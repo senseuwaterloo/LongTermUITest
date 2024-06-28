@@ -1,0 +1,190 @@
+import pytest
+import time
+import json
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+
+@pytest.mark.usefixtures("setup_class")
+class TestOhiomeansjobsOhioGov:
+    
+    def test_ohiomeansjobsohiogov_63b039d1(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("auto mechanic")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.ID, "location").clear()
+        self.driver.find_element(By.ID, "location").send_keys("Delaware, Ohio")
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Search')]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Career/Education Level')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Job Type')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Salary')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineSalary_rptFacet__ctl1_lnkFacet").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent_msgRefine").click()
+        self.driver.find_element(By.ID, "jobTitle").clear()
+        self.driver.find_element(By.ID, "jobTitle").send_keys("auto mechanic")
+        self.driver.find_element(By.ID, "ui-id-5").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Search')]").click()
+        self.driver.find_element(By.ID, "radius").clear()
+        self.driver.find_element(By.ID, "radius").select("20 miles")
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='filtersButtonSection']/div[1]").click()
+    
+    def test_ohiomeansjobsohiogov_2fccd591(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("intern")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.ID, "location").clear()
+        self.driver.find_element(By.ID, "location").send_keys("dayton")
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Search')]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Career/Education Level')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineCareerLvl_rptFacet__ctl1_lnkFacet").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Industry')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Professional, Science, & Technical')]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='customPopup']/div[2]/a[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Actions')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlResultsFlat_rptResults__ctl1_lnkSave").click()
+    
+    def test_ohiomeansjobsohiogov_40c81a5d(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("marketing")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Career/Education Level')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineCareerLvl_rptFacet__ctl1_lnkFacet").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent_msgRefine").click()
+    
+    def test_ohiomeansjobsohiogov_8473acca(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("amazon")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Location')]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineLocation_rptFacet__ctl1_divFacet']/li[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Job Type')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineJobType_rptFacet__ctl4_lnkFacet").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Industry')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Transportation & Storage')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent_msgRefine").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'No, thanks')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Actions')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlResultsFlat_rptResults__ctl2_lnkSave").click()
+    
+    def test_ohiomeansjobsohiogov_1564d78a(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("web design")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Salary')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineSalary_rptFacet__ctl1_lnkFacet").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent_msgRefine").click()
+    
+    def test_ohiomeansjobsohiogov_1d84ad91(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("logistic")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.ID, "location").clear()
+        self.driver.find_element(By.ID, "location").send_keys("11005")
+        self.driver.find_element(By.ID, "state").clear()
+        self.driver.find_element(By.ID, "state").select("NY")
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Search')]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Salary')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineSalary_rptFacet__ctl2_lnkFacet").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Career/Education Level')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'High school diploma or equivalent')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Job Type')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineJobType_rptFacet__ctl5_lnkFacet").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent_msgRefine").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Actions')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlResultsFlat_rptResults__ctl1_lnkTitle").click()
+    
+    def test_ohiomeansjobsohiogov_a4a92140(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("waiter")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineJobType_rptFacet__ctl3_lnkFacet").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent_msgRefine").click()
+    
+    def test_ohiomeansjobsohiogov_bb4dfd52(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("IT jobs")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Certificates')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlCertificates_rptFacet__ctl6_lnkFacet").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent_msgRefine").click()
+    
+    def test_ohiomeansjobsohiogov_ec487f0b(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//a[@id='job-seekers']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a Job Center')]").click()
+        self.driver.find_element(By.ID, "counties-dropdown").clear()
+        self.driver.find_element(By.ID, "counties-dropdown").select("Jefferson")
+        self.driver.find_element(By.XPATH, "//div[@id='odx-locations-list']/div[1]/ul[1]/li[41]/div[1]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Jefferson County')]").click()
+    
+    def test_ohiomeansjobsohiogov_f7635bd8(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("chef")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.ID, "location").clear()
+        self.driver.find_element(By.ID, "location").send_keys("moscow")
+        self.driver.find_element(By.ID, "state").clear()
+        self.driver.find_element(By.ID, "state").select("ID")
+        self.driver.find_element(By.ID, "radius").clear()
+        self.driver.find_element(By.ID, "radius").select("5 miles")
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Search')]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineIndustry_rptFacet__ctl1_lnkFacet").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineAgency_mgsCorporateSites").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent_msgRefine").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Actions')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlResultsFlat_rptResults__ctl1_lnkTitle").click()
+    
+    def test_ohiomeansjobsohiogov_690e9a88(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//a[@id='news-and-events']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'View Events')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Interviews')]").click()
+        self.driver.find_element(By.ID, "_ctl0__ctl0__ctl0_MainContent_MainContent_MainContent__ctl0_RegisterForEventButton").click()
+    
+    def test_ohiomeansjobsohiogov_743d254c(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("TEACHER")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent__ctlRefineSearch__ctlRefineIndustry_rptFacet__ctl1_lnkFacet").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Dayton')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Government')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent_msgRefine").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Actions')]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='customPopup']/div[3]/div[2]").click()
+    
+    def test_ohiomeansjobsohiogov_fe788604(self):
+        # self.driver.get("https://ohiomeansjobs.ohio.gov")
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and contains(@placeholder, 'Search by job title, skill or company') and @title='Enter Keywords']").send_keys("dogs")
+        self.driver.find_element(By.XPATH, "//form[@id='job-search-bar']/button[1]").click()
+        self.driver.find_element(By.XPATH, "//a[@id='filtersSearchLink']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Job Type')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Training Opportunities')]").click()
+        self.driver.find_element(By.ID, "_ctl0_PageTemplateContent_msgRefine").click()
+    
