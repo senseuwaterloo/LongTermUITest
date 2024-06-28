@@ -76,6 +76,10 @@ def setup_method(request):
         screenshot_path = f"{class_folder}/screenshots/{request.node.name}.png"
         driver.save_screenshot(screenshot_path)
 
+        dom_path = f"{class_folder}/dom/{request.node.name}.html"
+        with open(dom_path, "w", encoding="utf-8") as dom_file:
+            dom_file.write(driver.page_source)
+
         log_path = f"{class_folder}/logs/{request.node.name}.log"
         with open(log_path, "w") as log_file:
             log_file.write(f"Test {request.node.name} failed.\n")
