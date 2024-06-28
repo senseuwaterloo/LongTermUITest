@@ -73,6 +73,8 @@ def setup_method(request):
         class_folder = f"{execution_folder}/{test_class_name}"
         os.makedirs(f"{class_folder}/screenshots", exist_ok=True)
         os.makedirs(f"{class_folder}/logs", exist_ok=True)
+        os.makedirs(f"{class_folder}/dom", exist_ok=True)
+
         screenshot_path = f"{class_folder}/screenshots/{request.node.name}.png"
         driver.save_screenshot(screenshot_path)
 
