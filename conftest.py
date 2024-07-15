@@ -1,57 +1,202 @@
-import re
-import pytest
+import logging
 import os
+import re
 import time
-from selenium import webdriver
-from selenium.common import NoSuchElementException, StaleElementReferenceException
-from util.website_config import website_dict, cookie_locator_dict
 from datetime import datetime
+
+import pytest
+import undetected_chromedriver as uc
+from selenium.common import NoSuchElementException, StaleElementReferenceException, TimeoutException, ElementClickInterceptedException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
+from util.website_config import website_dict, cookie_locator_dict
 
 DISPLAY_VISIBLE = False
 DISPLAY_WIDTH = 2560
 DISPLAY_HEIGHT = 1440
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+
+option_args = [
+        "--enable-automation",
+        "--disable-field-trial-config",
+        "--disable-background-networking",
+        "--enable-features=NetworkService,NetworkServiceInProcess",
+        "--disable-features="
+        + (
+            "ImprovedCookieControls"
+            ",LazyFrameLoading"
+            ",GlobalMediaControls"
+            ",DestroyProfileOnBrowserClose"
+            ",MediaRouter"
+            ",DialMediaRouteProvider"
+            ",AcceptCHFrame"
+            ",AutoExpandDetailsElement"
+            ",CertificateTransparencyComponentUpdater"
+            ",AvoidUnnecessaryBeforeUnloadCheckSync"
+            ",Translate"
+        ),
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-back-forward-cache",
+        "--disable-breakpad",
+        "--disable-client-side-phishing-detection",
+        "--disable-component-extensions-with-background-pages",
+        "--disable-component-update",
+        "--no-default-browser-check",
+        "--disable-default-apps",
+        "--disable-dev-shm-usage",
+        "--disable-extensions",
+        "--disable-features",
+        "--allow-pre-commit-input",
+        "--disable-hang-monitor",
+        "--disable-ipc-flooding-protection",
+        "--disable-popup-blocking",
+        "--disable-prompt-on-repost",
+        "--disable-renderer-backgrounding",
+        "--disable-sync",
+        "--force-color-profile",
+        "--metrics-recording-only",
+        "--no-first-run",
+        "--password-store",
+        "--use-mock-keychain",
+        "--no-service-autorun",
+        "--export-tagged-pdf",
+        "--no_sandbox",
+        "--ignore-certificate-errors",
+        "--disable-blink-features=AutomationControlled",
+        "--incognito",
+        "--disable-extensions",
+        "--disable-infobars",
+        "--start-maximized",
+        "--disable-gpu",
+        "--disable-dev-shm-usage"
+        "--window-size=1920,1080"
+    ]
+
+
+# override find_element and click to wait for element clickable before clicking
+class CustomWebDriver(uc.Chrome):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.error_messages = []
+
+    def find_element(self, by=By.ID, value=None):
+        try:
+            element = WebDriverWait(super(), 10).until(
+                EC.presence_of_element_located((by, value))
+            )
+            return CustomWebElement(element, self, by, value)
+        except TimeoutException as e:
+            error_message = f"TimeoutException: Elements not found: {by} = {value} - {str(e)}"
+            logger.error(error_message)
+            self.error_messages.append(error_message)
+            return None
+
+    def find_elements(self, by=By.ID, value=None):
+        try:
+            elements = WebDriverWait(super(), 10).until(
+                EC.presence_of_all_elements_located((by, value))
+            )
+            return [CustomWebElement(el, self, by, value) for el in elements]
+        except TimeoutException as e:
+            error_message = f"TimeoutException: Element not found: {by} = {value} - {str(e)}"
+            logger.error(error_message)
+            self.error_messages.append(error_message)
+            return []
+
+
+class CustomWebElement:
+    def __init__(self, element, driver, by, value):
+        self.element = element
+        self.driver = driver
+        self.by = by
+        self.value = value
+
+    def click(self):
+        try:
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((self.by, self.value)))
+            self.element.click()
+        except TimeoutException as e:
+            error_message = f"TimeoutException: Element not clickable within timeout: {self.by} = {self.value} - {str(e)}"
+            logger.error(error_message)
+            self.driver.error_messages.append(error_message)
+            raise e
+        except ElementClickInterceptedException as e:
+            error_message = f"ElementClickInterceptedException: Element click intercepted: {self.by} = {self.value} - {str(e)}"
+            logger.error(error_message)
+            self.driver.error_messages.append(error_message)
+            raise e
+        except StaleElementReferenceException as e:
+            error_message = f"StaleElementReferenceException: Element became stale: {self.by} = {self.value} - {str(e)}"
+            logger.warning(error_message)
+            self.driver.error_messages.append(error_message)
+            raise e
+
+    def get_native_element(self):
+        return self.element
+
+    def __getattr__(self, item):
+        return getattr(self.element, item)
+
 
 @pytest.fixture(scope="class", autouse=True)
 def setup_class(request):
-
     # start display
     # https://stackoverflow.com/questions/72853097/pyvirtual-display-and-xvfb-on-macos-latest
     # display = Display(visible=DISPLAY_VISIBLE, size=(DISPLAY_WIDTH, DISPLAY_HEIGHT))
     # display.start()
-    tmp_opts = webdriver.ChromeOptions()
+    tmp_opts = uc.ChromeOptions()
     tmp_opts.add_argument("--headless")
-    chrome_driver = webdriver.Chrome(options=tmp_opts)
+    chrome_driver = uc.Chrome(options=tmp_opts)
     # Get user agent
     user_agent = chrome_driver.execute_script("return navigator.userAgent;")
     user_agent = user_agent.replace("Headless", "")
     # Quit the temporary driver
     chrome_driver.quit()
 
-    opts = webdriver.ChromeOptions()
+    opts = uc.ChromeOptions()
     # https://stackoverflow.com/questions/76627992/selenium-webdriver-headless-mode-shows-blank-page-selenium-web-element
-    opts.add_argument("--headless=new")
-    # Add user agent to options
-    opts.add_argument(f"--user-agent={user_agent}")
-    # Disable cache
-    opts.add_argument("--disable-cache")
-    opts.add_argument("--disable-application-cache")
-    opts.add_argument("--disk-cache-size=0")
-    # opts.add_argument("--disable-gpu")
-    opts.add_argument("--ignore-certificate-errors")
-    opts.add_argument('--disable-blink-features=AutomationControlled')
+    #TODO opts.add_argument("--headless=new")
 
-    opts.add_argument("--window-size=1920,1080")
-    # opts.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0")
+    for arg in option_args:
+        opts.add_argument(arg)
+    opts.add_argument(f"--user-agent={user_agent}")
 
     # Geolocation preferences
     prefs = {
-        "profile.default_content_setting_values.geolocation": 1,  # 1 = allow, 2 = block
-        "profile.default_content_setting_values.notifications": 2,  # Disable notifications
+        "profile.default_content_setting_values.cookies": 1,  # 1 = Allow, 2 = Block
+        "profile.default_content_setting_values.images": 1,
+        "profile.default_content_setting_values.javascript": 1,
+        "profile.default_content_setting_values.geolocation": 1,
+        "profile.default_content_setting_values.automatic_downloads": 1,
+        "profile.default_content_setting_values.mixed_script": 1,
+        "profile.default_content_setting_values.media_stream": 1,
+        "profile.default_content_setting_values.stylesheets": 1,
+        "profile.managed_default_content_settings": {
+            "cookies": 1,  # Allow cookies
+            "images": 1,
+            "javascript": 1,
+            "geolocation": 1,
+            "automatic_downloads": 1,
+            "mixed_script": 1,
+            "media_stream": 1,
+            "stylesheets": 1
+        }
     }
     opts.add_experimental_option("prefs", prefs)
 
-    driver = webdriver.Chrome(options=opts)
+    driver = CustomWebDriver(options=opts)
+    driver.execute_cdp_cmd("Page.setGeolocationOverride", {
+        "latitude": 39.98,
+        "longitude": -82.98,
+        "accuracy": 100
+    })
+
     request.cls.driver = driver
     yield
     driver.quit()
@@ -82,11 +227,22 @@ def setup_method(request):
         with open(dom_path, "w", encoding="utf-8") as dom_file:
             dom_file.write(driver.page_source)
 
-        log_path = f"{class_folder}/logs/{request.node.name}.log"
-        with open(log_path, "w") as log_file:
-            log_file.write(f"Test {request.node.name} failed.\n")
-            log_file.write(f"URL at failure: {driver.current_url}\n")
-            log_file.write(f"Exception: {request.node.rep_call.longreprtext}\n")
+        # log_path = f"{class_folder}/logs/{request.node.name}.log"
+        # with open(log_path, "w") as log_file:
+        #     log_file.write(f"Test {request.node.name} failed.\n")
+        #     log_file.write(f"URL at failure: {driver.current_url}\n")
+        #     log_file.write(f"Exception: {request.node.rep_call.longreprtext}\n")
+        log_path = f"{execution_folder}/{test_class_name}/logs/{request.node.name}.log"
+        file_handler = logging.FileHandler(log_path)
+        file_handler.setLevel(logging.INFO)
+        file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+        logger.addHandler(file_handler)
+        logger.error(f"Test {request.node.name} failed.")
+        logger.error(f"URL at failure: {driver.current_url}")
+        logger.error(f"Exception: {request.node.rep_call.longreprtext}")
+        for error_message in driver.error_messages:
+            logger.error(error_message)
+        logger.removeHandler(file_handler)
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -121,23 +277,24 @@ def get_website_url(website_name):
 
 
 def open_url_and_handle_cookie(driver, website_url):
+    print(website_url)
     driver.get(website_url)
-    time.sleep(5)
-    # print("In method open_url_and_handle_cookie")
-    # print(website_url)
-    # print(cookie_locator_dict.get(website_url))
     if website_url in cookie_locator_dict:
         locators = cookie_locator_dict[website_url]
         for by, locator in locators:
-            if is_cookie_displayed(driver, by, locator):
-                try:
-                    element = driver.find_element(by, locator)
-                    element.click()
-                except NoSuchElementException:
-                    print(f"Element located by {by} with locator {locator} not found")
+            # if is_cookie_displayed(driver, by, locator):
+            try:
+                # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, locator)))
+                element = WebDriverWait(driver, 6).until(EC.element_to_be_clickable((by, locator)))
+                element.click()
+            except (NoSuchElementException, TimeoutException, StaleElementReferenceException, AttributeError):
+                error_message = f"handle cookie error, element located by {by} with locator {locator} not found"
+                logger.warning(error_message)
+                driver.error_messages.append(error_message)
+    time.sleep(2)
 
 
-def is_cookie_displayed(driver: webdriver, by, locator) -> bool:
+def is_cookie_displayed(driver: uc, by, locator) -> bool:
     try:
         element = driver.find_element(by, locator)
         return element.is_displayed()

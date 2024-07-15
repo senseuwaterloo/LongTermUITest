@@ -28,12 +28,14 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'tiktok.music': 'https://music.tiktok.com/au/', 'tripadvisor': 'https://www.tripadvisor.com/',
                 'shopping.google': 'https://shopping.google.com/', 'nba': 'https://www.nba.com/',
                 'usnews.education': 'https://www.usnews.com/education', 'delta': 'https://www.delta.com',
-                'fedex': 'https://www.fedex.com/en-us/home.html'}
+                'fedex': 'https://www.fedex.com/en-us/home.html', 'akcorg': 'https://www.akc.org/',
+                'amctheatres': 'https://www.amctheatres.com/'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
                        'https://adoptapet.com': [(By.XPATH, "//div[@id='onetrust-close-btn-container']/button")],
-                       'https://agoda.com': [(By.XPATH, "//button[@aria-label='Close Message' and @class='ab-close-button']")],
+                       # (By.XPATH, "//button[@aria-label='Close Message' and @class='ab-close-button']")
+                       'https://agoda.com': [(By.ID, "secondaryButton"), (By.XPATH, "//a[contains(text(), 'No thanks')]"), (By.XPATH, "//button[contains(text(), 'No thanks')]")],
                        'https://www.airbnb.com/': [(By.XPATH, "//button[text()='Cookie Preferences']/following::button[text()='OK']")],
                        'https://www.akc.org/': [(By.XPATH, "//a[@title='Close' and @aria-label='Close this option']")],
                        'https://amtrak.com': [(By.ID, "onetrust-accept-btn-handler")],
