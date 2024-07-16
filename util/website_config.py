@@ -23,13 +23,14 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'aa': 'https://www.aa.com/homePage.do',
                 'qatarairways': 'https://www.qatarairways.com/en-us/homepage.html',
                 'ultimate-guitar': 'https://www.ultimate-guitar.com/', 'trip': 'https://us.trip.com/?locale=en-us',
-                'macys': 'https://www.macys.com/', 'bestbuy': 'https://www.bestbuy.com/',
+                'macys': 'https://www.macys.com/', 'bestbuy': 'https://www.bestbuy.com/?intl=nosplash',
                 'cars': 'https://www.cars.com/', 'recreation.gov': 'https://www.recreation.gov/',
                 'tiktok.music': 'https://music.tiktok.com/au/', 'tripadvisor': 'https://www.tripadvisor.com/',
                 'shopping.google': 'https://shopping.google.com/', 'nba': 'https://www.nba.com/',
                 'usnews.education': 'https://www.usnews.com/education', 'delta': 'https://www.delta.com',
                 'fedex': 'https://www.fedex.com/en-us/home.html', 'akcorg': 'https://www.akc.org/',
-                'amctheatres': 'https://www.amctheatres.com/'}
+                'amctheatres': 'https://www.amctheatres.com/', 'bbborg': 'https://www.bbb.org/',
+                'bookdepository': 'https://www.barnesandnoble.com/'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
@@ -41,7 +42,8 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        'https://amtrak.com': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://apartments.com': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://bbb.org': [(By.XPATH, "//button[text()='Accept All Cookies']")],
-                       'https://booking.com': [(By.XPATH, "//button[@aria-label='Dismiss sign in information.']")],
+                       'https://www.barnesandnoble.com/': [(By.ID, "onetrust-accept-btn-handler")],
+                       # 'https://booking.com': [(By.XPATH, "//button[@aria-label='Dismiss sign in information.']")],
                        'https://www.budget.com/en/home': [(By.XPATH, "//div[@id='member-benefits-terms-generic-modal']/preceding-sibling::h4/span[@aria-label='Close']"),
                                                           (By.ID, "onetrust-accept-btn-handler")],
                        'https://cabelas.com': [(By.ID, "CookieTrackingDisclosureButton")],

@@ -32,6 +32,24 @@ def switch_to_new_tab(driver, website_url=""):
     return driver
 
 
+def calculate_budget_dates(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    # Adjust the month to be the previous month
+    start_date_month_adjusted = (start_date.month - 1) if start_date.month > 1 else 12
+    end_date_month_adjusted = (end_date.month - 1) if end_date.month > 1 else 12
+
+    start_date_year = start_date.year
+    start_date_day = start_date.day
+
+    end_date_year = end_date.year
+    end_date_day = end_date.day
+
+    return (start_date_year, start_date_month_adjusted, start_date_day), (end_date_year, end_date_month_adjusted, end_date_day)
+
+
 def calculate_dates(days_from_now_start=7, days_from_now_end=14):
     current_date = datetime.now()
     start_date = current_date + timedelta(days=days_from_now_start)

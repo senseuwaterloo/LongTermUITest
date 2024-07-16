@@ -87,7 +87,7 @@ class CustomWebDriver(uc.Chrome):
 
     def find_element(self, by=By.ID, value=None):
         try:
-            element = WebDriverWait(super(), 10).until(
+            element = WebDriverWait(super(), 15).until(
                 EC.presence_of_element_located((by, value))
             )
             return CustomWebElement(element, self, by, value)
@@ -99,7 +99,7 @@ class CustomWebDriver(uc.Chrome):
 
     def find_elements(self, by=By.ID, value=None):
         try:
-            elements = WebDriverWait(super(), 10).until(
+            elements = WebDriverWait(super(), 15).until(
                 EC.presence_of_all_elements_located((by, value))
             )
             return [CustomWebElement(el, self, by, value) for el in elements]
@@ -119,7 +119,7 @@ class CustomWebElement:
 
     def click(self):
         try:
-            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((self.by, self.value)))
+            WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
             self.element.click()
         except TimeoutException as e:
             error_message = f"TimeoutException: Element not clickable within timeout: {self.by} = {self.value} - {str(e)}"
@@ -199,6 +199,10 @@ def setup_class(request):
 
     request.cls.driver = driver
     yield
+
+    driver.delete_all_cookies()
+    driver.execute_script('window.localStorage.clear();')
+    driver.execute_script('window.sessionStorage.clear();')
     driver.quit()
     # display.stop()
 
@@ -243,6 +247,10 @@ def setup_method(request):
         for error_message in driver.error_messages:
             logger.error(error_message)
         logger.removeHandler(file_handler)
+
+        driver.delete_all_cookies()
+        driver.execute_script('window.localStorage.clear();')
+        driver.execute_script('window.sessionStorage.clear();')
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
