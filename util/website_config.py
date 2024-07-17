@@ -30,7 +30,8 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'usnews.education': 'https://www.usnews.com/education', 'delta': 'https://www.delta.com',
                 'fedex': 'https://www.fedex.com/en-us/home.html', 'akcorg': 'https://www.akc.org/',
                 'amctheatres': 'https://www.amctheatres.com/', 'bbborg': 'https://www.bbb.org/',
-                'bookdepository': 'https://www.barnesandnoble.com/'}
+                'bookdepository': 'https://www.barnesandnoble.com/', 'cagov': 'https://www.ca.gov/',
+                'careerswalmart': 'https://careers.walmart.com/'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
@@ -46,7 +47,7 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        # 'https://booking.com': [(By.XPATH, "//button[@aria-label='Dismiss sign in information.']")],
                        'https://www.budget.com/en/home': [(By.XPATH, "//div[@id='member-benefits-terms-generic-modal']/preceding-sibling::h4/span[@aria-label='Close']"),
                                                           (By.ID, "onetrust-accept-btn-handler")],
-                       'https://cabelas.com': [(By.ID, "CookieTrackingDisclosureButton")],
+                       'https://cabelas.com': [(By.ID, "SSCACloseBtn"), (By.ID, "CookieTrackingDisclosureButton")],
                        'https://www.carnival.com/': [(By.ID, "cookie-consent-btn")],
                        'https://www.cars.com/': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://coinmarketcap.com': [(By.ID, "onetrust-accept-btn-handler")],
