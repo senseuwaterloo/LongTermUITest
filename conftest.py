@@ -3,7 +3,7 @@ import os
 import re
 import time
 from datetime import datetime
-
+import polling2
 import pytest
 import undetected_chromedriver as uc
 from selenium.common import NoSuchElementException, StaleElementReferenceException, TimeoutException, ElementClickInterceptedException
@@ -111,16 +111,40 @@ class CustomWebDriver(uc.Chrome):
 
 
 class CustomWebElement:
-    def __init__(self, element, driver, by, value):
+    def __init__(self, element, driver, by, value, is_shadow_element=False):
         self.element = element
         self.driver = driver
         self.by = by
         self.value = value
+        self.is_shadow_element = is_shadow_element
 
     def click(self):
         try:
-            WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
-            self.element.click()
+            # WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
+            # self.element.click()
+            logger.info(f"Attempting to click element: {self.by} = {self.value}")
+            if self.is_shadow_element:
+                polling2.poll(
+                    lambda: self.element.is_displayed() and self.element.is_enabled(),
+                    step=0.5,
+                    timeout=15
+                )
+                self.element.click()
+            else:
+                # polling2.poll(
+                #     lambda: self.element.is_displayed() and self.element.is_enabled(),
+                #     step=0.5,
+                #     timeout=15,
+                #     check_success=lambda x: x.is_displayed() and x.is_enabled()
+                # )
+                WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
+                self.element.click()
+            logger.info(f"Element clicked: {self.by} = {self.value}")
+        except polling2.TimeoutException as e:
+            error_message = f"TimeoutException: Shadow Element not clickable within timeout: {self.by} = {self.value} - {str(e)}"
+            logger.error(error_message)
+            self.driver.error_messages.append(error_message)
+            raise e
         except TimeoutException as e:
             error_message = f"TimeoutException: Element not clickable within timeout: {self.by} = {self.value} - {str(e)}"
             logger.error(error_message)
@@ -137,11 +161,111 @@ class CustomWebElement:
             self.driver.error_messages.append(error_message)
             raise e
 
+    def find_element(self, by=By.ID, value=None):
+        try:
+            element = WebDriverWait(self.element, 15).until(
+                EC.presence_of_element_located((by, value))
+            )
+            return CustomWebElement(element, self, by, value)
+        except TimeoutException as e:
+            error_message = f"TimeoutException: Elements not found: {by} = {value} - {str(e)}"
+            logger.error(error_message)
+            self.error_messages.append(error_message)
+            return None
+
+    def find_elements(self, by=By.ID, value=None):
+        try:
+            elements = WebDriverWait(self.element, 15).until(
+                EC.presence_of_all_elements_located((by, value))
+            )
+            return [CustomWebElement(el, self, by, value) for el in elements]
+        except TimeoutException as e:
+            error_message = f"TimeoutException: Element not found: {by} = {value} - {str(e)}"
+            logger.error(error_message)
+            self.error_messages.append(error_message)
+            return []
+
+    @property
+    def shadow_root(self):
+        logger.info(f"Attempting to find element in shadow root: {self.by} = {self.value}")
+        shadow_root = self.driver.execute_script("return arguments[0].shadowRoot", self.element)
+        return CustomShadowRoot(shadow_root, self.driver, self.by, self.value)
+        # try:
+        #     shadow_root = polling2.poll(
+        #         lambda: self.driver.execute_script("return arguments[0].shadowRoot", self.element),
+        #         step=0.5,
+        #         timeout=15,
+        #         check_success=lambda x: x is not None
+        #     )
+        #     logger.info(f"Shadow root accessed for element: {self.by} = {self.value}")
+        #     return CustomShadowRoot(shadow_root, self.driver, self.by, self.value)
+        # except polling2.TimeoutException as e:
+        #     error_message = f"TimeoutException: Shadow root not found for element: {self.by} = {self.value} - {str(e)}"
+        #     logger.error(error_message)
+        #     self.driver.error_messages.append(error_message)
+        #     return None
+
     def get_native_element(self):
         return self.element
 
     def __getattr__(self, item):
         return getattr(self.element, item)
+
+
+class CustomShadowRoot:
+    def __init__(self, shadow_root, driver, by, value):
+        self.shadow_root = shadow_root
+        self.driver = driver
+        self.by = by
+        self.value = value
+
+    def find_element(self, by=By.ID, value=None):
+        try:
+            logger.info(f"Attempting to find element in shadow root: {by} = {value}")
+            element = polling2.poll(
+                lambda: self._find_element_in_shadow_root(by, value),
+                step=0.5,
+                timeout=15,
+                check_success=lambda x: x is not None
+            )
+            logger.info(f"Element found in shadow root: {by} = {value}")
+            return CustomWebElement(element, self.driver, by, value, is_shadow_element=True)
+        except polling2.TimeoutException as e:
+            error_message = f"TimeoutException: Element not found in shadow root: {by} = {value} - {str(e)}"
+            logger.error(error_message)
+            self.driver.error_messages.append(error_message)
+            return None
+
+    def _find_element_in_shadow_root(self, by, value):
+        try:
+            return self.shadow_root.find_element(by, value)
+        except NoSuchElementException as e:
+            logger.debug(f"Element not found yet: {by} = {value} - {str(e)}")
+            return None
+
+    def find_elements(self, by=By.ID, value=None):
+        try:
+            logger.info(f"Attempting to find elements in shadow root: {by} = {value}")
+            elements = polling2.poll(
+                lambda: self._find_elements_in_shadow_root(by, value),
+                step=0.5,
+                timeout=15,
+                check_success=lambda x: x is not None and len(x) > 0
+            )
+            logger.info(f"Elements found in shadow root: {by} = {value}")
+            return [CustomWebElement(el, self.driver, by, value, is_shadow_element=True) for el in elements]
+        except polling2.TimeoutException as e:
+            error_message = f"TimeoutException: Elements not found in shadow root: {by} = {value} - {str(e)}"
+            logger.error(error_message)
+            self.driver.error_messages.append(error_message)
+            return []
+
+    def _find_elements_in_shadow_root(self, by, value):
+        try:
+            return self.shadow_root.find_elements(by, value)
+        except NoSuchElementException as e:
+            logger.debug(f"Elements not found yet: {by} = {value} - {str(e)}")
+            return None
 
 
 @pytest.fixture(scope="class", autouse=True)

@@ -31,7 +31,8 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'fedex': 'https://www.fedex.com/en-us/home.html', 'akcorg': 'https://www.akc.org/',
                 'amctheatres': 'https://www.amctheatres.com/', 'bbborg': 'https://www.bbb.org/',
                 'bookdepository': 'https://www.barnesandnoble.com/', 'cagov': 'https://www.ca.gov/',
-                'careerswalmart': 'https://careers.walmart.com/'}
+                'careerswalmart': 'https://careers.walmart.com/', 'courseraorg': 'https://www.coursera.org/',
+                'craigslistorg': 'https://craigslist.org'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
@@ -48,9 +49,9 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        'https://www.budget.com/en/home': [(By.XPATH, "//div[@id='member-benefits-terms-generic-modal']/preceding-sibling::h4/span[@aria-label='Close']"),
                                                           (By.ID, "onetrust-accept-btn-handler")],
                        'https://cabelas.com': [(By.ID, "SSCACloseBtn"), (By.ID, "CookieTrackingDisclosureButton")],
-                       'https://www.carnival.com/': [(By.ID, "cookie-consent-btn")],
+                       # 'https://www.carnival.com/': [(By.ID, "cookie-consent-btn")],
                        'https://www.cars.com/': [(By.ID, "onetrust-accept-btn-handler")],
-                       'https://coinmarketcap.com': [(By.ID, "onetrust-accept-btn-handler")],
+                       # 'https://coinmarketcap.com': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://www.delta.com': [(By.XPATH, "//button[@class='cookie-close-icon float-right circle-outline']")],
                        'https://discogs.com': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://enterprise.com': [(By.ID, "onetrust-close-btn-container")],
