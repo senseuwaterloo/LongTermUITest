@@ -32,7 +32,7 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'amctheatres': 'https://www.amctheatres.com/', 'bbborg': 'https://www.bbb.org/',
                 'bookdepository': 'https://www.barnesandnoble.com/', 'cagov': 'https://www.ca.gov/',
                 'careerswalmart': 'https://careers.walmart.com/', 'courseraorg': 'https://www.coursera.org/',
-                'craigslistorg': 'https://craigslist.org'}
+                'craigslistorg': 'https://craigslist.org', 'dmvvirginiagov': 'https://www.dmv.virginia.gov/'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
@@ -52,7 +52,7 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        # 'https://www.carnival.com/': [(By.ID, "cookie-consent-btn")],
                        'https://www.cars.com/': [(By.ID, "onetrust-accept-btn-handler")],
                        # 'https://coinmarketcap.com': [(By.ID, "onetrust-accept-btn-handler")],
-                       'https://www.delta.com': [(By.XPATH, "//button[@class='cookie-close-icon float-right circle-outline']")],
+                       # 'https://www.delta.com': [(By.XPATH, "//button[@class='cookie-close-icon float-right circle-outline']")],
                        'https://discogs.com': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://enterprise.com': [(By.ID, "onetrust-close-btn-container")],
                        'https://www.flightaware.com/': [(By.ID, "onetrust-accept-btn-handler")],

@@ -79,7 +79,7 @@ option_args = [
     ]
 
 
-# override find_element and click to wait for element clickable before clicking
+# override find_element and click to wait for element to be clickable before clicking
 class CustomWebDriver(uc.Chrome):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
