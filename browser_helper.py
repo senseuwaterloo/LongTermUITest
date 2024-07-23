@@ -72,8 +72,54 @@ def calculate_dates_slash_format(days_from_now_start=7, days_from_now_end=14):
     return start_date_str, end_date_str
 
 
+def calculate_dates_weekday_format(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    start_date_str = start_date.strftime('%A, %B %d, %Y')
+    end_date_str = end_date.strftime('%A, %B %d, %Y')
+
+    return start_date_str, end_date_str
+
+
+def get_day_suffix(day):
+    if 11 <= day <= 13:
+        return 'th'
+    elif day % 10 == 1:
+        return 'st'
+    elif day % 10 == 2:
+        return 'nd'
+    elif day % 10 == 3:
+        return 'rd'
+    else:
+        return 'th'
+
+
+def format_date_with_suffix(date):
+    day = date.day
+    suffix = get_day_suffix(day)
+    formatted_date = date.strftime(f'%-d{suffix} %B (%A)')
+    return formatted_date
+
+
+def calculate_dates_with_suffix(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    start_date_str = format_date_with_suffix(start_date)
+    end_date_str = format_date_with_suffix(end_date)
+
+    return start_date_str, end_date_str
+
+
 def scroll_to_element(driver, element):
     if isinstance(element, CustomWebElement):
         element = element.get_native_element()
     driver.execute_script("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element)
     time.sleep(1)
+
+
+def scroll_down(driver, distance):
+    driver.execute_script(f"window.scrollBy(0, {distance});")

@@ -416,6 +416,12 @@ def open_url_and_handle_cookie(driver, website_url):
         for by, locator in locators:
             # if is_cookie_displayed(driver, by, locator):
             try:
+                # if website_url == 'https://extraspace.com':
+                #     time.sleep(7)
+                #     user_cookie_shadow_root = driver.find_element(By.ID, "usercentrics-root")
+                #     close_button = user_cookie_shadow_root.shadow_root.find_element(By.XPATH, "//button[@data-testid='uc-ccpa-button']")
+                #     close_button.click()
+                # else:
                 # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, locator)))
                 element = WebDriverWait(driver, 6).until(EC.element_to_be_clickable((by, locator)))
                 element.click()

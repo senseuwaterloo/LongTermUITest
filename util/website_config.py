@@ -55,6 +55,8 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        # 'https://www.delta.com': [(By.XPATH, "//button[@class='cookie-close-icon float-right circle-outline']")],
                        'https://discogs.com': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://enterprise.com': [(By.ID, "onetrust-close-btn-container")],
+                       # button in a shadow dom, need to handle separately
+                       # 'https://extraspace.com': [(By.XPATH, "//button[@data-testid='uc-ccpa-button']")],
                        'https://www.flightaware.com/': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://www.gov.uk/': [(By.XPATH, "//button[text()='Accept additional cookies']"), (By.XPATH, "//button[contains(text(), 'Hide this message')]")],
                        'https://health.usnews.com': [(By.ID, "onetrust-close-btn-container")],
