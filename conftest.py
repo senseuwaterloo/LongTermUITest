@@ -7,6 +7,7 @@ import polling2
 import pytest
 import undetected_chromedriver as uc
 from selenium.common import NoSuchElementException, StaleElementReferenceException, TimeoutException, ElementClickInterceptedException
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -274,6 +275,9 @@ def setup_class(request):
     # https://stackoverflow.com/questions/72853097/pyvirtual-display-and-xvfb-on-macos-latest
     # display = Display(visible=DISPLAY_VISIBLE, size=(DISPLAY_WIDTH, DISPLAY_HEIGHT))
     # display.start()
+    chrome_binary_path = '/Applications/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing'
+    service = Service(executable_path=chrome_binary_path)
+
     tmp_opts = uc.ChromeOptions()
     tmp_opts.add_argument("--headless")
     chrome_driver = uc.Chrome(options=tmp_opts)

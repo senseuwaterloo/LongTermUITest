@@ -1,0 +1,154 @@
+2024-07-23 11:41:58,932 - ERROR - Test test_financegoogle_d78d07bf failed.
+2024-07-23 11:41:58,936 - ERROR - URL at failure: https://www.google.com/finance/
+2024-07-23 11:41:58,936 - ERROR - Exception: self = <test.test_financegoogle.TestFinanceGoogle object at 0x106760d00>
+
+    def test_financegoogle_d78d07bf(self):
+        # uiteststudy@gmail.com:UITestStudy2024
+        # self.driver.get("https://www.google.com/finance/")
+        # add extra login steps
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//span[text()='Sign in']").click()
+        self.driver.find_element(By.NAME, "identifier").click()
+        self.driver.find_element(By.NAME, "identifier").send_keys("uiteststudy@gmail.com")
+        self.driver.find_element(By.XPATH, "//button[contains(., 'Next') and @type='button']").click()
+        self.driver.find_element(By.NAME, "Passwd").click()
+        self.driver.find_element(By.NAME, "Passwd").send_keys("UITestStudy2024")
+        self.driver.find_element(By.XPATH, "//button[contains(., 'Next') and @type='button']").click()
+    
+        # self.driver.find_element(By.XPATH, "//body[@id='yDmH0d']/c-wiz[3]/div[1]/div[4]/div[1]/div[1]/div[2]/c-wiz[1]/div[1]/div[1]/div[5]/div[1]/div[1]/button[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//span[text()='New portfolio']").click()
+    
+        # self.driver.find_element(By.ID, "c236").clear()
+        # self.driver.find_element(By.ID, "c236").send_keys("AI")
+        # very dynamic id and attributes, use neighbor text
+>       self.driver.find_element(By.XPATH, "//span[text()='Portfolio name']/ancestor::label//input").clear()
+
+test/test_financegoogle.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:117: in clear
+    self._execute(Command.CLEAR_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x106761e10>
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...7ff80f24c18b _pthread_start + 99\\n21  libsystem_pthread.dylib             0x00007ff80f247ae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+E         (Session info: chrome=126.0.6478.183)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001013da078 undetected_chromedriver + 5169272
+E       1   undetected_chromedriver             0x00000001013d1f4a undetected_chromedriver + 5136202
+E       2   undetected_chromedriver             0x0000000100f4e1a1 undetected_chromedriver + 401825
+E       3   undetected_chromedriver             0x0000000100f91e63 undetected_chromedriver + 679523
+E       4   undetected_chromedriver             0x0000000100fbeab2 undetected_chromedriver + 862898
+E       5   undetected_chromedriver             0x0000000100f8fed8 undetected_chromedriver + 671448
+E       6   undetected_chromedriver             0x0000000100fbec6e undetected_chromedriver + 863342
+E       7   undetected_chromedriver             0x0000000100fddf57 undetected_chromedriver + 991063
+E       8   undetected_chromedriver             0x0000000100fbe853 undetected_chromedriver + 862291
+E       9   undetected_chromedriver             0x0000000100f8e5c6 undetected_chromedriver + 665030
+E       10  undetected_chromedriver             0x0000000100f8ee4e undetected_chromedriver + 667214
+E       11  undetected_chromedriver             0x000000010139cc90 undetected_chromedriver + 4918416
+E       12  undetected_chromedriver             0x00000001013a1c8d undetected_chromedriver + 4938893
+E       13  undetected_chromedriver             0x00000001013a2365 undetected_chromedriver + 4940645
+E       14  undetected_chromedriver             0x000000010137dd74 undetected_chromedriver + 4791668
+E       15  undetected_chromedriver             0x00000001013a2659 undetected_chromedriver + 4941401
+E       16  undetected_chromedriver             0x000000010136f544 undetected_chromedriver + 4732228
+E       17  undetected_chromedriver             0x00000001013c2828 undetected_chromedriver + 5072936
+E       18  undetected_chromedriver             0x00000001013c29e7 undetected_chromedriver + 5073383
+E       19  undetected_chromedriver             0x00000001013d1afe undetected_chromedriver + 5135102
+E       20  libsystem_pthread.dylib             0x00007ff80f24c18b _pthread_start + 99
+E       21  libsystem_pthread.dylib             0x00007ff80f247ae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementNotInteractableException
