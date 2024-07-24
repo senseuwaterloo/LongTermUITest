@@ -1,7 +1,7 @@
 import time
 
 import pytest
-from selenium.webdriver import Keys
+from selenium.webdriver import Keys, ActionChains
 from selenium.webdriver.common.by import By
 
 
@@ -172,7 +172,7 @@ class TestGlassdoor:
     def test_glassdoor_36113c94(self):
         # self.driver.get("https://glassdoor.com")
         # uiteststudy@gmail.com:Pass4Glassdoor2024!
-        time.sleep(7)
+        # time.sleep(7)
         # add login steps
         self.driver.find_element(By.XPATH, "//div[@id='SignInButton']/button[1]").click()
         self.driver.find_element(By.ID, "modalUserEmail").clear()
@@ -181,13 +181,21 @@ class TestGlassdoor:
         self.driver.find_element(By.ID, "modalUserPassword").clear()
         self.driver.find_element(By.ID, "modalUserPassword").send_keys("Pass4Glassdoor2024!")
 
-        time.sleep(3)
+        time.sleep(2)
         # selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted.
         # if locate to div then will overlap with element "show password" and be intercepted
         # If located to button then will intercept by parent div
         # if locate to span then will intercept by parent div
-        self.driver.find_element(By.XPATH, "//div[@id='InlineLoginModule']/div/div[1]/div[1]/div/div/div/form/div[2]/button[1]/span[1]").click()
+        # STILL NOT WORKING EVEN TRY TO USE action perform. have to use offset to avoid clicking on the overlap part
+        # self.driver.find_element(By.XPATH, "//div[@id='InlineLoginModule']/div/div[1]/div[1]/div/div/div/form/div[2]/button[1]/span[1]").click()
         # self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//div[@id='InlineLoginModule']/div/div[1]/div[1]/div/div/div/form/div[2]/button[1]").get_native_element())
+        login_button = self.driver.find_element(By.XPATH, "//div[@id='InlineLoginModule']/div/div[1]/div[1]/div/div/div/form/div[2]").get_native_element()
+        action = ActionChains(self.driver)
+        action.move_to_element_with_offset(login_button, 15, 15)
+        action.click().perform()
+
+        time.sleep(2)
+        # selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
         self.driver.find_element(By.XPATH, "//div[@id='globalNavContainer']/div/ul/li[2]").click()
 
         # self.driver.find_element(By.ID, "sc.keyword").clear()
@@ -215,6 +223,9 @@ class TestGlassdoor:
         # self.driver.find_element(By.XPATH, "//article[@id='MainCol']/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/span[2]").click()
         # self.driver.find_element(By.XPATH, "//article[@id='MainCol']/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/ul[1]/li[2]/button[1]/div[2]").click()
         # self.driver.find_element(By.XPATH, "//article[@id='MainCol']/div[1]/ul[1]/li[1]/div[2]/div[1]/div[1]/button[1]/span[1]/svg[1]").click()
+
+        # NEED TO close a popup window
+        self.driver.find_element(By.XPATH, "//button[@aria-label='Cancel']").click()
         self.driver.find_element(By.XPATH, "//button[@data-test='expand-filters']").click()
         self.driver.find_element(By.XPATH, "//button[@data-test='jobTypeIndeed-option' and contains(., 'Full-time')]").click()
         self.driver.find_element(By.XPATH, "//button[@data-test='fromAge' and text()='Date posted']").click()

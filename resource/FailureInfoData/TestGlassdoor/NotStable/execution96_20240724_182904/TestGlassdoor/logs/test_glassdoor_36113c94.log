@@ -1,0 +1,203 @@
+2024-07-24 18:29:27,297 - ERROR - Test test_glassdoor_36113c94 failed.
+2024-07-24 18:29:27,301 - ERROR - URL at failure: https://www.glassdoor.com/Community/index.htm?countryPickerRedirect=true
+2024-07-24 18:29:27,301 - ERROR - Exception: self = <test.test_glassdoor.TestGlassdoor object at 0x103337400>
+
+    def test_glassdoor_36113c94(self):
+        # self.driver.get("https://glassdoor.com")
+        # uiteststudy@gmail.com:Pass4Glassdoor2024!
+        time.sleep(7)
+        # add login steps
+        self.driver.find_element(By.XPATH, "//div[@id='SignInButton']/button[1]").click()
+        self.driver.find_element(By.ID, "modalUserEmail").clear()
+        self.driver.find_element(By.ID, "modalUserEmail").send_keys("uiteststudy@gmail.com")
+        self.driver.find_element(By.XPATH, "//div[@data-test='authModalContainerV2-content']//button[@data-test='email-form-button']").click()
+        self.driver.find_element(By.ID, "modalUserPassword").clear()
+        self.driver.find_element(By.ID, "modalUserPassword").send_keys("Pass4Glassdoor2024!")
+    
+        time.sleep(2)
+        # selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted.
+        # if locate to div then will overlap with element "show password" and be intercepted
+        # If located to button then will intercept by parent div
+        # if locate to span then will intercept by parent div
+        # STILL NOT WORKING EVEN TRY TO USE action perform
+        # self.driver.find_element(By.XPATH, "//div[@id='InlineLoginModule']/div/div[1]/div[1]/div/div/div/form/div[2]/button[1]/span[1]").click()
+        # self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//div[@id='InlineLoginModule']/div/div[1]/div[1]/div/div/div/form/div[2]/button[1]").get_native_element())
+        login_button = self.driver.find_element(By.XPATH, "//div[@id='InlineLoginModule']/div/div[1]/div[1]/div/div/div/form/div[2]").get_native_element()
+        action = ActionChains(self.driver)
+        action.move_to_element_with_offset(login_button, 10, 10)
+        action.click().perform()
+>       self.driver.find_element(By.XPATH, "//div[@id='globalNavContainer']/div/ul/li[2]").click()
+
+test/test_glassdoor.py:196: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:163: in click
+    raise e
+conftest.py:142: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1033359f0>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...7ff81581018b _pthread_start + 99\\n28  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+E         (Session info: chrome=127.0.6533.73); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100896898 undetected_chromedriver + 5179544
+E       1   undetected_chromedriver             0x000000010088e2ca undetected_chromedriver + 5145290
+E       2   undetected_chromedriver             0x00000001004052b0 undetected_chromedriver + 389808
+E       3   undetected_chromedriver             0x0000000100415320 undetected_chromedriver + 455456
+E       4   undetected_chromedriver             0x0000000100415c5a undetected_chromedriver + 457818
+E       5   undetected_chromedriver             0x000000010040ba55 undetected_chromedriver + 416341
+E       6   undetected_chromedriver             0x0000000100409d75 undetected_chromedriver + 408949
+E       7   undetected_chromedriver             0x000000010040cd6f undetected_chromedriver + 421231
+E       8   undetected_chromedriver             0x000000010040ce1c undetected_chromedriver + 421404
+E       9   undetected_chromedriver             0x000000010045310a undetected_chromedriver + 708874
+E       10  undetected_chromedriver             0x0000000100446354 undetected_chromedriver + 656212
+E       11  undetected_chromedriver             0x00000001004737b2 undetected_chromedriver + 841650
+E       12  undetected_chromedriver             0x0000000100445e58 undetected_chromedriver + 654936
+E       13  undetected_chromedriver             0x000000010047396e undetected_chromedriver + 842094
+E       14  undetected_chromedriver             0x0000000100490b9b undetected_chromedriver + 961435
+E       15  undetected_chromedriver             0x0000000100473553 undetected_chromedriver + 841043
+E       16  undetected_chromedriver             0x00000001004447f6 undetected_chromedriver + 649206
+E       17  undetected_chromedriver             0x000000010044505e undetected_chromedriver + 651358
+E       18  undetected_chromedriver             0x0000000100859b00 undetected_chromedriver + 4930304
+E       19  undetected_chromedriver             0x000000010085ea16 undetected_chromedriver + 4950550
+E       20  undetected_chromedriver             0x000000010085f0e5 undetected_chromedriver + 4952293
+E       21  undetected_chromedriver             0x000000010083bec9 undetected_chromedriver + 4808393
+E       22  undetected_chromedriver             0x000000010085f3d9 undetected_chromedriver + 4953049
+E       23  undetected_chromedriver             0x000000010082d824 undetected_chromedriver + 4749348
+E       24  undetected_chromedriver             0x000000010087e5a8 undetected_chromedriver + 5080488
+E       25  undetected_chromedriver             0x000000010087e767 undetected_chromedriver + 5080935
+E       26  undetected_chromedriver             0x000000010088deae undetected_chromedriver + 5144238
+E       27  libsystem_pthread.dylib             0x00007ff81581018b _pthread_start + 99
+E       28  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: StaleElementReferenceException
+2024-07-24 18:29:27,301 - ERROR - StaleElementReferenceException: Element became stale: xpath = //div[@id='globalNavContainer']/div/ul/li[2] - Message: stale element reference: stale element not found
+  (Session info: chrome=127.0.6533.73); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   undetected_chromedriver             0x0000000100896898 undetected_chromedriver + 5179544
+1   undetected_chromedriver             0x000000010088e2ca undetected_chromedriver + 5145290
+2   undetected_chromedriver             0x00000001004052b0 undetected_chromedriver + 389808
+3   undetected_chromedriver             0x0000000100415320 undetected_chromedriver + 455456
+4   undetected_chromedriver             0x0000000100415c5a undetected_chromedriver + 457818
+5   undetected_chromedriver             0x000000010040ba55 undetected_chromedriver + 416341
+6   undetected_chromedriver             0x0000000100409d75 undetected_chromedriver + 408949
+7   undetected_chromedriver             0x000000010040cd6f undetected_chromedriver + 421231
+8   undetected_chromedriver             0x000000010040ce1c undetected_chromedriver + 421404
+9   undetected_chromedriver             0x000000010045310a undetected_chromedriver + 708874
+10  undetected_chromedriver             0x0000000100446354 undetected_chromedriver + 656212
+11  undetected_chromedriver             0x00000001004737b2 undetected_chromedriver + 841650
+12  undetected_chromedriver             0x0000000100445e58 undetected_chromedriver + 654936
+13  undetected_chromedriver             0x000000010047396e undetected_chromedriver + 842094
+14  undetected_chromedriver             0x0000000100490b9b undetected_chromedriver + 961435
+15  undetected_chromedriver             0x0000000100473553 undetected_chromedriver + 841043
+16  undetected_chromedriver             0x00000001004447f6 undetected_chromedriver + 649206
+17  undetected_chromedriver             0x000000010044505e undetected_chromedriver + 651358
+18  undetected_chromedriver             0x0000000100859b00 undetected_chromedriver + 4930304
+19  undetected_chromedriver             0x000000010085ea16 undetected_chromedriver + 4950550
+20  undetected_chromedriver             0x000000010085f0e5 undetected_chromedriver + 4952293
+21  undetected_chromedriver             0x000000010083bec9 undetected_chromedriver + 4808393
+22  undetected_chromedriver             0x000000010085f3d9 undetected_chromedriver + 4953049
+23  undetected_chromedriver             0x000000010082d824 undetected_chromedriver + 4749348
+24  undetected_chromedriver             0x000000010087e5a8 undetected_chromedriver + 5080488
+25  undetected_chromedriver             0x000000010087e767 undetected_chromedriver + 5080935
+26  undetected_chromedriver             0x000000010088deae undetected_chromedriver + 5144238
+27  libsystem_pthread.dylib             0x00007ff81581018b _pthread_start + 99
+28  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15
+
