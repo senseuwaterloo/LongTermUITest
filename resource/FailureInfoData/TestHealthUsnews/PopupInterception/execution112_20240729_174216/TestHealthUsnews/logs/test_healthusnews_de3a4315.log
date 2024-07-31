@@ -1,0 +1,53 @@
+2024-07-29 17:42:58,855 - ERROR - Test test_healthusnews_de3a4315 failed.
+2024-07-29 17:42:58,860 - ERROR - URL at failure: https://health.usnews.com/doctors/cardiologists
+2024-07-29 17:42:58,860 - ERROR - Exception: self = <test.test_healthusnews.TestHealthUsnews object at 0x103c552d0>
+
+    def test_healthusnews_de3a4315(self):
+        # self.driver.get("https://health.usnews.com")
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Doctors')]").click()
+        self.driver.find_element(By.XPATH, "//a[text()='Doctors' and @data-tracking-id='top_nav']").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Cardiology')]").click()
+        # need to scroll down a little more to avoid click being blocked by popup ad window
+        geriatric_medicine_link = self.driver.find_element(By.XPATH, "//a[text()='Geriatric Medicine']")
+        # selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element is not clickable at point (504, 997)
+        scroll_to_element(self.driver, geriatric_medicine_link)
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Cardiology')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//main[@id='app']/article[1]/div[1]/div[4]/div[2]/div[2]/div[1]/form[1]/div[2]/fieldset[1]/div[1]/div[1]/div[1]/span[1]/label[1]/input[1]").clear()
+        # self.driver.find_element(By.XPATH, "//main[@id='app']/article[1]/div[1]/div[4]/div[2]/div[2]/div[1]/form[1]/div[2]/fieldset[1]/div[1]/div[1]/div[1]/span[1]/label[1]/input[1]").send_keys("HOUSTON, TX")
+        self.driver.find_element(By.XPATH, "//input[@name='location' and @type='text']").clear()
+        self.driver.find_element(By.XPATH, "//input[@name='location' and @type='text']").send_keys("Houston, TX")
+    
+        # self.driver.find_element(By.XPATH, "//li[@id='react-autowhatever-location-input--item-0']/div[1]/span[1]").click()
+        # click coincide by popup of ad window. ad popup when about to click
+        # time.sleep(3)
+>       self.driver.find_element(By.ID, "react-autowhatever-1--item-0").click()
+E       AttributeError: 'NoneType' object has no attribute 'click'
+
+test/test_healthusnews.py:132: AttributeError
+2024-07-29 17:42:58,860 - ERROR - TimeoutException: Elements not found: id = react-autowhatever-1--item-0 - Message: 
+Stacktrace:
+0   undetected_chromedriver             0x0000000101282898 undetected_chromedriver + 5179544
+1   undetected_chromedriver             0x000000010127a2ca undetected_chromedriver + 5145290
+2   undetected_chromedriver             0x0000000100df12b0 undetected_chromedriver + 389808
+3   undetected_chromedriver             0x0000000100e3d3e1 undetected_chromedriver + 701409
+4   undetected_chromedriver             0x0000000100e3d691 undetected_chromedriver + 702097
+5   undetected_chromedriver             0x0000000100e7f464 undetected_chromedriver + 971876
+6   undetected_chromedriver             0x0000000100e5f7dd undetected_chromedriver + 841693
+7   undetected_chromedriver             0x0000000100e7cb9b undetected_chromedriver + 961435
+8   undetected_chromedriver             0x0000000100e5f553 undetected_chromedriver + 841043
+9   undetected_chromedriver             0x0000000100e307f6 undetected_chromedriver + 649206
+10  undetected_chromedriver             0x0000000100e3105e undetected_chromedriver + 651358
+11  undetected_chromedriver             0x0000000101245b00 undetected_chromedriver + 4930304
+12  undetected_chromedriver             0x000000010124aa16 undetected_chromedriver + 4950550
+13  undetected_chromedriver             0x000000010124b0e5 undetected_chromedriver + 4952293
+14  undetected_chromedriver             0x0000000101227ec9 undetected_chromedriver + 4808393
+15  undetected_chromedriver             0x000000010124b3d9 undetected_chromedriver + 4953049
+16  undetected_chromedriver             0x0000000101219824 undetected_chromedriver + 4749348
+17  undetected_chromedriver             0x000000010126a5a8 undetected_chromedriver + 5080488
+18  undetected_chromedriver             0x000000010126a767 undetected_chromedriver + 5080935
+19  undetected_chromedriver             0x0000000101279eae undetected_chromedriver + 5144238
+20  libsystem_pthread.dylib             0x00007ff81581018b _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15
+

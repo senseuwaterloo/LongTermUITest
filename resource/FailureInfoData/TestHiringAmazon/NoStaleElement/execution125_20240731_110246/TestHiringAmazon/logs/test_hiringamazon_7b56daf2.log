@@ -1,0 +1,205 @@
+2024-07-31 11:03:06,638 - ERROR - Test test_hiringamazon_7b56daf2 failed.
+2024-07-31 11:03:06,641 - ERROR - URL at failure: https://amazon-na.fountain.com/jobs/amazon-delivery-service-partner?iframe=true&utm_source=AmazonDelivers.Jobs&utm_medium=cpc&utm_campaign=AmazonDelivers.Jobs&distance=50mi&account_slug=amazon-delivery-service-partner&lat=40.7127753&lon=-74.0059728
+2024-07-31 11:03:06,641 - ERROR - Exception: self = <test.test_hiringamazon.TestHiringAmazon object at 0x102b53040>
+
+    def test_hiringamazon_7b56daf2(self):
+        # self.driver.get("https://hiring.amazon.com")
+    
+        # self.driver.find_element(By.XPATH, "//div[@role='button']").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='stencil-flyout-body']/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]").click()
+        # logic changed, no first step
+        self.driver.find_element(By.XPATH, "//div[@data-test-component='StencilText' and text()='Job Opportunities']").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='stencil-flyout-body']/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@data-test-component='StencilText' and text()='DSP Delivery Driver']").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Apply with an Amazon Delivery Service Partner')]").click()
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Apply with a Delivery Service Partner')]").click()
+        # somehow the typical selenium click is not working for this element
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//a[contains(text(),'Apply with a Delivery Service Partner')]").get_native_element())
+        # need to switch to a new tab
+        switch_to_new_tab(self.driver)
+    
+        # self.driver.find_element(By.XPATH, "//div[contains(.,'Accept All')]").click()
+        self.driver.find_element(By.XPATH, "//div[text()='Accept All']").click()
+    
+        self.driver.find_element(By.ID, "address").clear()
+        # self.driver.find_element(By.ID, "address").send_keys("Grand Rapids")
+        self.driver.find_element(By.ID, "address").send_keys("New York")
+    
+        # make the locator more specific and also since now there is no jobs around the given address we need to set the address to New York where there are more jobs
+        # self.driver.find_element(By.XPATH, "//div[contains(.,'Grand Rapids, MI')]").click()
+        # self.driver.find_element(By.XPATH, "//div[text()='New York, NY']").click()
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//div[text()='New York, NY']").get_native_element())
+    
+>       self.driver.find_element(By.XPATH, "//button[@type='button']").click()
+
+test/test_hiringamazon.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:163: in click
+    raise e
+conftest.py:142: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x102b51870>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...7ff81581018b _pthread_start + 99\\n26  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E         (Session info: chrome=127.0.6533.73); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102e83838 undetected_chromedriver + 5179448
+E       1   undetected_chromedriver             0x0000000102e7b26a undetected_chromedriver + 5145194
+E       2   undetected_chromedriver             0x00000001029f22b0 undetected_chromedriver + 389808
+E       3   undetected_chromedriver             0x00000001029f80b5 undetected_chromedriver + 413877
+E       4   undetected_chromedriver             0x00000001029f9d6f undetected_chromedriver + 421231
+E       5   undetected_chromedriver             0x00000001029f9e1c undetected_chromedriver + 421404
+E       6   undetected_chromedriver             0x0000000102a4010a undetected_chromedriver + 708874
+E       7   undetected_chromedriver             0x0000000102a3f33a undetected_chromedriver + 705338
+E       8   undetected_chromedriver             0x0000000102a33496 undetected_chromedriver + 656534
+E       9   undetected_chromedriver             0x0000000102a607b2 undetected_chromedriver + 841650
+E       10  undetected_chromedriver             0x0000000102a32e58 undetected_chromedriver + 654936
+E       11  undetected_chromedriver             0x0000000102a6096e undetected_chromedriver + 842094
+E       12  undetected_chromedriver             0x0000000102a7db9b undetected_chromedriver + 961435
+E       13  undetected_chromedriver             0x0000000102a60553 undetected_chromedriver + 841043
+E       14  undetected_chromedriver             0x0000000102a317f6 undetected_chromedriver + 649206
+E       15  undetected_chromedriver             0x0000000102a3205e undetected_chromedriver + 651358
+E       16  undetected_chromedriver             0x0000000102e46aa0 undetected_chromedriver + 4930208
+E       17  undetected_chromedriver             0x0000000102e4b9b6 undetected_chromedriver + 4950454
+E       18  undetected_chromedriver             0x0000000102e4c085 undetected_chromedriver + 4952197
+E       19  undetected_chromedriver             0x0000000102e28e69 undetected_chromedriver + 4808297
+E       20  undetected_chromedriver             0x0000000102e4c379 undetected_chromedriver + 4952953
+E       21  undetected_chromedriver             0x0000000102e1a7c4 undetected_chromedriver + 4749252
+E       22  undetected_chromedriver             0x0000000102e6b548 undetected_chromedriver + 5080392
+E       23  undetected_chromedriver             0x0000000102e6b707 undetected_chromedriver + 5080839
+E       24  undetected_chromedriver             0x0000000102e7ae4e undetected_chromedriver + 5144142
+E       25  libsystem_pthread.dylib             0x00007ff81581018b _pthread_start + 99
+E       26  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: StaleElementReferenceException
+2024-07-31 11:03:06,641 - ERROR - StaleElementReferenceException: Element became stale: xpath = //button[@type='button'] - Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=127.0.6533.73); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   undetected_chromedriver             0x0000000102e83838 undetected_chromedriver + 5179448
+1   undetected_chromedriver             0x0000000102e7b26a undetected_chromedriver + 5145194
+2   undetected_chromedriver             0x00000001029f22b0 undetected_chromedriver + 389808
+3   undetected_chromedriver             0x00000001029f80b5 undetected_chromedriver + 413877
+4   undetected_chromedriver             0x00000001029f9d6f undetected_chromedriver + 421231
+5   undetected_chromedriver             0x00000001029f9e1c undetected_chromedriver + 421404
+6   undetected_chromedriver             0x0000000102a4010a undetected_chromedriver + 708874
+7   undetected_chromedriver             0x0000000102a3f33a undetected_chromedriver + 705338
+8   undetected_chromedriver             0x0000000102a33496 undetected_chromedriver + 656534
+9   undetected_chromedriver             0x0000000102a607b2 undetected_chromedriver + 841650
+10  undetected_chromedriver             0x0000000102a32e58 undetected_chromedriver + 654936
+11  undetected_chromedriver             0x0000000102a6096e undetected_chromedriver + 842094
+12  undetected_chromedriver             0x0000000102a7db9b undetected_chromedriver + 961435
+13  undetected_chromedriver             0x0000000102a60553 undetected_chromedriver + 841043
+14  undetected_chromedriver             0x0000000102a317f6 undetected_chromedriver + 649206
+15  undetected_chromedriver             0x0000000102a3205e undetected_chromedriver + 651358
+16  undetected_chromedriver             0x0000000102e46aa0 undetected_chromedriver + 4930208
+17  undetected_chromedriver             0x0000000102e4b9b6 undetected_chromedriver + 4950454
+18  undetected_chromedriver             0x0000000102e4c085 undetected_chromedriver + 4952197
+19  undetected_chromedriver             0x0000000102e28e69 undetected_chromedriver + 4808297
+20  undetected_chromedriver             0x0000000102e4c379 undetected_chromedriver + 4952953
+21  undetected_chromedriver             0x0000000102e1a7c4 undetected_chromedriver + 4749252
+22  undetected_chromedriver             0x0000000102e6b548 undetected_chromedriver + 5080392
+23  undetected_chromedriver             0x0000000102e6b707 undetected_chromedriver + 5080839
+24  undetected_chromedriver             0x0000000102e7ae4e undetected_chromedriver + 5144142
+25  libsystem_pthread.dylib             0x00007ff81581018b _pthread_start + 99
+26  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15
+

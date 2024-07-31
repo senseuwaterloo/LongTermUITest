@@ -33,7 +33,8 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'bookdepository': 'https://www.barnesandnoble.com/', 'cagov': 'https://www.ca.gov/',
                 'careerswalmart': 'https://careers.walmart.com/', 'courseraorg': 'https://www.coursera.org/',
                 'craigslistorg': 'https://craigslist.org', 'dmvvirginiagov': 'https://www.dmv.virginia.gov/',
-                'financegoogle': 'https://www.google.com/finance/', 'govuk': 'https://www.gov.uk'}
+                'financegoogle': 'https://www.google.com/finance/', 'govuk': 'https://www.gov.uk',
+                'healthusnews': 'https://health.usnews.com', 'hiringamazon': 'https://hiring.amazon.com'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],

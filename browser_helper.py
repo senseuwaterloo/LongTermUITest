@@ -14,21 +14,16 @@ def switch_to_new_tab(driver, website_url=""):
     # Switch to the new tab
     for handle in window_handles:
         if handle != original_window:
+            driver.close()
+            time.sleep(2)
             driver.switch_to.window(handle)
+            time.sleep(2)
             break
-    # if website_url in cookie_locator_dict:
-    #     locators = cookie_locator_dict[website_url]
-    #     for by, locator in locators:
-    #         # if is_cookie_displayed(driver, by, locator):
-    #         try:
-    #             # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, locator)))
-    #             element = WebDriverWait(driver, 6).until(EC.element_to_be_clickable((by, locator)))
-    #             element.click()
-    #         except (NoSuchElementException, TimeoutException, StaleElementReferenceException, AttributeError):
-    #             error_message = f"handle cookie error, element located by {by} with locator {locator} not found"
-    #             logger.warning(error_message)
-    #             driver.error_messages.append(error_message)
 
+    # Close the original tab and switch back to new tab
+    # driver.switch_to.window(original_window)
+    # driver.close()
+    # driver.switch_to.window(driver.window_handles[0])
     return driver
 
 
