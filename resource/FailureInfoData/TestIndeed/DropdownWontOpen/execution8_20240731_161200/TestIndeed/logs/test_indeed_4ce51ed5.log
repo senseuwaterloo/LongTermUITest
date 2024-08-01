@@ -1,0 +1,67 @@
+2024-07-31 16:12:28,729 - ERROR - Test test_indeed_4ce51ed5 failed.
+2024-07-31 16:12:28,732 - ERROR - URL at failure: https://uk.indeed.com/l-chelmsford-jobs.html?vjk=4616ba208cd25839
+2024-07-31 16:12:28,732 - ERROR - Exception: self = <test.test_indeed.TestIndeed object at 0x106d73310>
+
+    def test_indeed_4ce51ed5(self):
+        # self.driver.get("https://www.indeed.com/worldwide")
+        # comment the following step since it is redundant
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Countries')]").click()
+    
+        self.driver.find_element(By.XPATH, "//div[@id='page']/div[1]/div[1]/ul[1]/li[58]/a[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Browse Jobs')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'England')]").click()
+        # no link for Essex, need to change to Chelmsford
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Jobs in Essex')]").click()
+        # scroll to element and scroll down further to avoid being blocked by cookie banner
+        chelmsford_link = self.driver.find_element(By.XPATH, "//a[contains(text(),'Jobs in Chelmsford')]")
+        scroll_to_element(self.driver, chelmsford_link)
+        scroll_down(self.driver, 500)
+        chelmsford_link.click()
+    
+        # self.driver.find_element(By.XPATH, "//button[@id='filter-dateposted']/div[2]/svg[1]").click()
+        self.driver.find_element(By.XPATH, "//button[@id='filter-dateposted']/div[1]").click()
+    
+>       self.driver.find_element(By.XPATH, "//a[contains(text(),'Last 24 hours')]").click()
+
+test/test_indeed.py:237: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:153: in click
+    raise e
+conftest.py:141: in click
+    WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="30d3c5b7f37c00dddd4bfa2454baab44")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x106dcc670>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2024-07-31 16:12:28,732 - ERROR - TimeoutException: Element not clickable within timeout: xpath = //a[contains(text(),'Last 24 hours')] - Message: 
+

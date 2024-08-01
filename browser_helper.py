@@ -27,6 +27,23 @@ def switch_to_new_tab(driver, website_url=""):
     return driver
 
 
+def switch_to_new_tab_and_return_old(driver, website_url=""):
+    time.sleep(3)
+
+    # Get the current window handles
+    window_handles = driver.window_handles
+    original_window = driver.current_window_handle
+
+    # Switch to the new tab
+    for handle in window_handles:
+        if handle != original_window:
+            driver.switch_to.window(handle)
+            time.sleep(2)
+            break
+
+    return original_window
+
+
 def calculate_budget_dates(days_from_now_start=7, days_from_now_end=14):
     current_date = datetime.now()
     start_date = current_date + timedelta(days=days_from_now_start)

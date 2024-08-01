@@ -1,0 +1,84 @@
+2024-07-31 14:00:05,419 - ERROR - Test test_ikea_813e47ec failed.
+2024-07-31 14:00:05,422 - ERROR - URL at failure: https://www.ikea.com/us/en/cat/flatware-sets-18866/
+2024-07-31 14:00:05,422 - ERROR - Exception: self = <test.test_ikea.TestIkea object at 0x107f5bb20>
+
+    def test_ikea_813e47ec(self):
+        # self.driver.get("https://ikea.com")
+        # layout logic changed, no need for this click
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Products')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Kitchenware & tableware')]").click()
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Kitchenware & tableware')]").click()
+    
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Flatware & cutlery')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//span[contains(.,'Columbus')]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']/div[1]/div[1]/div/span").click()
+    
+        self.driver.find_element(By.XPATH, "//input[@type='search' and @placeholder='Search by ZIP code or city, state']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and @placeholder='Search by ZIP code or city, state']").send_keys("san diego")
+    
+        # self.driver.find_element(By.XPATH, "/html/body[1]/div[4]/div[1]/div[1]/nav[1]/div[2]/div[3]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/button[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']/div[2]/div[3]/div/div[2]/div/div/div[2]/div[1]/div/div[1]/div[2]/button/span").click()
+    
+        # original locator will locate multiple "Select store" button we need to make sure it only locates the first one
+        # self.driver.find_element(By.XPATH, "//button[@id='geo-market']/span[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//button[@id='geo-market' and @aria-label='Set San Diego as my store and close modal']/span[1]/span[1]").click()
+    
+        # self.driver.find_element(By.XPATH, "//span[contains(.,'Flatware')]").click()
+        self.driver.find_element(By.XPATH, "//span[text()='Flatware']").click()
+    
+        # filter logic changed also need to avoid absolute XPath
+        # self.driver.find_element(By.XPATH, "/html/body[1]/main[1]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[2]/div[1]/button[13]").click()
+        # element click intercepted: Element <span class="plp-pill__label">...</span> is not clickable at point (1635, 857). Other element would receive the click: <button aria-haspopup="true"
+        # self.driver.find_element(By.XPATH, "//span[text()='All filters']").click()
+        self.driver.find_element(By.XPATH, "//button[.//span[text()='All filters']]").click()
+    
+        # self.driver.find_element(By.XPATH, "//li[@id='sort']/div[1]/button[1]/svg[1]").click()
+        self.driver.find_element(By.XPATH, "//li[@id='sort']/div[1]/button[1]").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='SEC_sort']/fieldset[1]/label[2]/span[2]/input[1]").click()
+>       self.driver.find_element(By.ID, "plp-PRICE_LOW_TO_HIGH").click()
+
+test/test_ikea.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:153: in click
+    raise e
+conftest.py:141: in click
+    WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="3d62e82e2ef58ee292be5a724a6c43ac")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x107eefc70>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2024-07-31 14:00:05,422 - ERROR - TimeoutException: Element not clickable within timeout: id = plp-PRICE_LOW_TO_HIGH - Message: 
+

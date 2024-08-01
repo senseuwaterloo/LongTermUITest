@@ -34,7 +34,8 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'careerswalmart': 'https://careers.walmart.com/', 'courseraorg': 'https://www.coursera.org/',
                 'craigslistorg': 'https://craigslist.org', 'dmvvirginiagov': 'https://www.dmv.virginia.gov/',
                 'financegoogle': 'https://www.google.com/finance/', 'govuk': 'https://www.gov.uk',
-                'healthusnews': 'https://health.usnews.com', 'hiringamazon': 'https://hiring.amazon.com'}
+                'healthusnews': 'https://health.usnews.com', 'hiringamazon': 'https://hiring.amazon.com',
+                'ikea': 'https://www.ikea.com/us/en/', 'indeed': 'https://www.indeed.com/worldwide'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
@@ -63,7 +64,7 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        'https://www.gov.uk/': [(By.XPATH, "//button[text()='Accept additional cookies']"), (By.XPATH, "//button[contains(text(), 'Hide this message')]")],
                        'https://health.usnews.com': [(By.ID, "onetrust-close-btn-container")],
                        'https://hiring.amazon.com': [(By.XPATH, "//button[@data-test-id='consentBtn']"), (By.XPATH, "//div[@data-test-id='consentModal']/div/button")],
-                       'https://ikea.com': [(By.ID, "onetrust-accept-btn-handler")],
+                       'https://www.ikea.com/us/en/': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://instacart.com': [(By.XPATH, "//div[contains(text(),'Sign up and get free delivery on your first 3 orders')]/ancestor::div[@role='dialog']//button[@aria-label='close']")],
                        'https://www.jetblue.com/': [(By.XPATH, "//a[text()='Accept All Cookies' and @role='button']")],
                        'https://koa.com': [(By.XPATH, "//button[@class='close-cookie-notice']")],

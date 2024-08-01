@@ -1,0 +1,211 @@
+2024-07-31 14:18:38,556 - ERROR - Test test_ikea_813e47ec failed.
+2024-07-31 14:18:38,559 - ERROR - URL at failure: https://www.ikea.com/us/en/cat/flatware-sets-18866/
+2024-07-31 14:18:38,560 - ERROR - Exception: self = <test.test_ikea.TestIkea object at 0x1050a7400>
+
+    def test_ikea_813e47ec(self):
+        # self.driver.get("https://ikea.com")
+        # layout logic changed, no need for this click
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Products')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Kitchenware & tableware')]").click()
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Kitchenware & tableware')]").click()
+    
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Flatware & cutlery')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//span[contains(.,'Columbus')]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']/div[1]/div[1]/div/span").click()
+    
+        self.driver.find_element(By.XPATH, "//input[@type='search' and @placeholder='Search by ZIP code or city, state']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and @placeholder='Search by ZIP code or city, state']").send_keys("san diego")
+    
+        # self.driver.find_element(By.XPATH, "/html/body[1]/div[4]/div[1]/div[1]/nav[1]/div[2]/div[3]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/button[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']/div[2]/div[3]/div/div[2]/div/div/div[2]/div[1]/div/div[1]/div[2]/button/span").click()
+    
+        # original locator will locate multiple "Select store" button we need to make sure it only locates the first one
+        # self.driver.find_element(By.XPATH, "//button[@id='geo-market']/span[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//button[@id='geo-market' and @aria-label='Set San Diego as my store and close modal']/span[1]/span[1]").click()
+    
+        # self.driver.find_element(By.XPATH, "//span[contains(.,'Flatware')]").click()
+        self.driver.find_element(By.XPATH, "//span[text()='Flatware']").click()
+    
+        # filter logic changed also need to avoid absolute XPath
+        # self.driver.find_element(By.XPATH, "/html/body[1]/main[1]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[2]/div[1]/button[13]").click()
+        # element click intercepted: Element <span class="plp-pill__label">...</span> is not clickable at point (1635, 857). Other element would receive the click: <button aria-haspopup="true"
+        # self.driver.find_element(By.XPATH, "//span[text()='All filters']").click()
+        self.driver.find_element(By.XPATH, "//button[.//span[text()='All filters']]").click()
+    
+        # self.driver.find_element(By.XPATH, "//li[@id='sort']/div[1]/button[1]/svg[1]").click()
+        self.driver.find_element(By.XPATH, "//li[@id='sort']/div[1]/button[1]").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='SEC_sort']/fieldset[1]/label[2]/span[2]/input[1]").click()
+        # self.driver.find_element(By.ID, "plp-PRICE_LOW_TO_HIGH").click()
+        # element not clickable and timeout when locating to the input element so try to locate to the span below the input
+>       self.driver.find_element(By.XPATH, "//div[@id='SEC_sort']/div/fieldset/label[2]/span[2]/span").click()
+
+test/test_ikea.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:158: in click
+    raise e
+conftest.py:142: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1050a5ae0>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff81581018b _pthread_start + 99\\n25  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <span class="plp-radio__symbol"></span> is not clickable at point (1853, 309). Other element would receive the click: <input type="radio" name="radioname" id="plp-PRICE_LOW_TO_HIGH" text="" value="PRICE_LOW_TO_HIGH">
+E         (Session info: chrome=127.0.6533.73)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001027f3838 undetected_chromedriver + 5179448
+E       1   undetected_chromedriver             0x00000001027eb26a undetected_chromedriver + 5145194
+E       2   undetected_chromedriver             0x00000001023622b0 undetected_chromedriver + 389808
+E       3   undetected_chromedriver             0x00000001023b5096 undetected_chromedriver + 729238
+E       4   undetected_chromedriver             0x00000001023b2f88 undetected_chromedriver + 720776
+E       5   undetected_chromedriver             0x00000001023b0a57 undetected_chromedriver + 711255
+E       6   undetected_chromedriver             0x00000001023af902 undetected_chromedriver + 706818
+E       7   undetected_chromedriver             0x00000001023a3496 undetected_chromedriver + 656534
+E       8   undetected_chromedriver             0x00000001023d07b2 undetected_chromedriver + 841650
+E       9   undetected_chromedriver             0x00000001023a2e58 undetected_chromedriver + 654936
+E       10  undetected_chromedriver             0x00000001023d096e undetected_chromedriver + 842094
+E       11  undetected_chromedriver             0x00000001023edb9b undetected_chromedriver + 961435
+E       12  undetected_chromedriver             0x00000001023d0553 undetected_chromedriver + 841043
+E       13  undetected_chromedriver             0x00000001023a17f6 undetected_chromedriver + 649206
+E       14  undetected_chromedriver             0x00000001023a205e undetected_chromedriver + 651358
+E       15  undetected_chromedriver             0x00000001027b6aa0 undetected_chromedriver + 4930208
+E       16  undetected_chromedriver             0x00000001027bb9b6 undetected_chromedriver + 4950454
+E       17  undetected_chromedriver             0x00000001027bc085 undetected_chromedriver + 4952197
+E       18  undetected_chromedriver             0x0000000102798e69 undetected_chromedriver + 4808297
+E       19  undetected_chromedriver             0x00000001027bc379 undetected_chromedriver + 4952953
+E       20  undetected_chromedriver             0x000000010278a7c4 undetected_chromedriver + 4749252
+E       21  undetected_chromedriver             0x00000001027db548 undetected_chromedriver + 5080392
+E       22  undetected_chromedriver             0x00000001027db707 undetected_chromedriver + 5080839
+E       23  undetected_chromedriver             0x00000001027eae4e undetected_chromedriver + 5144142
+E       24  libsystem_pthread.dylib             0x00007ff81581018b _pthread_start + 99
+E       25  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2024-07-31 14:18:38,560 - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //div[@id='SEC_sort']/div/fieldset/label[2]/span[2]/span - Message: element click intercepted: Element <span class="plp-radio__symbol"></span> is not clickable at point (1853, 309). Other element would receive the click: <input type="radio" name="radioname" id="plp-PRICE_LOW_TO_HIGH" text="" value="PRICE_LOW_TO_HIGH">
+  (Session info: chrome=127.0.6533.73)
+Stacktrace:
+0   undetected_chromedriver             0x00000001027f3838 undetected_chromedriver + 5179448
+1   undetected_chromedriver             0x00000001027eb26a undetected_chromedriver + 5145194
+2   undetected_chromedriver             0x00000001023622b0 undetected_chromedriver + 389808
+3   undetected_chromedriver             0x00000001023b5096 undetected_chromedriver + 729238
+4   undetected_chromedriver             0x00000001023b2f88 undetected_chromedriver + 720776
+5   undetected_chromedriver             0x00000001023b0a57 undetected_chromedriver + 711255
+6   undetected_chromedriver             0x00000001023af902 undetected_chromedriver + 706818
+7   undetected_chromedriver             0x00000001023a3496 undetected_chromedriver + 656534
+8   undetected_chromedriver             0x00000001023d07b2 undetected_chromedriver + 841650
+9   undetected_chromedriver             0x00000001023a2e58 undetected_chromedriver + 654936
+10  undetected_chromedriver             0x00000001023d096e undetected_chromedriver + 842094
+11  undetected_chromedriver             0x00000001023edb9b undetected_chromedriver + 961435
+12  undetected_chromedriver             0x00000001023d0553 undetected_chromedriver + 841043
+13  undetected_chromedriver             0x00000001023a17f6 undetected_chromedriver + 649206
+14  undetected_chromedriver             0x00000001023a205e undetected_chromedriver + 651358
+15  undetected_chromedriver             0x00000001027b6aa0 undetected_chromedriver + 4930208
+16  undetected_chromedriver             0x00000001027bb9b6 undetected_chromedriver + 4950454
+17  undetected_chromedriver             0x00000001027bc085 undetected_chromedriver + 4952197
+18  undetected_chromedriver             0x0000000102798e69 undetected_chromedriver + 4808297
+19  undetected_chromedriver             0x00000001027bc379 undetected_chromedriver + 4952953
+20  undetected_chromedriver             0x000000010278a7c4 undetected_chromedriver + 4749252
+21  undetected_chromedriver             0x00000001027db548 undetected_chromedriver + 5080392
+22  undetected_chromedriver             0x00000001027db707 undetected_chromedriver + 5080839
+23  undetected_chromedriver             0x00000001027eae4e undetected_chromedriver + 5144142
+24  libsystem_pthread.dylib             0x00007ff81581018b _pthread_start + 99
+25  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15
+
