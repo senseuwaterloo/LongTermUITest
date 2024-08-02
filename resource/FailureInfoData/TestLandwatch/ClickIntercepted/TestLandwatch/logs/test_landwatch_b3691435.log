@@ -1,0 +1,190 @@
+2024-08-02 16:46:49,122 - ERROR - Test test_landwatch_b3691435 failed.
+2024-08-02 16:46:49,134 - ERROR - URL at failure: https://www.landwatch.com/timberland-property/acres-51-100/listed-7-days
+2024-08-02 16:46:49,136 - ERROR - Exception: self = <test.test_landwatch.TestLandwatch object at 0x10702b7c0>
+
+    def test_landwatch_b3691435(self):
+        # self.driver.get("https://landwatch.com")
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div[1]/header[1]/div[2]/div[1]/div[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Timberland')]").click()
+        self.driver.find_element(By.XPATH, "//a[text()='Georgia ']").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'51 - 100 Acres')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='expansible1']/div[1]/fieldset[1]/div[1]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//a[text()='For Sale ']").click()
+    
+        # self.driver.find_element(By.ID, "Date Listed").clear()
+        # self.driver.find_element(By.ID, "Date Listed").select("Past 7 days")
+        date_listed_dropdown = self.driver.find_element(By.ID, "Date Listed")
+        date_listed_select = Select(date_listed_dropdown)
+        date_listed_select.select_by_visible_text('Past 7 days')
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='dropdown2']/div[1]/span[1]").click()
+>       self.driver.find_element(By.XPATH, "//div[contains(@id, 'dropdown')]/div[1]/span[1]").click()
+
+test/test_landwatch.py:215: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:158: in click
+    raise e
+conftest.py:142: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x107029ba0>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff81581018b _pthread_start + 99\\n25  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <span class="_17e17">...</span> is not clickable at point (1519, 11). Other element would receive the click: <header class="_18c05">...</header>
+E         (Session info: chrome=127.0.6533.89)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102f1f838 undetected_chromedriver + 5179448
+E       1   undetected_chromedriver             0x0000000102f1726a undetected_chromedriver + 5145194
+E       2   undetected_chromedriver             0x0000000102a8e2b0 undetected_chromedriver + 389808
+E       3   undetected_chromedriver             0x0000000102ae1096 undetected_chromedriver + 729238
+E       4   undetected_chromedriver             0x0000000102adef88 undetected_chromedriver + 720776
+E       5   undetected_chromedriver             0x0000000102adca57 undetected_chromedriver + 711255
+E       6   undetected_chromedriver             0x0000000102adb902 undetected_chromedriver + 706818
+E       7   undetected_chromedriver             0x0000000102acf496 undetected_chromedriver + 656534
+E       8   undetected_chromedriver             0x0000000102afc7b2 undetected_chromedriver + 841650
+E       9   undetected_chromedriver             0x0000000102acee58 undetected_chromedriver + 654936
+E       10  undetected_chromedriver             0x0000000102afc96e undetected_chromedriver + 842094
+E       11  undetected_chromedriver             0x0000000102b19b9b undetected_chromedriver + 961435
+E       12  undetected_chromedriver             0x0000000102afc553 undetected_chromedriver + 841043
+E       13  undetected_chromedriver             0x0000000102acd7f6 undetected_chromedriver + 649206
+E       14  undetected_chromedriver             0x0000000102ace05e undetected_chromedriver + 651358
+E       15  undetected_chromedriver             0x0000000102ee2aa0 undetected_chromedriver + 4930208
+E       16  undetected_chromedriver             0x0000000102ee79b6 undetected_chromedriver + 4950454
+E       17  undetected_chromedriver             0x0000000102ee8085 undetected_chromedriver + 4952197
+E       18  undetected_chromedriver             0x0000000102ec4e69 undetected_chromedriver + 4808297
+E       19  undetected_chromedriver             0x0000000102ee8379 undetected_chromedriver + 4952953
+E       20  undetected_chromedriver             0x0000000102eb67c4 undetected_chromedriver + 4749252
+E       21  undetected_chromedriver             0x0000000102f07548 undetected_chromedriver + 5080392
+E       22  undetected_chromedriver             0x0000000102f07707 undetected_chromedriver + 5080839
+E       23  undetected_chromedriver             0x0000000102f16e4e undetected_chromedriver + 5144142
+E       24  libsystem_pthread.dylib             0x00007ff81581018b _pthread_start + 99
+E       25  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2024-08-02 16:46:49,136 - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //div[contains(@id, 'dropdown')]/div[1]/span[1] - Message: element click intercepted: Element <span class="_17e17">...</span> is not clickable at point (1519, 11). Other element would receive the click: <header class="_18c05">...</header>
+  (Session info: chrome=127.0.6533.89)
+Stacktrace:
+0   undetected_chromedriver             0x0000000102f1f838 undetected_chromedriver + 5179448
+1   undetected_chromedriver             0x0000000102f1726a undetected_chromedriver + 5145194
+2   undetected_chromedriver             0x0000000102a8e2b0 undetected_chromedriver + 389808
+3   undetected_chromedriver             0x0000000102ae1096 undetected_chromedriver + 729238
+4   undetected_chromedriver             0x0000000102adef88 undetected_chromedriver + 720776
+5   undetected_chromedriver             0x0000000102adca57 undetected_chromedriver + 711255
+6   undetected_chromedriver             0x0000000102adb902 undetected_chromedriver + 706818
+7   undetected_chromedriver             0x0000000102acf496 undetected_chromedriver + 656534
+8   undetected_chromedriver             0x0000000102afc7b2 undetected_chromedriver + 841650
+9   undetected_chromedriver             0x0000000102acee58 undetected_chromedriver + 654936
+10  undetected_chromedriver             0x0000000102afc96e undetected_chromedriver + 842094
+11  undetected_chromedriver             0x0000000102b19b9b undetected_chromedriver + 961435
+12  undetected_chromedriver             0x0000000102afc553 undetected_chromedriver + 841043
+13  undetected_chromedriver             0x0000000102acd7f6 undetected_chromedriver + 649206
+14  undetected_chromedriver             0x0000000102ace05e undetected_chromedriver + 651358
+15  undetected_chromedriver             0x0000000102ee2aa0 undetected_chromedriver + 4930208
+16  undetected_chromedriver             0x0000000102ee79b6 undetected_chromedriver + 4950454
+17  undetected_chromedriver             0x0000000102ee8085 undetected_chromedriver + 4952197
+18  undetected_chromedriver             0x0000000102ec4e69 undetected_chromedriver + 4808297
+19  undetected_chromedriver             0x0000000102ee8379 undetected_chromedriver + 4952953
+20  undetected_chromedriver             0x0000000102eb67c4 undetected_chromedriver + 4749252
+21  undetected_chromedriver             0x0000000102f07548 undetected_chromedriver + 5080392
+22  undetected_chromedriver             0x0000000102f07707 undetected_chromedriver + 5080839
+23  undetected_chromedriver             0x0000000102f16e4e undetected_chromedriver + 5144142
+24  libsystem_pthread.dylib             0x00007ff81581018b _pthread_start + 99
+25  libsystem_pthread.dylib             0x00007ff81580bae3 thread_start + 15
+
