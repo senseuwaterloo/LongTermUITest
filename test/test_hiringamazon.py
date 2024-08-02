@@ -3,7 +3,7 @@ import time
 import pytest
 from selenium.webdriver.common.by import By
 
-from browser_helper import switch_to_new_tab
+from browser_helper import switch_to_new_tab_and_close_old
 
 
 @pytest.mark.usefixtures("setup_class")
@@ -155,7 +155,7 @@ class TestHiringAmazon:
         # somehow the typical selenium click is not working for this element
         self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//a[contains(text(),'Apply with a Delivery Service Partner')]").get_native_element())
         # need to switch to a new tab
-        switch_to_new_tab(self.driver)
+        switch_to_new_tab_and_close_old(self.driver)
 
         # self.driver.find_element(By.XPATH, "//div[contains(.,'Accept All')]").click()
         self.driver.find_element(By.XPATH, "//div[text()='Accept All']").click()
@@ -174,7 +174,7 @@ class TestHiringAmazon:
         time.sleep(2)
         self.driver.find_element(By.XPATH, "//button[@type='button']").click()
         # need to switch to a new tab again
-        switch_to_new_tab(self.driver)
+        switch_to_new_tab_and_close_old(self.driver)
 
         # self.driver.find_element(By.ID, "application_form_first_name").clear()
         # self.driver.find_element(By.ID, "application_form_first_name").send_keys("Nelson")

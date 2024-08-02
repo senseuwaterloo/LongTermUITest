@@ -415,19 +415,29 @@ def get_website_url(website_name):
 def open_url_and_handle_cookie(driver, website_url):
     print(website_url)
     driver.get(website_url)
-    if website_url in cookie_locator_dict:
+    if website_url == 'https://www.jetblue.com/':
+        try:
+            frame = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "trustarc_cm")))
+            driver.switch_to.frame(frame.get_native_element())
+            if website_url in cookie_locator_dict:
+                locators = cookie_locator_dict[website_url]
+                for by, locator in locators:
+                    try:
+                        element = WebDriverWait(driver, 9).until(EC.element_to_be_clickable((by, locator)))
+                        element.click()
+                    except (NoSuchElementException, TimeoutException, StaleElementReferenceException, AttributeError):
+                        error_message = f"handle cookie error, element located by {by} with locator {locator} not found"
+                        logger.warning(error_message)
+                        driver.error_messages.append(error_message)
+        finally:
+            driver.switch_to.default_content()
+
+    elif website_url in cookie_locator_dict:
         locators = cookie_locator_dict[website_url]
         for by, locator in locators:
             # if is_cookie_displayed(driver, by, locator):
             try:
-                # if website_url == 'https://extraspace.com':
-                #     time.sleep(7)
-                #     user_cookie_shadow_root = driver.find_element(By.ID, "usercentrics-root")
-                #     close_button = user_cookie_shadow_root.shadow_root.find_element(By.XPATH, "//button[@data-testid='uc-ccpa-button']")
-                #     close_button.click()
-                # else:
-                # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, locator)))
-                element = WebDriverWait(driver, 6).until(EC.element_to_be_clickable((by, locator)))
+                element = WebDriverWait(driver, 9).until(EC.element_to_be_clickable((by, locator)))
                 element.click()
             except (NoSuchElementException, TimeoutException, StaleElementReferenceException, AttributeError):
                 error_message = f"handle cookie error, element located by {by} with locator {locator} not found"

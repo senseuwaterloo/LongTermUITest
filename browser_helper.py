@@ -1,10 +1,34 @@
+import platform
 import time
 from datetime import datetime, timedelta
+
+from selenium.webdriver import Keys
 
 from conftest import CustomWebElement
 
 
 def switch_to_new_tab(driver, website_url=""):
+    time.sleep(3)
+
+    # Get the current window handles
+    window_handles = driver.window_handles
+    original_window = driver.current_window_handle
+
+    # Switch to the new tab
+    for handle in window_handles:
+        if handle != original_window:
+            driver.switch_to.window(handle)
+            time.sleep(2)
+            break
+
+    # Close the original tab and switch back to new tab
+    # driver.switch_to.window(original_window)
+    # driver.close()
+    # driver.switch_to.window(driver.window_handles[0])
+    return driver
+
+
+def switch_to_new_tab_and_close_old(driver, website_url=""):
     time.sleep(3)
 
     # Get the current window handles
@@ -135,3 +159,10 @@ def scroll_to_element(driver, element):
 
 def scroll_down(driver, distance):
     driver.execute_script(f"window.scrollBy(0, {distance});")
+
+
+def get_control_key():
+    if platform.system() == 'Darwin':
+        return Keys.COMMAND
+    else:
+        return Keys.CONTROL

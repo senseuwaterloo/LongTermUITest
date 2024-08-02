@@ -3,7 +3,7 @@ import time
 import pytest
 from selenium.webdriver.common.by import By
 
-from browser_helper import switch_to_new_tab, switch_to_new_tab_and_return_old
+from browser_helper import switch_to_new_tab_and_return_old
 
 
 @pytest.mark.usefixtures("setup_class")
