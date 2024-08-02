@@ -14,7 +14,7 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'uniqlo': 'https://www.uniqlo.com/us/en/', 'budget': 'https://www.budget.com/en/home',
                 'target': 'https://www.target.com/', 'viator': 'https://www.viator.com/',
                 'yellowpages': 'https://www.yellowpages.com/', 'eventbrite': 'https://www.eventbrite.com/',
-                'spothero': 'https://spothero.com/', 'kayak': 'https://www.kayak.com/',
+                'spothero': 'https://spothero.com/', 'kayak': 'https://www.kayak.com/?ispredir=true',
                 'flightaware': 'https://www.flightaware.com/', 'cvs': 'https://www.cvs.com/',
                 'carnival': 'https://www.carnival.com/', 'marriott': 'https://www.marriott.com',
                 'nfl': 'https://www.nfl.com/', 'airbnb': 'https://www.airbnb.com/',

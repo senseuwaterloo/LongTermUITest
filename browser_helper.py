@@ -97,6 +97,18 @@ def calculate_dates(days_from_now_start=7, days_from_now_end=14):
     return start_date_str, end_date_str
 
 
+def calculate_dates_full_month_name(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    # do not return leading 0 before a single digit
+    start_date_str = start_date.strftime('%B ') + str(start_date.day) + start_date.strftime(', %Y')
+    end_date_str = end_date.strftime('%B ') + str(end_date.day) + end_date.strftime(', %Y')
+
+    return start_date_str, end_date_str
+
+
 def calculate_dates_slash_format(days_from_now_start=7, days_from_now_end=14):
     current_date = datetime.now()
     start_date = current_date + timedelta(days=days_from_now_start)
