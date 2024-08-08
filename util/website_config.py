@@ -36,7 +36,8 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'financegoogle': 'https://www.google.com/finance/', 'govuk': 'https://www.gov.uk',
                 'healthusnews': 'https://health.usnews.com', 'hiringamazon': 'https://hiring.amazon.com',
                 'ikea': 'https://www.ikea.com/us/en/', 'indeed': 'https://www.indeed.com/worldwide',
-                'justicegov': 'https://www.justice.gov/', 'lastfm': 'https://www.last.fm/'}
+                'justicegov': 'https://www.justice.gov/', 'lastfm': 'https://www.last.fm/',
+                'mayoclinicorg': 'https://www.mayoclinic.org/'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
@@ -87,7 +88,8 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        'https://www.united.com/en/us': [(By.XPATH, "//a[@role='button' and text()='Understood']")],
                        'https://ups.com': [(By.XPATH, "//label[contains(text(), 'Opt-In to Essential Cookies Only')]"), (By.ID, "consent_prompt_submit")],
                        'https://www.usnews.com/education': [(By.ID, "onetrust-close-btn-container")],
-                       'https://www.viator.com/': [(By.ID, "onetrust-accept-btn-handler")]}
+                       'https://www.viator.com/': [(By.ID, "onetrust-accept-btn-handler")],
+                       'https://www.macys.com/': [(By.ID, "onetrust-accept-btn-handler")]}
 
 tasks_from_website = [(
     'Book a cheapest bundle and save option for 2 adults from Ahmedabad to Dubai on November 18 with free cancellation options, hotel should be a 3 star near Burj Khalifa with guest rating above 4, one night',

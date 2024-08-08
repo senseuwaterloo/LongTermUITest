@@ -131,6 +131,28 @@ def calculate_dates_weekday_format(days_from_now_start=7, days_from_now_end=14):
     return start_date_str, end_date_str
 
 
+def calculate_dates_weekday_abbr_format(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    start_date_str = start_date.strftime('%a %b %d %Y')
+    end_date_str = end_date.strftime('%a %b %d %Y')
+
+    return start_date_str, end_date_str
+
+
+def calculate_dates_weekday_abbr_without_year_format(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    start_date_str = start_date.strftime('%a, %B %-d')
+    end_date_str = end_date.strftime('%a, %B %-d')
+
+    return start_date_str, end_date_str
+
+
 def get_day_suffix(day):
     if 11 <= day <= 13:
         return 'th'

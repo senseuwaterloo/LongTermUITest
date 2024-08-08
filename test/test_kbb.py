@@ -116,7 +116,7 @@ class TestKbb:
 
         # add extra step to handle popup
         time.sleep(3)
-        if self.driver.find_element(By.XPATH, "//button[text()='No Thanks']"):
+        if self.driver.find_element(By.XPATH, "//button[text()='No Thanks']") is not None:
             self.driver.find_element(By.XPATH, "//button[text()='No Thanks']").click()
         scroll_down(self.driver, 500)
 
@@ -155,7 +155,7 @@ class TestKbb:
 
         # add extra step to handle popup
         time.sleep(3)
-        if self.driver.find_element(By.XPATH, "//button[text()='No Thanks']"):
+        if self.driver.find_element(By.XPATH, "//button[text()='No Thanks']") is not None:
             self.driver.find_element(By.XPATH, "//button[text()='No Thanks']").click()
         scroll_down(self.driver, 500)
 
