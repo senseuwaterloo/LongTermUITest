@@ -82,8 +82,11 @@ class TestMovoto:
         # TODO as expected.
         # TODO also tried to send "RETURN" key in the input area and click on the search icon to search the location name directly but the search input is not responding to these actions and
         # TODO no error will be thrown either. The only way to make the search input responding or give the correct dropdown is to MANUALLY input the text then perform the actions.
-        self.driver.find_element(By.XPATH, "//input[@type='text' and @placeholder='City, ZIP, School, Address, Neighborhood']").clear()
-        self.driver.find_element(By.XPATH, "//input[@type='text' and @placeholder='City, ZIP, School, Address, Neighborhood']").send_keys("Huntsville, AL")
+        # self.driver.find_element(By.XPATH, "//input[@type='text' and @placeholder='City, ZIP, School, Address, Neighborhood']").clear()
+        self.driver.find_element(By.CSS_SELECTOR, ".mvt-searchbox__input > input").clear()
+        self.driver.find_element(By.CSS_SELECTOR, ".mvt-searchbox__input > input").send_keys("Huntsville, AL")
+
+        time.sleep(2)
         # self.driver.find_element(By.XPATH, "//input[@type='text' and @placeholder='City, ZIP, School, Address, Neighborhood']").send_keys(" ")
         # self.driver.execute_script("arguments[0].dispatchEvent(new KeyboardEvent('keydown', {'key': ' '}));", search_input)
         # self.driver.execute_script("arguments[0].dispatchEvent(new KeyboardEvent('keypress', {'key': ' '}));", search_input)

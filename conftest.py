@@ -6,6 +6,7 @@ from datetime import datetime
 import polling2
 import pytest
 import undetected_chromedriver as uc
+from selenium import webdriver
 from selenium.common import NoSuchElementException, StaleElementReferenceException, TimeoutException, ElementClickInterceptedException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By

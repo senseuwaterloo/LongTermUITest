@@ -131,6 +131,18 @@ def calculate_dates_weekday_format(days_from_now_start=7, days_from_now_end=14):
     return start_date_str, end_date_str
 
 
+def calculate_dates_weekday_mta_format(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    # Format the dates as '15, Thursday August 2024'
+    start_date_str = start_date.strftime('%d, %A %B %Y')
+    end_date_str = end_date.strftime('%d, %A %B %Y')
+
+    return start_date_str, end_date_str
+
+
 def calculate_dates_weekday_abbr_format(days_from_now_start=7, days_from_now_end=14):
     current_date = datetime.now()
     start_date = current_date + timedelta(days=days_from_now_start)
@@ -193,6 +205,20 @@ def scroll_to_element(driver, element):
 
 def scroll_down(driver, distance):
     driver.execute_script(f"window.scrollBy(0, {distance});")
+    time.sleep(1)
+
+
+def scroll_inside_element(driver, element):
+    """
+    Scrolls to the bottom inside a scrollable element.
+
+    :param driver: The Selenium WebDriver instance.
+    :param element: The WebElement to scroll inside.
+    """
+    # time.sleep(2)
+    # driver.execute_script("arguments[0].scrollTo(0, arguments[0].scrollHeight);", element)
+    driver.execute_script("arguments[0].scrollBy(0, 500);", element)
+    time.sleep(2)
 
 
 def get_control_key():
