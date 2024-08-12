@@ -39,7 +39,8 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'justicegov': 'https://www.justice.gov/', 'lastfm': 'https://www.last.fm/',
                 'mayoclinicorg': 'https://www.mayoclinic.org/', 'newmtainfo': 'https://new.mta.info/',
                 'npsgov': 'https://www.nps.gov/', 'ohiogov': 'https://ohio.gov/',
-                'ohiomeansjobsohiogov': 'https://ohiomeansjobs.ohio.gov', 'osuedu': 'https://osu.edu'}
+                'ohiomeansjobsohiogov': 'https://ohiomeansjobs.ohio.gov', 'osuedu': 'https://osu.edu',
+                'petfinder': 'https://petfinderfoundation.org/'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
@@ -76,7 +77,7 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        'https://www.nfl.com/': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://osu.edu': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://pensketruckrental.com': [(By.ID, "onetrust-accept-btn-handler")],
-                       'https://petfinder.com': [(By.ID, "onetrust-close-btn-container")],
+                       # 'https://petfinder.com': [(By.ID, "onetrust-close-btn-container")],
                        'https://www.qatarairways.com/en-us/homepage.html': [(By.ID, "cookie-accept-all")],
                        'http://ryanair.com/': [(By.XPATH, "//button[@class='cookie-popup-with-overlay__button-settings' and text()='Yes, I agree']")],
                        'https://sixflags.com': [(By.ID, "cn-accept-cookie")],

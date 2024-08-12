@@ -1,0 +1,49 @@
+2024-08-12 14:30:51,729 - ERROR - Test test_pinterest_70cb365b failed.
+2024-08-12 14:30:51,731 - ERROR - URL at failure: https://www.pinterest.com/search/pins/?q=christian%20quotes&rs=typed
+2024-08-12 14:30:51,731 - ERROR - Exception: self = <test.test_pinterest.TestPinterest object at 0x105298c40>
+
+    def test_pinterest_70cb365b(self):
+        # self.driver.get("https://pinterest.com")
+    
+        # add extra step to navigate to the explore page
+        self.driver.find_element(By.XPATH, "//span[text()='Explore']").click()
+    
+        # self.driver.find_element(By.XPATH, "//input[@role='combobox' and @name='searchBoxInput' and @value='' and @type='text' and @placeholder='Search']").clear()
+        # self.driver.find_element(By.XPATH, "//input[@role='combobox' and @name='searchBoxInput' and @value='' and @type='text' and @placeholder='Search']").send_keys("christian quotes")
+        self.driver.find_element(By.NAME, "searchBoxInput").clear()
+        self.driver.find_element(By.NAME, "searchBoxInput").send_keys("christian quotes")
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='SuggestionGroup-Option-0-1']/a[1]/div[1]/div[1]/div[1]/div[1]").click()
+        self.driver.find_element(By.NAME, "searchBoxInput").send_keys(Keys.RETURN)
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='__PWS_ROOT__']/div[1]/div[2]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/a[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/img[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='gradient']/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/button[1]/div[1]/div[1]/svg[1]").click()
+>       self.driver.find_element(By.XPATH, "//div[@data-test-id='max-width-container']/div[1]/div[1]/div[1]").click()
+E       AttributeError: 'NoneType' object has no attribute 'click'
+
+test/test_pinterest.py:78: AttributeError
+2024-08-12 14:30:51,731 - ERROR - TimeoutException: Elements not found: xpath = //div[@data-test-id='max-width-container']/div[1]/div[1]/div[1] - Message: 
+Stacktrace:
+0   undetected_chromedriver             0x0000000100936848 undetected_chromedriver + 5179464
+1   undetected_chromedriver             0x000000010092e27a undetected_chromedriver + 5145210
+2   undetected_chromedriver             0x00000001004a52b0 undetected_chromedriver + 389808
+3   undetected_chromedriver             0x00000001004f13e1 undetected_chromedriver + 701409
+4   undetected_chromedriver             0x00000001004f1691 undetected_chromedriver + 702097
+5   undetected_chromedriver             0x0000000100533464 undetected_chromedriver + 971876
+6   undetected_chromedriver             0x00000001005137dd undetected_chromedriver + 841693
+7   undetected_chromedriver             0x0000000100530b9b undetected_chromedriver + 961435
+8   undetected_chromedriver             0x0000000100513553 undetected_chromedriver + 841043
+9   undetected_chromedriver             0x00000001004e47f6 undetected_chromedriver + 649206
+10  undetected_chromedriver             0x00000001004e505e undetected_chromedriver + 651358
+11  undetected_chromedriver             0x00000001008f9ab0 undetected_chromedriver + 4930224
+12  undetected_chromedriver             0x00000001008fe9c6 undetected_chromedriver + 4950470
+13  undetected_chromedriver             0x00000001008ff095 undetected_chromedriver + 4952213
+14  undetected_chromedriver             0x00000001008dbe79 undetected_chromedriver + 4808313
+15  undetected_chromedriver             0x00000001008ff389 undetected_chromedriver + 4952969
+16  undetected_chromedriver             0x00000001008cd7d4 undetected_chromedriver + 4749268
+17  undetected_chromedriver             0x000000010091e558 undetected_chromedriver + 5080408
+18  undetected_chromedriver             0x000000010091e717 undetected_chromedriver + 5080855
+19  undetected_chromedriver             0x000000010092de5e undetected_chromedriver + 5144158
+20  libsystem_pthread.dylib             0x00007ff80dfb818b _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80dfb3ae3 thread_start + 15
+

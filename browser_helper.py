@@ -196,6 +196,26 @@ def calculate_dates_with_suffix(days_from_now_start=7, days_from_now_end=14):
     return start_date_str, end_date_str
 
 
+def calculate_dates_day_month_format(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    # Determine the correct format for the day
+    if platform.system() == "Windows":
+        day_format = '%#d'
+    else:
+        day_format = '%-d'
+
+    start_day = start_date.strftime(day_format)
+    start_month = start_date.strftime('%B')
+
+    end_day = end_date.strftime(day_format)
+    end_month = end_date.strftime('%B')
+
+    return start_day, start_month, end_day, end_month
+
+
 def scroll_to_element(driver, element):
     if isinstance(element, CustomWebElement):
         element = element.get_native_element()

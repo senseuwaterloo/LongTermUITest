@@ -1,0 +1,187 @@
+2024-08-11 23:01:46,058 - ERROR - Test test_pensketruckrental_d1c3d4d2 failed.
+2024-08-11 23:01:46,061 - ERROR - URL at failure: https://www.pensketruckrental.com/locations/us/massachusetts/norwood/
+2024-08-11 23:01:46,061 - ERROR - Exception: self = <test.test_pensketruckrental.TestPensketruckrental object at 0x1051606d0>
+
+    def test_pensketruckrental_d1c3d4d2(self):
+        # self.driver.get("https://pensketruckrental.com")
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Locations')]").click()
+        self.driver.find_element(By.XPATH, "//div[@class='right-side']//a[contains(text(),'Locations')]").click()
+    
+        # redundant action in the new web page
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a Location')]").click()
+    
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Massachusetts')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Norwood')]").click()
+        self.driver.find_element(By.XPATH, "//div[@class='big-container no-map']//a[contains(text(),'Norwood')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'All Seasons Rent All')]").click()
+>       self.driver.find_element(By.XPATH, "//a[contains(text(),'All Seasons Rent')]").click()
+
+test/test_pensketruckrental.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:159: in click
+    raise e
+conftest.py:143: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x105163700>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff80dfb818b _pthread_start + 99\\n25  libsystem_pthread.dylib             0x00007ff80dfb3ae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <a class="widget__headline-text rm-stats-tracked" href="https://www.pensketruckrental.com/locations/us/massachusetts/norwood/055944/" aria-label="All Seasons Rent All" data-type="text">...</a> is not clickable at point (400, 563). Other element would receive the click: <div class="full-page-overlay">...</div>
+E         (Session info: chrome=127.0.6533.100)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001049a9848 undetected_chromedriver + 5179464
+E       1   undetected_chromedriver             0x00000001049a127a undetected_chromedriver + 5145210
+E       2   undetected_chromedriver             0x00000001045182b0 undetected_chromedriver + 389808
+E       3   undetected_chromedriver             0x000000010456b096 undetected_chromedriver + 729238
+E       4   undetected_chromedriver             0x0000000104568f88 undetected_chromedriver + 720776
+E       5   undetected_chromedriver             0x0000000104566a57 undetected_chromedriver + 711255
+E       6   undetected_chromedriver             0x0000000104565902 undetected_chromedriver + 706818
+E       7   undetected_chromedriver             0x0000000104559496 undetected_chromedriver + 656534
+E       8   undetected_chromedriver             0x00000001045867b2 undetected_chromedriver + 841650
+E       9   undetected_chromedriver             0x0000000104558e58 undetected_chromedriver + 654936
+E       10  undetected_chromedriver             0x000000010458696e undetected_chromedriver + 842094
+E       11  undetected_chromedriver             0x00000001045a3b9b undetected_chromedriver + 961435
+E       12  undetected_chromedriver             0x0000000104586553 undetected_chromedriver + 841043
+E       13  undetected_chromedriver             0x00000001045577f6 undetected_chromedriver + 649206
+E       14  undetected_chromedriver             0x000000010455805e undetected_chromedriver + 651358
+E       15  undetected_chromedriver             0x000000010496cab0 undetected_chromedriver + 4930224
+E       16  undetected_chromedriver             0x00000001049719c6 undetected_chromedriver + 4950470
+E       17  undetected_chromedriver             0x0000000104972095 undetected_chromedriver + 4952213
+E       18  undetected_chromedriver             0x000000010494ee79 undetected_chromedriver + 4808313
+E       19  undetected_chromedriver             0x0000000104972389 undetected_chromedriver + 4952969
+E       20  undetected_chromedriver             0x00000001049407d4 undetected_chromedriver + 4749268
+E       21  undetected_chromedriver             0x0000000104991558 undetected_chromedriver + 5080408
+E       22  undetected_chromedriver             0x0000000104991717 undetected_chromedriver + 5080855
+E       23  undetected_chromedriver             0x00000001049a0e5e undetected_chromedriver + 5144158
+E       24  libsystem_pthread.dylib             0x00007ff80dfb818b _pthread_start + 99
+E       25  libsystem_pthread.dylib             0x00007ff80dfb3ae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2024-08-11 23:01:46,061 - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //a[contains(text(),'All Seasons Rent')] - Message: element click intercepted: Element <a class="widget__headline-text rm-stats-tracked" href="https://www.pensketruckrental.com/locations/us/massachusetts/norwood/055944/" aria-label="All Seasons Rent All" data-type="text">...</a> is not clickable at point (400, 563). Other element would receive the click: <div class="full-page-overlay">...</div>
+  (Session info: chrome=127.0.6533.100)
+Stacktrace:
+0   undetected_chromedriver             0x00000001049a9848 undetected_chromedriver + 5179464
+1   undetected_chromedriver             0x00000001049a127a undetected_chromedriver + 5145210
+2   undetected_chromedriver             0x00000001045182b0 undetected_chromedriver + 389808
+3   undetected_chromedriver             0x000000010456b096 undetected_chromedriver + 729238
+4   undetected_chromedriver             0x0000000104568f88 undetected_chromedriver + 720776
+5   undetected_chromedriver             0x0000000104566a57 undetected_chromedriver + 711255
+6   undetected_chromedriver             0x0000000104565902 undetected_chromedriver + 706818
+7   undetected_chromedriver             0x0000000104559496 undetected_chromedriver + 656534
+8   undetected_chromedriver             0x00000001045867b2 undetected_chromedriver + 841650
+9   undetected_chromedriver             0x0000000104558e58 undetected_chromedriver + 654936
+10  undetected_chromedriver             0x000000010458696e undetected_chromedriver + 842094
+11  undetected_chromedriver             0x00000001045a3b9b undetected_chromedriver + 961435
+12  undetected_chromedriver             0x0000000104586553 undetected_chromedriver + 841043
+13  undetected_chromedriver             0x00000001045577f6 undetected_chromedriver + 649206
+14  undetected_chromedriver             0x000000010455805e undetected_chromedriver + 651358
+15  undetected_chromedriver             0x000000010496cab0 undetected_chromedriver + 4930224
+16  undetected_chromedriver             0x00000001049719c6 undetected_chromedriver + 4950470
+17  undetected_chromedriver             0x0000000104972095 undetected_chromedriver + 4952213
+18  undetected_chromedriver             0x000000010494ee79 undetected_chromedriver + 4808313
+19  undetected_chromedriver             0x0000000104972389 undetected_chromedriver + 4952969
+20  undetected_chromedriver             0x00000001049407d4 undetected_chromedriver + 4749268
+21  undetected_chromedriver             0x0000000104991558 undetected_chromedriver + 5080408
+22  undetected_chromedriver             0x0000000104991717 undetected_chromedriver + 5080855
+23  undetected_chromedriver             0x00000001049a0e5e undetected_chromedriver + 5144158
+24  libsystem_pthread.dylib             0x00007ff80dfb818b _pthread_start + 99
+25  libsystem_pthread.dylib             0x00007ff80dfb3ae3 thread_start + 15
+

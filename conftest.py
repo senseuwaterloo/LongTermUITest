@@ -75,8 +75,7 @@ option_args = [
         "--disable-extensions",
         "--disable-infobars",
         "--start-maximized",
-        "--disable-gpu",
-        "--disable-dev-shm-usage"
+        "--disable-dev-shm-usage",
         "--window-size=1920,1080"
     ]
 
@@ -292,12 +291,26 @@ def setup_class(request):
     # https://stackoverflow.com/questions/76627992/selenium-webdriver-headless-mode-shows-blank-page-selenium-web-element
     #TODO opts.add_argument("--headless=new")
 
+    # opts.add_argument("--disable-features=DownloadBubble,DownloadBubbleV2")
+
     for arg in option_args:
         opts.add_argument(arg)
     opts.add_argument(f"--user-agent={user_agent}")
 
-    # Geolocation preferences
+    download_path = 'testoutput'
+    absolute_download_path = os.path.abspath(download_path)
     prefs = {
+        "download.default_directory": absolute_download_path,  # Set the download path
+        "download.prompt_for_download": False,  # Don't ask for download location
+        "download.directory_upgrade": True,  # Automatically download to the specified directory
+        "safebrowsing.enabled": True,  # Allow downloading without safety check
+        "profile.default_content_settings.popups": 0,  # Disable popups
+        "profile.content_settings.exceptions.automatic_downloads.*.setting": 1,  # Allow automatic downloads
+        "download.extensions_to_open": "",  # Leave empty to avoid automatically opening files after download
+        "download.restrictions": 0,  # To allow all downloads
+        # no effective way to disable the chrome save as dislog now......
+        'browser.enabled_labs_experiments': ['download-bubble@2', 'download-bubble-v2@2'],
+
         "profile.default_content_setting_values.cookies": 1,  # 1 = Allow, 2 = Block
         "profile.default_content_setting_values.images": 1,
         "profile.default_content_setting_values.javascript": 1,
