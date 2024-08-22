@@ -1,0 +1,183 @@
+2024-08-22 11:46:10,731 - ERROR - Test test_resy_75db63ac failed.
+2024-08-22 11:46:10,733 - ERROR - URL at failure: https://resy.com/cities/chicago-il/venues/kasama?date=2024-08-29&seats=7
+2024-08-22 11:46:10,734 - ERROR - Exception: self = <test.test_resy.TestResy object at 0x104873460>
+
+    def test_resy_75db63ac(self):
+        # self.driver.get("https://resy.com")
+    
+        nearby_restaurants_link = self.driver.find_element(By.XPATH, "//a[contains(text(),'Nearby Restaurants')]")
+        scroll_to_element(self.driver, nearby_restaurants_link)
+        nearby_restaurants_link.click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='page-wrapper']/resy-nav[1]/header[1]/div[2]/resy-locations-container[1]/div[1]/div[1]/button[1]/div[1]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//button[contains(@class, 'LocationsContainer__click-container') and contains(@aria-label, 'Location')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Chicago')]").click()
+        self.driver.find_element(By.XPATH, "//button[text()='Chicago']").click()
+    
+        # add extra step to handle possible popups
+        if self.driver.find_element(By.XPATH, "//button[@data-test-id='announcement_modal-button-close']") is not None:
+            self.driver.find_element(By.XPATH, "//button[@data-test-id='announcement_modal-button-close']").click()
+    
+        self.driver.find_element(By.ID, "DateSelector__button").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='DayPicker']/div[2]/div[1]/div[1]/table[1]/tbody[1]/tr[4]/td[5]/button[1]").click()
+        start_date_str, _ = calculate_dates_full_month_name(7, 7)
+        if self.driver.find_element(By.XPATH, f"//button[contains(@aria-label, '{start_date_str}')]") is None:
+            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+        self.driver.find_element(By.XPATH, f"//button[contains(@aria-label, '{start_date_str}')]").click()
+    
+        # self.driver.find_element(By.ID, "party_size").clear()
+        # self.driver.find_element(By.ID, "party_size").select("7 Guests")
+        party_size_dropdown = self.driver.find_element(By.ID, "party_size")
+        party_size_select = Select(party_size_dropdown)
+        party_size_select.select_by_value("7")
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='page-content']/resy-search[1]/resy-search-container[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/button[5]/i[1]/i[1]/svg[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='page-content']/resy-search[1]/resy-search-container[1]/div[1]/div[1]/div[1]/div[4]/div[5]/div[2]/div[2]/div[4]/button[5]").click()
+        # self.driver.find_element(By.XPATH, "//button[@id='rgs://resy/61091/1808411/3/2023-04-20/2023-04-20/14:00:00/7/Dining Room']/div[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='page-wrapper']/div[1]/summary-page[1]/div[1]/div[2]/div[4]/div[1]/button[1]/span[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='page-wrapper']/div[1]/confirmation-page[1]/div[1]/div[2]/div[3]/button[1]/span[1]").click()
+        top_rated_restaurant = self.driver.find_element(By.XPATH, "//article[@aria-labelledby='region-top-rated']/div[1]/div[1]/div[1]")
+        scroll_to_element(self.driver, top_rated_restaurant)
+        top_rated_restaurant.click()
+        party_time_dropdown = self.driver.find_element(By.ID, "time")
+        party_time_select = Select(party_time_dropdown)
+>       party_time_select.select_by_value("1400")
+
+test/test_resy.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/select.py:79: in select_by_value
+    self._set_selected(opt)
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/select.py:211: in _set_selected
+    if not option.is_selected():
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:188: in is_selected
+    return self._execute(Command.IS_ELEMENT_SELECTED)["value"]
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x104870be0>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...7ff800ae018b _pthread_start + 99\\n24  libsystem_pthread.dylib             0x00007ff800adbae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E         (Session info: chrome=128.0.6613.85); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010300e2a8 undetected_chromedriver + 5096104
+E       1   undetected_chromedriver             0x0000000103005ada undetected_chromedriver + 5061338
+E       2   undetected_chromedriver             0x0000000102b90fd0 undetected_chromedriver + 389072
+E       3   undetected_chromedriver             0x0000000102b97189 undetected_chromedriver + 414089
+E       4   undetected_chromedriver             0x0000000102b98b1f undetected_chromedriver + 420639
+E       5   undetected_chromedriver             0x0000000102b98bcc undetected_chromedriver + 420812
+E       6   undetected_chromedriver             0x0000000102bd81a2 undetected_chromedriver + 680354
+E       7   undetected_chromedriver             0x0000000102c01ef2 undetected_chromedriver + 851698
+E       8   undetected_chromedriver             0x0000000102bd2288 undetected_chromedriver + 656008
+E       9   undetected_chromedriver             0x0000000102c020ae undetected_chromedriver + 852142
+E       10  undetected_chromedriver             0x0000000102c1f250 undetected_chromedriver + 971344
+E       11  undetected_chromedriver             0x0000000102c01c93 undetected_chromedriver + 851091
+E       12  undetected_chromedriver             0x0000000102bd0c79 undetected_chromedriver + 650361
+E       13  undetected_chromedriver             0x0000000102bd149e undetected_chromedriver + 652446
+E       14  undetected_chromedriver             0x0000000102fd1020 undetected_chromedriver + 4845600
+E       15  undetected_chromedriver             0x0000000102fd5f38 undetected_chromedriver + 4865848
+E       16  undetected_chromedriver             0x0000000102fd6605 undetected_chromedriver + 4867589
+E       17  undetected_chromedriver             0x0000000102fb3c59 undetected_chromedriver + 4725849
+E       18  undetected_chromedriver             0x0000000102fd68f9 undetected_chromedriver + 4868345
+E       19  undetected_chromedriver             0x0000000102fa5b74 undetected_chromedriver + 4668276
+E       20  undetected_chromedriver             0x0000000102ff5dd8 undetected_chromedriver + 4996568
+E       21  undetected_chromedriver             0x0000000102ff5fd7 undetected_chromedriver + 4997079
+E       22  undetected_chromedriver             0x00000001030056de undetected_chromedriver + 5060318
+E       23  libsystem_pthread.dylib             0x00007ff800ae018b _pthread_start + 99
+E       24  libsystem_pthread.dylib             0x00007ff800adbae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: StaleElementReferenceException
