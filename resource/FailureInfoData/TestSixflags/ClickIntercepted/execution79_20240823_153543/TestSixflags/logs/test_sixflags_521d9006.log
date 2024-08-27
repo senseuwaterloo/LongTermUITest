@@ -1,0 +1,201 @@
+2024-08-23 15:36:05,328 - ERROR - Test test_sixflags_521d9006 failed.
+2024-08-23 15:36:05,332 - ERROR - URL at failure: https://www.sixflags.com/magicmountain/group-sales
+2024-08-23 15:36:05,333 - ERROR - Exception: self = <test.test_sixflags.TestSixflags object at 0x102a837f0>
+
+    def test_sixflags_521d9006(self):
+        # self.driver.get("https://sixflags.com")
+    
+        # self.driver.find_element(By.XPATH, "//section[@id='parkselector']/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/button[1]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//section[@id='parkselector']//div[@class='sf-dropdown']//button[./div[text()='Browse the Parks Below']]").click()
+    
+        # self.driver.find_element(By.XPATH, "//section[@id='parkselector']/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/a[1]/div[1]/div[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//section[@id='parkselector']//a[@class='single-park-desktop' and @data-title='Six Flags Magic Mountain' and @data-state='Los Angeles, CA']").click()
+    
+        self.driver.find_element(By.XPATH, "//section[@id='parkselector']//div[@class='sf-dropdown']//button[text()='Go!']").click()
+    
+        # self.driver.find_element(By.ID, "sm-16807812394218174-1").click()
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Group Tickets')]").click()
+        # self.driver.find_element(By.XPATH, "//article[@id='post-113811']/div[1]/div[1]/div[1]/div[1]/section[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/button[1]/i[1]").click()
+        self.driver.find_element(By.XPATH, "//nav[not(@aria-hidden='true')]//a[text()='Groups' and ./span[@aria-label='Menu Toggle' and @role='application'] and ./span[@class='sub-arrow']]").click()
+        scroll_down(self.driver, 600)
+        self.driver.find_element(By.XPATH, "//button[@class='btn_show_hide card_icon' and ./parent::div/div[1]/h3[text()='Groups of 15 to 99']]").click()
+    
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Buy Tickets')]").click()
+    
+        # No need to select a time slot, just use the default time slot
+        # self.driver.find_element(By.XPATH, "//button[@id='row3-cell30']/span[1]").click()
+    
+        # need add switch to frame action
+        override_iframe = self.driver.find_element(By.ID, "override").get_native_element()
+        self.driver.switch_to.frame(override_iframe)
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='application-view']/div[1]/div[2]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[4]/button[1]").click()
+>       self.driver.find_element(By.XPATH, "//button[./gap-button-label[text()='Buy Now']]").click()
+
+test/test_sixflags.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:158: in click
+    raise e
+conftest.py:142: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x102a81720>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff80977018b _pthread_start + 99\\n25  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <button class="btn-primary-action gap-palette--secondary mdc-button--raised mdc-button" ng-click="wizardCallback(pkg)" ng-disabled="pkg.isSoldOut">...</button> is not clickable at point (1087, 257). Other element would receive the click: <gap-card gap-elevation="5" ng-class="modal.customCardClasses" class="mdc-elevation--z5 gap-card mdc-card mdc-card--outlined recommender-wizard-loader">...</gap-card>
+E         (Session info: chrome=128.0.6613.85)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001012a12a8 undetected_chromedriver + 5096104
+E       1   undetected_chromedriver             0x0000000101298ada undetected_chromedriver + 5061338
+E       2   undetected_chromedriver             0x0000000100e23fd0 undetected_chromedriver + 389072
+E       3   undetected_chromedriver             0x0000000100e77486 undetected_chromedriver + 730246
+E       4   undetected_chromedriver             0x0000000100e7538d undetected_chromedriver + 721805
+E       5   undetected_chromedriver             0x0000000100e72e47 undetected_chromedriver + 712263
+E       6   undetected_chromedriver             0x0000000100e71cf2 undetected_chromedriver + 707826
+E       7   undetected_chromedriver             0x0000000100e658c6 undetected_chromedriver + 657606
+E       8   undetected_chromedriver             0x0000000100e94ef2 undetected_chromedriver + 851698
+E       9   undetected_chromedriver             0x0000000100e65288 undetected_chromedriver + 656008
+E       10  undetected_chromedriver             0x0000000100e950ae undetected_chromedriver + 852142
+E       11  undetected_chromedriver             0x0000000100eb2250 undetected_chromedriver + 971344
+E       12  undetected_chromedriver             0x0000000100e94c93 undetected_chromedriver + 851091
+E       13  undetected_chromedriver             0x0000000100e63c79 undetected_chromedriver + 650361
+E       14  undetected_chromedriver             0x0000000100e6449e undetected_chromedriver + 652446
+E       15  undetected_chromedriver             0x0000000101264020 undetected_chromedriver + 4845600
+E       16  undetected_chromedriver             0x0000000101268f38 undetected_chromedriver + 4865848
+E       17  undetected_chromedriver             0x0000000101269605 undetected_chromedriver + 4867589
+E       18  undetected_chromedriver             0x0000000101246c59 undetected_chromedriver + 4725849
+E       19  undetected_chromedriver             0x00000001012698f9 undetected_chromedriver + 4868345
+E       20  undetected_chromedriver             0x0000000101238b74 undetected_chromedriver + 4668276
+E       21  undetected_chromedriver             0x0000000101288dd8 undetected_chromedriver + 4996568
+E       22  undetected_chromedriver             0x0000000101288fd7 undetected_chromedriver + 4997079
+E       23  undetected_chromedriver             0x00000001012986de undetected_chromedriver + 5060318
+E       24  libsystem_pthread.dylib             0x00007ff80977018b _pthread_start + 99
+E       25  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2024-08-23 15:36:05,333 - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //button[./gap-button-label[text()='Buy Now']] - Message: element click intercepted: Element <button class="btn-primary-action gap-palette--secondary mdc-button--raised mdc-button" ng-click="wizardCallback(pkg)" ng-disabled="pkg.isSoldOut">...</button> is not clickable at point (1087, 257). Other element would receive the click: <gap-card gap-elevation="5" ng-class="modal.customCardClasses" class="mdc-elevation--z5 gap-card mdc-card mdc-card--outlined recommender-wizard-loader">...</gap-card>
+  (Session info: chrome=128.0.6613.85)
+Stacktrace:
+0   undetected_chromedriver             0x00000001012a12a8 undetected_chromedriver + 5096104
+1   undetected_chromedriver             0x0000000101298ada undetected_chromedriver + 5061338
+2   undetected_chromedriver             0x0000000100e23fd0 undetected_chromedriver + 389072
+3   undetected_chromedriver             0x0000000100e77486 undetected_chromedriver + 730246
+4   undetected_chromedriver             0x0000000100e7538d undetected_chromedriver + 721805
+5   undetected_chromedriver             0x0000000100e72e47 undetected_chromedriver + 712263
+6   undetected_chromedriver             0x0000000100e71cf2 undetected_chromedriver + 707826
+7   undetected_chromedriver             0x0000000100e658c6 undetected_chromedriver + 657606
+8   undetected_chromedriver             0x0000000100e94ef2 undetected_chromedriver + 851698
+9   undetected_chromedriver             0x0000000100e65288 undetected_chromedriver + 656008
+10  undetected_chromedriver             0x0000000100e950ae undetected_chromedriver + 852142
+11  undetected_chromedriver             0x0000000100eb2250 undetected_chromedriver + 971344
+12  undetected_chromedriver             0x0000000100e94c93 undetected_chromedriver + 851091
+13  undetected_chromedriver             0x0000000100e63c79 undetected_chromedriver + 650361
+14  undetected_chromedriver             0x0000000100e6449e undetected_chromedriver + 652446
+15  undetected_chromedriver             0x0000000101264020 undetected_chromedriver + 4845600
+16  undetected_chromedriver             0x0000000101268f38 undetected_chromedriver + 4865848
+17  undetected_chromedriver             0x0000000101269605 undetected_chromedriver + 4867589
+18  undetected_chromedriver             0x0000000101246c59 undetected_chromedriver + 4725849
+19  undetected_chromedriver             0x00000001012698f9 undetected_chromedriver + 4868345
+20  undetected_chromedriver             0x0000000101238b74 undetected_chromedriver + 4668276
+21  undetected_chromedriver             0x0000000101288dd8 undetected_chromedriver + 4996568
+22  undetected_chromedriver             0x0000000101288fd7 undetected_chromedriver + 4997079
+23  undetected_chromedriver             0x00000001012986de undetected_chromedriver + 5060318
+24  libsystem_pthread.dylib             0x00007ff80977018b _pthread_start + 99
+25  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15
+

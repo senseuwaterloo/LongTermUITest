@@ -1,0 +1,190 @@
+2024-08-26 21:49:51,910 - ERROR - Test test_storesteampowered_29f639c1 failed.
+2024-08-26 21:49:51,912 - ERROR - URL at failure: https://steamcommunity.com/app/570/discussions/
+2024-08-26 21:49:51,913 - ERROR - Exception: self = <test.test_storesteampowered.TestStoreSteampowered object at 0x103b53d00>
+
+    def test_storesteampowered_29f639c1(self):
+        # self.driver.get("https://store.steampowered.com")
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'COMMUNITY')]").click()
+        community_element = self.driver.find_element(By.XPATH, "//a[contains(text(),'COMMUNITY')]").get_native_element()
+        action = ActionChains(self.driver)
+        action.move_to_element(community_element).perform()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Discussions')]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='global_header']//a[contains(text(),'Discussions')]").click()
+    
+        self.driver.find_element(By.XPATH, "//a[@id='tab_games']/span[1]").click()
+        self.driver.find_element(By.ID, "associate_game").clear()
+        self.driver.find_element(By.ID, "associate_game").send_keys("Dota 2")
+        self.driver.find_element(By.XPATH, "//div[@id='game_select_suggestions']/div[1]").click()
+    
+        # clicked on the pinned item instead of the newest item
+        # self.driver.find_element(By.XPATH, "//div[@id='forum_General_3703047_1696040635904700731']/a[1]").click()
+>       self.driver.find_element(By.XPATH, "//div[contains(@id, 'forum_General_') and contains(@id, '_topics')]/div[@class='forum_topic  unread' and ./preceding-sibling::div[1][@class='forum_topic  unread locked sticky']]/div[@class='forum_topic_name ']").click()
+
+test/test_storesteampowered.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:158: in click
+    raise e
+conftest.py:142: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x103b52080>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff80977018b _pthread_start + 99\\n25  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <div class="forum_topic_name ">...</div> is not clickable at point (757, 369). Other element would receive the click: <a class="forum_topic_overlay" href="https://steamcommunity.com/app/570/discussions/0/4432192283999156196/">...</a>
+E         (Session info: chrome=128.0.6613.85)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100c6b2a8 undetected_chromedriver + 5096104
+E       1   undetected_chromedriver             0x0000000100c62ada undetected_chromedriver + 5061338
+E       2   undetected_chromedriver             0x00000001007edfd0 undetected_chromedriver + 389072
+E       3   undetected_chromedriver             0x0000000100841486 undetected_chromedriver + 730246
+E       4   undetected_chromedriver             0x000000010083f38d undetected_chromedriver + 721805
+E       5   undetected_chromedriver             0x000000010083ce47 undetected_chromedriver + 712263
+E       6   undetected_chromedriver             0x000000010083bcf2 undetected_chromedriver + 707826
+E       7   undetected_chromedriver             0x000000010082f8c6 undetected_chromedriver + 657606
+E       8   undetected_chromedriver             0x000000010085eef2 undetected_chromedriver + 851698
+E       9   undetected_chromedriver             0x000000010082f288 undetected_chromedriver + 656008
+E       10  undetected_chromedriver             0x000000010085f0ae undetected_chromedriver + 852142
+E       11  undetected_chromedriver             0x000000010087c250 undetected_chromedriver + 971344
+E       12  undetected_chromedriver             0x000000010085ec93 undetected_chromedriver + 851091
+E       13  undetected_chromedriver             0x000000010082dc79 undetected_chromedriver + 650361
+E       14  undetected_chromedriver             0x000000010082e49e undetected_chromedriver + 652446
+E       15  undetected_chromedriver             0x0000000100c2e020 undetected_chromedriver + 4845600
+E       16  undetected_chromedriver             0x0000000100c32f38 undetected_chromedriver + 4865848
+E       17  undetected_chromedriver             0x0000000100c33605 undetected_chromedriver + 4867589
+E       18  undetected_chromedriver             0x0000000100c10c59 undetected_chromedriver + 4725849
+E       19  undetected_chromedriver             0x0000000100c338f9 undetected_chromedriver + 4868345
+E       20  undetected_chromedriver             0x0000000100c02b74 undetected_chromedriver + 4668276
+E       21  undetected_chromedriver             0x0000000100c52dd8 undetected_chromedriver + 4996568
+E       22  undetected_chromedriver             0x0000000100c52fd7 undetected_chromedriver + 4997079
+E       23  undetected_chromedriver             0x0000000100c626de undetected_chromedriver + 5060318
+E       24  libsystem_pthread.dylib             0x00007ff80977018b _pthread_start + 99
+E       25  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2024-08-26 21:49:51,913 - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //div[contains(@id, 'forum_General_') and contains(@id, '_topics')]/div[@class='forum_topic  unread' and ./preceding-sibling::div[1][@class='forum_topic  unread locked sticky']]/div[@class='forum_topic_name '] - Message: element click intercepted: Element <div class="forum_topic_name ">...</div> is not clickable at point (757, 369). Other element would receive the click: <a class="forum_topic_overlay" href="https://steamcommunity.com/app/570/discussions/0/4432192283999156196/">...</a>
+  (Session info: chrome=128.0.6613.85)
+Stacktrace:
+0   undetected_chromedriver             0x0000000100c6b2a8 undetected_chromedriver + 5096104
+1   undetected_chromedriver             0x0000000100c62ada undetected_chromedriver + 5061338
+2   undetected_chromedriver             0x00000001007edfd0 undetected_chromedriver + 389072
+3   undetected_chromedriver             0x0000000100841486 undetected_chromedriver + 730246
+4   undetected_chromedriver             0x000000010083f38d undetected_chromedriver + 721805
+5   undetected_chromedriver             0x000000010083ce47 undetected_chromedriver + 712263
+6   undetected_chromedriver             0x000000010083bcf2 undetected_chromedriver + 707826
+7   undetected_chromedriver             0x000000010082f8c6 undetected_chromedriver + 657606
+8   undetected_chromedriver             0x000000010085eef2 undetected_chromedriver + 851698
+9   undetected_chromedriver             0x000000010082f288 undetected_chromedriver + 656008
+10  undetected_chromedriver             0x000000010085f0ae undetected_chromedriver + 852142
+11  undetected_chromedriver             0x000000010087c250 undetected_chromedriver + 971344
+12  undetected_chromedriver             0x000000010085ec93 undetected_chromedriver + 851091
+13  undetected_chromedriver             0x000000010082dc79 undetected_chromedriver + 650361
+14  undetected_chromedriver             0x000000010082e49e undetected_chromedriver + 652446
+15  undetected_chromedriver             0x0000000100c2e020 undetected_chromedriver + 4845600
+16  undetected_chromedriver             0x0000000100c32f38 undetected_chromedriver + 4865848
+17  undetected_chromedriver             0x0000000100c33605 undetected_chromedriver + 4867589
+18  undetected_chromedriver             0x0000000100c10c59 undetected_chromedriver + 4725849
+19  undetected_chromedriver             0x0000000100c338f9 undetected_chromedriver + 4868345
+20  undetected_chromedriver             0x0000000100c02b74 undetected_chromedriver + 4668276
+21  undetected_chromedriver             0x0000000100c52dd8 undetected_chromedriver + 4996568
+22  undetected_chromedriver             0x0000000100c52fd7 undetected_chromedriver + 4997079
+23  undetected_chromedriver             0x0000000100c626de undetected_chromedriver + 5060318
+24  libsystem_pthread.dylib             0x00007ff80977018b _pthread_start + 99
+25  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15
+

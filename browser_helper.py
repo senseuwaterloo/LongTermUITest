@@ -216,6 +216,29 @@ def calculate_dates_day_month_format(days_from_now_start=7, days_from_now_end=14
     return start_day, start_month, end_day, end_month
 
 
+def calculate_first_last_dates():
+    current_date = datetime.now()
+
+    # Calculate the first day of the next month
+    if current_date.month == 12:  # if December, next month is January of next year
+        first_day_next_month = datetime(current_date.year + 1, 1, 1)
+    else:
+        first_day_next_month = datetime(current_date.year, current_date.month + 1, 1)
+
+    # Calculate the last day of the next month
+    if first_day_next_month.month == 12:  # if next month is December, end of December is 31st
+        last_day_next_month = datetime(first_day_next_month.year, 12, 31)
+    else:
+        # Go to the first day of the month after the next, then subtract one day
+        first_day_of_following_month = datetime(first_day_next_month.year, first_day_next_month.month + 1, 1)
+        last_day_next_month = first_day_of_following_month - timedelta(days=1)
+
+    start_date_str = first_day_next_month.strftime('%Y-%m-%d')
+    end_date_str = last_day_next_month.strftime('%Y-%m-%d')
+
+    return start_date_str, end_date_str
+
+
 def scroll_to_element(driver, element):
     if isinstance(element, CustomWebElement):
         element = element.get_native_element()

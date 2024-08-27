@@ -1,0 +1,222 @@
+2024-08-26 23:41:59,258 - ERROR - Test test_stubhub_1567bfa7 failed.
+2024-08-26 23:41:59,261 - ERROR - URL at failure: https://www.stubhub.com/brooklyn-nets-brooklyn-tickets-1-25-2025/event/154533153/?quantity=6&sections=1718164%2C1534227%2C1534224%2C1554292%2C1534216&ticketClasses=582&rows=&seats=&seatTypes=&listingQty=
+2024-08-26 23:41:59,261 - ERROR - Exception: self = <test.test_stubhub.TestStubhub object at 0x10288afe0>
+
+    def test_stubhub_1567bfa7(self):
+        # self.driver.get("https://stubhub.com")
+        time.sleep(5)
+        # self.driver.find_element(By.XPATH, "//input[@value='' and @type='search' and @placeholder='Event, artist or team']").clear()
+        # self.driver.find_element(By.XPATH, "//input[@value='' and @type='search' and @placeholder='Event, artist or team']").send_keys("MIAMI HEAT")
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search events, artists, teams, and more']").clear()
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search events, artists, teams, and more']").send_keys("MIAMI HEAT")
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/div[1]/div[5]/div[2]/div[1]/a[1]/div[2]/div[1]/em[1]").click()
+        self.driver.find_element(By.XPATH, "//p[./em[text()='Miami'] and ./em[text()='Heat'] and not(preceding-sibling::*) and not(following-sibling::*)]").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[3]/div[2]/div[1]/div[1]/div[1]/div[3]/div[1]/span[1]/div[2]/button[1]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@aria-label='Filter by location']/div[1]").click()
+    
+        # self.driver.find_element(By.XPATH, "//input[@value='' and @type='text' and @placeholder='Search']").clear()
+        # self.driver.find_element(By.XPATH, "//input[@value='' and @type='text' and @placeholder='Search']").send_keys("NEW YOK")
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Country, State, City']").clear()
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Country, State, City']").send_keys("NEW YORK")
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[3]/div[2]/div[1]/div[1]/div[1]/div[3]/div[1]/span[1]/div[2]/button[1]/div[2]/div[1]/div[2]/div[2]").click()
+        self.driver.find_element(By.XPATH, "//div[text()='New York, NY, USA']").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[3]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/button[1]/div[3]/svg[1]/path[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[3]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]").click()
+        # selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//div[text()='Home/Away']").click()
+        self.driver.find_element(By.XPATH, "//div[text()='Away games']").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[3]/div[2]/div[1]/div[1]/div[1]/div[3]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//ul[./li[1]/div[1]/div[1]/div[text()='New York']]/li[2]//button[text()='See tickets']").click()
+        switch_to_new_tab(self.driver)
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='modal-root']/div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[6]/button[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[2]/div[1]/div[1]/div[3]/div[1]/div[2]/div[4]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/svg[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[2]/div[1]/div[1]/div[3]/div[1]/div[2]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/svg[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[2]/div[1]/div[1]/div[3]/div[1]/div[2]/div[5]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[10]/label[1]/span[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/button[1]").click()
+        # self.driver.find_element(By.XPATH, "//select[@name='quantity-select']").clear()
+        # self.driver.find_element(By.XPATH, "//select[@name='quantity-select']").select("6 tickets")
+        # self.driver.find_element(By.XPATH, "//div[@id='modal-root']/div[1]/div[2]/div[1]/div[2]/a[1]/button[1]").click()
+        tickets_dropdown = self.driver.find_element(By.XPATH, "//div[@id='modal-root']//select[@aria-label='Number of tickets']")
+        tickets_select = Select(tickets_dropdown)
+        tickets_select.select_by_visible_text("6 tickets")
+        self.driver.find_element(By.XPATH, "//button[text()='Continue']").click()
+        self.driver.find_element(By.XPATH, "//div[@aria-label='filter']/div[text()='Zones']").click()
+        # club gold is not available now, click on VIP now
+        self.driver.find_element(By.XPATH, "//li[contains(@id, 'picker-') and ./div[1]/div[1]/div[text()='VIP']]/div[2]/div[1]/span[1]").click()
+        # click zone again to avoid the popup intercept clicking sort dropdown
+>       self.driver.find_element(By.XPATH, "//div[@aria-label='filter']/div[text()='Zones']").click()
+
+test/test_stubhub.py:204: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:158: in click
+    raise e
+conftest.py:142: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x102889270>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff80977018b _pthread_start + 99\\n25  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <div class="sc-1urpwzu-1 hjilXi">...</div> is not clickable at point (657, 116). Other element would receive the click: <div class="sc-1pqrqi7-0 jMFJFj">...</div>
+E         (Session info: chrome=128.0.6613.85)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001029eb2a8 undetected_chromedriver + 5096104
+E       1   undetected_chromedriver             0x00000001029e2ada undetected_chromedriver + 5061338
+E       2   undetected_chromedriver             0x000000010256dfd0 undetected_chromedriver + 389072
+E       3   undetected_chromedriver             0x00000001025c1486 undetected_chromedriver + 730246
+E       4   undetected_chromedriver             0x00000001025bf38d undetected_chromedriver + 721805
+E       5   undetected_chromedriver             0x00000001025bce47 undetected_chromedriver + 712263
+E       6   undetected_chromedriver             0x00000001025bbcf2 undetected_chromedriver + 707826
+E       7   undetected_chromedriver             0x00000001025af8c6 undetected_chromedriver + 657606
+E       8   undetected_chromedriver             0x00000001025deef2 undetected_chromedriver + 851698
+E       9   undetected_chromedriver             0x00000001025af288 undetected_chromedriver + 656008
+E       10  undetected_chromedriver             0x00000001025df0ae undetected_chromedriver + 852142
+E       11  undetected_chromedriver             0x00000001025fc250 undetected_chromedriver + 971344
+E       12  undetected_chromedriver             0x00000001025dec93 undetected_chromedriver + 851091
+E       13  undetected_chromedriver             0x00000001025adc79 undetected_chromedriver + 650361
+E       14  undetected_chromedriver             0x00000001025ae49e undetected_chromedriver + 652446
+E       15  undetected_chromedriver             0x00000001029ae020 undetected_chromedriver + 4845600
+E       16  undetected_chromedriver             0x00000001029b2f38 undetected_chromedriver + 4865848
+E       17  undetected_chromedriver             0x00000001029b3605 undetected_chromedriver + 4867589
+E       18  undetected_chromedriver             0x0000000102990c59 undetected_chromedriver + 4725849
+E       19  undetected_chromedriver             0x00000001029b38f9 undetected_chromedriver + 4868345
+E       20  undetected_chromedriver             0x0000000102982b74 undetected_chromedriver + 4668276
+E       21  undetected_chromedriver             0x00000001029d2dd8 undetected_chromedriver + 4996568
+E       22  undetected_chromedriver             0x00000001029d2fd7 undetected_chromedriver + 4997079
+E       23  undetected_chromedriver             0x00000001029e26de undetected_chromedriver + 5060318
+E       24  libsystem_pthread.dylib             0x00007ff80977018b _pthread_start + 99
+E       25  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2024-08-26 23:41:59,261 - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //div[@aria-label='filter']/div[text()='Zones'] - Message: element click intercepted: Element <div class="sc-1urpwzu-1 hjilXi">...</div> is not clickable at point (657, 116). Other element would receive the click: <div class="sc-1pqrqi7-0 jMFJFj">...</div>
+  (Session info: chrome=128.0.6613.85)
+Stacktrace:
+0   undetected_chromedriver             0x00000001029eb2a8 undetected_chromedriver + 5096104
+1   undetected_chromedriver             0x00000001029e2ada undetected_chromedriver + 5061338
+2   undetected_chromedriver             0x000000010256dfd0 undetected_chromedriver + 389072
+3   undetected_chromedriver             0x00000001025c1486 undetected_chromedriver + 730246
+4   undetected_chromedriver             0x00000001025bf38d undetected_chromedriver + 721805
+5   undetected_chromedriver             0x00000001025bce47 undetected_chromedriver + 712263
+6   undetected_chromedriver             0x00000001025bbcf2 undetected_chromedriver + 707826
+7   undetected_chromedriver             0x00000001025af8c6 undetected_chromedriver + 657606
+8   undetected_chromedriver             0x00000001025deef2 undetected_chromedriver + 851698
+9   undetected_chromedriver             0x00000001025af288 undetected_chromedriver + 656008
+10  undetected_chromedriver             0x00000001025df0ae undetected_chromedriver + 852142
+11  undetected_chromedriver             0x00000001025fc250 undetected_chromedriver + 971344
+12  undetected_chromedriver             0x00000001025dec93 undetected_chromedriver + 851091
+13  undetected_chromedriver             0x00000001025adc79 undetected_chromedriver + 650361
+14  undetected_chromedriver             0x00000001025ae49e undetected_chromedriver + 652446
+15  undetected_chromedriver             0x00000001029ae020 undetected_chromedriver + 4845600
+16  undetected_chromedriver             0x00000001029b2f38 undetected_chromedriver + 4865848
+17  undetected_chromedriver             0x00000001029b3605 undetected_chromedriver + 4867589
+18  undetected_chromedriver             0x0000000102990c59 undetected_chromedriver + 4725849
+19  undetected_chromedriver             0x00000001029b38f9 undetected_chromedriver + 4868345
+20  undetected_chromedriver             0x0000000102982b74 undetected_chromedriver + 4668276
+21  undetected_chromedriver             0x00000001029d2dd8 undetected_chromedriver + 4996568
+22  undetected_chromedriver             0x00000001029d2fd7 undetected_chromedriver + 4997079
+23  undetected_chromedriver             0x00000001029e26de undetected_chromedriver + 5060318
+24  libsystem_pthread.dylib             0x00007ff80977018b _pthread_start + 99
+25  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15
+
