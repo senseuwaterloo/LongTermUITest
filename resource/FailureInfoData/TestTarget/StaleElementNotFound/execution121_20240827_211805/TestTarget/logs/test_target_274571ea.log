@@ -1,0 +1,209 @@
+2024-08-27 21:18:27,159 - ERROR - Test test_target_274571ea failed.
+2024-08-27 21:18:27,162 - ERROR - URL at failure: https://www.target.com/s?searchTerm=Easter+Eggs&tref=typeahead%7Cterm%7CEaster+Eggs%7C%7C%7Chistory&facetedValue=gf7z9Zav8si&ignoreBrandExactness=true&moveTo=product-list-grid
+2024-08-27 21:18:27,162 - ERROR - Exception: self = <test.test_target.TestTarget object at 0x10718f520>
+
+    def test_target_274571ea(self):
+        # self.driver.get("https://www.target.com/")
+    
+        # self.driver.find_element(By.XPATH, "//button[@id='web-store-id-msg-btn']/div[1]/span[2]").click()
+        self.driver.find_element(By.XPATH, "//button[@id='web-store-id-msg-btn']/div[1]/span[1]").click()
+    
+        self.driver.find_element(By.ID, "zip-or-city-state").clear()
+        self.driver.find_element(By.ID, "zip-or-city-state").send_keys("25504")
+        self.driver.find_element(By.XPATH, "//button[contains(.,'Look up')]").click()
+        self.driver.find_element(By.XPATH, "//h4[contains(.,'Barboursville')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'More info')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'More info') and @aria-label='More info about Barboursville store']").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='__next']/div[3]/div[1]/div[1]/div[2]/div[1]/div[3]/button[2]").click()
+        self.driver.find_element(By.XPATH, "//button[text()='Shop this store']").click()
+    
+        # self.driver.find_element(By.XPATH, "//nav[@id='headerPrimary']/a[1]/span[1]/div[1]/svg[1]/path[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='pageBodyContainer']/div[1]/div[1]/div[13]/div[1]/div[1]/ul[1]/li[1]/a[1]/div[1]/div[2]/span[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='pageBodyContainer']/div[1]/div[1]/div[3]/div[1]/div[1]/ul[1]/li[5]/a[1]/div[1]/div[2]/span[1]").click()
+        # since it's not easter now, easter egg is not in the dropdown menu now, so search for easter egg instead
+        self.driver.find_element(By.ID, "search").clear()
+        self.driver.find_element(By.ID, "search").send_keys("Easter Eggs")
+        self.driver.find_element(By.ID, "search").send_keys(Keys.RETURN)
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='pageBodyContainer']/div[1]/div[1]/div[4]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/button[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@data-test='@web/SlotRenderer']//button[@data-test='facet-button-Type']").click()
+    
+        # self.driver.find_element(By.XPATH, "/html/body[1]/div[24]/div[1]/div[1]/div[2]/div[4]/div[1]/label[1]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//span[text()='Fillable Eggs' and ./parent::span]").click()
+        self.driver.find_element(By.XPATH, "//span[text()='Prefilled Eggs' and ./parent::span]").click()
+    
+        # self.driver.find_element(By.XPATH, "/html/body[1]/div[24]/div[1]/div[1]/div[1]/div[1]/div[2]/button[1]").click()
+        self.driver.find_element(By.XPATH, "//button[text()='Apply']").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='pageBodyContainer']/div[1]/div[1]/div[4]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/button[1]").click()
+>       self.driver.find_element(By.XPATH, "//div[@data-test='@web/SlotRenderer']//button[@data-test='facet-button-Price']").click()
+
+test/test_target.py:248: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:163: in click
+    raise e
+conftest.py:141: in click
+    WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:96: in until
+    value = method(self._driver)
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/expected_conditions.py:364: in _predicate
+    element = visibility_of(target)(driver)
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/expected_conditions.py:173: in _predicate
+    return _element_if_visible(element)
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/expected_conditions.py:179: in _element_if_visible
+    return element if element.is_displayed() == visibility else False
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:252: in is_displayed
+    return self.parent.execute_script(f"/* isDisplayed */return ({isDisplayed_js}).apply(null, arguments);", self)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:414: in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x10718d660>
+response = {'status': 404, 'value': '{"value":{"error":"stale element reference","message":"stale element reference: stale elemen...7ff80977018b _pthread_start + 99\\n21  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+E         (Session info: chrome=128.0.6613.85); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104d142a8 undetected_chromedriver + 5096104
+E       1   undetected_chromedriver             0x0000000104d0bada undetected_chromedriver + 5061338
+E       2   undetected_chromedriver             0x0000000104896fd0 undetected_chromedriver + 389072
+E       3   undetected_chromedriver             0x000000010489d189 undetected_chromedriver + 414089
+E       4   undetected_chromedriver             0x000000010489ee09 undetected_chromedriver + 421385
+E       5   undetected_chromedriver             0x00000001049261c4 undetected_chromedriver + 975300
+E       6   undetected_chromedriver             0x0000000104907ef2 undetected_chromedriver + 851698
+E       7   undetected_chromedriver             0x0000000104925250 undetected_chromedriver + 971344
+E       8   undetected_chromedriver             0x0000000104907c93 undetected_chromedriver + 851091
+E       9   undetected_chromedriver             0x00000001048d6c79 undetected_chromedriver + 650361
+E       10  undetected_chromedriver             0x00000001048d749e undetected_chromedriver + 652446
+E       11  undetected_chromedriver             0x0000000104cd7020 undetected_chromedriver + 4845600
+E       12  undetected_chromedriver             0x0000000104cdbf38 undetected_chromedriver + 4865848
+E       13  undetected_chromedriver             0x0000000104cdc605 undetected_chromedriver + 4867589
+E       14  undetected_chromedriver             0x0000000104cb9c59 undetected_chromedriver + 4725849
+E       15  undetected_chromedriver             0x0000000104cdc8f9 undetected_chromedriver + 4868345
+E       16  undetected_chromedriver             0x0000000104cabb74 undetected_chromedriver + 4668276
+E       17  undetected_chromedriver             0x0000000104cfbdd8 undetected_chromedriver + 4996568
+E       18  undetected_chromedriver             0x0000000104cfbfd7 undetected_chromedriver + 4997079
+E       19  undetected_chromedriver             0x0000000104d0b6de undetected_chromedriver + 5060318
+E       20  libsystem_pthread.dylib             0x00007ff80977018b _pthread_start + 99
+E       21  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: StaleElementReferenceException
+2024-08-27 21:18:27,162 - ERROR - StaleElementReferenceException: Element became stale: xpath = //div[@data-test='@web/SlotRenderer']//button[@data-test='facet-button-Price'] - Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=128.0.6613.85); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   undetected_chromedriver             0x0000000104d142a8 undetected_chromedriver + 5096104
+1   undetected_chromedriver             0x0000000104d0bada undetected_chromedriver + 5061338
+2   undetected_chromedriver             0x0000000104896fd0 undetected_chromedriver + 389072
+3   undetected_chromedriver             0x000000010489d189 undetected_chromedriver + 414089
+4   undetected_chromedriver             0x000000010489ee09 undetected_chromedriver + 421385
+5   undetected_chromedriver             0x00000001049261c4 undetected_chromedriver + 975300
+6   undetected_chromedriver             0x0000000104907ef2 undetected_chromedriver + 851698
+7   undetected_chromedriver             0x0000000104925250 undetected_chromedriver + 971344
+8   undetected_chromedriver             0x0000000104907c93 undetected_chromedriver + 851091
+9   undetected_chromedriver             0x00000001048d6c79 undetected_chromedriver + 650361
+10  undetected_chromedriver             0x00000001048d749e undetected_chromedriver + 652446
+11  undetected_chromedriver             0x0000000104cd7020 undetected_chromedriver + 4845600
+12  undetected_chromedriver             0x0000000104cdbf38 undetected_chromedriver + 4865848
+13  undetected_chromedriver             0x0000000104cdc605 undetected_chromedriver + 4867589
+14  undetected_chromedriver             0x0000000104cb9c59 undetected_chromedriver + 4725849
+15  undetected_chromedriver             0x0000000104cdc8f9 undetected_chromedriver + 4868345
+16  undetected_chromedriver             0x0000000104cabb74 undetected_chromedriver + 4668276
+17  undetected_chromedriver             0x0000000104cfbdd8 undetected_chromedriver + 4996568
+18  undetected_chromedriver             0x0000000104cfbfd7 undetected_chromedriver + 4997079
+19  undetected_chromedriver             0x0000000104d0b6de undetected_chromedriver + 5060318
+20  libsystem_pthread.dylib             0x00007ff80977018b _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80976bae3 thread_start + 15
+

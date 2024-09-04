@@ -42,7 +42,7 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'ohiomeansjobsohiogov': 'https://ohiomeansjobs.ohio.gov', 'osuedu': 'https://osu.edu',
                 'petfinder': 'https://petfinderfoundation.org/', 'recreationgov': 'https://www.recreation.gov/',
                 'shoppinggoogle': 'https://shopping.google.com/', 'sportsyahoo': 'https://sports.yahoo.com/?guccounter=1',
-                'storesteampowered': 'https://store.steampowered.com/'}
+                'storesteampowered': 'https://store.steampowered.com/', 'thetrainline': 'https://www.thetrainline.com/en-us'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
@@ -85,7 +85,7 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        'https://sixflags.com': [(By.ID, "cn-accept-cookie")],
                        'https://soundcloud.com': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://stocktwits.com/': [(By.XPATH, "//div[@id='onetrust-button-group-parent']/preceding::button[@aria-label='Close'][1]")],
-                       'https://thetrainline.com': [(By.ID, "onetrust-accept-btn-handler")],
+                       'https://www.thetrainline.com/en-us': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://travelzoo.com': [(By.ID, "btnClose")],
                        'https://twitter.com': [(By.XPATH, "//button[@data-testid='xMigrationBottomBar']")],
                        'https://www.underarmour.com/en-us/': [(By.XPATH, "//a[text()='Agree and Proceed']")],

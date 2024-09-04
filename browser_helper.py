@@ -239,6 +239,20 @@ def calculate_first_last_dates():
     return start_date_str, end_date_str
 
 
+def calculate_dates_ticketcenter_format(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    start_day = start_date.strftime('%-d')  # Day of the month without leading zeros
+    start_month_year = start_date.strftime('%b %Y')  # Month and year
+
+    end_day = end_date.strftime('%-d')  # Day of the month without leading zeros
+    end_month_year = end_date.strftime('%b %Y')  # Month and year
+
+    return start_day, start_month_year, end_day, end_month_year
+
+
 def scroll_to_element(driver, element):
     if isinstance(element, CustomWebElement):
         element = element.get_native_element()
