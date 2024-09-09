@@ -119,7 +119,6 @@ class TestUnited:
         self.driver.find_element(By.XPATH, "//div[contains(@class, 'undefined listings')]/div[contains(@class, 'Listings__StyledWrapper')]/div[1]//button[@data-testid='price-choosen-button']").click()
         time.sleep(2)
 
-
     # def test_united_5c29c805(self):
     #     # self.driver.get("https://www.united.com/en/us")
     #     self.driver.find_element(By.XPATH, "//li[@id='bookHotelTab']/h3[1]/span[1]").click()

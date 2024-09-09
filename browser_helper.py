@@ -264,6 +264,19 @@ def calculate_dates_without_space(days_from_now_start=7, days_from_now_end=14):
     return start_date_str, end_date_str
 
 
+def calculate_next_first_last_day():
+    current_date = datetime.now()
+    # Calculate the first day of the next month
+    first_of_next_month = (current_date.replace(day=1) + timedelta(days=32)).replace(day=1)
+    # Calculate the last day of the next month by finding the first day of the following month and subtracting a day
+    last_of_next_month = (first_of_next_month.replace(day=1) + timedelta(days=32)).replace(day=1) - timedelta(days=1)
+
+    first_date_str = first_of_next_month.strftime('%a %b %d %Y')
+    last_date_str = last_of_next_month.strftime('%a %b %d %Y')
+
+    return first_date_str, last_date_str
+
+
 def scroll_to_element(driver, element):
     if isinstance(element, CustomWebElement):
         element = element.get_native_element()

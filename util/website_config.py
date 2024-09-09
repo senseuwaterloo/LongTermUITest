@@ -98,7 +98,7 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        # 'https://ups.com': [(By.XPATH, "//label[contains(text(), 'Opt-In to Essential Cookies Only')]"), (By.ID, "consent_prompt_submit")],
                        'https://www.ups.com/us/en/Home.page': [(By.XPATH, "//button[@class='close_btn_thick']")],
                        # 'https://www.usnews.com/education': [(By.ID, "onetrust-close-btn-container")],
-                       'https://www.viator.com/': [(By.ID, "onetrust-accept-btn-handler")],
+                       'https://www.viator.com/': [(By.ID, "onetrust-pc-btn-handler"), (By.XPATH, "//button[@class='ot-pc-refuse-all-handler' and text()='Reject All']")],
                        'https://www.macys.com/': [(By.ID, "onetrust-accept-btn-handler")]}
 
 tasks_from_website = [(
