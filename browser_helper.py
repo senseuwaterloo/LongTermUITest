@@ -196,6 +196,24 @@ def calculate_dates_with_suffix(days_from_now_start=7, days_from_now_end=14):
     return start_date_str, end_date_str
 
 
+def format_date_with_suffix_webmd(date):
+    day = date.day
+    suffix = get_day_suffix(day)
+    formatted_date = date.strftime(f'%B {day}{suffix}, %Y')
+    return formatted_date
+
+
+def calculate_dates_with_suffix_webmd(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    start_date_str = format_date_with_suffix(start_date)
+    end_date_str = format_date_with_suffix(end_date)
+
+    return start_date_str, end_date_str
+
+
 def calculate_dates_day_month_format(days_from_now_start=7, days_from_now_end=14):
     current_date = datetime.now()
     start_date = current_date + timedelta(days=days_from_now_start)
