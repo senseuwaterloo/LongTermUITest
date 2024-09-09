@@ -1,0 +1,76 @@
+2024-09-09 11:36:53,591 - ERROR - Test test_usmegabus_54d60a7c failed.
+2024-09-09 11:36:53,593 - ERROR - URL at failure: https://us.megabus.com/
+2024-09-09 11:36:53,594 - ERROR - Exception: self = <test.test_usmegabus.TestUsMegabus object at 0x102c8f460>
+
+    def test_usmegabus_54d60a7c(self):
+        # self.driver.get("https://us.megabus.com")
+    
+        # Need to handle popup...
+        if self.driver.find_element(By.XPATH, "//button[text()='Decline Offer']") is not None:
+            self.driver.find_element(By.XPATH, "//button[text()='Decline Offer']").click()
+    
+        self.driver.find_element(By.ID, "startingAt").clear()
+        self.driver.find_element(By.ID, "startingAt").send_keys("albany")
+    
+        # self.driver.find_element(By.XPATH, "//main[@id='homepageContentArea']/div[1]/mb-user-home[1]/div[1]/div[1]/div[1]/div[1]/div[1]/mb-journey-planner-lite[1]/div[1]/div[1]/mb-journey-search[1]/div[1]/div[1]/div[1]/div[1]/form[1]/div[2]/div[1]/div[1]/div[1]/mb-typeahead-component[1]/div[1]/div[1]/div[1]/div[2]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//div[./input[@id='startingAt']]//div[@title='Enter a town or city']/div[1]/div[2]").click()
+    
+        self.driver.find_element(By.ID, "goingTo").clear()
+        self.driver.find_element(By.ID, "goingTo").send_keys("New York")
+    
+        # self.driver.find_element(By.XPATH, "//main[@id='homepageContentArea']/div[1]/mb-user-home[1]/div[1]/div[1]/div[1]/div[1]/div[1]/mb-journey-planner-lite[1]/div[1]/div[1]/mb-journey-search[1]/div[1]/div[1]/div[1]/div[1]/form[1]/div[2]/div[1]/div[1]/div[2]/mb-typeahead-component[1]/div[1]/div[1]/div[1]/div[2]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//div[./input[@id='goingTo']]//div[@title='Enter a town or city']/div[1]/div[2]").click()
+    
+        self.driver.find_element(By.ID, "mat-input-0").click()
+    
+        # self.driver.find_element(By.XPATH, "//mat-calendar[@id='mat-datepicker-0']/div[1]/mat-month-view[1]/table[1]/tbody[1]/tr[3]/td[7]/div[1]").click()
+        start_date_str, end_date_str = calculate_dates_full_month_name(7, 14)
+        if self.driver.find_element(By.XPATH, f"//td[@aria-label='{start_date_str}']") is None:
+            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+    
+>       self.driver.find_element(By.XPATH, f"//td[@aria-label='{start_date_str}']").click()
+
+test/test_usmegabus.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:141: in click
+    WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:96: in until
+    value = method(self._driver)
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/expected_conditions.py:364: in _predicate
+    element = visibility_of(target)(driver)
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/expected_conditions.py:173: in _predicate
+    return _element_if_visible(element)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+element = None, visibility = True
+
+    def _element_if_visible(element: WebElement, visibility: bool = True) -> Union[Literal[False], WebElement]:
+>       return element if element.is_displayed() == visibility else False
+E       AttributeError: 'NoneType' object has no attribute 'is_displayed'
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/expected_conditions.py:179: AttributeError
+2024-09-09 11:36:53,594 - ERROR - TimeoutException: Elements not found: xpath = //td[@aria-label='September 16, 2024'] - Message: 
+Stacktrace:
+0   undetected_chromedriver             0x0000000104e1b248 undetected_chromedriver + 5096008
+1   undetected_chromedriver             0x0000000104e12a7a undetected_chromedriver + 5061242
+2   undetected_chromedriver             0x000000010499dfd0 undetected_chromedriver + 389072
+3   undetected_chromedriver             0x00000001049ea9ab undetected_chromedriver + 702891
+4   undetected_chromedriver             0x00000001049eaa81 undetected_chromedriver + 703105
+5   undetected_chromedriver             0x0000000104a2ecd4 undetected_chromedriver + 982228
+6   undetected_chromedriver             0x0000000104a0ef1d undetected_chromedriver + 851741
+7   undetected_chromedriver             0x0000000104a2c250 undetected_chromedriver + 971344
+8   undetected_chromedriver             0x0000000104a0ec93 undetected_chromedriver + 851091
+9   undetected_chromedriver             0x00000001049ddc79 undetected_chromedriver + 650361
+10  undetected_chromedriver             0x00000001049de49e undetected_chromedriver + 652446
+11  undetected_chromedriver             0x0000000104dddfc0 undetected_chromedriver + 4845504
+12  undetected_chromedriver             0x0000000104de2ed8 undetected_chromedriver + 4865752
+13  undetected_chromedriver             0x0000000104de35a5 undetected_chromedriver + 4867493
+14  undetected_chromedriver             0x0000000104dc0bf9 undetected_chromedriver + 4725753
+15  undetected_chromedriver             0x0000000104de3899 undetected_chromedriver + 4868249
+16  undetected_chromedriver             0x0000000104db2b14 undetected_chromedriver + 4668180
+17  undetected_chromedriver             0x0000000104e02d78 undetected_chromedriver + 4996472
+18  undetected_chromedriver             0x0000000104e02f77 undetected_chromedriver + 4996983
+19  undetected_chromedriver             0x0000000104e1267e undetected_chromedriver + 5060222
+20  libsystem_pthread.dylib             0x00007ff81706018b _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff81705bae3 thread_start + 15
+

@@ -1,0 +1,99 @@
+2024-09-09 09:13:28,186 - ERROR - Test test_united_fdf322bd failed.
+2024-09-09 09:13:28,189 - ERROR - URL at failure: https://packages.united.com/relax/in/3000015284/from/20240923/to/20240930/rooms/1/adults/2?cart-key=beef9709-8be2-4dc7-b946-322459989c87&index=0&component-key=STAY-340382&pkg-rguid=d466aeb429ba48f5b360e5ef7b7000c5&uspCacheKey=263635b1-5199-4a3d-8e53-e53caca78c9d
+2024-09-09 09:13:28,190 - ERROR - Exception: self = <test.test_united.TestUnited object at 0x10522e6b0>
+
+    def test_united_fdf322bd(self):
+        # self.driver.get("https://www.united.com/en/us")
+        # self.driver.find_element(By.XPATH, "//a[@id='headerNav0']/span[1]").click()
+        self.driver.find_element(By.XPATH, "//button/span[text()='Book']").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='headerNav0-panel']/div[1]/div[2]/ul[1]/li[3]/a[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[text()='Vacation packages']").click()
+        switch_to_new_tab_and_close_old(self.driver)
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='__next']/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/label[2]/div[1]/svg[1]").click()
+        self.driver.find_element(By.XPATH, "//label[@for='Hotel + Flight + Car']").click()
+    
+        self.driver.find_element(By.ID, "Where from?").clear()
+        self.driver.find_element(By.ID, "Where from?").send_keys("new york")
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='Where from?-dropdown-item-0']/div[1]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='Where from?-dropdown']//div[@id='undefined-item-0']/div[1]/div[1]").click()
+    
+        self.driver.find_element(By.ID, "Where to?").clear()
+        self.driver.find_element(By.ID, "Where to?").send_keys("las vegas")
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='Where to?-dropdown-item-0']/div[1]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='Where to?-dropdown']//div[@id='undefined-item-0']/div[1]/div[1]").click()
+    
+        # self.driver.find_element(By.XPATH, "//input[@value='' and @placeholder='Departing - Returning']").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='__next']/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[3]/div[17]/div[1]/div[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='__next']/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[3]/div[25]/div[1]/div[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='__next']/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[2]/label[2]/div[1]/svg[3]").click()
+        self.driver.find_element(By.XPATH, "//div[text()='Departing - Returning']").click()
+        start_date_str, end_date_str = calculate_dates_without_space(14, 21)
+        self.driver.find_element(By.XPATH, f"//div[@data-autobot-element-id='DATEPICKER_DAY_{start_date_str}']").click()
+        self.driver.find_element(By.XPATH, f"//div[@data-autobot-element-id='DATEPICKER_DAY_{end_date_str}']").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='__next']/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[2]/button[1]").click()
+        self.driver.find_element(By.XPATH, "//div[text()='Start Saving']").click()
+        switch_to_new_tab_and_close_old(self.driver)
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='main-wrapper']/div[1]/div[1]/div[3]/div[2]/div[1]/div[7]/div[1]/div[1]/div[2]/label[1]/div[1]/div[1]/div[1]/svg[3]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='main-wrapper']/div[1]/div[1]/div[3]/div[2]/div[1]/div[5]/div[1]/div[1]/div[1]/button[4]/div[1]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='root']/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[3]/div[2]").click()
+        # self.driver.find_element(By.XPATH, "/html/body[1]/reach-portal[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/div[9]/div[1]/div[1]/button[1]/div[1]").click()
+        # self.driver.find_element(By.XPATH, "//svg[@role='img' and @title='Increase Rooms']").click()
+        # self.driver.find_element(By.XPATH, "//svg[@role='img' and @title='Increase Adults']").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='popover-description-traveler-selection-popover']/div[3]/div[1]/div[2]/div[2]/button[2]/div[1]/svg[1]/path[1]").click()
+        # self.driver.find_element(By.XPATH, "/html/body[1]/div[5]").click()
+        # self.driver.find_element(By.XPATH, "//button[contains(.,'Update Search')]").click()
+        self.driver.find_element(By.XPATH, "//div[text()='1 Room, 2 Adults']").click()
+        self.driver.find_element(By.XPATH, "//button[@aria-label='Select traveler information']").click()
+        self.driver.find_element(By.XPATH, "//button[@aria-label='Increase Rooms']").click()
+        self.driver.find_element(By.XPATH, "//button[@aria-label='Increase Adults']").click()
+        self.driver.find_element(By.XPATH, "//button[@aria-label='Increase Adults']").click()
+>       self.driver.find_element(By.XPATH, "//div[text()='Done']").click()
+
+test/test_united.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:153: in click
+    raise e
+conftest.py:141: in click
+    WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="b80796d9735461dc231e269b3c724cd1")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x105221000>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2024-09-09 09:13:28,190 - ERROR - TimeoutException: Element not clickable within timeout: xpath = //div[text()='Done'] - Message: 
+

@@ -1,0 +1,68 @@
+2024-09-09 12:30:20,219 - ERROR - Test test_usnewseducation_7d047bb7 failed.
+2024-09-09 12:30:20,222 - ERROR - URL at failure: https://www.usnews.com/education/scholarships/search?state-of-residence=AZ&state-of-study=AZ&sort=deadline-desc
+2024-09-09 12:30:20,222 - ERROR - Exception: self = <test.test_usnewseducation.TestUsnewsEducation object at 0x106db71c0>
+
+    def test_usnewseducation_7d047bb7(self):
+        # self.driver.get("https://www.usnews.com/education")
+        # uiteststudy@gmail.com:Pass4USNews!
+    
+        # add extra login steps
+        self.driver.find_element(By.XPATH, "//button[@title='My Account']").click()
+        self.driver.find_element(By.XPATH, "//a[text()='Sign In to My Account']").click()
+        self.driver.find_element(By.NAME, "username").clear()
+        self.driver.find_element(By.NAME, "username").send_keys("uiteststudy@gmail.com")
+        self.driver.find_element(By.NAME, "password").clear()
+        self.driver.find_element(By.NAME, "password").send_keys("Pass4USNews!")
+        self.driver.find_element(By.XPATH, "//button[text()='Continue']").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Scholarship Search')]").click()
+        # selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//a[text()='Scholarships and Finances']").click()
+    
+        # self.driver.find_element(By.XPATH, "//select[@name='state-of-residence']").clear()
+        # self.driver.find_element(By.XPATH, "//select[@name='state-of-residence']").select("Arizona")
+        state_residence_dropdown = self.driver.find_element(By.NAME, "state-of-residence")
+        state_residence_select = Select(state_residence_dropdown)
+        state_residence_select.select_by_value("AZ")
+    
+        # self.driver.find_element(By.XPATH, "//select[@name='state-of-study']").clear()
+        # self.driver.find_element(By.XPATH, "//select[@name='state-of-study']").select("Arizona")
+        state_study_dropdown = self.driver.find_element(By.NAME, "state-of-study")
+        state_study_select = Select(state_study_dropdown)
+        state_study_select.select_by_value("AZ")
+    
+        # self.driver.find_element(By.XPATH, "//div[@name='ethnicity' and @placeholder='Type to Select']").clear()
+        # self.driver.find_element(By.XPATH, "//div[@name='ethnicity' and @placeholder='Type to Select']").send_keys("african american")
+        self.driver.find_element(By.XPATH, "//input[@name='ethnicity' and @placeholder='Type to Select']").clear()
+        self.driver.find_element(By.XPATH, "//input[@name='ethnicity' and @placeholder='Type to Select']").send_keys("african american")
+    
+>       self.driver.find_element(By.ID, "react-autowhatever-1--item-0").click()
+E       AttributeError: 'NoneType' object has no attribute 'click'
+
+test/test_usnewseducation.py:111: AttributeError
+2024-09-09 12:30:20,222 - ERROR - TimeoutException: Elements not found: id = react-autowhatever-1--item-0 - Message: 
+Stacktrace:
+0   undetected_chromedriver             0x0000000104587248 undetected_chromedriver + 5096008
+1   undetected_chromedriver             0x000000010457ea7a undetected_chromedriver + 5061242
+2   undetected_chromedriver             0x0000000104109fd0 undetected_chromedriver + 389072
+3   undetected_chromedriver             0x00000001041569ab undetected_chromedriver + 702891
+4   undetected_chromedriver             0x0000000104156a81 undetected_chromedriver + 703105
+5   undetected_chromedriver             0x000000010419acd4 undetected_chromedriver + 982228
+6   undetected_chromedriver             0x000000010417af1d undetected_chromedriver + 851741
+7   undetected_chromedriver             0x0000000104198250 undetected_chromedriver + 971344
+8   undetected_chromedriver             0x000000010417ac93 undetected_chromedriver + 851091
+9   undetected_chromedriver             0x0000000104149c79 undetected_chromedriver + 650361
+10  undetected_chromedriver             0x000000010414a49e undetected_chromedriver + 652446
+11  undetected_chromedriver             0x0000000104549fc0 undetected_chromedriver + 4845504
+12  undetected_chromedriver             0x000000010454eed8 undetected_chromedriver + 4865752
+13  undetected_chromedriver             0x000000010454f5a5 undetected_chromedriver + 4867493
+14  undetected_chromedriver             0x000000010452cbf9 undetected_chromedriver + 4725753
+15  undetected_chromedriver             0x000000010454f899 undetected_chromedriver + 4868249
+16  undetected_chromedriver             0x000000010451eb14 undetected_chromedriver + 4668180
+17  undetected_chromedriver             0x000000010456ed78 undetected_chromedriver + 4996472
+18  undetected_chromedriver             0x000000010456ef77 undetected_chromedriver + 4996983
+19  undetected_chromedriver             0x000000010457e67e undetected_chromedriver + 5060222
+20  libsystem_pthread.dylib             0x00007ff81706018b _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff81705bae3 thread_start + 15
+

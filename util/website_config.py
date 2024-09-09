@@ -42,7 +42,10 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'ohiomeansjobsohiogov': 'https://ohiomeansjobs.ohio.gov', 'osuedu': 'https://osu.edu',
                 'petfinder': 'https://petfinderfoundation.org/', 'recreationgov': 'https://www.recreation.gov/',
                 'shoppinggoogle': 'https://shopping.google.com/', 'sportsyahoo': 'https://sports.yahoo.com/?guccounter=1',
-                'storesteampowered': 'https://store.steampowered.com/', 'thetrainline': 'https://www.thetrainline.com/en-us'}
+                'storesteampowered': 'https://store.steampowered.com/', 'thetrainline': 'https://www.thetrainline.com/en-us',
+                'ultimateguitar': 'https://www.ultimate-guitar.com/', 'umichedu': 'https://www.umich.edu',
+                'ups': 'https://www.ups.com/us/en/Home.page', 'usmegabus': 'https://us.megabus.com',
+                'usnewseducation': 'https://www.usnews.com/education'}
 
 cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
                        'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
@@ -88,11 +91,13 @@ cookie_locator_dict = {'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti
                        'https://www.thetrainline.com/en-us': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://travelzoo.com': [(By.ID, "btnClose")],
                        'https://twitter.com': [(By.XPATH, "//button[@data-testid='xMigrationBottomBar']")],
-                       'https://www.underarmour.com/en-us/': [(By.XPATH, "//a[text()='Agree and Proceed']")],
-                       'https://www.uniqlo.com/us/en/': [(By.ID, "dismissbutton2")],
-                       'https://www.united.com/en/us': [(By.XPATH, "//a[@role='button' and text()='Understood']")],
-                       'https://ups.com': [(By.XPATH, "//label[contains(text(), 'Opt-In to Essential Cookies Only')]"), (By.ID, "consent_prompt_submit")],
-                       'https://www.usnews.com/education': [(By.ID, "onetrust-close-btn-container")],
+                       # 'https://www.underarmour.com/en-us/': [(By.XPATH, "//a[text()='Agree and Proceed']")],
+                       'https://www.underarmour.com/en-us/': [(By.XPATH, "//a[@id='truste-consent-close']/img")],
+                       # 'https://www.uniqlo.com/us/en/': [(By.ID, "dismissbutton2")],
+                       'https://www.united.com/en/us': [(By.XPATH, "//a[@role='button' and text()='Accept cookies']")],
+                       # 'https://ups.com': [(By.XPATH, "//label[contains(text(), 'Opt-In to Essential Cookies Only')]"), (By.ID, "consent_prompt_submit")],
+                       'https://www.ups.com/us/en/Home.page': [(By.XPATH, "//button[@class='close_btn_thick']")],
+                       # 'https://www.usnews.com/education': [(By.ID, "onetrust-close-btn-container")],
                        'https://www.viator.com/': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://www.macys.com/': [(By.ID, "onetrust-accept-btn-handler")]}
 

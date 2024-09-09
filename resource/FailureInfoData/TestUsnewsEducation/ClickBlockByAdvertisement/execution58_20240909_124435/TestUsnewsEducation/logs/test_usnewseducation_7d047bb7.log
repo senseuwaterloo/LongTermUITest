@@ -1,0 +1,225 @@
+2024-09-09 12:45:20,314 - ERROR - Test test_usnewseducation_7d047bb7 failed.
+2024-09-09 12:45:20,319 - ERROR - URL at failure: https://www.usnews.com/education/scholarships/search?state-of-residence=AZ&state-of-study=AZ&ethnicity=African%20American&gender=Female&sort=deadline-desc
+2024-09-09 12:45:20,319 - ERROR - Exception: self = <test.test_usnewseducation.TestUsnewsEducation object at 0x104f26fb0>
+
+    def test_usnewseducation_7d047bb7(self):
+        # self.driver.get("https://www.usnews.com/education")
+        # uiteststudy@gmail.com:Pass4USNews!
+    
+        # add extra login steps
+        self.driver.find_element(By.XPATH, "//button[@title='My Account']").click()
+        self.driver.find_element(By.XPATH, "//a[text()='Sign In to My Account']").click()
+        # need to wait a few seconds otherwise the email won't be filled out sometimes
+        time.sleep(2)
+        self.driver.find_element(By.NAME, "username").clear()
+        self.driver.find_element(By.NAME, "username").send_keys("uiteststudy@gmail.com")
+        self.driver.find_element(By.NAME, "password").clear()
+        self.driver.find_element(By.NAME, "password").send_keys("Pass4USNews!")
+        self.driver.find_element(By.XPATH, "//button[text()='Continue']").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Scholarship Search')]").click()
+        # selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//a[text()='Scholarships and Finances']").click()
+    
+        # self.driver.find_element(By.XPATH, "//select[@name='state-of-residence']").clear()
+        # self.driver.find_element(By.XPATH, "//select[@name='state-of-residence']").select("Arizona")
+        state_residence_dropdown = self.driver.find_element(By.NAME, "state-of-residence")
+        state_residence_select = Select(state_residence_dropdown)
+        state_residence_select.select_by_value("AZ")
+    
+        # self.driver.find_element(By.XPATH, "//select[@name='state-of-study']").clear()
+        # self.driver.find_element(By.XPATH, "//select[@name='state-of-study']").select("Arizona")
+        state_study_dropdown = self.driver.find_element(By.NAME, "state-of-study")
+        state_study_select = Select(state_study_dropdown)
+        state_study_select.select_by_value("AZ")
+    
+        # self.driver.find_element(By.XPATH, "//div[@name='ethnicity' and @placeholder='Type to Select']").clear()
+        # self.driver.find_element(By.XPATH, "//div[@name='ethnicity' and @placeholder='Type to Select']").send_keys("african american")
+        # need to wait a few second to avoid the dropdown be close by page loading process
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//input[@name='ethnicity' and @placeholder='Type to Select']").clear()
+        self.driver.find_element(By.XPATH, "//input[@name='ethnicity' and @placeholder='Type to Select']").send_keys("african american")
+    
+        self.driver.find_element(By.ID, "react-autowhatever-1--item-0").click()
+    
+        # self.driver.find_element(By.XPATH, "//select[@name='gender']").clear()
+        # self.driver.find_element(By.XPATH, "//select[@name='gender']").select("Female")
+        gender_dropdown = self.driver.find_element(By.NAME, "gender")
+        gender_select = Select(gender_dropdown)
+        gender_select.select_by_value("Female")
+    
+        # self.driver.find_element(By.XPATH, "//main[@id='app']/div[3]/article[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/form[1]/fieldset[8]/div[1]/div[1]/span[6]/label[1]").click()
+        # self.driver.find_element(By.XPATH, "//main[@id='app']/div[3]/article[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/form[1]/fieldset[10]/div[1]/div[1]/span[2]/label[1]").click()
+        time.sleep(2)
+        need_based_checkbox = self.driver.find_element(By.XPATH, "//span[text()='Need-Based Aid']")
+        scroll_down(self.driver, 600)
+>       need_based_checkbox.click()
+
+test/test_usnewseducation.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:158: in click
+    raise e
+conftest.py:142: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x104f253f0>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff81706018b _pthread_start + 99\\n25  libsystem_pthread.dylib             0x00007ff81705bae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <span>...</span> is not clickable at point (440, 932). Other element would receive the click: <div class="Ad__Container-sc-1ah7c5n-0 dTpFnS">...</div>
+E         (Session info: chrome=128.0.6613.120)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001050a6248 undetected_chromedriver + 5096008
+E       1   undetected_chromedriver             0x000000010509da7a undetected_chromedriver + 5061242
+E       2   undetected_chromedriver             0x0000000104c28fd0 undetected_chromedriver + 389072
+E       3   undetected_chromedriver             0x0000000104c7c486 undetected_chromedriver + 730246
+E       4   undetected_chromedriver             0x0000000104c7a38d undetected_chromedriver + 721805
+E       5   undetected_chromedriver             0x0000000104c77e47 undetected_chromedriver + 712263
+E       6   undetected_chromedriver             0x0000000104c76cf2 undetected_chromedriver + 707826
+E       7   undetected_chromedriver             0x0000000104c6a8c6 undetected_chromedriver + 657606
+E       8   undetected_chromedriver             0x0000000104c99ef2 undetected_chromedriver + 851698
+E       9   undetected_chromedriver             0x0000000104c6a288 undetected_chromedriver + 656008
+E       10  undetected_chromedriver             0x0000000104c9a0ae undetected_chromedriver + 852142
+E       11  undetected_chromedriver             0x0000000104cb7250 undetected_chromedriver + 971344
+E       12  undetected_chromedriver             0x0000000104c99c93 undetected_chromedriver + 851091
+E       13  undetected_chromedriver             0x0000000104c68c79 undetected_chromedriver + 650361
+E       14  undetected_chromedriver             0x0000000104c6949e undetected_chromedriver + 652446
+E       15  undetected_chromedriver             0x0000000105068fc0 undetected_chromedriver + 4845504
+E       16  undetected_chromedriver             0x000000010506ded8 undetected_chromedriver + 4865752
+E       17  undetected_chromedriver             0x000000010506e5a5 undetected_chromedriver + 4867493
+E       18  undetected_chromedriver             0x000000010504bbf9 undetected_chromedriver + 4725753
+E       19  undetected_chromedriver             0x000000010506e899 undetected_chromedriver + 4868249
+E       20  undetected_chromedriver             0x000000010503db14 undetected_chromedriver + 4668180
+E       21  undetected_chromedriver             0x000000010508dd78 undetected_chromedriver + 4996472
+E       22  undetected_chromedriver             0x000000010508df77 undetected_chromedriver + 4996983
+E       23  undetected_chromedriver             0x000000010509d67e undetected_chromedriver + 5060222
+E       24  libsystem_pthread.dylib             0x00007ff81706018b _pthread_start + 99
+E       25  libsystem_pthread.dylib             0x00007ff81705bae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2024-09-09 12:45:20,319 - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //span[text()='Need-Based Aid'] - Message: element click intercepted: Element <span>...</span> is not clickable at point (440, 932). Other element would receive the click: <div class="Ad__Container-sc-1ah7c5n-0 dTpFnS">...</div>
+  (Session info: chrome=128.0.6613.120)
+Stacktrace:
+0   undetected_chromedriver             0x00000001050a6248 undetected_chromedriver + 5096008
+1   undetected_chromedriver             0x000000010509da7a undetected_chromedriver + 5061242
+2   undetected_chromedriver             0x0000000104c28fd0 undetected_chromedriver + 389072
+3   undetected_chromedriver             0x0000000104c7c486 undetected_chromedriver + 730246
+4   undetected_chromedriver             0x0000000104c7a38d undetected_chromedriver + 721805
+5   undetected_chromedriver             0x0000000104c77e47 undetected_chromedriver + 712263
+6   undetected_chromedriver             0x0000000104c76cf2 undetected_chromedriver + 707826
+7   undetected_chromedriver             0x0000000104c6a8c6 undetected_chromedriver + 657606
+8   undetected_chromedriver             0x0000000104c99ef2 undetected_chromedriver + 851698
+9   undetected_chromedriver             0x0000000104c6a288 undetected_chromedriver + 656008
+10  undetected_chromedriver             0x0000000104c9a0ae undetected_chromedriver + 852142
+11  undetected_chromedriver             0x0000000104cb7250 undetected_chromedriver + 971344
+12  undetected_chromedriver             0x0000000104c99c93 undetected_chromedriver + 851091
+13  undetected_chromedriver             0x0000000104c68c79 undetected_chromedriver + 650361
+14  undetected_chromedriver             0x0000000104c6949e undetected_chromedriver + 652446
+15  undetected_chromedriver             0x0000000105068fc0 undetected_chromedriver + 4845504
+16  undetected_chromedriver             0x000000010506ded8 undetected_chromedriver + 4865752
+17  undetected_chromedriver             0x000000010506e5a5 undetected_chromedriver + 4867493
+18  undetected_chromedriver             0x000000010504bbf9 undetected_chromedriver + 4725753
+19  undetected_chromedriver             0x000000010506e899 undetected_chromedriver + 4868249
+20  undetected_chromedriver             0x000000010503db14 undetected_chromedriver + 4668180
+21  undetected_chromedriver             0x000000010508dd78 undetected_chromedriver + 4996472
+22  undetected_chromedriver             0x000000010508df77 undetected_chromedriver + 4996983
+23  undetected_chromedriver             0x000000010509d67e undetected_chromedriver + 5060222
+24  libsystem_pthread.dylib             0x00007ff81706018b _pthread_start + 99
+25  libsystem_pthread.dylib             0x00007ff81705bae3 thread_start + 15
+

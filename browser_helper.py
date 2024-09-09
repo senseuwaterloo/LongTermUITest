@@ -253,6 +253,17 @@ def calculate_dates_ticketcenter_format(days_from_now_start=7, days_from_now_end
     return start_day, start_month_year, end_day, end_month_year
 
 
+def calculate_dates_without_space(days_from_now_start=7, days_from_now_end=14):
+    current_date = datetime.now()
+    start_date = current_date + timedelta(days=days_from_now_start)
+    end_date = current_date + timedelta(days=days_from_now_end)
+
+    start_date_str = start_date.strftime('%Y%m%d')
+    end_date_str = end_date.strftime('%Y%m%d')
+
+    return start_date_str, end_date_str
+
+
 def scroll_to_element(driver, element):
     if isinstance(element, CustomWebElement):
         element = element.get_native_element()
