@@ -76,6 +76,7 @@ class TestZocdoc:
     
     def test_zocdoc_73178018(self):
         # self.driver.get("https://zocdoc.com")
+        # TODO: Blocked by zocdoc, consider remove it from subjects...
         self.driver.find_element(By.XPATH, "//input[@name='patient-powered-search-input' and @value='' and @type='text' and @placeholder='Condition, procedure, doctor...']").clear()
         self.driver.find_element(By.XPATH, "//input[@name='patient-powered-search-input' and @value='' and @type='text' and @placeholder='Condition, procedure, doctor...']").send_keys("chi")
 
