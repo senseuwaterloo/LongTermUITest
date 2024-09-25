@@ -9,7 +9,8 @@ else
   echo "Xvfb process on display :99 stopped"
 fi
 
-Xvfb :99 -screen 0 2560x1440x16 &
+TMPDIR=$(mktemp -d)
+Xvfb :99 -screen 0 2560x1440x16 -fbdir "$TMPDIR" &
 XVFB_PID=$!
 
 export DISPLAY=:99
