@@ -275,8 +275,8 @@ def setup_class(request):
     # https://stackoverflow.com/questions/72853097/pyvirtual-display-and-xvfb-on-macos-latest
     # display = Display(visible=DISPLAY_VISIBLE, size=(DISPLAY_WIDTH, DISPLAY_HEIGHT))
     # display.start()
-    chrome_binary_path = '/Applications/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing'
-    service = Service(executable_path=chrome_binary_path)
+    # chrome_binary_path = '/Applications/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing'
+    # service = Service(executable_path=chrome_binary_path)
 
     tmp_opts = uc.ChromeOptions()
     tmp_opts.add_argument("--headless")
@@ -289,7 +289,8 @@ def setup_class(request):
 
     opts = uc.ChromeOptions()
     # https://stackoverflow.com/questions/76627992/selenium-webdriver-headless-mode-shows-blank-page-selenium-web-element
-    #TODO opts.add_argument("--headless=new")
+    # TODO opts.add_argument("--headless=new")
+    # no need to set headless when running on server as we are using xvfb
 
     # opts.add_argument("--disable-features=DownloadBubble,DownloadBubbleV2")
 
