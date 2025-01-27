@@ -142,7 +142,7 @@ class TestEspn:
         self.driver.find_element(By.XPATH, "//nav[@id='global-nav']/ul[1]/li[1]/a[1]/span[1]/span[1]").click()
 
         # self.driver.find_element(By.XPATH, "//nav[@id='global-nav-secondary']/div[1]/ul[1]/li[4]/a[1]/span[1]").click()
-        # should click somewhere else to hide the hover window
+        # should click somewhere else to hide the hover window otherwise will have selenium.common.exceptions.ElementClickInterceptedException
         self.driver.find_element(By.ID, "global-search-trigger").click()
 
         self.driver.find_element(By.XPATH, "//nav[@id='global-nav-secondary']/div[1]/ul[1]/li[3]/a[1]/span[1]").click()

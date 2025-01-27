@@ -103,6 +103,7 @@ class TestStoreSteampowered:
     def test_storesteampowered_29f639c1(self):
         # self.driver.get("https://store.steampowered.com")
         # self.driver.find_element(By.XPATH, "//a[contains(text(),'COMMUNITY')]").click()
+        # hover on the element instead of clicking, just ignore this change
         community_element = self.driver.find_element(By.XPATH, "//a[contains(text(),'COMMUNITY')]").get_native_element()
         action = ActionChains(self.driver)
         action.move_to_element(community_element).perform()

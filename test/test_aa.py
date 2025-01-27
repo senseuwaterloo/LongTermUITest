@@ -183,16 +183,20 @@ class TestAa:
         plan_travel_element = main_navigation_element.find_element(By.CSS_SELECTOR, "adc-tab[label='Plan travel']")
         plan_travel_element.click()
 
-        time.sleep(3)
+        # wrapped click with wait for element to be clickable, no need to use thread sleep here
+        # time.sleep(3)
         # self.driver.find_element(By.XPATH, "//a[contains(text(),'Flights')]").click()
         new_adc_header_element = self.driver.find_element(By.CSS_SELECTOR, "adc-header")
         new_main_navigation_element = new_adc_header_element.shadow_root.find_element(By.ID, "main-navigation")
         hp_header_link_element = new_main_navigation_element.find_element(By.CSS_SELECTOR, "hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link']")
         # https://stackoverflow.com/questions/49906451/web-driver-click-on-element-within-shadowdom-is-returning-error-messageunk
+        # selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of undefined (reading 'defaultView')
+        # seems like a bug with the framework: https://issues.chromium.org/issues/42322743
         self.driver.execute_script("arguments[0].click()", hp_header_link_element.shadow_root.find_element(By.CSS_SELECTOR, "a"))
-        # hp_header_link_element.click()
+        # hp_header_link_element.shadow_root.find_element(By.CSS_SELECTOR, "a").click()
 
-        time.sleep(5)
+        # wrapped click with wait for element to be clickable, no need to use thread sleep here
+        # time.sleep(5)
         self.driver.find_element(By.XPATH, "//span[contains(.,'Multi city')]").click()
         self.driver.find_element(By.ID, "segments0.origin").click()
         self.driver.find_element(By.ID, "segments0.origin").clear()
@@ -226,7 +230,9 @@ class TestAa:
         self.driver.find_element(By.ID, "segments2.travelDate").clear()
         self.driver.find_element(By.ID, "segments2.travelDate").send_keys("04/23/2025")
         self.driver.find_element(By.ID, "flightSearchSubmitBtn").click()
-        time.sleep(60)
+
+        # wrapped click with wait for element to be clickable, no need to use thread sleep here. Need to set the maximum timeout to 60s
+        # time.sleep(60)
         self.driver.find_element(By.ID, "btn-sort-by-duration").click()
 
     # def test_aa_708cbe51(self):

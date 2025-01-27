@@ -64,6 +64,7 @@ class TestTripadvisor:
     def test_tripadvisor_ffc01d9d(self):
         # self.driver.get("https://www.tripadvisor.com/")
         # TODO: Still being blocked by trip advisor, so can't evaluate whether the test can pass. Consider remove trip advisor from out subjects?
+        # TODO keep being promoted to verify not being a robot by the time we label the test cases, should remove this subject.
         # self.driver.find_element(By.XPATH, "//div[@id='lithium-root']/main[1]/div[1]/span[1]/div[1]/div[1]/div[1]/div[16]/div[1]/button[1]/span[3]/svg[1]/circle[3]").click()
         # self.driver.find_element(By.XPATH, "//a[@id='menu-item-3']/div[1]/span[1]").click()
         self.driver.find_element(By.XPATH, "//a[@data-automation='centralNav_flights']").click()

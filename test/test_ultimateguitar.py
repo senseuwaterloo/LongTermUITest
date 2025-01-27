@@ -45,6 +45,7 @@ class TestUltimateGuitar:
     
     def test_ultimateguitar_61d28a34(self):
         # self.driver.get("https://www.ultimate-guitar.com/")
+        # NO Change
         # self.driver.find_element(By.XPATH, "//span[contains(.,'Tabs')]").click()
         self.driver.find_element(By.XPATH, "//span[text()='Tabs']").click()
 

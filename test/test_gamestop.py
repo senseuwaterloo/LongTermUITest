@@ -92,7 +92,7 @@ class TestGamestop:
     
     def test_gamestop_2705de3e(self):
         # self.driver.get("https://gamestop.com")
-        # time.sleep(6)
+        time.sleep(6)
 
         # self.driver.find_element(By.XPATH, "//div[@id='header-redesign']/div[1]/div[1]/button[2]/span[1]").click()
         self.driver.find_element(By.XPATH, "//div[@id='header-redesign']/div[1]/div[1]/button").click()
@@ -115,7 +115,7 @@ class TestGamestop:
         # self.driver.find_element(By.XPATH, "//div[@id='refinementModal']/div[1]/div[1]/div[2]/div[1]/div[11]/div[1]").click()
         # self.driver.find_element(By.XPATH, "//div[@id='refinementModal']/div[1]/div[1]/div[2]/div[1]/div[11]/div[2]/ul[1]/li[1]/a[1]").click()
 
-        # NEED TO Wait for a few seconds otherwise the filter conditions will not be properly clicked and applied
+        # NEED TO Wait for a few seconds otherwise the filter conditions will not be properly clicked and applied otherwise the test will pass even though some options are not selected
         time.sleep(1)
         self.driver.find_element(By.XPATH, "//label[contains(text(), ' Microsoft')]").click()
         time.sleep(1)

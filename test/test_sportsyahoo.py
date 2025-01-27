@@ -49,6 +49,7 @@ class TestSportsYahoo:
         self.driver.find_element(By.ID, "ybar-sbq").send_keys("lebron james")
 
         # self.driver.find_element(By.XPATH, "//form[@id='ybar-sf']/div[2]/div[1]/div[1]/ul[1]/li[1]/div[1]/div[1]/img[1]").click()
+        # //form[@id="ybar-sf"]/div[4]/div/div/ul[1]/li[1]/div[1]/div/img
         self.driver.find_element(By.XPATH, "//img[@alt='LeBron James']").click()
 
         # self.driver.find_element(By.XPATH, "//div[@id='sub-nav']/ul[1]/li[3]/a[1]/span[1]").click()

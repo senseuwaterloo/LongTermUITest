@@ -19,8 +19,8 @@ class TestPensketruckrental:
 
         self.driver.find_element(By.XPATH, "//a[contains(text(),'Massachusetts')]").click()
 
-        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Norwood')]").click()
-        self.driver.find_element(By.XPATH, "//div[@class='big-container no-map']//a[contains(text(),'Norwood')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Norwood')]").click()
+        # self.driver.find_element(By.XPATH, "//div[@class='big-container no-map']//a[contains(text(),'Norwood')]").click()
 
         # self.driver.find_element(By.XPATH, "//a[contains(text(),'All Seasons Rent All')]").click()
         # page is still loading and lead to selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted:

@@ -88,7 +88,7 @@ class CustomWebDriver(uc.Chrome):
 
     def find_element(self, by=By.ID, value=None):
         try:
-            element = WebDriverWait(super(), 15).until(
+            element = WebDriverWait(super(), 60).until(
                 EC.presence_of_element_located((by, value))
             )
             return CustomWebElement(element, self, by, value)
@@ -100,7 +100,7 @@ class CustomWebDriver(uc.Chrome):
 
     def find_elements(self, by=By.ID, value=None):
         try:
-            elements = WebDriverWait(super(), 15).until(
+            elements = WebDriverWait(super(), 60).until(
                 EC.presence_of_all_elements_located((by, value))
             )
             return [CustomWebElement(el, self, by, value) for el in elements]
@@ -138,7 +138,7 @@ class CustomWebElement:
                 #     timeout=15,
                 #     check_success=lambda x: x.is_displayed() and x.is_enabled()
                 # )
-                WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
+                WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((self.by, self.value)))
                 self.element.click()
             logger.info(f"Element clicked: {self.by} = {self.value}")
         except polling2.TimeoutException as e:
@@ -164,7 +164,7 @@ class CustomWebElement:
 
     def find_element(self, by=By.ID, value=None):
         try:
-            element = WebDriverWait(self.element, 15).until(
+            element = WebDriverWait(self.element, 60).until(
                 EC.presence_of_element_located((by, value))
             )
             return CustomWebElement(element, self, by, value)
@@ -176,7 +176,7 @@ class CustomWebElement:
 
     def find_elements(self, by=By.ID, value=None):
         try:
-            elements = WebDriverWait(self.element, 15).until(
+            elements = WebDriverWait(self.element, 60).until(
                 EC.presence_of_all_elements_located((by, value))
             )
             return [CustomWebElement(el, self, by, value) for el in elements]

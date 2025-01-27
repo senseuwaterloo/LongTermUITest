@@ -27,7 +27,7 @@ class TestViator:
     
     def test_viator_8308d10f(self):
         # self.driver.get("https://www.viator.com/")
-        # TODO: Blocked by viator......
+        # TODO: Blocked by viator...... Consider remove this subject
 
         time.sleep(2)
         self.driver.find_element(By.ID, "react-select-homepageTypeaheadSearch-input").clear()

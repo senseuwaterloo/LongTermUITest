@@ -1,5 +1,6 @@
 #!/bin/bash
 
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 XVFB_PID=$(pgrep -f "Xvfb :99")
 
 if [ -z "$XVFB_PID" ]; then
@@ -15,6 +16,6 @@ XVFB_PID=$!
 
 export DISPLAY=:99
 
-pytest test/
+pytest test/ --html="report_$TIMESTAMP.html"
 
 kill $XVFB_PID

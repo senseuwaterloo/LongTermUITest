@@ -103,6 +103,7 @@ class TestStocktwits:
         self.driver.find_element(By.XPATH, "//input[@name='desktopSearch' and @value='' and @type='text' and @placeholder='Search stocks, crypto, and people']").send_keys("tesla")
 
         # self.driver.find_element(By.XPATH, "//div[@id='app-main-header']/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]").click()
+        # new xpath: //div[@id="app-main-header"]/div[2]/div/div[1]/div[2]/div/div[1]/div[2]/div/div[1]/div/div[1]
         self.driver.find_element(By.XPATH, "//div[contains(@class, 'Item_itemDescriptionTitle') and ./span[text()='TSLA']]").click()
 
         # self.driver.find_element(By.XPATH, "//div[@id='Layout']/div[2]/div[3]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/button[1]/span[1]/span[1]").click()

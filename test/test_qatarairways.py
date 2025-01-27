@@ -199,6 +199,7 @@ class TestQatarairways:
     def test_qatarairways_4786982f(self):
         # self.driver.get("https://www.qatarairways.com/en-us/homepage.html")
         # self.driver.find_element(By.XPATH, "//a[contains(text(),'Book')]").click()
+        # Just update the locator to make it locate the element uniquely, doesn't really impact the result since the first element located by the locator is the target element.
         self.driver.find_element(By.XPATH, "//a[normalize-space(text())='Book' and @role='button']").click()
 
         # self.driver.find_element(By.XPATH, "//ul[@id='planyourtrip']/li[3]/a[1]/span[1]").click()

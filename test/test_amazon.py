@@ -37,9 +37,11 @@ class TestAmazon:
         # self.driver.get("https://amazon.com")
         self.driver.find_element(By.XPATH, "//a[@id='nav-hamburger-menu']/i[1]").click()
         self.driver.find_element(By.XPATH, "//div[@id='hmenu-content']/ul[1]/li[3]/a[1]/div[1]").click()
-        #TODO somehow the selenium click is not working, so we need to invoke the javascript code here... same to test_aa
-        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//*[@id='hmenu-content']/ul[3]/li[12]/a").get_native_element())
-        # self.driver.find_element(By.XPATH, "//*[@id='hmenu-content']/ul[3]/li[12]/a").click()
+        # TODO somehow the selenium click is not working, so we need to invoke the javascript code here... same to test_aa
+        # Same error still persists even though we use some sleep
+        # time.sleep(12)
+        # self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//*[@id='hmenu-content']/ul[3]/li[12]/a").get_native_element())
+        self.driver.find_element(By.XPATH, "//*[@id='hmenu-content']/ul[3]/li[12]/a").click()
         self.driver.find_element(By.ID, "twotabsearchtextbox").clear()
         self.driver.find_element(By.ID, "twotabsearchtextbox").send_keys("roman empire history")
         self.driver.find_element(By.ID, "nav-search-submit-button").click()

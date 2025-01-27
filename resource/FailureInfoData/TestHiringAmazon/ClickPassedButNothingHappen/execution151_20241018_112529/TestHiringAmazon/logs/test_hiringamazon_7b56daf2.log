@@ -1,0 +1,53 @@
+2024-10-18 11:26:48,919 - ERROR - Test test_hiringamazon_7b56daf2 failed.
+2024-10-18 11:26:48,922 - ERROR - URL at failure: https://hiring.amazon.com/job-opportunities/delivery-driver-jobs#/
+2024-10-18 11:26:48,922 - ERROR - Exception: self = <test.test_hiringamazon.TestHiringAmazon object at 0x1047db1f0>
+
+    def test_hiringamazon_7b56daf2(self):
+        # self.driver.get("https://hiring.amazon.com")
+    
+        # self.driver.find_element(By.XPATH, "//div[@role='button']").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='stencil-flyout-body']/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]").click()
+        # logic changed, no first step
+        self.driver.find_element(By.XPATH, "//div[@data-test-component='StencilText' and text()='Job Opportunities']").click()
+    
+        # self.driver.find_element(By.XPATH, "//div[@id='stencil-flyout-body']/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@data-test-component='StencilText' and text()='DSP Delivery Driver']").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Apply with an Amazon Delivery Service Partner')]").click()
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Apply with a Delivery Service Partner')]").click()
+        # somehow the typical selenium click is not working for this element
+        # self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//a[contains(text(),'Apply with a Delivery Service Partner')]").get_native_element())
+        tmp_element = self.driver.find_element(By.XPATH, "//a[contains(text(),'Apply with a Delivery Service Partner')]")
+        tmp_element.click()
+        # need to switch to a new tab
+        switch_to_new_tab_and_close_old(self.driver)
+    
+        # self.driver.find_element(By.XPATH, "//div[contains(.,'Accept All')]").click()
+>       self.driver.find_element(By.XPATH, "//div[text()='Accept All']").click()
+E       AttributeError: 'NoneType' object has no attribute 'click'
+
+test/test_hiringamazon.py:163: AttributeError
+2024-10-18 11:26:48,922 - ERROR - TimeoutException: Elements not found: xpath = //div[text()='Accept All'] - Message: 
+Stacktrace:
+0   undetected_chromedriver             0x0000000103123a58 undetected_chromedriver + 8141400
+1   undetected_chromedriver             0x000000010311b94a undetected_chromedriver + 8108362
+2   undetected_chromedriver             0x00000001029c0f60 undetected_chromedriver + 397152
+3   undetected_chromedriver             0x0000000102a0d1f3 undetected_chromedriver + 709107
+4   undetected_chromedriver             0x0000000102a0d4f1 undetected_chromedriver + 709873
+5   undetected_chromedriver             0x0000000102a52cb4 undetected_chromedriver + 994484
+6   undetected_chromedriver             0x0000000102a317ad undetected_chromedriver + 858029
+7   undetected_chromedriver             0x0000000102a500ce undetected_chromedriver + 983246
+8   undetected_chromedriver             0x0000000102a31523 undetected_chromedriver + 857379
+9   undetected_chromedriver             0x0000000102a00012 undetected_chromedriver + 655378
+10  undetected_chromedriver             0x0000000102a00fee undetected_chromedriver + 659438
+11  undetected_chromedriver             0x00000001030e87c0 undetected_chromedriver + 7899072
+12  undetected_chromedriver             0x00000001030ec714 undetected_chromedriver + 7915284
+13  undetected_chromedriver             0x00000001030ca597 undetected_chromedriver + 7775639
+14  undetected_chromedriver             0x00000001030ed19e undetected_chromedriver + 7917982
+15  undetected_chromedriver             0x00000001030b9874 undetected_chromedriver + 7706740
+16  undetected_chromedriver             0x0000000103109d98 undetected_chromedriver + 8035736
+17  undetected_chromedriver             0x0000000103109f56 undetected_chromedriver + 8036182
+18  undetected_chromedriver             0x000000010311b558 undetected_chromedriver + 8107352
+19  libsystem_pthread.dylib             0x00007ff819c4818b _pthread_start + 99
+20  libsystem_pthread.dylib             0x00007ff819c43ae3 thread_start + 15
+

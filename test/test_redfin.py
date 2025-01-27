@@ -84,6 +84,7 @@ class TestRedfin:
     def test_redfin_3e4283d1(self):
         # self.driver.get("https://www.redfin.com/")
         # self.driver.find_element(By.XPATH, "//a[contains(text(),'Rent')]").click()
+        # Just update the locator to make it locate the element uniquely, doesn't really impact the result since the first element located by the locator is the target element.
         self.driver.find_element(By.XPATH, "//a[text()='Rent' and @role='tab']").click()
 
         self.driver.find_element(By.ID, "search-box-input").clear()

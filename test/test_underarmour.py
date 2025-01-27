@@ -74,6 +74,7 @@ class TestUnderarmour:
     def test_underarmour_90bd64ec(self):
         # self.driver.get("https://www.underarmour.com/en-us/")
         # self.driver.find_element(By.XPATH, "//a[@id='kids']/span[1]").click()
+        # Hover on the element instead of click
         kids_menu_button = self.driver.find_element(By.XPATH, "//a[@data-testid='nav-link-kids']").get_native_element()
         action = ActionChains(self.driver)
         action.move_to_element(kids_menu_button).perform()

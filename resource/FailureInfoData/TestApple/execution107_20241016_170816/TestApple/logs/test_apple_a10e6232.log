@@ -1,0 +1,63 @@
+2024-10-16 17:09:37,606 - ERROR - Test test_apple_a10e6232 failed.
+2024-10-16 17:09:37,609 - ERROR - URL at failure: https://www.apple.com/shop/buy-ipad/ipad/64gb-blue-wifi
+2024-10-16 17:09:37,609 - ERROR - Exception: self = <test.test_apple.TestApple object at 0x107138f70>
+
+    def test_apple_a10e6232(self):
+        # self.driver.get("https://apple.com")
+        self.driver.find_element(By.XPATH, "//ul[@id='globalnav-list']/li[2]/div[1]/div[1]/div[3]/ul[1]/li[1]/a[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//nav[@id='chapternav']/div/ul/li[3]/a").click()
+        self.driver.find_element(By.XPATH, "//nav[@id='ac-localnav']/div/div[2]/div[2]/div[2]/div[2]/a").click()
+        time.sleep(3)
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div[3]/div[2]/div[2]/div/div[1]/fieldset/div/div[1]").click()
+        #TODO: the page automatically scroll after each choice so need some wait time to avoid: selenium.common.exceptions.StaleElementReferenceException:
+        # Message: stale element reference: stale element not found in the current frame
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div[3]/div[2]/div[2]/div/div[2]/fieldset/div/div[1]/label").click()
+        time.sleep(1.5)
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div[3]/div[2]/div[2]/div/div[3]/fieldset/div/div[1]/label").click()
+        time.sleep(1.5)
+        # force the click with javascript since selenium click is not working for this button
+        # self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//input[@data-autom='addEngraving-app']").get_native_element())
+>       self.driver.find_element(By.XPATH, "//input[@data-autom='addEngraving-app']").click()
+
+test/test_apple.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:153: in click
+    raise e
+conftest.py:141: in click
+    WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((self.by, self.value)))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="497b13d638aaf6111b7eb5277d8438e2")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x106564670>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2024-10-16 17:09:37,609 - ERROR - TimeoutException: Element not clickable within timeout: xpath = //input[@data-autom='addEngraving-app'] - Message: 
+

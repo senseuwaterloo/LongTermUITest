@@ -1,0 +1,157 @@
+2024-10-16 10:37:22,408 - ERROR - Test test_aa_6c28458c failed.
+2024-10-16 10:37:22,411 - ERROR - URL at failure: https://www.aa.com/homePage.do
+2024-10-16 10:37:22,412 - ERROR - Exception: self = <test.test_aa.TestAa object at 0x102924c10>
+
+    def test_aa_6c28458c(self):
+        # self.driver.get("https://www.aa.com/homePage.do")
+        # self.driver.find_element(By.ID, "plan-travel-expander").click()
+        adc_header_element = self.driver.find_element(By.CSS_SELECTOR, "adc-header")
+        main_navigation_element = adc_header_element.shadow_root.find_element(By.ID, "main-navigation")
+        plan_travel_element = main_navigation_element.find_element(By.CSS_SELECTOR, "adc-tab[label='Plan travel']")
+        plan_travel_element.click()
+    
+        # wrapped click with wait for element to be clickable, no need to use thread sleep here
+        # time.sleep(3)
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Flights')]").click()
+        new_adc_header_element = self.driver.find_element(By.CSS_SELECTOR, "adc-header")
+        new_main_navigation_element = new_adc_header_element.shadow_root.find_element(By.ID, "main-navigation")
+        hp_header_link_element = new_main_navigation_element.find_element(By.CSS_SELECTOR, "hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link']")
+        # https://stackoverflow.com/questions/49906451/web-driver-click-on-element-within-shadowdom-is-returning-error-messageunk
+        # self.driver.execute_script("arguments[0].click()", hp_header_link_element.shadow_root.find_element(By.CSS_SELECTOR, "a"))
+        # hp_header_link_element.click()
+>       hp_header_link_element.shadow_root.find_element(By.CSS_SELECTOR, "a").click()
+
+test/test_aa.py:195: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1029260b0>
+response = {'status': 500, 'value': '{"value":{"error":"javascript error","message":"javascript error: Cannot read properties of ...7ff806d0418b _pthread_start + 99\\n26  libsystem_pthread.dylib             0x00007ff806cffae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.JavascriptException: Message: javascript error: Cannot read properties of undefined (reading 'defaultView')
+E         (Session info: chrome=130.0.6723.59)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000101735a58 undetected_chromedriver + 8141400
+E       1   undetected_chromedriver             0x000000010172d94a undetected_chromedriver + 8108362
+E       2   undetected_chromedriver             0x0000000100fd2f60 undetected_chromedriver + 397152
+E       3   undetected_chromedriver             0x0000000100fd8e0d undetected_chromedriver + 421389
+E       4   undetected_chromedriver             0x0000000100fdaa6f undetected_chromedriver + 428655
+E       5   undetected_chromedriver             0x0000000100fdab1c undetected_chromedriver + 428828
+E       6   undetected_chromedriver             0x0000000101023604 undetected_chromedriver + 726532
+E       7   undetected_chromedriver             0x0000000101021827 undetected_chromedriver + 718887
+E       8   undetected_chromedriver             0x0000000101020c5b undetected_chromedriver + 715867
+E       9   undetected_chromedriver             0x0000000101014318 undetected_chromedriver + 664344
+E       10  undetected_chromedriver             0x0000000101043782 undetected_chromedriver + 857986
+E       11  undetected_chromedriver             0x0000000101013d08 undetected_chromedriver + 662792
+E       12  undetected_chromedriver             0x000000010104393e undetected_chromedriver + 858430
+E       13  undetected_chromedriver             0x00000001010620ce undetected_chromedriver + 983246
+E       14  undetected_chromedriver             0x0000000101043523 undetected_chromedriver + 857379
+E       15  undetected_chromedriver             0x0000000101012012 undetected_chromedriver + 655378
+E       16  undetected_chromedriver             0x0000000101012fee undetected_chromedriver + 659438
+E       17  undetected_chromedriver             0x00000001016fa7c0 undetected_chromedriver + 7899072
+E       18  undetected_chromedriver             0x00000001016fe714 undetected_chromedriver + 7915284
+E       19  undetected_chromedriver             0x00000001016dc597 undetected_chromedriver + 7775639
+E       20  undetected_chromedriver             0x00000001016ff19e undetected_chromedriver + 7917982
+E       21  undetected_chromedriver             0x00000001016cb874 undetected_chromedriver + 7706740
+E       22  undetected_chromedriver             0x000000010171bd98 undetected_chromedriver + 8035736
+E       23  undetected_chromedriver             0x000000010171bf56 undetected_chromedriver + 8036182
+E       24  undetected_chromedriver             0x000000010172d558 undetected_chromedriver + 8107352
+E       25  libsystem_pthread.dylib             0x00007ff806d0418b _pthread_start + 99
+E       26  libsystem_pthread.dylib             0x00007ff806cffae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: JavascriptException

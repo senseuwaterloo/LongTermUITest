@@ -1,0 +1,204 @@
+2024-10-16 20:42:37,633 - ERROR - Test test_boardgamegeek_d2171cc3 failed.
+2024-10-16 20:42:37,636 - ERROR - URL at failure: https://boardgamegeek.com/boardgame/161936/pandemic-legacy-season-1
+2024-10-16 20:42:37,636 - ERROR - Exception: self = <test.test_boardgamegeek.TestBoardgamegeek object at 0x102d6b970>
+
+    def test_boardgamegeek_d2171cc3(self):
+        # self.driver.get("https://boardgamegeek.com")
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Sign In')]").click()
+        self.driver.find_element(By.ID, "inputUsername").click()
+        self.driver.find_element(By.ID, "inputUsername").send_keys("UITestStudy")
+        self.driver.find_element(By.ID, "inputPassword").click()
+        self.driver.find_element(By.ID, "inputPassword").send_keys("UITestStudy2024")
+        self.driver.find_element(By.XPATH, "//button[contains(text(),'Sign In')]").click()
+        time.sleep(5)
+        self.driver.find_element(By.XPATH, "//button[contains(.,'GeekLists')]").click()
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Hot')]").click()
+        # time.sleep(5)
+        # tmp = self.driver.find_element(By.XPATH, "//a[contains(text(),'Hot')]").get_native_element()
+        # tmp.click()
+        # Have to use javascript to do the click, otherwise will timeout on waiting for element clickable or will
+        # throw selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable even though we wait for enough long time and the element is already there
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//a[contains(text(),'Hot')]").get_native_element())
+        self.driver.find_element(By.XPATH, "/html/body[1]/gg-app[1]/div[1]/gg-header[1]/header[1]/nav[1]/div[1]/button[2]").click()
+        self.driver.find_element(By.XPATH, "//button[contains(.,'Browse')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'All Boardgames')]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='results_objectname1']/a").click()
+        # self.driver.find_element(By.XPATH, "//button[contains(., 'Add To') and contains(., 'Collection')]").click()
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//button[contains(., 'Add To') and contains(., 'Collection')]").get_native_element())
+        self.driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]").click()
+        time.sleep(1)
+    
+        self.driver.find_element(By.XPATH, "//button[contains(.,'Browse')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'All Boardgames')]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='results_objectname3']/a").click()
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//button[contains(., 'Add To') and contains(., 'Collection')]").get_native_element())
+        self.driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]").click()
+        time.sleep(1.5)
+    
+>       self.driver.find_element(By.XPATH, "//*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/button").click()
+
+test/test_boardgamegeek.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:158: in click
+    raise e
+conftest.py:142: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x102d69ed0>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff80fd6018b _pthread_start + 99\\n24  libsystem_pthread.dylib             0x00007ff80fd5bae3 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <button class="btn btn-sm dropdown-toggle" uib-dropdown-toggle="" type="button" aria-haspopup="true" aria-expanded="false">...</button> is not clickable at point (1366, 26). Other element would receive the click: <div uib-modal-window="modal-window" class="modal modal-fixed-right fade ng-scope ng-isolate-scope in" role="dialog" index="0" animate="animate" ng-style="{'z-index': 1050 + $$topModalIndex*10, display: 'block'}" tabindex="-1" uib-modal-animation-class="fade" modal-in-class="in" modal-animation="true" style="z-index: 1050; display: block;">...</div>
+E         (Session info: chrome=130.0.6723.59)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100c56a58 undetected_chromedriver + 8141400
+E       1   undetected_chromedriver             0x0000000100c4e94a undetected_chromedriver + 8108362
+E       2   undetected_chromedriver             0x00000001004f3f60 undetected_chromedriver + 397152
+E       3   undetected_chromedriver             0x0000000100546dd6 undetected_chromedriver + 736726
+E       4   undetected_chromedriver             0x0000000100544d48 undetected_chromedriver + 728392
+E       5   undetected_chromedriver             0x0000000100542827 undetected_chromedriver + 718887
+E       6   undetected_chromedriver             0x0000000100541c5b undetected_chromedriver + 715867
+E       7   undetected_chromedriver             0x0000000100535318 undetected_chromedriver + 664344
+E       8   undetected_chromedriver             0x0000000100564782 undetected_chromedriver + 857986
+E       9   undetected_chromedriver             0x0000000100534d08 undetected_chromedriver + 662792
+E       10  undetected_chromedriver             0x000000010056493e undetected_chromedriver + 858430
+E       11  undetected_chromedriver             0x00000001005830ce undetected_chromedriver + 983246
+E       12  undetected_chromedriver             0x0000000100564523 undetected_chromedriver + 857379
+E       13  undetected_chromedriver             0x0000000100533012 undetected_chromedriver + 655378
+E       14  undetected_chromedriver             0x0000000100533fee undetected_chromedriver + 659438
+E       15  undetected_chromedriver             0x0000000100c1b7c0 undetected_chromedriver + 7899072
+E       16  undetected_chromedriver             0x0000000100c1f714 undetected_chromedriver + 7915284
+E       17  undetected_chromedriver             0x0000000100bfd597 undetected_chromedriver + 7775639
+E       18  undetected_chromedriver             0x0000000100c2019e undetected_chromedriver + 7917982
+E       19  undetected_chromedriver             0x0000000100bec874 undetected_chromedriver + 7706740
+E       20  undetected_chromedriver             0x0000000100c3cd98 undetected_chromedriver + 8035736
+E       21  undetected_chromedriver             0x0000000100c3cf56 undetected_chromedriver + 8036182
+E       22  undetected_chromedriver             0x0000000100c4e558 undetected_chromedriver + 8107352
+E       23  libsystem_pthread.dylib             0x00007ff80fd6018b _pthread_start + 99
+E       24  libsystem_pthread.dylib             0x00007ff80fd5bae3 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2024-10-16 20:42:37,636 - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/button - Message: element click intercepted: Element <button class="btn btn-sm dropdown-toggle" uib-dropdown-toggle="" type="button" aria-haspopup="true" aria-expanded="false">...</button> is not clickable at point (1366, 26). Other element would receive the click: <div uib-modal-window="modal-window" class="modal modal-fixed-right fade ng-scope ng-isolate-scope in" role="dialog" index="0" animate="animate" ng-style="{'z-index': 1050 + $$topModalIndex*10, display: 'block'}" tabindex="-1" uib-modal-animation-class="fade" modal-in-class="in" modal-animation="true" style="z-index: 1050; display: block;">...</div>
+  (Session info: chrome=130.0.6723.59)
+Stacktrace:
+0   undetected_chromedriver             0x0000000100c56a58 undetected_chromedriver + 8141400
+1   undetected_chromedriver             0x0000000100c4e94a undetected_chromedriver + 8108362
+2   undetected_chromedriver             0x00000001004f3f60 undetected_chromedriver + 397152
+3   undetected_chromedriver             0x0000000100546dd6 undetected_chromedriver + 736726
+4   undetected_chromedriver             0x0000000100544d48 undetected_chromedriver + 728392
+5   undetected_chromedriver             0x0000000100542827 undetected_chromedriver + 718887
+6   undetected_chromedriver             0x0000000100541c5b undetected_chromedriver + 715867
+7   undetected_chromedriver             0x0000000100535318 undetected_chromedriver + 664344
+8   undetected_chromedriver             0x0000000100564782 undetected_chromedriver + 857986
+9   undetected_chromedriver             0x0000000100534d08 undetected_chromedriver + 662792
+10  undetected_chromedriver             0x000000010056493e undetected_chromedriver + 858430
+11  undetected_chromedriver             0x00000001005830ce undetected_chromedriver + 983246
+12  undetected_chromedriver             0x0000000100564523 undetected_chromedriver + 857379
+13  undetected_chromedriver             0x0000000100533012 undetected_chromedriver + 655378
+14  undetected_chromedriver             0x0000000100533fee undetected_chromedriver + 659438
+15  undetected_chromedriver             0x0000000100c1b7c0 undetected_chromedriver + 7899072
+16  undetected_chromedriver             0x0000000100c1f714 undetected_chromedriver + 7915284
+17  undetected_chromedriver             0x0000000100bfd597 undetected_chromedriver + 7775639
+18  undetected_chromedriver             0x0000000100c2019e undetected_chromedriver + 7917982
+19  undetected_chromedriver             0x0000000100bec874 undetected_chromedriver + 7706740
+20  undetected_chromedriver             0x0000000100c3cd98 undetected_chromedriver + 8035736
+21  undetected_chromedriver             0x0000000100c3cf56 undetected_chromedriver + 8036182
+22  undetected_chromedriver             0x0000000100c4e558 undetected_chromedriver + 8107352
+23  libsystem_pthread.dylib             0x00007ff80fd6018b _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80fd5bae3 thread_start + 15
+

@@ -151,6 +151,7 @@ class TestAkcOrg:
         start_date_str, end_date_str = calculate_dates_slash_format(14, 379)
 
         calendar_element = self.driver.find_element(By.XPATH, "//div[@class='desktop-view row']//input[contains(@class, 'desktop-view') and @name='dateStart' and @placeholder='MM/DD/YYYY']")
+        # dynamic loading
         scroll_to_element(self.driver, calendar_element)
         self.driver.find_element(By.XPATH, "//div[@class='desktop-view row']//input[contains(@class, 'desktop-view') and @name='dateStart' and @placeholder='MM/DD/YYYY']").click()
         self.driver.find_element(By.XPATH, "//div[@class='desktop-view row']//input[contains(@class, 'desktop-view') and @name='dateStart' and @placeholder='MM/DD/YYYY']").clear()

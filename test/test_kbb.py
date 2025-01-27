@@ -112,6 +112,7 @@ class TestKbb:
     def test_kbb_d3a4e6c3(self):
         # self.driver.get("https://kbb.com")
         # self.driver.find_element(By.XPATH, "//a[contains(text(),'Car Values')]").click()
+        # not sure why I changed this
         self.driver.find_element(By.XPATH, "//div/a[contains(text(),'Car Values')]").click()
 
         # add extra step to handle popup

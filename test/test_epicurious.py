@@ -73,12 +73,14 @@ class TestEpicurious:
         self.driver.find_element(By.XPATH, "//div[contains(@id, 'react-select-') and contains(@id, '-placeholder') and text()='Popular']").click()
 
         # somehow clicking the label element in the div is not working
+        # Just tried again, somehow seems fine now.
         self.driver.find_element(By.ID, "react-select-2-option-5").click() # somehow clicking the label element in the div is not working
         self.driver.find_element(By.XPATH, "//div[contains(@id, 'react-select-') and contains(@id, '-placeholder') and text()='Cuisines & Flavors']").click()
 
         # somehow clicking the label element in the div is not working
         self.driver.find_element(By.ID, "react-select-4-option-7").click()
-        self.driver.find_element(By.XPATH, "//div[contains(@id, 'react-select-') and contains(@id, '-placeholder') and text()='Cuisines & Flavors']").click()
+        # was using the following step to close the dropdown in case click interception happens, also seems unnecessary and fine now.
+        # self.driver.find_element(By.XPATH, "//div[contains(@id, 'react-select-') and contains(@id, '-placeholder') and text()='Cuisines & Flavors']").click()
         self.driver.find_element(By.XPATH, "//div[@id='0-Recipes']/div[2]/section/div/div/div/div[1]/div[1]/div[1]/span").click()
 
     # def test_epicurious_dfdf6de1(self):

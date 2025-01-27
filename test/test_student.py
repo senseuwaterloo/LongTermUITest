@@ -289,7 +289,7 @@ class TestStudent:
         # self.driver.find_element(By.XPATH, "//select[@name='month']").clear()
         # self.driver.find_element(By.XPATH, "//select[@name='month']").select("Apr")
         # self.driver.find_element(By.XPATH, "//div[@id='app']/div[1]/div[2]/div[2]/div[1]/ul[1]/li[6]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/div[7]").click()
-        # click on the calendar first so that the elements in the calendar are clickable
+        # click on the calendar first so that the elements in the calendar are clickable, ignored the long relative xpath here since it mainly related to the input
         self.driver.find_element(By.XPATH, "//select[@name='year']").click()
         move_in_year_dropdown = self.driver.find_element(By.XPATH, "//select[@name='year']")
         move_in_year_select = Select(move_in_year_dropdown)

@@ -35,7 +35,7 @@ class TestTicketcenter:
 
         # self.driver.find_element(By.XPATH, "//button[contains(.,'Apply')]").click()
         # due to the layout shift of the calendar, the Apply button will be blocked by the head menu, therefore we need to click on somewhere else to apply the date filter......
-        # or we can use JS to perform the click action which will not be intercepted by other element
+        # or we can use JS to perform the click action which will not be intercepted by other element. This is a web app bug
         apply_button = self.driver.find_element(By.XPATH, "//div[contains(@style, 'display: block;')]//button[text()='Apply']").get_native_element()
         self.driver.execute_script('arguments[0].click()', apply_button)
 

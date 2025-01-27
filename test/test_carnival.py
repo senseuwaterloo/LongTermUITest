@@ -20,7 +20,7 @@ class TestCarnival:
     def test_carnival_c1b8361d(self):
         # self.driver.get("https://www.carnival.com/")
         self.driver.find_element(By.ID, "cdc-destinations").click()
-        # Papua New Guinea chnaged to South Pacific on website
+        # Papua New Guinea changed to South Pacific on website
         self.driver.find_element(By.XPATH, "//div[@id='ccl-cruise-search']/ccl-cruise-search[1]/div[3]/ccl-cruise-search-bar[1]/div[1]/div[2]/div[1]/div[2]/div[1]/ccl-search-bar-expandable-filter[1]/div[1]/ul[1]/li[16]/button[1]").click()
         self.driver.find_element(By.ID, "cdc-ports").click()
         self.driver.find_element(By.XPATH, "//div[@id='ccl-cruise-search']/ccl-cruise-search[1]/div[3]/ccl-cruise-search-bar[1]/div[1]/div[2]/div[1]/div[2]/div[1]/ccl-search-bar-expandable-filter[1]/div[1]/ul[1]/li[3]/button[1]").click()

@@ -53,7 +53,7 @@ class TestUsps:
         self.driver.find_element(By.XPATH, "//div[@id='1353701']/div[2]/button[1]").click()
 
         # add select date action
-        # need to wait for a few second for the loading image to fully disappear
+        # need to wait for a few second for the loading image to fully disappear otherwise click will be intercepted even though we waited for the element to be clickable.
         time.sleep(2)
         self.driver.find_element(By.ID, "displayDate").click()
         self.driver.find_element(By.XPATH, "//a[@class='ui-state-default']").click()
@@ -74,7 +74,7 @@ class TestUsps:
         self.driver.find_element(By.XPATH, "//p[text()='I have read, understand, and agree to the ']").click()
 
         # self.driver.find_element(By.ID, "standardizeButton").click()
-        # don click to avoid spam data
+        # don't click to avoid spam data
         self.driver.find_element(By.ID, "sendCodeBtn")
     
     # def test_usps_1c73e566(self):

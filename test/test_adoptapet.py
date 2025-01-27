@@ -72,6 +72,8 @@ class TestAdoptapet:
         self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a dog')]").click()
         # use sleep to avoid selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+        # Sometimes pass, sometimes fail, need wait to be more robust
+        # test logic should be structured in a way that anticipates and handles dynamic changes in the DOM.
         time.sleep(1)
         breed_element = self.driver.find_element(By.ID, "location-1")
         scroll_to_element(self.driver, breed_element)

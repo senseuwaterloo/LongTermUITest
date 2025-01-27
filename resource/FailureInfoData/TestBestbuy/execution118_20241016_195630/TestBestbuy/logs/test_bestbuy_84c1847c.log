@@ -1,0 +1,43 @@
+2024-10-16 19:57:02,006 - ERROR - Test test_bestbuy_84c1847c failed.
+2024-10-16 19:57:02,009 - ERROR - URL at failure: https://www.bestbuy.com/cart
+2024-10-16 19:57:02,009 - ERROR - Exception: self = <test.test_bestbuy.TestBestbuy object at 0x1047d54b0>
+
+    def test_bestbuy_84c1847c(self):
+        # self.driver.get("https://www.bestbuy.com/")
+        self.driver.find_element(By.ID, "gh-search-input").clear()
+        # change s20 and s21 to iPhone 14 and iPhone 15 respectively
+        self.driver.find_element(By.ID, "gh-search-input").send_keys("iPhone 15")
+        self.driver.find_element(By.XPATH, "//div[@data-testid='SuggestedSearches']/div[1]/div[2]/div/div/ul/li/a").click()
+        pre_owned_checkbox = self.driver.find_element(By.ID, "condition_facet-Pre-Owned-1")
+        scroll_to_element(self.driver, pre_owned_checkbox)
+        pre_owned_checkbox.click()
+        # self.driver.find_element(By.XPATH, "//button[@data-button-state='ADD_TO_CART']").click()
+        # have to use long xpath position since there are many add to cart button, otherwise it will click whichever appears first
+        self.driver.find_element(By.XPATH, "//div[@id='main-results']/ol/li[2]/div/div/div/div/div/div[3]/div[3]/div/div/div/div/div/div[1]/button").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Go to Cart')]").click()
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Check Trade-In Value')]").click()
+        time.sleep(1)
+        brand_dropdown_element = self.driver.find_element(By.ID, "brand")
+        brand_select = Select(brand_dropdown_element)
+        brand_select.select_by_value('Apple')
+        # time.sleep(1)
+        model_dropdown_element = self.driver.find_element(By.ID, "modelFamily")
+        model_select = Select(model_dropdown_element)
+>       model_select.select_by_value('Apple iPhone 14 Pro')
+
+test/test_bestbuy.py:235: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/select.py:79: in select_by_value
+    self._set_selected(opt)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.select.Select object at 0x1047d7a60>
+option = <conftest.CustomWebElement object at 0x1047d7b20>
+
+    def _set_selected(self, option) -> None:
+        if not option.is_selected():
+            if not option.is_enabled():
+>               raise NotImplementedError("You may not select a disabled option")
+E               NotImplementedError: You may not select a disabled option
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/select.py:213: NotImplementedError

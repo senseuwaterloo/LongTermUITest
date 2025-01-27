@@ -119,7 +119,7 @@ class TestDiscogs:
 
         self.driver.find_element(By.XPATH, "//ul[@id='top_artists']/li[1]/a[1]/span[2]/img[1]").click()
         # self.driver.find_element(By.XPATH, "//a[contains(text(),'David Bowie')]").click()
-        # above locator is too general
+        # above locator is too general, multiple elements can be located
         self.driver.find_element(By.XPATH, "//div[@id='page']/div[3]/div[1]/div[2]/div[2]/table/tbody/tr[1]/td[3]/a").click()
 
         # need to wait for several seconds since the link is loaded later than the expanding btn and somehow selenium click is clicking on that button. Maybe because of layout shift

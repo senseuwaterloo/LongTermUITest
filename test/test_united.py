@@ -99,8 +99,9 @@ class TestUnited:
         self.driver.find_element(By.XPATH, "//button[@aria-label='Increase Rooms']").click()
         self.driver.find_element(By.XPATH, "//button[@aria-label='Increase Adults']").click()
         self.driver.find_element(By.XPATH, "//button[@aria-label='Increase Adults']").click()
-        # Use javascript click to force the click since the Done button is now showed in the screen area.
+        # Use javascript click to force the click since the Done button is not showed in the screen area and the page is not scrollable. See the attached screenshot.
         # self.driver.find_element(By.XPATH, "//div[text()='Done']").click()
+        time.sleep(20)
         self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//div[text()='Done']").get_native_element())
         self.driver.find_element(By.XPATH, "//div[text()='Update Search']").click()
         switch_to_new_tab_and_close_old(self.driver)

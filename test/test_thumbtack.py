@@ -37,7 +37,7 @@ class TestThumbtack:
     
     def test_thumbtack_5a55aaa5(self):
         # self.driver.get("https://www.thumbtack.com/")
-        # TODO looks like this website provide two interact logics regarding the time selection! So the test steps can be different for different run! Need to think about it!
+        # TODO looks like this website provide two interact logics regarding the time selection! So the test steps can be different for different run! Need to think about it! Consider remove.
 
         # self.driver.find_element(By.XPATH, "//div[@title='Phone or Tablet Repair']").click()
         self.driver.find_element(By.XPATH, "//input[@aria-label='Search on Thumbtack']").clear()

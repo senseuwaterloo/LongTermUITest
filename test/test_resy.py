@@ -232,6 +232,7 @@ class TestResy:
         nearby_restaurants_link.click()
 
         # self.driver.find_element(By.XPATH, "//div[@id='page-wrapper']/resy-nav[1]/header[1]/div[2]/resy-locations-container[1]/div[1]/div[1]/button[1]/div[1]/div[1]").click()
+        # //div[@id="page-wrapper"]/resy-nav/header/div[2]/div[1]/resy-locations-container/div/div/button/div/div
         self.driver.find_element(By.XPATH, "//button[contains(@class, 'LocationsContainer__click-container') and contains(@aria-label, 'Location')]").click()
 
         # self.driver.find_element(By.XPATH, "//a[contains(text(),'Chicago')]").click()

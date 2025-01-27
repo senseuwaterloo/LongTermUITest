@@ -107,7 +107,10 @@ class TestDmvVirginiaGov:
         self.driver.find_element(By.XPATH, "//button[@data-latitude='36.7176']").click()
 
         self.driver.find_element(By.XPATH, "//a[@aria-label='Go to next page of dates available']").click()
+        # need to wait some time otherwise the list will be closed
+        time.sleep(2)
         self.driver.find_element(By.XPATH, "//div[@aria-label='Select a time']/div[5]/div[2]/div[1]").click()
+        time.sleep(2)
         self.driver.find_element(By.XPATH, "//div[@aria-label='Select a time']/div[5]/div[2]/div[2]/div[2]").click()
         # sleep to avoid: Element click intercepted: xpath = //button[@type='submit' and @class='next-button-alt'] - Message: element click intercepted: Element is not clickable at point (1283, 1028)
         time.sleep(2)

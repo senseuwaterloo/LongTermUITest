@@ -41,13 +41,13 @@ class TestBbbOrg:
 
         self.driver.find_element(By.XPATH, "//main[@id='content']//input[@placeholder='businesses, category']").click()
         self.driver.find_element(By.XPATH, "//main[@id='content']//input[@placeholder='businesses, category']").send_keys("SOLAR")
-        time.sleep(1)
+        time.sleep(2)
         self.driver.find_element(By.ID, "downshift-2-item-0").click()
 
         # self.driver.find_element(By.XPATH, "//main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/button").click()
         self.driver.find_element(By.XPATH, "//main[@id='content']//input[@name='find_loc']").click()
         self.driver.find_element(By.XPATH, "//main[@id='content']//input[@name='find_loc']").send_keys("MIAMI")
-        time.sleep(1)
+        time.sleep(2)
         self.driver.find_element(By.ID, "downshift-3-item-0").click()
 
         self.driver.find_element(By.XPATH, "//main[@id='content']//button[@type='submit' and text()='Search']").click()

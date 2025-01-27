@@ -1,0 +1,58 @@
+2024-10-16 20:22:51,351 - ERROR - Test test_boardgamegeek_d2171cc3 failed.
+2024-10-16 20:22:51,355 - ERROR - URL at failure: https://boardgamegeek.com/
+2024-10-16 20:22:51,355 - ERROR - Exception: self = <test.test_boardgamegeek.TestBoardgamegeek object at 0x1026e3970>
+
+    def test_boardgamegeek_d2171cc3(self):
+        # self.driver.get("https://boardgamegeek.com")
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Sign In')]").click()
+        self.driver.find_element(By.ID, "inputUsername").click()
+        self.driver.find_element(By.ID, "inputUsername").send_keys("UITestStudy")
+        self.driver.find_element(By.ID, "inputPassword").click()
+        self.driver.find_element(By.ID, "inputPassword").send_keys("UITestStudy2024")
+        self.driver.find_element(By.XPATH, "//button[contains(text(),'Sign In')]").click()
+        time.sleep(1.5)
+        self.driver.find_element(By.XPATH, "//button[contains(.,'GeekLists')]").click()
+>       self.driver.find_element(By.XPATH, "//a[contains(text(),'Hot')]").click()
+
+test/test_boardgamegeek.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:153: in click
+    raise e
+conftest.py:141: in click
+    WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((self.by, self.value)))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="90554edbdebdec248f262112061546bb")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x102663eb0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2024-10-16 20:22:51,355 - ERROR - TimeoutException: Element not clickable within timeout: xpath = //a[contains(text(),'Hot')] - Message: 
+

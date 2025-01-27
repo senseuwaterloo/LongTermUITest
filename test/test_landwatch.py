@@ -222,7 +222,8 @@ class TestLandwatch:
         time.sleep(3)
         self.driver.find_element(By.XPATH, "//div[contains(@id, 'dropdown')]/div[1]/span[1]").click()
 
-        self.driver.find_element(By.ID, "Price-").click()
+        # self.driver.find_element(By.ID, "Price-").click()
+        self.driver.find_element(By.ID, "Price_-").click()
         # need to wait for a few seconds for the page to be refreshed
         time.sleep(3)
 
