@@ -8,212 +8,57 @@ from browser_helper import scroll_to_element
 
 @pytest.mark.usefixtures("setup_class")
 class TestAdoptapet:
-    
-    # def test_adoptapet_0114ee6c(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//h5[contains(.,'Shelters/Rescues')]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[1]/div[1]/label[1]/span[2]").click()
-    #     self.driver.find_element(By.ID, "location-4").clear()
-    #     self.driver.find_element(By.ID, "location-4").send_keys("90011")
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/button[1]").click()
-    #
-    # def test_adoptapet_8cd3c1a2(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//h5[contains(.,'Shelters/Rescues')]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[1]/div[1]/label[1]/span[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[1]/div[1]/label[1]/span[1]").send_keys("10012")
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[2]/div[1]/ul[1]/div[1]/div[2]/svg[1]/path[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[2]/div[1]/ul[1]/div[2]/li[7]/span[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[2]/div[2]/ul[1]/div[1]/div[2]/svg[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[2]/div[2]/ul[1]/div[2]/li[4]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/button[1]").click()
-    #     self.driver.find_element(By.XPATH, "//span[contains(.,'More')]").click()
-    #
-    # def test_adoptapet_95d4b13f(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//span[@title='Find a pet']").click()
-    #     self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a cat')]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[1]/div[1]/label[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[1]/div[1]/label[1]").send_keys("75209")
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[2]/ul[2]/div[1]/span[2]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[2]/ul[2]/div[2]/div[2]/div[1]/label[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/button[1]").click()
-    #     self.driver.find_element(By.XPATH, "//div[@id='pet-card-85']/a[1]/div[1]/div[1]/div[1]/img[1]").click()
-    #
-    # def test_adoptapet_4fbcf13b(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//a[contains(text(),'Blog')]").click()
-    #     self.driver.find_element(By.ID, "s").clear()
-    #     self.driver.find_element(By.ID, "s").send_keys("hypoallergenic")
-    #     self.driver.find_element(By.ID, "searchsubmit").click()
-    #     self.driver.find_element(By.XPATH, "//a[contains(text(),'Read More...')]").click()
-    #
-    # def test_adoptapet_6d5baec8(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//span[@title='Find a pet']").click()
-    #     self.driver.find_element(By.XPATH, "/html/body[1]/div[2]/header[1]/div[3]/div[1]/nav[1]/ul[1]/li[1]").click()
-    #     self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a shelter/rescue')]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[1]/div[1]/label[1]/span[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[1]/div[1]/label[1]/span[1]").send_keys("21122")
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/button[1]").click()
-    #
-    # def test_adoptapet_44531ae3(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").send_keys("33109")
-    #     self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Young')]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Male')]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Private owner')]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Spayed/Neutered')]").click()
-    #
     def test_adoptapet_b49c669d(self):
         # self.driver.get("https://adoptapet.com")
+
+        # self.driver.find_element(By.XPATH, "/html/body[1]/div[2]/header[1]/div[3]/div[1]/nav[1]/ul[1]/li[1]").click()
+        # change absolute xpath
         self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()
+
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a dog')]").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a dog')]").click()
+
         # use sleep to avoid selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
         # Sometimes pass, sometimes fail, need wait to be more robust
         # test logic should be structured in a way that anticipates and handles dynamic changes in the DOM.
         time.sleep(1)
+
+        # add scroll action
         breed_element = self.driver.find_element(By.ID, "location-1")
         scroll_to_element(self.driver, breed_element)
+
+        # self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").clear()
+        # self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").send_keys("10019")
+        # changed locator. There was no id before.
         self.driver.find_element(By.ID, "location-1").clear()
         self.driver.find_element(By.ID, "location-1").send_keys("10019")
-        self.driver.find_element(By.XPATH, "//*[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
-        self.driver.find_element(By.XPATH, "//*[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
+
+        # self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[1]/input[1]").clear()
+        # self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[1]/input[1]").send_keys("jack russell")
+        # The structure.layout of the dom is changed
+        self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
+        self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
+        # Never mind about the code below, just to make sure the item is selected
         self.driver.find_element(By.XPATH, "//label[contains(text(),'Jack Russell Terrier')]").click()
+
+        # self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
         self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
+
+        # self.driver.find_element(By.XPATH, "/html/body[1]/div[2]/div[2]/div[1]/div[2]/button[1]").click()
+        # change absolute xpath to text-based locator
         self.driver.find_element(By.XPATH, "//button[contains(.,'Create an Alert')]").click()
+
+        # self.driver.find_element(By.XPATH, "//div[@id='livewire-ui-modal']/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/label[1]/span[1]").clear()
+        # self.driver.find_element(By.XPATH, "//div[@id='livewire-ui-modal']/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/label[1]/span[1]").send_keys("buckeye.foobar@gmail.com")
+        # changed locator. There was no id before.
         self.driver.find_element(By.ID, "email-2").clear()
         self.driver.find_element(By.ID, "email-2").send_keys("uiteststudy@gmail.com")
-        self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
-        self.driver.find_element(By.XPATH, "//button[contains(text(),'Subscribe Now')]").click()
 
-    # def test_adoptapet_c740e976(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//h5[contains(.,'Cats')]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[1]/div[1]/label[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[1]/div[1]/label[1]").send_keys("77494")
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[2]/ul[1]/div[1]/span[2]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[2]/ul[1]/div[2]/div[1]/div[1]/label[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[2]/ul[2]/div[1]/span[2]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[2]/ul[2]/div[2]/div[1]/div[1]/label[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/button[1]").click()
-    #     self.driver.find_element(By.XPATH, "/html/body[1]/div[2]/div[2]/div[1]/div[3]/div[1]/div[1]/ul[1]/div[1]/div[2]/svg[1]/path[1]").click()
-    #     self.driver.find_element(By.XPATH, "//span[contains(.,'35 miles or less')]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'White')]").click()
-    #
-    # def test_adoptapet_d8707876(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").send_keys("90028")
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[1]/div[1]/span[2]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[1]/div[2]/div[4]/div[1]/label[1]").click()
-    #     self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
-    #     self.driver.find_element(By.XPATH, "//div[@id='livewire-ui-modal']/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/img[1]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Spayed/Neutered')]").click()
-    #
-    # def test_adoptapet_c0420a0e(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//span[@title='Find a pet']").click()
-    #     self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a dog')]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").send_keys("90028")
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[1]/input[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[1]/input[1]").send_keys("bulldog")
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[2]/div[80]/div[1]/label[1]").click()
-    #     self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
-    #     self.driver.find_element(By.XPATH, "//div[@id='livewire-ui-modal']/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/img[1]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Private owner')]").click()
-    #
-    # def test_adoptapet_247ed1e9(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").send_keys("78613")
-    #     self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
-    #     self.driver.find_element(By.XPATH, "/html/body[1]/div[2]/div[2]/div[1]/div[3]/div[2]/div[1]/div[2]/div[1]/div[1]/ul[1]/div[1]/div[1]/svg[1]/path[1]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'German Shepherd Dog')]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Young')]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Male')]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'White')]").click()
-    #
-    # def test_adoptapet_2a97a198(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//span[@title='Find a pet']").click()
-    #     self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a dog')]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]/span[1]").send_keys("10019")
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[1]/div[1]/span[2]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[1]/div[2]/div[3]/div[1]/label[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[1]/input[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[1]/input[1]").send_keys("husky")
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[2]/div[116]/div[1]/label[1]").click()
-    #     self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
-    #
-    # def test_adoptapet_444b0e86(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//span[@title='Find a pet']").click()
-    #     self.driver.find_element(By.XPATH, "/html/body[1]/div[2]/header[1]/div[3]/div[1]/nav[1]/ul[1]/li[1]").click()
-    #     self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a cat')]").click()
-    #     self.driver.find_element(By.XPATH, "/html").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[1]/div[1]/label[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[1]/div[1]/label[1]").send_keys("21122")
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/button[1]").click()
-    #     self.driver.find_element(By.XPATH, "//div[@id='livewire-ui-modal']/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/img[1]").click()
-    #     self.driver.find_element(By.XPATH, "/html").click()
-    #     self.driver.find_element(By.XPATH, "//input[@type='text' and @placeholder=' ']").click()
-    #     self.driver.find_element(By.XPATH, "/html/body[1]/div[2]/div[2]/div[1]/div[3]/div[2]/div[1]/div[2]/div[1]/div[1]/ul[1]/div[2]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Maine Coon')]").click()
-    #
-    # def test_adoptapet_03dfedcb(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//h3[text()='Set up alerts']/following-sibling::a[@class='link3 mt-auto font-bold text-h5']/span[@class='link3-content']").click()
-    #     self.driver.find_element(By.XPATH, "//div[@id='content-main']/div[1]/div[1]/div[1]/div[1]/div[1]/button[1]").click()
-    #     self.driver.find_element(By.XPATH, "//input[@type='text']").click()
-    #     self.driver.find_element(By.XPATH, "//div[@id='content-main']/div[1]/div[1]/div[1]/div[3]/div[2]/ul[1]/li[1]").click()
-    #     self.driver.find_element(By.XPATH, "//input[@name='text' and @type='search']").clear()
-    #     self.driver.find_element(By.XPATH, "//input[@name='text' and @type='search']").send_keys("10017")
-    #     self.driver.find_element(By.XPATH, "//div[@id='content-main']/div[1]/div[1]/div[1]/div[5]/div[2]/div[3]/div[1]/input[1]").click()
-    #     self.driver.find_element(By.XPATH, "//div[@id='content-main']/div[1]/div[1]/div[1]/div[5]/div[2]/div[3]/div[1]/input[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//div[@id='content-main']/div[1]/div[1]/div[1]/div[5]/div[2]/div[3]/div[1]/input[1]").send_keys("Belgian Shepherd")
-    #     self.driver.find_element(By.XPATH, "//div[@id='content-main']/div[1]/div[1]/div[1]/div[5]/div[2]/div[3]/div[2]/ul[1]/li[1]/div[1]/span[1]").click()
-    #     self.driver.find_element(By.XPATH, "//div[@id='content-main']/div[1]/div[1]/div[1]/div[5]/button[1]").click()
-    #     self.driver.find_element(By.XPATH, "//input[@name='email' and @type='text']").clear()
-    #     self.driver.find_element(By.XPATH, "//input[@name='email' and @type='text']").send_keys("abc@abc.com")
-    #     self.driver.find_element(By.XPATH, "//div[@id='content-main']/div[1]/div[1]/div[1]/button[1]").click()
-    #
-    # def test_adoptapet_233c9a3e(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//span[@title='Find a pet']").click()
-    #     self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a dog')]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[1]/div[1]/label[1]").send_keys("90028")
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[1]/div[1]/span[2]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[1]/div[2]/div[4]/div[1]/label[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[1]/input[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[1]/input[1]").send_keys("boxer")
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/div[2]/ul[2]/div[2]/div[42]/div[1]/label[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div[1]/button[1]/svg[1]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Male')]").click()
-    #     self.driver.find_element(By.XPATH, "//div[@id='pet-card-25']/a[1]/div[1]/div[1]/div[1]/img[1]").click()
-    #
-    # def test_adoptapet_7168a307(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//h5[contains(.,'Shelters/Rescues')]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[1]/div[1]/label[1]/span[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[1]/div[1]/label[1]/span[1]").send_keys("77084")
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[2]/div[1]/ul[1]/div[1]/div[1]/span[2]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[2]/div[1]/ul[1]/div[2]/li[4]/span[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[2]/div[2]/ul[1]/div[1]/div[2]/svg[1]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/div[2]/div[2]/ul[1]/div[2]/li[3]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='shelter-search']/div[1]/button[1]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Small Animals')]").click()
-    #
-    # def test_adoptapet_7a91546b(self):
-    #     # self.driver.get("https://adoptapet.com")
-    #     self.driver.find_element(By.XPATH, "//h5[contains(.,'Cats')]").click()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[1]/div[1]/label[1]").clear()
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/div[1]/div[1]/label[1]").send_keys("90028")
-    #     self.driver.find_element(By.XPATH, "//form[@id='cat-search']/div[1]/button[1]/svg[1]/path[1]").click()
-    #     self.driver.find_element(By.XPATH, "//label[contains(.,'Siamese')]").click()
+        # self.driver.find_element(By.XPATH, "//div[@id='livewire-ui-modal']/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[2]/div[2]").click()
+        # Note that the dom layout changed.
+        self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
+
+        # self.driver.find_element(By.XPATH, "//div[@id='livewire-ui-modal']/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/form[1]/div[4]/button[1]").click()
+        # change absolute xpath to text-based locator
+        self.driver.find_element(By.XPATH, "//button[contains(text(),'Subscribe Now')]").click()
     
