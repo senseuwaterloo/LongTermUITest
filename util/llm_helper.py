@@ -4,6 +4,8 @@ import logging
 import re
 import time
 
+logging.basicConfig(level=logging.INFO)
+
 
 def get_web_element_rect(browser, fix_color=True):
     if fix_color:

@@ -3,6 +3,8 @@ import os
 import re
 import time
 from datetime import datetime
+from typing import List
+
 from dotenv import load_dotenv
 import polling2
 import pytest
@@ -20,10 +22,33 @@ DISPLAY_VISIBLE = False
 DISPLAY_WIDTH = 2560
 DISPLAY_HEIGHT = 1440
 WAIT_TIMEOUT = 30
+SHADOW_WAIT_TIMEOUT = 15
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging_messages: List[str] = []
+
+
+class ListHandler(logging.Handler):
+    """Custom handler to append logs to a list."""
+    def __init__(self, log_list: List[str]):
+        super().__init__()
+        self.log_list = log_list
+
+    def emit(self, record):
+        try:
+            msg = self.format(record)
+            self.log_list.append(msg)
+        except Exception:
+            self.handleError(record)
+
+
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
+# Add the custom handler with the desired format
+handler = ListHandler(logging_messages)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 option_args = [
         "--enable-automation",
@@ -86,33 +111,54 @@ option_args = [
 class CustomWebDriver(uc.Chrome):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.error_messages = []
+        # self.logging_messages = []
 
     def find_element(self, by=By.ID, value=None):
         try:
+            attempt_find_element_info = f"Attempting to find element: {by} = {value}"
+            logger.info(attempt_find_element_info)
+            # logging_messages.append(attempt_find_element_info)
+
             element = WebDriverWait(super(), WAIT_TIMEOUT).until(
                 EC.presence_of_element_located((by, value))
+                # lambda d: parent_presence_of_element_located((by, value), self)
             )
+
+            element_found_info = f"Successfully find element: {by} = {value}"
+            logger.info(element_found_info)
+            # logging_messages.append(element_found_info)
+
             return CustomWebElement(element, self, by, value)
         except TimeoutException as e:
-            # error_message = f"TimeoutException: Elements not found: {by} = {value} - {str(e)}"
-            error_message = f"TimeoutException: Elements not found: {by} = {value}"
+            current_url = self.current_url
+            error_message = (f"TimeoutException: Element not found within {WAIT_TIMEOUT} seconds: {by} = {value} "
+                             f"(Current page URL: {current_url})")
             logger.error(error_message)
-            self.error_messages.append(error_message)
-            return None
+            # logging_messages.append(error_message)
+            raise e
 
     def find_elements(self, by=By.ID, value=None):
         try:
+            attempt_find_element_info = f"Attempting to find elements: {by} = {value}"
+            logger.info(attempt_find_element_info)
+            # logging_messages.append(attempt_find_element_info)
+
             elements = WebDriverWait(super(), WAIT_TIMEOUT).until(
                 EC.presence_of_all_elements_located((by, value))
             )
+
+            element_found_info = f"Successfully find elements: {by} = {value}"
+            logger.info(element_found_info)
+            # self.logging_messages.append(element_found_info)
+
             return [CustomWebElement(el, self, by, value) for el in elements]
         except TimeoutException as e:
-            # error_message = f"TimeoutException: Element not found: {by} = {value} - {str(e)}"
-            error_message = f"TimeoutException: Element not found: {by} = {value}"
+            current_url = self.current_url
+            error_message = (f"TimeoutException: Elements not found within {WAIT_TIMEOUT} seconds: {by} = {value} "
+                             f"(Current page URL: {current_url})")
             logger.error(error_message)
-            self.error_messages.append(error_message)
-            return []
+            # self.logging_messages.append(error_message)
+            raise e
 
 
 class CustomWebElement:
@@ -125,96 +171,107 @@ class CustomWebElement:
 
     def click(self):
         try:
-            # WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((self.by, self.value)))
-            # self.element.click()
-            logger.info(f"Attempting to click element: {self.by} = {self.value}")
+            attempt_click_element_info = f"Attempting to click element: {self.by} = {self.value}"
+            logger.info(attempt_click_element_info)
+            # self.driver.logging_messages.append(attempt_click_element_info)
+
             if self.is_shadow_element:
                 polling2.poll(
                     lambda: self.element.is_displayed() and self.element.is_enabled(),
                     step=0.5,
-                    timeout=15
+                    timeout=SHADOW_WAIT_TIMEOUT
                 )
                 self.element.click()
             else:
-                # polling2.poll(
-                #     lambda: self.element.is_displayed() and self.element.is_enabled(),
-                #     step=0.5,
-                #     timeout=15,
-                #     check_success=lambda x: x.is_displayed() and x.is_enabled()
-                # )
                 WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.element_to_be_clickable((self.by, self.value)))
                 self.element.click()
-            logger.info(f"Element clicked: {self.by} = {self.value}")
+
+            element_clicked_info = f"Element clicked: {self.by} = {self.value}"
+            logger.info(element_clicked_info)
+            # self.driver.logging_messages.append(element_clicked_info)
         except polling2.TimeoutException as e:
-            # error_message = f"TimeoutException: Shadow Element not clickable within timeout: {self.by} = {self.value} - {str(e)}"
-            error_message = f"TimeoutException: Shadow Element not clickable within timeout: {self.by} = {self.value}"
+            current_url = self.driver.current_url
+            error_message = (f"TimeoutException: Shadow Element not clickable within {SHADOW_WAIT_TIMEOUT} seconds: {self.by} = {self.value} " 
+                             f"(Current page URL: {current_url})")
             logger.error(error_message)
-            self.driver.error_messages.append(error_message)
+            # self.driver.logging_messages.append(error_message)
             raise e
         except TimeoutException as e:
-            # error_message = f"TimeoutException: Element not clickable within timeout: {self.by} = {self.value} - {str(e)}"
-            error_message = f"TimeoutException: Element not clickable within timeout: {self.by} = {self.value}"
+            current_url = self.driver.current_url
+            error_message = (f"TimeoutException: Element not clickable within {WAIT_TIMEOUT} seconds: {self.by} = {self.value} "
+                             f"(Current page URL: {current_url})")
             logger.error(error_message)
-            self.driver.error_messages.append(error_message)
+            # self.driver.logging_messages.append(error_message)
             raise e
         except ElementClickInterceptedException as e:
-            # error_message = f"ElementClickInterceptedException: Element click intercepted: {self.by} = {self.value} - {str(e)}"
-            error_message = f"ElementClickInterceptedException: Element click intercepted: {self.by} = {self.value}"
+            current_url = self.driver.current_url
+            error_message = (f"ElementClickInterceptedException: Element click intercepted: {self.by} = {self.value} "
+                             f"(Current page URL: {current_url})")
             logger.error(error_message)
-            self.driver.error_messages.append(error_message)
+            # self.driver.logging_messages.append(error_message)
             raise e
         except StaleElementReferenceException as e:
-            # error_message = f"StaleElementReferenceException: Element became stale: {self.by} = {self.value} - {str(e)}"
-            error_message = f"StaleElementReferenceException: Element became stale: {self.by} = {self.value}"
+            current_url = self.driver.current_url
+            error_message = (f"StaleElementReferenceException: Element became stale: {self.by} = {self.value} "
+                             f"(Current page URL: {current_url})")
             logger.error(error_message)
-            self.driver.error_messages.append(error_message)
+            # self.driver.logging_messages.append(error_message)
             raise e
 
     def find_element(self, by=By.ID, value=None):
         try:
+            attempt_find_element_info = f"Attempting to find element: {by} = {value} within element: {self.by} = {self.value}"
+            logger.info(attempt_find_element_info)
+            # self.driver.logging_messages.append(attempt_find_element_info)
+
             element = WebDriverWait(self.element, WAIT_TIMEOUT).until(
                 EC.presence_of_element_located((by, value))
             )
+
+            element_found_info = f"Successfully find element: {by} = {value} within element: {self.by} = {self.value}"
+            logger.info(element_found_info)
+            # self.driver.logging_messages.append(element_found_info)
+
             return CustomWebElement(element, self, by, value)
-        except TimeoutException as e:
-            # error_message = f"TimeoutException: Elements not found: {by} = {value} - {str(e)}"
-            error_message = f"TimeoutException: Elements not found: {by} = {value}"
+        except TimeoutException:
+            current_url = self.driver.current_url
+            error_message = (f"TimeoutException: Element not found within {WAIT_TIMEOUT} seconds: {by} = {value} "
+                             f"(Current page URL: {current_url})")
             logger.error(error_message)
-            self.driver.error_messages.append(error_message)
+            # self.driver.logging_messages.append(error_message)
             return None
 
     def find_elements(self, by=By.ID, value=None):
         try:
+            attempt_find_element_info = f"Attempting to find elements: {by} = {value} within element: {self.by} = {self.value}"
+            logger.info(attempt_find_element_info)
+            # self.driver.logging_messages.append(attempt_find_element_info)
+
             elements = WebDriverWait(self.element, WAIT_TIMEOUT).until(
                 EC.presence_of_all_elements_located((by, value))
             )
+
+            element_found_info = f"Successfully find elements: {by} = {value} within element: {self.by} = {self.value}"
+            logger.info(element_found_info)
+            # self.driver.logging_messages.append(element_found_info)
+
             return [CustomWebElement(el, self, by, value) for el in elements]
-        except TimeoutException as e:
-            # error_message = f"TimeoutException: Element not found: {by} = {value} - {str(e)}"
-            error_message = f"TimeoutException: Element not found: {by} = {value}"
+        except TimeoutException:
+            current_url = self.driver.current_url
+            error_message = (f"TimeoutException: Elements not found within {WAIT_TIMEOUT} seconds: {by} = {value} "
+                             f"(Current page URL: {current_url})")
             logger.error(error_message)
-            self.driver.error_messages.append(error_message)
+            # self.driver.logging_messages.append(error_message)
             return []
 
     @property
     def shadow_root(self):
-        logger.info(f"Attempting to find element in shadow root: {self.by} = {self.value}")
+        attempt_shadow_root_info = f"Getting the shadow root of current element: {self.by} = {self.value}"
+        logger.info(attempt_shadow_root_info)
+        # self.driver.logging_messages.append(attempt_shadow_root_info)
+
         shadow_root = self.driver.execute_script("return arguments[0].shadowRoot", self.element)
         return CustomShadowRoot(shadow_root, self.driver, self.by, self.value)
-        # try:
-        #     shadow_root = polling2.poll(
-        #         lambda: self.driver.execute_script("return arguments[0].shadowRoot", self.element),
-        #         step=0.5,
-        #         timeout=15,
-        #         check_success=lambda x: x is not None
-        #     )
-        #     logger.info(f"Shadow root accessed for element: {self.by} = {self.value}")
-        #     return CustomShadowRoot(shadow_root, self.driver, self.by, self.value)
-        # except polling2.TimeoutException as e:
-        #     error_message = f"TimeoutException: Shadow root not found for element: {self.by} = {self.value} - {str(e)}"
-        #     logger.error(error_message)
-        #     self.driver.error_messages.append(error_message)
-        #     return None
 
     def get_native_element(self):
         return self.element
@@ -232,52 +289,65 @@ class CustomShadowRoot:
 
     def find_element(self, by=By.ID, value=None):
         try:
-            logger.info(f"Attempting to find element in shadow root: {by} = {value}")
+            attempt_find_element_info = f"Attempting to find element in shadow root: {by} = {value}"
+            logger.info(attempt_find_element_info)
+            # self.driver.logging_messages.append(attempt_find_element_info)
+
             element = polling2.poll(
                 lambda: self._find_element_in_shadow_root(by, value),
                 step=0.5,
-                timeout=15,
+                timeout=SHADOW_WAIT_TIMEOUT,
                 check_success=lambda x: x is not None
             )
-            logger.info(f"Element found in shadow root: {by} = {value}")
+
+            element_found_info = f"Element found in shadow root: {by} = {value}"
+            logger.info(element_found_info)
+            # self.driver.logging_messages.append(element_found_info)
             return CustomWebElement(element, self.driver, by, value, is_shadow_element=True)
-        except polling2.TimeoutException as e:
-            # error_message = f"TimeoutException: Element not found in shadow root: {by} = {value} - {str(e)}"
-            error_message = f"TimeoutException: Element not found in shadow root: {by} = {value}"
+        except polling2.TimeoutException:
+            current_url = self.driver.current_url
+            error_message = (f"TimeoutException: Element not found in shadow root within {SHADOW_WAIT_TIMEOUT} seconds: {by} = {value} "
+                             f"(Current page URL: {current_url})")
             logger.error(error_message)
-            self.driver.error_messages.append(error_message)
+            # self.driver.logging_messages.append(error_message)
             return None
 
     def _find_element_in_shadow_root(self, by, value):
         try:
             return self.shadow_root.find_element(by, value)
-        except NoSuchElementException as e:
-            logger.debug(f"Element not found yet: {by} = {value} - {str(e)}")
+        except NoSuchElementException:
             return None
 
     def find_elements(self, by=By.ID, value=None):
         try:
-            logger.info(f"Attempting to find elements in shadow root: {by} = {value}")
+            attempt_find_element_info = f"Attempting to find elements in shadow root: {by} = {value}"
+            logger.info(attempt_find_element_info)
+            # self.driver.logging_messages.append(attempt_find_element_info)
+
             elements = polling2.poll(
                 lambda: self._find_elements_in_shadow_root(by, value),
                 step=0.5,
-                timeout=15,
+                timeout=SHADOW_WAIT_TIMEOUT,
                 check_success=lambda x: x is not None and len(x) > 0
             )
-            logger.info(f"Elements found in shadow root: {by} = {value}")
+
+            element_found_info = f"Elements found in shadow root: {by} = {value}"
+            logger.info(element_found_info)
+            # self.driver.logging_messages.append(element_found_info)
+
             return [CustomWebElement(el, self.driver, by, value, is_shadow_element=True) for el in elements]
-        except polling2.TimeoutException as e:
-            # error_message = f"TimeoutException: Elements not found in shadow root: {by} = {value} - {str(e)}"
-            error_message = f"TimeoutException: Elements not found in shadow root: {by} = {value}"
+        except polling2.TimeoutException:
+            current_url = self.driver.current_url
+            error_message = (f"TimeoutException: Elements not found in shadow root within {SHADOW_WAIT_TIMEOUT} seconds: {by} = {value} "
+                             f"(Current page URL: {current_url})")
             logger.error(error_message)
-            self.driver.error_messages.append(error_message)
+            # self.driver.logging_messages.append(error_message)
             return []
 
     def _find_elements_in_shadow_root(self, by, value):
         try:
             return self.shadow_root.find_elements(by, value)
-        except NoSuchElementException as e:
-            logger.debug(f"Elements not found yet: {by} = {value} - {str(e)}")
+        except NoSuchElementException:
             return None
 
 
@@ -380,13 +450,7 @@ def setup_method(request):
         os.makedirs(f"{class_folder}/dom", exist_ok=True)
 
         rects, web_elements, web_elements_text = get_web_element_rect(driver)
-        # print("Test result:")
-        # print(rects)
-        # print(web_eles)
-        # for item in web_elements:
-        #     element_html = item.get_attribute("outerHTML")
-        #     print(element_html)
-        print(web_elements_text)
+        # print(web_elements_text)
         screenshot_path = f"{class_folder}/screenshots/{request.node.name}.png"
         driver.save_screenshot(screenshot_path)
 
@@ -394,11 +458,7 @@ def setup_method(request):
         with open(dom_path, "w", encoding="utf-8") as dom_file:
             dom_file.write(driver.page_source)
 
-        # log_path = f"{class_folder}/logs/{request.node.name}.log"
-        # with open(log_path, "w") as log_file:
-        #     log_file.write(f"Test {request.node.name} failed.\n")
-        #     log_file.write(f"URL at failure: {driver.current_url}\n")
-        #     log_file.write(f"Exception: {request.node.rep_call.longreprtext}\n")
+        logger.removeHandler(handler)
         log_path = f"{execution_folder}/{test_class_name}/logs/{request.node.name}.log"
         file_handler = logging.FileHandler(log_path)
         file_handler.setLevel(logging.INFO)
@@ -407,26 +467,27 @@ def setup_method(request):
         logger.error(f"Test {request.node.name} failed.")
         logger.error(f"URL at failure: {driver.current_url}")
         logger.error(f"Exception traceback: {request.node.rep_call.longreprtext}")
-        # for error_message in driver.error_messages:
-        #     logger.error(error_message)
-        if driver.error_messages:
-            logger.error("---- Collected Error Messages ----")
-            for err_msg in driver.error_messages:
-                logger.error(err_msg)
+
+        formatted_logs = "\n".join(logging_messages)
+
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(formatted_logs + "\n")
 
         test_method_source, failing_line_code = gather_test_code_and_failing_line(request)
-        print("test_method_source:")
-        print(test_method_source)
-        print(failing_line_code)
+        # print("test_method_source:")
+        # print(test_method_source)
+        # print(failing_line_code)
         # print("OPENAI KEY:")
         # print(os.getenv("OPENAI_API_KEY"))
         load_dotenv()
         suggestions = call_gpt_for_candidate_fixes(
             test_name=request.node.name,
             class_name=request.node.cls.__name__,
+            failing_url=driver.current_url,
             screenshot_path=screenshot_path,
-            web_eles_text=web_elements_text,
+            web_elements_text=web_elements_text,
             traceback_text=request.node.rep_call.longreprtext,
+            logging_output=formatted_logs,
             openai_api_key=os.getenv("OPENAI_API_KEY"),
             test_method_source=test_method_source,
             failing_line_code=failing_line_code
@@ -490,7 +551,7 @@ def open_url_and_handle_cookie(driver, website_url):
                     except (NoSuchElementException, TimeoutException, StaleElementReferenceException, AttributeError):
                         error_message = f"handle cookie error, element located by {by} with locator {locator} not found"
                         logger.warning(error_message)
-                        driver.error_messages.append(error_message)
+                        # logging_messages.append(error_message)
         finally:
             driver.switch_to.default_content()
 
@@ -504,7 +565,7 @@ def open_url_and_handle_cookie(driver, website_url):
             except (NoSuchElementException, TimeoutException, StaleElementReferenceException, AttributeError):
                 error_message = f"handle cookie error, element located by {by} with locator {locator} not found"
                 logger.warning(error_message)
-                driver.error_messages.append(error_message)
+                # logging_messages.append(error_message)
     time.sleep(2)
 
 

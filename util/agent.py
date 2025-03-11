@@ -7,9 +7,11 @@ from util.llm_helper import encode_image, call_gpt_api
 def call_gpt_for_candidate_fixes(
     test_name: str,
     class_name: str,
+    failing_url: str,
     screenshot_path: str,
-    web_eles_text: str,
+    web_elements_text: str,
     traceback_text: str,
+    logging_output: str,
     test_method_source: str,
     failing_line_code: str,
     openai_api_key: str = None
@@ -21,17 +23,29 @@ def call_gpt_for_candidate_fixes(
     if not openai_api_key:
         openai_api_key = os.getenv("OPENAI_API_KEY")
 
-    task_description = "finding the lowest travel time flight for 1 traveler from JFK, NYC to Heathrow, London on 04/19/2025, then from Heathrow, London to CDG, Paris on 04/21/2025 and then from CDG, Paris to JFK, NYC on 04/23/2025"
+    # "IMPORTANT: Do not use ellipsis ('...') to indicate omitted code. Always provide the full, exact code lines before and after the change without abbreviation."
+    # task_description = "finding the lowest travel time flight for 1 traveler from JFK, NYC to Heathrow, London on 04/19/2025, then from Heathrow, London to CDG, Paris on 04/21/2025 and then from CDG, Paris to JFK, NYC on 04/23/2025"
     system_msg = {
         "role": "system",
         "content": (
             "You are a helpful assistant for debugging Selenium test failures. "
             "At each stage, imagine you have the webpage screenshot where the test case fails (like a human looking at the browser), "
             "the output of the test execution, the failing test line, and the entire test method code. "
-            "Your goal is to propose multiple short code changes or configuration steps that might fix the test. "
-            "Please keep your commentary minimal—just enough to clarify each solution. "
-            "Enumerate your suggestions as (1), (2), (3), etc. and maximum give 5 candidate suggestions. "
-            "Terminate your answer once you have given these candidate fixes."
+            "Your goal is to propose multiple short, concise, and actionable code or configuration changes that might fix the test. "
+            "For each suggestion, provide the following in the exact format:\n"
+            "-------------------------------------------------------\n"
+            "Potential fix (X): [brief description of suggestion]\n"
+            "Original code line/lines: [exact original code line(s) that should be replaced]\n"
+            "Fixed code line/lines: [replacement code line(s) or patch/diff with sufficient context]\n"
+            "-------------------------------------------------------\n"
+            "Limit your output to a maximum of 5 suggestions (it doesn't have to always be five) and terminate your answer after listing them. "
+            "Each suggestion must be a short, direct, concise, and actionable code change, not vague commentary, redundant fixes or pseudo answers. "
+            "If you believe the issue is with an element locator, and if the broken element appears in the provided HTML textual list of interactable elements "
+            "(each element corresponds to the one annotated with numbered boxes in the screenshot), generate a new robust locator using that information. "
+            "Keep your commentary minimal—just enough to clarify each solution. "
+            "Note: The find_element and click methods have already been overridden to implement "
+            "dynamic waiting and to ignore most exceptions within the assigned timeout. Please do not suggest changes that duplicate "
+            "this behavior unless absolutely necessary.\n\n"
         )
     }
 
@@ -43,18 +57,19 @@ def call_gpt_for_candidate_fixes(
                 "type": "text",
                 "text": (
                     f"Test {test_name} in class {class_name} failed.\n"
-                    f"Traceback:\n{traceback_text}\n\n"
-                    f"This test is about {task_description}\n\n"
+                    f"URL at failure: {failing_url},\n"
+                    f"Logs from the test execution:\n"
+                    f"{logging_output}\n\n"
                     "Below is the screenshot of the page where the test case fails, with interactable elements annotated. "
                     "You also have a textual list of those elements.\n\n"
-                    "Apart from the annotated elements, you may also pay attention to the warning or error messages on the page to identify the root causes,  "
-                    "and sometimes the root cause may not arise from the code line where test case fails, it may also arise from the previous steps.\n\n"
+                    "Apart from the annotated elements, please pay attention to any warning or error messages on the page "
+                    "that might indicate the root cause. Note that the root cause may not always lie in the code line where the test failed; "
+                    "it could also stem from previous steps in the test.\n\n"
                     "Additionally, here is the entire test method code and the specific failing line:\n\n"
                     f"--- Test Method Source ---\n{test_method_source}\n\n"
                     f"--- Failing Line ---\n{failing_line_code}\n\n"
-                    "Please propose a few possible code or configuration fixes that might solve the test failure. "
-                    "Give me multiple candidate suggestions, enumerated as (1), (2), (3), etc.\n\n"
-                    f"List of clickable elements:\n{web_eles_text}\n"
+                    "Please propose UP TO 5 possible code or configuration fixes that might solve the test failure.\n\n"
+                    f"Textual list of clickable HTML elements annotated in the screenshot:\n{web_elements_text}\n"
                 ),
             },
             {
