@@ -10,14 +10,13 @@ from browser_helper import calculate_dates
 @pytest.mark.usefixtures("setup_class")
 class TestAmctheatres:
     def test_amctheatres_29f47ddb(self):
-        # self.driver.get("https://www.amctheatres.com")
+        self.driver.get("https://www.amctheatres.com")
         self.driver.find_element(By.XPATH, "//button[@aria-label='Sign In to AMC Stubs Account']").click()
         self.driver.find_element(By.NAME, "email").click()
         self.driver.find_element(By.NAME, "email").send_keys("uiteststudy@gmail.com")
         self.driver.find_element(By.XPATH, "//input[@placeholder='Password']").click()
         self.driver.find_element(By.XPATH, "//input[@placeholder='Password']").send_keys("UITestStudy2024")
         self.driver.find_element(By.XPATH, "//button[@type='submit' and text()='Sign In']").click()
-        # need to wait for a few second to wait for the login window to disappear to avoid: selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted
         time.sleep(2)
         self.driver.find_element(By.XPATH, "//button[@aria-label='Change Theatre Location']").click()
         self.driver.find_element(By.XPATH, "//input[@aria-labelledby='theatreLocatorHeadline']").click()
@@ -35,9 +34,9 @@ class TestAmctheatres:
         select = Select(date_dropdown_element)
         start_date_str, end_date_str = calculate_dates(1, 2)
         select.select_by_value(start_date_str)
-        # select the first movie and first timeslot from the page
+
         self.driver.find_element(By.XPATH, "/html/body/div[2]/div/main/div/div[3]/main/div/div[1]/section/div/div[1]/div/div[2]/div[1]/div/section/div[1]/div/div[1]/a").click()
-        # select the first 4 seats in the first row to avoid seats being unavailable
+
         self.driver.find_element(By.XPATH, "//*[@id='react-container']/div/main/div/div/div/div[2]/div[1]/div/div/div/div[2]/div/div/ul/li[1]/ul/li[1]").click()
         self.driver.find_element(By.XPATH, "//*[@id='react-container']/div/main/div/div/div/div[2]/div[1]/div/div/div/div[2]/div/div/ul/li[1]/ul/li[2]").click()
         self.driver.find_element(By.XPATH, "//*[@id='react-container']/div/main/div/div/div/div[2]/div[1]/div/div/div/div[2]/div/div/ul/li[1]/ul/li[3]").click()

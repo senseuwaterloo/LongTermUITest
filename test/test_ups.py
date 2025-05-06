@@ -5,20 +5,18 @@ from selenium.webdriver.common.by import By
 @pytest.mark.usefixtures("setup_class")
 class TestUps:
     def test_ups_8ae1041c(self):
-        # self.driver.get("https://ups.com")
+        self.driver.get("https://www.ups.com/us/en/Home.page")
         self.driver.find_element(By.XPATH, "//a[@id='tabs_0_tab_1']/span[1]").click()
         self.driver.find_element(By.ID, "ups-ship-from").clear()
         self.driver.find_element(By.ID, "ups-ship-from").send_keys("10001")
         self.driver.find_element(By.XPATH, "//div[@id='ship-from-input']/div[1]/div[1]/div[1]/div[1]/span[2]/span[1]").click()
         self.driver.find_element(By.ID, "ups-ship-to").clear()
-        # the zip code of Truckee seems not valid on UPS, use another one for Sacramento
-        # self.driver.find_element(By.ID, "ups-ship-to").send_keys("Truckee California")
+
         self.driver.find_element(By.ID, "ups-ship-to").send_keys("95814")
         self.driver.find_element(By.XPATH, "//div[@id='ship-to-input']/div[1]/div[1]/div[1]/div[1]/span[2]/span[1]").click()
         self.driver.find_element(By.ID, "ups-ship-weight").clear()
         self.driver.find_element(By.ID, "ups-ship-weight").send_keys("5")
 
-        # length, width, and height are also required to get a quote
         self.driver.find_element(By.ID, "ups-ship-length").clear()
         self.driver.find_element(By.ID, "ups-ship-length").send_keys("5")
         self.driver.find_element(By.ID, "ups-ship-width").clear()
@@ -28,5 +26,4 @@ class TestUps:
 
         self.driver.find_element(By.ID, "widget-get-quote-cta").click()
 
-        # self.driver.find_element(By.XPATH, "//div[@id='tiles-container']/div[1]/div[1]/div[1]/sqw-service-cell[1]/label[1]").click()
         self.driver.find_element(By.XPATH, "//span[text()=' Fastest ']").click()

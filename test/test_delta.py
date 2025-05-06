@@ -7,8 +7,8 @@ from browser_helper import calculate_dates_slash_format
 @pytest.mark.usefixtures("setup_class")
 class TestDelta:
     def test_delta_295380ed(self):
-        # self.driver.get("https://www.delta.com")
-        # time.sleep(10)
+        self.driver.get("https://www.delta.com")
+
         self.driver.find_element(By.XPATH, "//a[@id='fromAirportName']/span[1]").click()
         self.driver.find_element(By.ID, "search_input").clear()
         self.driver.find_element(By.ID, "search_input").send_keys("LGA")
@@ -20,8 +20,6 @@ class TestDelta:
         self.driver.find_element(By.ID, "selectTripType-val").click()
         self.driver.find_element(By.ID, "ui-list-selectTripType1").click()
 
-        # Somehow can't use ID "departureDate" since it will cause selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: but this is not related to
-        # the problem of the original test code
         self.driver.find_element(By.ID, "input_departureDate_1").click()
         flight_date, _ = calculate_dates_slash_format(21, 37)
         self.driver.find_element(By.XPATH, f"//a[contains(@data-date,'{flight_date}')]").click()

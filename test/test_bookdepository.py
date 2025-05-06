@@ -9,8 +9,8 @@ from browser_helper import scroll_to_element
 @pytest.mark.usefixtures("setup_class")
 class TestBookdepository:
     def test_bookdepository_c1f584e2(self):
-        # self.driver.get("https://bookdepository.com")
-        # book depository is closing soon, so we revised this test case for https://www.barnesandnoble.com/
+        self.driver.get("https://www.barnesandnoble.com/")
+
         self.driver.find_element(By.XPATH, "//a[contains(., ' My Account')]").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(), 'Sign In')]").click()
 

@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 @pytest.mark.usefixtures("setup_class")
 class TestAllrecipes:
     def test_allrecipes_87db8a52(self):
-        # self.driver.get("https://allrecipes.com")
+        self.driver.get("https://www.allrecipes.com/")
         self.driver.find_element(By.XPATH, "//nav[@id='mntl-header-nav_1-0']//a[contains(text(),'Ingredients')]").click()
         self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").click()
         self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").clear()

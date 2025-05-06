@@ -6,12 +6,12 @@ from selenium.webdriver.support.select import Select
 @pytest.mark.usefixtures("setup_class")
 class TestCourseraOrg:
     def test_courseraorg_228fc81a(self):
-        # self.driver.get("https://coursera.org")
-        # overall changed the locators
+        self.driver.get("https://www.coursera.org/")
+
         self.driver.find_element(By.XPATH, "//span[contains(.,'For') and contains(.,' Universities')]").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(),'Resources')]").click()
         self.driver.find_element(By.XPATH, "//div[@id='rendered-content']/div[1]/div[1]/div[1]/div[1]/header[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[4]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/a[1]").click()
-        # add a click button action
+
         self.driver.find_element(By.XPATH, "//a[@trackingname='EntWebsiteHow_job_skills_report_button_0']").click()
         self.driver.find_element(By.ID, "FirstName").clear()
         self.driver.find_element(By.ID, "FirstName").send_keys("John")
@@ -28,8 +28,6 @@ class TestCourseraOrg:
         self.driver.find_element(By.ID, "Phone").clear()
         self.driver.find_element(By.ID, "Phone").send_keys("234567890")
 
-        # self.driver.find_element(By.ID, "Primary_Discipline__c").clear()
-        # self.driver.find_element(By.ID, "Primary_Discipline__c").select("Accounting")
         main_industry_dropdown = self.driver.find_element(By.ID, "rentalField9")
         main_industry_select = Select(main_industry_dropdown)
         main_industry_select.select_by_value('Business')
@@ -42,10 +40,6 @@ class TestCourseraOrg:
         job_function_select = Select(job_function_dropdown)
         job_function_select.select_by_value('Finance')
 
-        # self.driver.find_element(By.ID, "Country").clear()
-        # self.driver.find_element(By.ID, "Country").select("United States")
-        # self.driver.find_element(By.ID, "State").clear()
-        # self.driver.find_element(By.ID, "State").select("MI")
         country_dropdown = self.driver.find_element(By.ID, "Country")
         country_select = Select(country_dropdown)
         country_select.select_by_value('United States')

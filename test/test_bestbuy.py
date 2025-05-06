@@ -10,16 +10,15 @@ from browser_helper import scroll_to_element
 @pytest.mark.usefixtures("setup_class")
 class TestBestbuy:
     def test_bestbuy_84c1847c(self):
-        # self.driver.get("https://www.bestbuy.com/")
+        self.driver.get("https://www.bestbuy.com/?intl=nosplash")
         self.driver.find_element(By.ID, "gh-search-input").clear()
-        # change s20 and s21 to iPhone 14 and iPhone 15 respectively
+
         self.driver.find_element(By.ID, "gh-search-input").send_keys("iPhone 15")
         self.driver.find_element(By.XPATH, "//div[@data-testid='SuggestedSearches']/div[1]/div[2]/div/div/ul/li/a").click()
         pre_owned_checkbox = self.driver.find_element(By.ID, "condition_facet-Pre-Owned-1")
         scroll_to_element(self.driver, pre_owned_checkbox)
         pre_owned_checkbox.click()
-        # self.driver.find_element(By.XPATH, "//button[@data-button-state='ADD_TO_CART']").click()
-        # have to use long xpath position since there are many add to cart button, otherwise it will click whichever appears first
+
         self.driver.find_element(By.XPATH, "//div[@id='main-results']/ol/li[2]/div/div/div/div/div/div[3]/div[3]/div/div/div/div/div/div[1]/button").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(),'Go to Cart')]").click()
         self.driver.find_element(By.XPATH, "//span[contains(text(),'Check Trade-In Value')]").click()

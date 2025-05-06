@@ -7,7 +7,7 @@ from browser_helper import scroll_to_element
 @pytest.mark.usefixtures("setup_class")
 class TestCabelas:
     def test_cabelas_3f62b47b(self):
-        # self.driver.get("https://cabelas.com")
+        self.driver.get("https://cabelas.com")
         self.driver.find_element(By.ID, "departmentButton_3074457345616967316").click()
         self.driver.find_element(By.ID, "moreLink_3074457345616967316_3074457345616967320").click()
         self.driver.find_element(By.XPATH, "//label[@for='Ice Fishing']").click()

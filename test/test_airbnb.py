@@ -1,14 +1,13 @@
-import time
-
 import pytest
 from selenium.webdriver.common.by import By
+
 from browser_helper import calculate_dates
 
 
 @pytest.mark.usefixtures("setup_class")
 class TestAirbnb:
     def test_airbnb_cdf4d2ec(self):
-        # self.driver.get("https://www.airbnb.com/")
+        self.driver.get("https://www.airbnb.com/")
         self.driver.find_element(By.XPATH, "//input[@data-testid='structured-search-input-field-query']").click()
         self.driver.find_element(By.XPATH, "//button[@data-testid='header-tab-search-block-tab-EXPERIENCES']").click()
         self.driver.find_element(By.ID, "bigsearch-query-location-input").clear()

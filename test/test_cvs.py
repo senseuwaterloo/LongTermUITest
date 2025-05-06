@@ -6,13 +6,8 @@ from selenium.webdriver.support.select import Select
 @pytest.mark.usefixtures("setup_class")
 class TestCvs:
     def test_cvs_7acc430a(self):
-        # self.driver.get("https://www.cvs.com/")
-        # uiteststudy@gmail.com:Pass4John!
+        self.driver.get("https://www.cvs.com/")
 
-        # shadow dom is introduced in the new version
-        # self.driver.find_element(By.ID, "Health-menu").click()
-        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Get Virtual Care')]").click()
-        # need to handle shadow dom to click above element
         header_shadow_root = self.driver.find_element(By.CSS_SELECTOR, "body > app-root > app-homepage > cvs-header-component > div > cvs-header > div > cvs-header-desktop")
         sign_in_dropdown = header_shadow_root.shadow_root.find_element(By.CSS_SELECTOR, "#cvs-desktop-header-container > div > div.header-desktop-top-right.sc-cvs-header-desktop > div > cvs-header-acc-dropdown")
         sign_in_dropdown.click()
@@ -51,12 +46,9 @@ class TestCvs:
         self.driver.find_element(By.ID, "city").clear()
         self.driver.find_element(By.ID, "city").send_keys("New York city")
 
-        # self.driver.find_element(By.ID, "state").clear()
-        # self.driver.find_element(By.ID, "state").select("New York")
         state_dropdown = self.driver.find_element(By.ID, "state")
         state_select = Select(state_dropdown)
         state_select.select_by_value('NY')
 
         self.driver.find_element(By.ID, "zipCode").clear()
         self.driver.find_element(By.ID, "zipCode").send_keys("10001")
-        # self.driver.find_element(By.XPATH, "//button[@type='submit']").click()

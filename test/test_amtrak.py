@@ -8,7 +8,7 @@ from browser_helper import scroll_to_element, switch_to_new_tab
 @pytest.mark.usefixtures("setup_class")
 class TestAmtrak:
     def test_amtrak_b910229f(self):
-        # self.driver.get("https://amtrak.com")
+        self.driver.get("https://amtrak.com")
         self.driver.find_element(By.XPATH, "//a[contains(text(),'DEALS') and @data-automation-id='sitePrimarySubnav']").click()
         self.driver.find_element(By.XPATH, "//a[@data-automation-id='VACATIONS & RAIL TOURS']").click()
         all_destinations_element = self.driver.find_element(By.XPATH, "//a[@data-automation-id='See all destinations']")
@@ -22,12 +22,11 @@ class TestAmtrak:
         second_trip_details = self.driver.find_element(By.XPATH, "//*[@id='ylg-ms__listings-search']/div/div/div[3]/div[1]/div/div/div/div[3]/a")
         scroll_to_element(self.driver, second_trip_details)
         second_trip_details.click()
-        # //*[@id="ylg-ms__listings-search"]/div/div/div[3]/div[2]/div/div/div/div[3]/a
 
         instant_quote = self.driver.find_element(By.XPATH, "//*[@id='tour-details-container__actions']/div[2]/button[1]")
         scroll_to_element(self.driver, instant_quote)
         instant_quote.click()
-        # always select the first day of next month
+
         self.driver.find_element(By.XPATH, "//*[@id='ylg-ms__listings-details']/div[2]/div/div/div[1]/div[3]/div[1]/div[1]/div/div/div/div[4]/div/img").click()
         self.driver.find_element(By.XPATH, "//div[@aria-label='days-cell']//span[text()='1']").click()
 
@@ -57,8 +56,7 @@ class TestAmtrak:
         next_step = self.driver.find_element(By.ID, "edit-actions-wizard-next")
         scroll_to_element(self.driver, next_step)
         next_step.click()
-        # new form will scroll up so need to wait for a few seconds to avoid selenium.common.exceptions.ElementClickInterceptedException:
-        # Message: element click intercepted: Element is not clickable at point
+
         time.sleep(2)
 
         self.driver.find_element(By.XPATH, "//input[@data-drupal-selector='edit-first-name']").click()

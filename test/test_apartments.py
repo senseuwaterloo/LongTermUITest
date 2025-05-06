@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 @pytest.mark.usefixtures("setup_class")
 class TestApartments:
     def test_apartments_e034b288(self):
-        # self.driver.get("https://apartments.com")
+        self.driver.get("https://apartments.com")
         self.driver.find_element(By.ID, "quickSearchLookup").click()
         self.driver.find_element(By.ID, "quickSearchLookup").send_keys("nyc")
         self.driver.find_element(By.XPATH, "//li[contains(@id, 'quickSearchLookup_typeahead') and text()='New York, NY']").click()

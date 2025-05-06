@@ -8,33 +8,24 @@ from browser_helper import calculate_budget_dates
 @pytest.mark.usefixtures("setup_class")
 class TestUhaul:
     def test_uhaul_9d8ba96c(self):
-        # self.driver.get("https://uhaul.com")
+        self.driver.get("https://uhaul.com")
         self.driver.find_element(By.ID, "PickupLocation-TruckOnly").clear()
         self.driver.find_element(By.ID, "PickupLocation-TruckOnly").send_keys("Birmingham, Alabama")
 
-        # self.driver.find_element(By.ID, "ui-id-7").click()
         self.driver.find_element(By.XPATH, "//div[text()='Birmingham, AL' and contains(@id, 'ui-id-')]").click()
 
         self.driver.find_element(By.ID, "DropoffLocation-TruckOnly").clear()
-        # self.driver.find_element(By.ID, "DropoffLocation-TruckOnly").send_keys("mobile alabama")
+
         self.driver.find_element(By.ID, "DropoffLocation-TruckOnly").send_keys("Mobil Alabama")
 
         self.driver.find_element(By.XPATH, "//form[@id='EquipmentSearch']/div[3]/div[1]/label[1]").click()
 
-        # self.driver.find_element(By.XPATH, "//a[@title='Next']").click()
-        # self.driver.find_element(By.XPATH, "//a[contains(text(),'29')]").click()
         (start_date_year, start_date_month_adjusted, start_date_day), (end_date_year, end_date_month_adjusted, end_date_day) = calculate_budget_dates(7, 14)
         self.driver.find_element(By.XPATH, f"//td[@data-year='{start_date_year}' and @data-month='{start_date_month_adjusted}' and not(contains(@class, 'ui-datepicker-other-month'))]/a[text()='{start_date_day}']").click()
-        # self.driver.find_element(By.XPATH, f"//td[@data-year='{end_date_year}' and @data-month='{end_date_month_adjusted}' and @class='']//a[text()='{end_date_day}']").click()
 
         self.driver.find_element(By.XPATH, "//form[@id='EquipmentSearch']/div[3]/div[2]/button[1]").click()
         self.driver.find_element(By.ID, "submit_DC").click()
 
-        # looks like handling some kind of popup, it's redundant now?
-        # self.driver.find_element(By.XPATH, "//dialog[@id='dvShowNewTowing_DC']/div[1]/div[2]/div[2]/div[2]/button[1]").click()
-
-        # self.driver.find_element(By.ID, "SelectedScheduleTime_Row0_Entity775073").clear()
-        # self.driver.find_element(By.ID, "SelectedScheduleTime_Row0_Entity775073").select("12 00 AM Midnight")
         pickup_time_dropdown = self.driver.find_element(By.ID, "SelectedScheduleTime_Row0_Entity775073")
         pickup_time_select = Select(pickup_time_dropdown)
         pickup_time_select.select_by_visible_text("12:00 AM Midnight")
@@ -42,8 +33,6 @@ class TestUhaul:
         self.driver.find_element(By.ID, "btnContinue_Row0_Entity775073").click()
         self.driver.find_element(By.XPATH, "//div[@id='sharedRevealContent']/div[1]/div[3]/div[1]/div[1]/div[2]/div[2]/button[1]").click()
 
-        # self.driver.find_element(By.ID, "btnContinueSafeTrip").click()
-        # add extra step and move above step to below
         self.driver.find_element(By.ID, "btnSelectDropoffNoPreference").click()
         self.driver.find_element(By.ID, "btnContinueSafeTrip").click()
 
@@ -52,13 +41,8 @@ class TestUhaul:
         self.driver.find_element(By.XPATH, "//a[contains(text(),'No thanks, I do not need storage')]").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(),'No thanks, I do not need supplies')]").click()
 
-        # add extra step to say no
         self.driver.find_element(By.XPATH, "//a[contains(text(),'No thanks, I do not need help in ')]").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(),'No thanks, I do not need help in ')]").click()
 
-        # self.driver.find_element(By.XPATH, "//form[@id='SkipLocationBottomForm']/button[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='SkipLocationBottomForm']/button[1]").click()
-        # self.driver.find_element(By.ID, "hlSaveQuote").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='SaveCustomerQuoteForm']/button[1]").click()
         self.driver.find_element(By.ID, "hlSaveQuote").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(),'Save Equipment Quote')]").click()

@@ -6,17 +6,11 @@ from selenium.webdriver.support.select import Select
 @pytest.mark.usefixtures("setup_class")
 class TestDrugs:
     def test_drugs_bb78798e(self):
-        # self.driver.get("https://www.drugs.com/")
+        self.driver.get("https://www.drugs.com/")
         self.driver.find_element(By.XPATH, "/html/body[1]/div[2]/div[1]/ul[1]/li[2]/a[1]/img[1]").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(),'Agree and Continue')]").click()
         self.driver.find_element(By.ID, "livesearch-imprint").clear()
         self.driver.find_element(By.ID, "livesearch-imprint").send_keys("894 5")
-
-        # self.driver.find_element(By.XPATH, "//div[@id='ls-wrap']/div[1]/a[1]").click()
-        # self.driver.find_element(By.ID, "color-select").clear()
-        # self.driver.find_element(By.ID, "color-select").select("Pink")
-        # self.driver.find_element(By.ID, "shape-select").clear()
-        # self.driver.find_element(By.ID, "shape-select").select("Oval")
 
         color_list = self.driver.find_element(By.ID, "color-select")
         color_select = Select(color_list)

@@ -8,15 +8,8 @@ from browser_helper import scroll_to_element
 @pytest.mark.usefixtures("setup_class")
 class TestCars:
     def test_cars_135d86d4(self):
-        # self.driver.get("https://www.cars.com/")
+        self.driver.get("https://www.cars.com/")
 
-        # self.driver.find_element(By.ID, "make-model-search-stocktype").clear()
-        # self.driver.find_element(By.ID, "make-model-search-stocktype").select("Used")
-        # self.driver.find_element(By.ID, "makes").clear()
-        # self.driver.find_element(By.ID, "makes").select("BMW")
-        # self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
-        # web app logic is changed so need to search first and then filter the used car
-        # need to handle shadow dom
         car_search_form_shadow_root = self.driver.find_element(By.CSS_SELECTOR, "#panel-19 > cars-search-form")
         spark_select_button = car_search_form_shadow_root.shadow_root.find_element(By.CSS_SELECTOR, "form > spark-fieldset > spark-select:nth-child(2)")
         spark_select_button.click()
@@ -29,10 +22,6 @@ class TestCars:
         stock_select = Select(stock_type_dropdown)
         stock_select.select_by_value('used')
 
-        # self.driver.find_element(By.ID, "price_list_price_min_select").clear()
-        # self.driver.find_element(By.ID, "price_list_price_min_select").select("$25,000")
-        # self.driver.find_element(By.ID, "price_list_price_max_select").clear()
-        # self.driver.find_element(By.ID, "price_list_price_max_select").select("$50,000")
         min_price_dropdown = self.driver.find_element(By.ID, "price_list_price_min_select")
         min_price_select = Select(min_price_dropdown)
         min_price_select.select_by_value('25000')
@@ -40,10 +29,6 @@ class TestCars:
         max_price_select = Select(max_price_dropdown)
         max_price_select.select_by_value('50000')
 
-        # self.driver.find_element(By.ID, "year_year_min_select").clear()
-        # self.driver.find_element(By.ID, "year_year_min_select").select("2005")
-        # self.driver.find_element(By.ID, "year_year_max_select").clear()
-        # self.driver.find_element(By.ID, "year_year_max_select").select("2015")
         min_year_dropdown = self.driver.find_element(By.ID, "year_year_min_select")
         min_year_select = Select(min_year_dropdown)
         min_year_select.select_by_value('2005')
@@ -51,22 +36,15 @@ class TestCars:
         max_year_select = Select(max_year_dropdown)
         max_year_select.select_by_value('2015')
 
-        # self.driver.find_element(By.ID, "mileage-select").clear()
-        # self.driver.find_element(By.ID, "mileage-select").select("50,000 or less (291)")
         mileage_dropdown = self.driver.find_element(By.ID, "mileage-select")
         mileage_select = Select(mileage_dropdown)
         mileage_select.select_by_value('50000')
 
-        # self.driver.find_element(By.XPATH, "//button[@id='trigger_cylinders']/svg[1]").click()
-        # self.driver.find_element(By.XPATH, "//div[@id='panel_cylinders']/div[3]/label[1]").click()
-        # need to scroll to the element first to avoid: selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted:
         trigger_cylinders = self.driver.find_element(By.ID, "trigger_cylinders")
         scroll_to_element(self.driver, trigger_cylinders)
         trigger_cylinders.click()
         self.driver.find_element(By.XPATH, "//label[@for='cylinders_8']").click()
 
-        # self.driver.find_element(By.ID, "sort-dropdown").clear()
-        # self.driver.find_element(By.ID, "sort-dropdown").select("Lowest price")
         sort_dropdown = self.driver.find_element(By.ID, "sort-dropdown")
         sort_select = Select(sort_dropdown)
         sort_select.select_by_value('list_price')

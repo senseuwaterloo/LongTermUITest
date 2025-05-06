@@ -9,35 +9,19 @@ from browser_helper import calculate_dates_weekday_abbr_format
 @pytest.mark.usefixtures("setup_class")
 class TestMarriott:
     def test_marriott_06a6d90b(self):
-        # self.driver.get("https://www.marriott.com")
-        # self.driver.find_element(By.ID, "1681035762615-search-destination").clear()
-        # self.driver.find_element(By.ID, "1681035762615-search-destination").send_keys("NIAGRA FALLS")
+        self.driver.get("https://www.marriott.com")
+
         self.driver.find_element(By.ID, "downshift-0-input").clear()
         self.driver.find_element(By.ID, "downshift-0-input").send_keys("NIAGRA FALLS")
 
-        # self.driver.find_element(By.XPATH, "//li[@id='1681035835783-search-destination-option-0']/p[1]").click()
         self.driver.find_element(By.ID, "downshift-0-item-0").click()
 
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035840958-find-a-hotel-homePage-form']/div[1]/div[1]/div[1]/div[2]/div[1]/button[1]/span[2]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035853756-find-a-hotel-homePage-form']/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[3]/div[3]/div[4]/span[1]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035861955-find-a-hotel-homePage-form']/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[3]/div[3]/div[7]/span[1]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035868051-find-a-hotel-homePage-form']/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[3]/button[1]").click()
         self.driver.find_element(By.ID, "date-picker").click()
         start_date, end_date = calculate_dates_weekday_abbr_format(30, 33)
         self.driver.find_element(By.XPATH, f"//div[@aria-label='{start_date}' and @aria-disabled='false']/div[1]").click()
         self.driver.find_element(By.XPATH, f"//div[@aria-label='{end_date}' and @aria-disabled='false']/div[1]").click()
         self.driver.find_element(By.XPATH, "//button[@data-custom_click_track_value='Search Form Dates Module| Done button |internal']").click()
 
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035873889-find-a-hotel-homePage-form']/div[2]/div[1]/button[1]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035873889-find-a-hotel-homePage-form']/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/button[2]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035873889-find-a-hotel-homePage-form']/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/button[2]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035873889-find-a-hotel-homePage-form']/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/button[2]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035873889-find-a-hotel-homePage-form']/div[2]/div[1]/div[1]/div[2]/div[3]/div[2]/button[2]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035873889-find-a-hotel-homePage-form']/div[2]/div[1]/div[1]/div[2]/div[5]/div[1]/div[2]/button[2]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035873889-find-a-hotel-homePage-form']/div[2]/div[1]/div[1]/div[2]/div[5]/div[1]/div[2]/button[2]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035873889-find-a-hotel-homePage-form']/div[2]/div[1]/div[1]/div[2]/div[5]/div[1]/div[2]/button[2]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035873889-find-a-hotel-homePage-form']/div[2]/div[1]/div[1]/div[2]/div[5]/div[1]/div[2]/button[2]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//form[@id='1681035873889-find-a-hotel-homePage-form']/button[1]").click()
         self.driver.find_element(By.ID, "Rooms & Guests").click()
         self.driver.find_element(By.XPATH, "//button[@custom_click_track_value='Search form | Rooms Increment button |internal']").click()
         self.driver.find_element(By.XPATH, "//button[@custom_click_track_value='Search form | Adults Increment button |internal']").click()
@@ -48,25 +32,9 @@ class TestMarriott:
         self.driver.find_element(By.XPATH, "//button[@custom_click_track_value='Search form | Children age Increment button |internal']").click()
         self.driver.find_element(By.XPATH, "//button[@data-custom_click_track_value='Search Form | Find Hotels |internal']").click()
 
-        # can't find the below checkbox in the search result page now..., need to perform this action in the filter panel after selecting price
-        # self.driver.find_element(By.ID, "Show rates with taxes and all fees").click()
-
-        # self.driver.find_element(By.ID, "availabilityFilterToggle").click()
-        # need to wait for the page to be stable then click on the filter, otherwise the price button will not display in the filter window. Please refer to the screenshot
         time.sleep(4)
         self.driver.find_element(By.XPATH, "//button[@custom_click_track_value='Phoenix Search Results| Filter Selection: All Filters |internal']").click()
 
-        # self.driver.find_element(By.XPATH, "//div[@id='SuggestedFilters2642']/div[1]/form[1]/div[1]/div[1]/ul[1]/li[2]/a[1]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//div[@id='SuggestedFiltersdfdd']/div[1]/form[1]/div[1]/div[1]/ul[1]/li[4]/a[1]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//div[@id='SearchFilter6058']/div[1]/span[5]").click()
-        # self.driver.find_element(By.XPATH, "//ul[@id='price-list']/li[3]/label[1]").click()
-        # self.driver.find_element(By.XPATH, "//div[@id='SearchFilter6058']/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/form[1]/button[1]").click()
-        # self.driver.find_element(By.XPATH, "//div[@id='PropertyRecordsSearchToolBard941']/div[1]/div[2]/span[2]/span[1]/span[1]").click()
-        # self.driver.find_element(By.XPATH, "//ul[@id='sort']/li[2]").click()
-        # self.driver.find_element(By.XPATH, "//div[@id='property-record-map-YYZTO']/div[1]/div[2]/div[1]/div[1]/a[1]/div[1]").click()
-        # self.driver.find_element(By.XPATH, "//div[@id='tab1']/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[2]/div[2]/button[1]").click()
-        # self.driver.find_element(By.XPATH, "//div[@id='tile-global-privacy-consent']/div[2]/div[1]/label[1]").click()
-        # self.driver.find_element(By.XPATH, "//button[@name='submit' and @type='submit']").click()
         self.driver.find_element(By.XPATH, "//span[@role='switch' and ./input[@custom_click_track_value='Phoenix Search Results| Show available hotels only Selection |internal']]").click()
         self.driver.find_element(By.XPATH, "//label[contains(text(), '100 - 200 USD')]").click()
         self.driver.find_element(By.XPATH, "//span[@role='switch' and ./input[@custom_click_track_value='Phoenix Search Results| Show rates with taxes and all fees |internal']]").click()

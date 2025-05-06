@@ -6,7 +6,7 @@ from selenium.webdriver.support.select import Select
 @pytest.mark.usefixtures("setup_class")
 class TestCargurus:
     def test_cargurus_e832e1f9(self):
-        # self.driver.get("https://www.cargurus.com/")
+        self.driver.get("https://www.cargurus.com/")
         self.driver.find_element(By.XPATH, "//div[@id='heroSearch']/label[2]/span[1]").click()
         self.driver.find_element(By.XPATH, "//input[@name='smcVinPlateField' and @type='text' and @placeholder='(EX.) C4R 6URU']").clear()
         self.driver.find_element(By.XPATH, "//input[@name='smcVinPlateField' and @type='text' and @placeholder='(EX.) C4R 6URU']").send_keys("YAW639")

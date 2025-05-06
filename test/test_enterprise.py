@@ -10,7 +10,7 @@ from browser_helper import calculate_dates_slash_format
 @pytest.mark.usefixtures("setup_class")
 class TestEnterprise:
     def test_enterprise_d5054276(self):
-        # self.driver.get("https://enterprise.com")
+        self.driver.get("https://enterprise.com")
         # time.sleep(10)
         self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']/ul[1]/li[3]/div[2]").click()
         self.driver.find_element(By.XPATH, "//div[@id='navContentLocations']/div[1]/div[1]/div[1]/ul[1]/li[1]/a[1]/span[1]").click()

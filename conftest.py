@@ -438,7 +438,7 @@ def setup_method(request):
     website_domain_name = convert_class_name(test_class_name)
     website_url = get_website_url(website_domain_name)
     driver = request.cls.driver
-    # open_url_and_handle_cookie(driver, website_url)
+    open_url_and_handle_cookie(driver, website_url)
 
     execution_folder = request.config.execution_folder
 

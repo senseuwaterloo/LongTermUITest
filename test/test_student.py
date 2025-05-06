@@ -8,18 +8,15 @@ from browser_helper import scroll_down
 @pytest.mark.usefixtures("setup_class")
 class TestStudent:
     def test_student_a36836fd(self):
-        # self.driver.get("https://student.com")
-        # add extra step to navigate to the main website
+        self.driver.get("https://student.com")
+
         self.driver.find_element(By.XPATH, "//span[text()='Oceania']").click()
         self.driver.find_element(By.XPATH, "//a[text()='Sydney']").click()
 
-        # self.driver.find_element(By.XPATH, "//span[@role='presentation']").click()
         self.driver.find_element(By.XPATH, "//span[@role='presentation' and text()='Rentals']").click()
 
-        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Group Booking')]").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(),'Group booking')]").click()
 
-        # add extra step to close potential pop up
         if self.driver.find_element(By.XPATH, "//div[@class='download-banner__close-content' and @role='presentation']") is not None:
             self.driver.find_element(By.XPATH, "//div[@class='download-banner__close-content' and @role='presentation']").click()
 
@@ -37,10 +34,7 @@ class TestStudent:
 
         scroll_down(self.driver, 500)
         self.driver.find_element(By.XPATH, "//input[@name='moveInDate' and @value='' and @type='text' and @placeholder='Desired move-in date']").click()
-        # self.driver.find_element(By.XPATH, "//select[@name='month']").clear()
-        # self.driver.find_element(By.XPATH, "//select[@name='month']").select("Apr")
-        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[1]/div[2]/div[2]/div[1]/ul[1]/li[6]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/div[7]").click()
-        # click on the calendar first so that the elements in the calendar are clickable, ignored the long relative xpath here since it mainly related to the input
+
         self.driver.find_element(By.XPATH, "//select[@name='year']").click()
         move_in_year_dropdown = self.driver.find_element(By.XPATH, "//select[@name='year']")
         move_in_year_select = Select(move_in_year_dropdown)
@@ -52,9 +46,6 @@ class TestStudent:
 
         self.driver.find_element(By.XPATH, "//input[@name='moveOutDate' and @value='' and @type='text' and @placeholder='Desired move-out date']").click()
 
-        # self.driver.find_element(By.XPATH, "//select[@name='year']").clear()
-        # self.driver.find_element(By.XPATH, "//select[@name='year']").select("2024")
-        # self.driver.find_element(By.XPATH, "//div[@id='app']/div[1]/div[2]/div[2]/div[1]/ul[1]/li[7]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[5]/div[7]").click()
         self.driver.find_element(By.XPATH, "//select[@name='year']").click()
         move_out_year_dropdown = self.driver.find_element(By.XPATH, "//select[@name='year']")
         move_out_year_select = Select(move_out_year_dropdown)
@@ -76,6 +67,3 @@ class TestStudent:
         self.driver.find_element(By.XPATH, "//input[@name='emailAddress' and @value='' and @type='text' and @placeholder='Input email address']").send_keys("Johnbrown@gmail.com")
         self.driver.find_element(By.XPATH, "//input[@name='phone-input' and @value='' and @type='phone' and @placeholder='Phone number']").clear()
         self.driver.find_element(By.XPATH, "//input[@name='phone-input' and @value='' and @type='phone' and @placeholder='Phone number']").send_keys("3324456543")
-
-        # avoid sending spam data
-        # self.driver.find_element(By.XPATH, "//button[@type='button']").click()

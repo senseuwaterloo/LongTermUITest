@@ -5,9 +5,8 @@ from selenium.webdriver.common.by import By
 @pytest.mark.usefixtures("setup_class")
 class TestCookpad:
     def test_cookpad_ceac063d(self):
-        # self.driver.get("https://cookpad.com")
-        #TODO to run this test after the anti-robot time.sleep(100)
-        # changed the locators in this  test case
+        self.driver.get("https://cookpad.com")
+
         self.driver.find_element(By.ID, "navigation_search").clear()
         self.driver.find_element(By.ID, "navigation_search").send_keys("pancake")
         self.driver.find_element(By.XPATH, "//button[@name='button' and @type='submit']").click()
