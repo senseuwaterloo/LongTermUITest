@@ -6,7 +6,6 @@ from selenium.webdriver.common.by import By
 class TestAa:
     def test_aa_6c28458c(self):
         self.driver.get("https://www.aa.com/homePage.do")
-        self.driver.find_element(By.NAME, "optoutmulti_button").click()
         adc_header_element = self.driver.find_element(By.CSS_SELECTOR, "adc-header")
         main_navigation_element = adc_header_element.shadow_root.find_element(By.ID, "main-navigation")
         plan_travel_element = main_navigation_element.find_element(By.CSS_SELECTOR, "adc-tab[label='Plan travel']")
@@ -29,7 +28,7 @@ class TestAa:
         self.driver.find_element(By.XPATH, "//a[contains(., 'LHR - London Heathrow, United Kingdom')]").click()
 
         self.driver.find_element(By.ID, "segments0.travelDate").clear()
-        self.driver.find_element(By.ID, "segments0.travelDate").send_keys("04/19/2025")
+        self.driver.find_element(By.ID, "segments0.travelDate").send_keys("08/19/2025")
         self.driver.find_element(By.ID, "segments1.origin").click()
         self.driver.find_element(By.ID, "segments1.origin").clear()
         self.driver.find_element(By.ID, "segments1.origin").send_keys("Heathrow")
@@ -41,7 +40,7 @@ class TestAa:
         self.driver.find_element(By.XPATH, "//a[contains(., 'CDG - Paris Charles de Gaulle, France')]").click()
 
         self.driver.find_element(By.ID, "segments1.travelDate").clear()
-        self.driver.find_element(By.ID, "segments1.travelDate").send_keys("04/21/2025")
+        self.driver.find_element(By.ID, "segments1.travelDate").send_keys("08/21/2025")
 
         self.driver.find_element(By.ID, "addFlightLink").click()
         self.driver.find_element(By.ID, "segments2.origin").click()
@@ -55,7 +54,7 @@ class TestAa:
         self.driver.find_element(By.XPATH, "/html/body/ul[6]/li/a").click()
 
         self.driver.find_element(By.ID, "segments2.travelDate").clear()
-        self.driver.find_element(By.ID, "segments2.travelDate").send_keys("04/23/2025")
+        self.driver.find_element(By.ID, "segments2.travelDate").send_keys("08/23/2025")
 
         self.driver.find_element(By.ID, "flightSearchSubmitBtn").click()
 

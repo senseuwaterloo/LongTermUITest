@@ -223,7 +223,7 @@ def call_gpt_api(args, openai_client, messages):
     retry_times = 0
     max_retries = 3
 
-    model_name = "o1"  # or "gpt-4-vision-preview", etc.
+    model_name = "o3"
     if args and hasattr(args, "api_model"):
         model_name = args.api_model
 

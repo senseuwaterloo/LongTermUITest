@@ -113,6 +113,32 @@ class CustomWebDriver(uc.Chrome):
         super().__init__(*args, **kwargs)
         # self.logging_messages = []
 
+    def get(self, website_url):
+        try:
+            log_message_attempt = f"Attempting to navigate to URL: {website_url}"
+            logger.info(log_message_attempt)
+
+            super().get(website_url)
+
+            log_message_success = f"Successfully navigated to URL: {website_url}"
+            logger.info(log_message_success)
+
+        except Exception as e:
+            error_message = f"Exception occurred while trying to navigate to URL: {website_url}"
+            logger.error(error_message)
+            raise e
+
+        if website_url in cookie_locator_dict:
+            locators = cookie_locator_dict[website_url]
+            for by, locator in locators:
+                try:
+                    element = WebDriverWait(super(), 9).until(EC.element_to_be_clickable((by, locator)))
+                    element.click()
+                except (NoSuchElementException, TimeoutException, StaleElementReferenceException, AttributeError):
+                    error_message = f"handle cookie window error, element located by {by} with locator {locator} not found, continue without dismissing cookie window"
+                    logger.warning(error_message)
+        time.sleep(2)
+
     def find_element(self, by=By.ID, value=None):
         try:
             attempt_find_element_info = f"Attempting to find element: {by} = {value}"
@@ -438,7 +464,7 @@ def setup_method(request):
     website_domain_name = convert_class_name(test_class_name)
     website_url = get_website_url(website_domain_name)
     driver = request.cls.driver
-    open_url_and_handle_cookie(driver, website_url)
+    # open_url_and_handle_cookie(driver, website_url)
 
     execution_folder = request.config.execution_folder
 
@@ -474,11 +500,7 @@ def setup_method(request):
             f.write(formatted_logs + "\n")
 
         test_method_source, failing_line_code = gather_test_code_and_failing_line(request)
-        # print("test_method_source:")
-        # print(test_method_source)
-        # print(failing_line_code)
-        # print("OPENAI KEY:")
-        # print(os.getenv("OPENAI_API_KEY"))
+
         load_dotenv()
         suggestions = call_gpt_for_candidate_fixes(
             test_name=request.node.name,
@@ -536,7 +558,7 @@ def get_website_url(website_name):
 
 
 def open_url_and_handle_cookie(driver, website_url):
-    print(website_url)
+    # print(website_url)
     driver.get(website_url)
     if website_url == 'https://www.jetblue.com/':
         try:
