@@ -15,7 +15,12 @@ class TestAa:
         new_main_navigation_element = new_adc_header_element.shadow_root.find_element(By.ID, "main-navigation")
         hp_header_link_element = new_main_navigation_element.find_element(By.CSS_SELECTOR, "hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link']")
         self.driver.execute_script("arguments[0].click()", hp_header_link_element.shadow_root.find_element(By.CSS_SELECTOR, "a"))
-        self.driver.find_element(By.XPATH, "//span[contains(.,'Multi city')]").click()
+        # self.driver.find_element(By.XPATH, "//span[contains(.,'Multi city')]").click()
+        trip_type_adc_dropdown_shadow = self.driver.find_element(By.ID, "trip-type")
+        trip_type_adc_dropdown_shadow.click()
+        trip_type_adc_dropdown_list = trip_type_adc_dropdown_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.aileron-dropdown__menu > adc-dropdown-listbox")
+        multi_city_option = trip_type_adc_dropdown_list.shadow_root.find_element(By.ID, "adc-lb-2")
+        multi_city_option.click()
 
         self.driver.find_element(By.ID, "segments0.origin").click()
         self.driver.find_element(By.ID, "segments0.origin").clear()
