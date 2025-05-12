@@ -48,7 +48,7 @@ website_dict = {'careers.walmart': 'https://careers.walmart.com/', 'dmv.virginia
                 'usnewseducation': 'https://www.usnews.com/education'}
 
 cookie_locator_dict = {#'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmulti_button')],
-                       'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
+                       # 'https://www.accuweather.com/': [(By.XPATH, "//*[@id='privacy-policy-banner']/div/div")],
                        'https://adoptapet.com': [(By.XPATH, "//div[@id='onetrust-close-btn-container']/button")],
                        # (By.XPATH, "//button[@aria-label='Close Message' and @class='ab-close-button']")
                        'https://agoda.com': [(By.ID, "secondaryButton"), (By.XPATH, "//a[contains(text(), 'No thanks')]"), (By.XPATH, "//button[contains(text(), 'No thanks')]")],
