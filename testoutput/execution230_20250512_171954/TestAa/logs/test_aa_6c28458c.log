@@ -1,0 +1,396 @@
+2025-05-12 17:20:49,622 - ERROR - Test test_aa_6c28458c failed.
+2025-05-12 17:20:49,624 - ERROR - URL at failure: https://www.aa.com/booking/search/find-flights
+2025-05-12 17:20:49,625 - ERROR - Exception traceback: self = <test.test_aa.TestAa object at 0x1119c6b60>
+
+    def test_aa_6c28458c(self):
+        self.driver.get("https://www.aa.com/homePage.do")
+        adc_header_element = self.driver.find_element(By.CSS_SELECTOR, "adc-header")
+        main_navigation_element = adc_header_element.shadow_root.find_element(By.ID, "main-navigation")
+        plan_travel_element = main_navigation_element.find_element(By.CSS_SELECTOR, "adc-tab[label='Plan travel']")
+        plan_travel_element.click()
+    
+        new_adc_header_element = self.driver.find_element(By.CSS_SELECTOR, "adc-header")
+        new_main_navigation_element = new_adc_header_element.shadow_root.find_element(By.ID, "main-navigation")
+        hp_header_link_element = new_main_navigation_element.find_element(By.CSS_SELECTOR, "hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link']")
+        self.driver.execute_script("arguments[0].click()", hp_header_link_element.shadow_root.find_element(By.CSS_SELECTOR, "a"))
+        # self.driver.find_element(By.XPATH, "//span[contains(.,'Multi city')]").click()
+        trip_type_adc_dropdown_shadow = self.driver.find_element(By.ID, "trip-type")
+        trip_type_adc_dropdown_shadow.click()
+        trip_type_adc_dropdown_list = trip_type_adc_dropdown_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.aileron-dropdown__menu > adc-dropdown-listbox")
+        multi_city_option = trip_type_adc_dropdown_list.shadow_root.find_element(By.ID, "adc-lb-2")
+        multi_city_option.click()
+    
+        first_origin_airport_shadow = self.driver.find_element(By.ID, "originAirport1")
+        first_origin_airport_input_shadow = first_origin_airport_shadow.shadow_root.find_element(By.ID, "airport-code-input")
+        geolocator_input_shadow = first_origin_airport_input_shadow.shadow_root.find_element(By.ID, "geolocator-input")
+        first_origin_input = geolocator_input_shadow.shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        first_origin_input.click()
+        first_origin_input.clear()
+        first_origin_input.send_keys("JFK")
+        # self.driver.find_element(By.ID, "segments0.origin").click()
+        # self.driver.find_element(By.ID, "segments0.origin").clear()
+        # self.driver.find_element(By.ID, "segments0.origin").send_keys("JFK")
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(.,'JFK - New York John F Kennedy Intl, NY')]").click()
+        # Need to wait a few second to let the option list be displayed
+        time.sleep(2)
+        first_origin_airport_code_select = first_origin_airport_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.adc-airport-code--options > adc-airport-code-listbox")
+        first_origin_airport_code_select.send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+    
+        # self.driver.find_element(By.ID, "segments0.destination").click()
+        # self.driver.find_element(By.ID, "segments0.destination").clear()
+        # self.driver.find_element(By.ID, "segments0.destination").send_keys("Heathrow")
+        # self.driver.find_element(By.XPATH, "//a[contains(., 'LHR - London Heathrow, United Kingdom')]").click()
+        destination_shadow = self.driver.find_element(By.ID, "destinationAirport1")
+        destination_input_shadow = destination_shadow.shadow_root.find_element(By.ID, "airport-code-input")
+        dest_geo_input = destination_input_shadow.shadow_root.find_element(By.ID, "geolocator-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        dest_geo_input.click()
+        dest_geo_input.clear()
+        dest_geo_input.send_keys("LHR")
+        time.sleep(2)
+        destination_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.adc-airport-code--options > adc-airport-code-listbox").send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+    
+        # self.driver.find_element(By.ID, "segments0.travelDate").clear()
+        # self.driver.find_element(By.ID, "segments0.travelDate").send_keys("08/19/2025")
+        first_datepicker_shadow = self.driver.find_element(By.ID, "datePicker1")
+        first_date_input = first_datepicker_shadow.shadow_root.find_element(By.ID, "first-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        first_date_input.clear()
+        first_date_input.send_keys("08/19/2025")
+    
+        # self.driver.find_element(By.ID, "segments1.origin").click()
+        # self.driver.find_element(By.ID, "segments1.origin").clear()
+        # self.driver.find_element(By.ID, "segments1.origin").send_keys("Heathrow")
+        # self.driver.find_element(By.XPATH, "/html/body/ul[3]/li/a").click()
+        second_origin_airport_shadow = self.driver.find_element(By.ID, "originAirport2")
+        second_origin_airport_input_shadow = second_origin_airport_shadow.shadow_root.find_element(By.ID, "airport-code-input")
+        second_origin_input = second_origin_airport_input_shadow.shadow_root.find_element(By.ID, "geolocator-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        second_origin_input.click()
+        second_origin_input.clear()
+        second_origin_input.send_keys("Heathrow")
+        time.sleep(2)
+        second_origin_airport_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.adc-airport-code--options > adc-airport-code-listbox").send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+    
+        # self.driver.find_element(By.ID, "segments1.destination").click()
+        # self.driver.find_element(By.ID, "segments1.destination").clear()
+        # self.driver.find_element(By.ID, "segments1.destination").send_keys("CDG")
+        # self.driver.find_element(By.XPATH, "//a[contains(., 'CDG - Paris Charles de Gaulle, France')]").click()
+        second_destination_shadow = self.driver.find_element(By.ID, "destinationAirport2")
+        second_destination_input_shadow = second_destination_shadow.shadow_root.find_element(By.ID, "airport-code-input")
+        second_dest_geo_input = second_destination_input_shadow.shadow_root.find_element(By.ID, "geolocator-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        second_dest_geo_input.click()
+        second_dest_geo_input.clear()
+        second_dest_geo_input.send_keys("CDG")
+        time.sleep(2)
+        second_destination_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.adc-airport-code--options > adc-airport-code-listbox").send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+    
+        # self.driver.find_element(By.ID, "segments1.travelDate").clear()
+        # self.driver.find_element(By.ID, "segments1.travelDate").send_keys("08/21/2025")
+        second_datepicker_shadow = self.driver.find_element(By.ID, "datePicker2")
+        second_date_input = second_datepicker_shadow.shadow_root.find_element(By.ID, "first-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        second_date_input.clear()
+        second_date_input.send_keys("08/21/2025")
+    
+        # self.driver.find_element(By.ID, "addFlightLink").click()
+        self.driver.find_element(By.ID, "add-flight").click()
+    
+        # self.driver.find_element(By.ID, "segments2.origin").click()
+        # self.driver.find_element(By.ID, "segments2.origin").clear()
+        # self.driver.find_element(By.ID, "segments2.origin").send_keys("CDG")
+        # self.driver.find_element(By.XPATH, "/html/body/ul[5]/li/a").click()
+        third_origin_airport_shadow = self.driver.find_element(By.ID, "originAirport3")
+        third_origin_airport_input_shadow = third_origin_airport_shadow.shadow_root.find_element(By.ID, "airport-code-input")
+        third_origin_input = third_origin_airport_input_shadow.shadow_root.find_element(By.ID, "geolocator-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        third_origin_input.click()
+        third_origin_input.clear()
+        third_origin_input.send_keys("CDG")
+        time.sleep(2)
+        third_origin_airport_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.adc-airport-code--options > adc-airport-code-listbox").send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+    
+        # self.driver.find_element(By.ID, "segments2.destination").click()
+        # self.driver.find_element(By.ID, "segments2.destination").clear()
+        # self.driver.find_element(By.ID, "segments2.destination").send_keys("JFK")
+        # self.driver.find_element(By.XPATH, "/html/body/ul[6]/li/a").click()
+        third_destination_shadow = self.driver.find_element(By.ID, "destinationAirport3")
+        third_destination_input_shadow = third_destination_shadow.shadow_root.find_element(By.ID, "airport-code-input")
+        third_dest_geo_input = third_destination_input_shadow.shadow_root.find_element(By.ID, "geolocator-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        third_dest_geo_input.click()
+        third_dest_geo_input.clear()
+        third_dest_geo_input.send_keys("JFK")
+        time.sleep(2)
+        third_destination_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.adc-airport-code--options > adc-airport-code-listbox").send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+    
+        # self.driver.find_element(By.ID, "segments2.travelDate").clear()
+        # self.driver.find_element(By.ID, "segments2.travelDate").send_keys("08/23/2025")
+        third_datepicker_shadow = self.driver.find_element(By.ID, "datePicker3")
+        third_date_input = third_datepicker_shadow.shadow_root.find_element(By.ID, "first-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        third_date_input.clear()
+        third_date_input.send_keys("08/21/2025")
+    
+>       self.driver.find_element(By.ID, "flightSearchSubmitBtn").click()
+
+test/test_aa.py:134: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:164: in find_element
+    raise e
+conftest.py:148: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x111a483a0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001032128b8 undetected_chromedriver + 5986488
+E       1   undetected_chromedriver             0x00000001032099ea undetected_chromedriver + 5949930
+E       2   undetected_chromedriver             0x0000000102cc2600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102d14304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000102d14521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102d64204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000102d3a33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000102d61566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000102d3a0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000102d0661d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000102d07281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001031d0580 undetected_chromedriver + 5715328
+E       12  undetected_chromedriver             0x00000001031d4445 undetected_chromedriver + 5731397
+E       13  undetected_chromedriver             0x00000001031aaed0 undetected_chromedriver + 5562064
+E       14  undetected_chromedriver             0x00000001031d4e7b undetected_chromedriver + 5734011
+E       15  undetected_chromedriver             0x0000000103199de4 undetected_chromedriver + 5492196
+E       16  undetected_chromedriver             0x00000001031f7a98 undetected_chromedriver + 5876376
+E       17  undetected_chromedriver             0x00000001031f7c60 undetected_chromedriver + 5876832
+E       18  undetected_chromedriver             0x00000001032095b1 undetected_chromedriver + 5948849
+E       19  libsystem_pthread.dylib             0x00007ff814164df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff814160857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-12 17:19:59,065 - INFO - Attempting to navigate to URL: https://www.aa.com/homePage.do
+2025-05-12 17:20:00,951 - INFO - Successfully navigated to URL: https://www.aa.com/homePage.do
+2025-05-12 17:20:02,952 - INFO - Attempting to find element: css selector = adc-header
+2025-05-12 17:20:02,977 - INFO - Successfully find element: css selector = adc-header
+2025-05-12 17:20:02,984 - INFO - Getting the shadow root of current element: css selector = adc-header
+2025-05-12 17:20:02,989 - INFO - Attempting to find element in shadow root: id = main-navigation
+2025-05-12 17:20:03,000 - INFO - Element found in shadow root: id = main-navigation
+2025-05-12 17:20:03,000 - INFO - Attempting to find element: css selector = adc-tab[label='Plan travel'] within element: id = main-navigation
+2025-05-12 17:20:03,009 - INFO - Successfully find element: css selector = adc-tab[label='Plan travel'] within element: id = main-navigation
+2025-05-12 17:20:03,009 - INFO - Attempting to click element: css selector = adc-tab[label='Plan travel']
+2025-05-12 17:20:03,009 - INFO - Attempting to find element: css selector = adc-tab[label='Plan travel'] within element: id = main-navigation
+2025-05-12 17:20:03,014 - INFO - Successfully find element: css selector = adc-tab[label='Plan travel'] within element: id = main-navigation
+2025-05-12 17:20:03,131 - INFO - Element clicked: css selector = adc-tab[label='Plan travel']
+2025-05-12 17:20:03,131 - INFO - Attempting to find element: css selector = adc-header
+2025-05-12 17:20:03,136 - INFO - Successfully find element: css selector = adc-header
+2025-05-12 17:20:03,136 - INFO - Getting the shadow root of current element: css selector = adc-header
+2025-05-12 17:20:03,140 - INFO - Attempting to find element in shadow root: id = main-navigation
+2025-05-12 17:20:03,145 - INFO - Element found in shadow root: id = main-navigation
+2025-05-12 17:20:03,145 - INFO - Attempting to find element: css selector = hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link'] within element: id = main-navigation
+2025-05-12 17:20:03,151 - INFO - Successfully find element: css selector = hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link'] within element: id = main-navigation
+2025-05-12 17:20:03,152 - INFO - Getting the shadow root of current element: css selector = hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link']
+2025-05-12 17:20:04,104 - INFO - Attempting to find element: id = trip-type
+2025-05-12 17:20:05,134 - INFO - Successfully find element: id = trip-type
+2025-05-12 17:20:05,136 - INFO - Attempting to click element: id = trip-type
+2025-05-12 17:20:05,136 - INFO - Attempting to find element: id = trip-type
+2025-05-12 17:20:05,142 - INFO - Successfully find element: id = trip-type
+2025-05-12 17:20:05,189 - INFO - Element clicked: id = trip-type
+2025-05-12 17:20:05,189 - INFO - Getting the shadow root of current element: id = trip-type
+2025-05-12 17:20:05,192 - INFO - Attempting to find element in shadow root: css selector = div > div.aileron-dropdown__menu > adc-dropdown-listbox
+2025-05-12 17:20:05,198 - INFO - Element found in shadow root: css selector = div > div.aileron-dropdown__menu > adc-dropdown-listbox
+2025-05-12 17:20:05,199 - INFO - Getting the shadow root of current element: css selector = div > div.aileron-dropdown__menu > adc-dropdown-listbox
+2025-05-12 17:20:05,201 - INFO - Attempting to find element in shadow root: id = adc-lb-2
+2025-05-12 17:20:05,207 - INFO - Element found in shadow root: id = adc-lb-2
+2025-05-12 17:20:05,207 - INFO - Attempting to click element: id = adc-lb-2
+2025-05-12 17:20:05,251 - INFO - Element clicked: id = adc-lb-2
+2025-05-12 17:20:05,251 - INFO - Attempting to find element: id = originAirport1
+2025-05-12 17:20:05,259 - INFO - Successfully find element: id = originAirport1
+2025-05-12 17:20:05,259 - INFO - Getting the shadow root of current element: id = originAirport1
+2025-05-12 17:20:05,262 - INFO - Attempting to find element in shadow root: id = airport-code-input
+2025-05-12 17:20:05,268 - INFO - Element found in shadow root: id = airport-code-input
+2025-05-12 17:20:05,268 - INFO - Getting the shadow root of current element: id = airport-code-input
+2025-05-12 17:20:05,270 - INFO - Attempting to find element in shadow root: id = geolocator-input
+2025-05-12 17:20:05,277 - INFO - Element found in shadow root: id = geolocator-input
+2025-05-12 17:20:05,277 - INFO - Getting the shadow root of current element: id = geolocator-input
+2025-05-12 17:20:05,280 - INFO - Attempting to find element in shadow root: css selector = #container > input
+2025-05-12 17:20:05,287 - INFO - Element found in shadow root: css selector = #container > input
+2025-05-12 17:20:05,287 - INFO - Attempting to click element: css selector = #container > input
+2025-05-12 17:20:05,408 - INFO - Element clicked: css selector = #container > input
+2025-05-12 17:20:07,516 - INFO - Getting the shadow root of current element: id = originAirport1
+2025-05-12 17:20:07,530 - INFO - Attempting to find element in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:07,541 - INFO - Element found in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:07,634 - INFO - Attempting to find element: id = destinationAirport1
+2025-05-12 17:20:07,641 - INFO - Successfully find element: id = destinationAirport1
+2025-05-12 17:20:07,641 - INFO - Getting the shadow root of current element: id = destinationAirport1
+2025-05-12 17:20:07,644 - INFO - Attempting to find element in shadow root: id = airport-code-input
+2025-05-12 17:20:07,648 - INFO - Element found in shadow root: id = airport-code-input
+2025-05-12 17:20:07,648 - INFO - Getting the shadow root of current element: id = airport-code-input
+2025-05-12 17:20:07,651 - INFO - Attempting to find element in shadow root: id = geolocator-input
+2025-05-12 17:20:07,655 - INFO - Element found in shadow root: id = geolocator-input
+2025-05-12 17:20:07,655 - INFO - Getting the shadow root of current element: id = geolocator-input
+2025-05-12 17:20:07,658 - INFO - Attempting to find element in shadow root: css selector = #container > input
+2025-05-12 17:20:07,662 - INFO - Element found in shadow root: css selector = #container > input
+2025-05-12 17:20:07,662 - INFO - Attempting to click element: css selector = #container > input
+2025-05-12 17:20:07,714 - INFO - Element clicked: css selector = #container > input
+2025-05-12 17:20:09,766 - INFO - Getting the shadow root of current element: id = destinationAirport1
+2025-05-12 17:20:09,778 - INFO - Attempting to find element in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:09,787 - INFO - Element found in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:09,860 - INFO - Attempting to find element: id = datePicker1
+2025-05-12 17:20:09,867 - INFO - Successfully find element: id = datePicker1
+2025-05-12 17:20:09,867 - INFO - Getting the shadow root of current element: id = datePicker1
+2025-05-12 17:20:09,870 - INFO - Attempting to find element in shadow root: id = first-input
+2025-05-12 17:20:09,877 - INFO - Element found in shadow root: id = first-input
+2025-05-12 17:20:09,877 - INFO - Getting the shadow root of current element: id = first-input
+2025-05-12 17:20:09,880 - INFO - Attempting to find element in shadow root: css selector = #container > input
+2025-05-12 17:20:09,886 - INFO - Element found in shadow root: css selector = #container > input
+2025-05-12 17:20:09,934 - INFO - Attempting to find element: id = originAirport2
+2025-05-12 17:20:09,944 - INFO - Successfully find element: id = originAirport2
+2025-05-12 17:20:09,944 - INFO - Getting the shadow root of current element: id = originAirport2
+2025-05-12 17:20:09,947 - INFO - Attempting to find element in shadow root: id = airport-code-input
+2025-05-12 17:20:09,951 - INFO - Element found in shadow root: id = airport-code-input
+2025-05-12 17:20:09,951 - INFO - Getting the shadow root of current element: id = airport-code-input
+2025-05-12 17:20:09,955 - INFO - Attempting to find element in shadow root: id = geolocator-input
+2025-05-12 17:20:09,960 - INFO - Element found in shadow root: id = geolocator-input
+2025-05-12 17:20:09,960 - INFO - Getting the shadow root of current element: id = geolocator-input
+2025-05-12 17:20:09,963 - INFO - Attempting to find element in shadow root: css selector = #container > input
+2025-05-12 17:20:09,968 - INFO - Element found in shadow root: css selector = #container > input
+2025-05-12 17:20:09,968 - INFO - Attempting to click element: css selector = #container > input
+2025-05-12 17:20:10,025 - INFO - Element clicked: css selector = #container > input
+2025-05-12 17:20:12,151 - INFO - Getting the shadow root of current element: id = originAirport2
+2025-05-12 17:20:12,155 - INFO - Attempting to find element in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:12,160 - INFO - Element found in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:12,218 - INFO - Attempting to find element: id = destinationAirport2
+2025-05-12 17:20:12,224 - INFO - Successfully find element: id = destinationAirport2
+2025-05-12 17:20:12,224 - INFO - Getting the shadow root of current element: id = destinationAirport2
+2025-05-12 17:20:12,227 - INFO - Attempting to find element in shadow root: id = airport-code-input
+2025-05-12 17:20:12,233 - INFO - Element found in shadow root: id = airport-code-input
+2025-05-12 17:20:12,233 - INFO - Getting the shadow root of current element: id = airport-code-input
+2025-05-12 17:20:12,236 - INFO - Attempting to find element in shadow root: id = geolocator-input
+2025-05-12 17:20:12,241 - INFO - Element found in shadow root: id = geolocator-input
+2025-05-12 17:20:12,241 - INFO - Getting the shadow root of current element: id = geolocator-input
+2025-05-12 17:20:12,243 - INFO - Attempting to find element in shadow root: css selector = #container > input
+2025-05-12 17:20:12,247 - INFO - Element found in shadow root: css selector = #container > input
+2025-05-12 17:20:12,247 - INFO - Attempting to click element: css selector = #container > input
+2025-05-12 17:20:12,290 - INFO - Element clicked: css selector = #container > input
+2025-05-12 17:20:14,340 - INFO - Getting the shadow root of current element: id = destinationAirport2
+2025-05-12 17:20:14,348 - INFO - Attempting to find element in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:14,357 - INFO - Element found in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:14,426 - INFO - Attempting to find element: id = datePicker2
+2025-05-12 17:20:14,432 - INFO - Successfully find element: id = datePicker2
+2025-05-12 17:20:14,433 - INFO - Getting the shadow root of current element: id = datePicker2
+2025-05-12 17:20:14,435 - INFO - Attempting to find element in shadow root: id = first-input
+2025-05-12 17:20:14,440 - INFO - Element found in shadow root: id = first-input
+2025-05-12 17:20:14,440 - INFO - Getting the shadow root of current element: id = first-input
+2025-05-12 17:20:14,444 - INFO - Attempting to find element in shadow root: css selector = #container > input
+2025-05-12 17:20:14,450 - INFO - Element found in shadow root: css selector = #container > input
+2025-05-12 17:20:14,497 - INFO - Attempting to find element: id = add-flight
+2025-05-12 17:20:14,503 - INFO - Successfully find element: id = add-flight
+2025-05-12 17:20:14,503 - INFO - Attempting to click element: id = add-flight
+2025-05-12 17:20:14,503 - INFO - Attempting to find element: id = add-flight
+2025-05-12 17:20:14,507 - INFO - Successfully find element: id = add-flight
+2025-05-12 17:20:14,567 - INFO - Element clicked: id = add-flight
+2025-05-12 17:20:14,567 - INFO - Attempting to find element: id = originAirport3
+2025-05-12 17:20:14,574 - INFO - Successfully find element: id = originAirport3
+2025-05-12 17:20:14,574 - INFO - Getting the shadow root of current element: id = originAirport3
+2025-05-12 17:20:14,577 - INFO - Attempting to find element in shadow root: id = airport-code-input
+2025-05-12 17:20:14,581 - INFO - Element found in shadow root: id = airport-code-input
+2025-05-12 17:20:14,581 - INFO - Getting the shadow root of current element: id = airport-code-input
+2025-05-12 17:20:14,585 - INFO - Attempting to find element in shadow root: id = geolocator-input
+2025-05-12 17:20:14,590 - INFO - Element found in shadow root: id = geolocator-input
+2025-05-12 17:20:14,590 - INFO - Getting the shadow root of current element: id = geolocator-input
+2025-05-12 17:20:14,594 - INFO - Attempting to find element in shadow root: css selector = #container > input
+2025-05-12 17:20:14,598 - INFO - Element found in shadow root: css selector = #container > input
+2025-05-12 17:20:14,598 - INFO - Attempting to click element: css selector = #container > input
+2025-05-12 17:20:14,641 - INFO - Element clicked: css selector = #container > input
+2025-05-12 17:20:16,702 - INFO - Getting the shadow root of current element: id = originAirport3
+2025-05-12 17:20:16,714 - INFO - Attempting to find element in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:16,724 - INFO - Element found in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:16,790 - INFO - Attempting to find element: id = destinationAirport3
+2025-05-12 17:20:16,795 - INFO - Successfully find element: id = destinationAirport3
+2025-05-12 17:20:16,796 - INFO - Getting the shadow root of current element: id = destinationAirport3
+2025-05-12 17:20:16,798 - INFO - Attempting to find element in shadow root: id = airport-code-input
+2025-05-12 17:20:16,803 - INFO - Element found in shadow root: id = airport-code-input
+2025-05-12 17:20:16,803 - INFO - Getting the shadow root of current element: id = airport-code-input
+2025-05-12 17:20:16,806 - INFO - Attempting to find element in shadow root: id = geolocator-input
+2025-05-12 17:20:16,811 - INFO - Element found in shadow root: id = geolocator-input
+2025-05-12 17:20:16,811 - INFO - Getting the shadow root of current element: id = geolocator-input
+2025-05-12 17:20:16,813 - INFO - Attempting to find element in shadow root: css selector = #container > input
+2025-05-12 17:20:16,817 - INFO - Element found in shadow root: css selector = #container > input
+2025-05-12 17:20:16,817 - INFO - Attempting to click element: css selector = #container > input
+2025-05-12 17:20:16,861 - INFO - Element clicked: css selector = #container > input
+2025-05-12 17:20:18,912 - INFO - Getting the shadow root of current element: id = destinationAirport3
+2025-05-12 17:20:18,923 - INFO - Attempting to find element in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:18,933 - INFO - Element found in shadow root: css selector = div > div.adc-airport-code--options > adc-airport-code-listbox
+2025-05-12 17:20:19,004 - INFO - Attempting to find element: id = datePicker3
+2025-05-12 17:20:19,010 - INFO - Successfully find element: id = datePicker3
+2025-05-12 17:20:19,010 - INFO - Getting the shadow root of current element: id = datePicker3
+2025-05-12 17:20:19,013 - INFO - Attempting to find element in shadow root: id = first-input
+2025-05-12 17:20:19,018 - INFO - Element found in shadow root: id = first-input
+2025-05-12 17:20:19,018 - INFO - Getting the shadow root of current element: id = first-input
+2025-05-12 17:20:19,023 - INFO - Attempting to find element in shadow root: css selector = #container > input
+2025-05-12 17:20:19,028 - INFO - Element found in shadow root: css selector = #container > input
+2025-05-12 17:20:19,077 - INFO - Attempting to find element: id = flightSearchSubmitBtn
+2025-05-12 17:20:49,123 - ERROR - TimeoutException: Element not found within 30 seconds: id = flightSearchSubmitBtn (Current page URL: https://www.aa.com/booking/search/find-flights)
+2025-05-12 17:21:34,304 - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use a more reliable locator for the “Search” button  
+Original code line/lines:  
+self.driver.find_element(By.ID, "flightSearchSubmitBtn").click()  
+
+Fixed code line/lines:  
+self.driver.find_element(By.XPATH, "//button[@type='submit' and contains(.,'Search')]").click()  
+-------------------------------------------------------
+Potential fix (2): Scroll the button into view, then click with JS (some browsers don’t load the element until it’s in the viewport)  
+Original code line/lines:  
+self.driver.find_element(By.ID, "flightSearchSubmitBtn").click()  
+
+Fixed code line/lines:  
+submit_btn = self.driver.find_element(By.ID, "flightSearchSubmitBtn")  
+self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", submit_btn)  
+self.driver.execute_script("arguments[0].click();", submit_btn)  
+-------------------------------------------------------
+Potential fix (3): Ensure the last date field loses focus so the form validation enables the button  
+Original code line/lines:  
+third_date_input.send_keys("08/21/2025")  
+
+Fixed code line/lines:  
+third_date_input.send_keys("08/21/2025", Keys.TAB)  # blur field so “Search” button renders/enables  
+-------------------------------------------------------
+Potential fix (4): Wait explicitly for the button to be present & enabled before clicking  
+Original code line/lines:  
+self.driver.find_element(By.ID, "flightSearchSubmitBtn").click()  
+
+Fixed code line/lines:  
+submit_btn = WebDriverWait(self.driver, 15).until(  
+    lambda d: d.find_element(By.ID, "flightSearchSubmitBtn").is_enabled())  
+self.driver.find_element(By.ID, "flightSearchSubmitBtn").click()  
+-------------------------------------------------------
+Potential fix (5): The ID appears to differ on the multi-city form – use the correct ID  
+Original code line/lines:  
+self.driver.find_element(By.ID, "flightSearchSubmitBtn").click()  
+
+Fixed code line/lines:  
+self.driver.find_element(By.ID, "flightSearchMultiCityBtn").click()  
+-------------------------------------------------------
