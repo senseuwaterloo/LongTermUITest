@@ -55,8 +55,13 @@ class TestAa:
         time.sleep(2)
         destination_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.adc-airport-code--options > adc-airport-code-listbox").send_keys(Keys.ARROW_DOWN, Keys.ENTER)
 
-        self.driver.find_element(By.ID, "segments0.travelDate").clear()
-        self.driver.find_element(By.ID, "segments0.travelDate").send_keys("08/19/2025")
+        # self.driver.find_element(By.ID, "segments0.travelDate").clear()
+        # self.driver.find_element(By.ID, "segments0.travelDate").send_keys("08/19/2025")
+        first_datepicker_shadow = self.driver.find_element(By.ID, "datePicker1")
+        first_date_input = first_datepicker_shadow.shadow_root.find_element(By.ID, "first-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        first_date_input.clear()
+        first_date_input.send_keys("08/19/2025")
+
         self.driver.find_element(By.ID, "segments1.origin").click()
         self.driver.find_element(By.ID, "segments1.origin").clear()
         self.driver.find_element(By.ID, "segments1.origin").send_keys("Heathrow")
