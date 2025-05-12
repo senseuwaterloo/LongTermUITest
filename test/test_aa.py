@@ -1,4 +1,7 @@
+import time
+
 import pytest
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
 
@@ -32,7 +35,12 @@ class TestAa:
         # self.driver.find_element(By.ID, "segments0.origin").click()
         # self.driver.find_element(By.ID, "segments0.origin").clear()
         # self.driver.find_element(By.ID, "segments0.origin").send_keys("JFK")
-        self.driver.find_element(By.XPATH, "//a[contains(.,'JFK - New York John F Kennedy Intl, NY')]").click()
+
+        # self.driver.find_element(By.XPATH, "//a[contains(.,'JFK - New York John F Kennedy Intl, NY')]").click()
+        # Need to wait a few second to let the option list be displayed
+        time.sleep(2)
+        first_origin_airport_code_select = first_origin_airport_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.adc-airport-code--options > adc-airport-code-listbox")
+        first_origin_airport_code_select.send_keys(Keys.ARROW_DOWN, Keys.ENTER)
 
         self.driver.find_element(By.ID, "segments0.destination").click()
         self.driver.find_element(By.ID, "segments0.destination").clear()

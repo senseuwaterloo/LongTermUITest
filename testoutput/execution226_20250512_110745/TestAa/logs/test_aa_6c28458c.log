@@ -1,0 +1,193 @@
+2025-05-12 11:08:29,015 - ERROR - Test test_aa_6c28458c failed.
+2025-05-12 11:08:29,018 - ERROR - URL at failure: https://www.aa.com/booking/search/find-flights
+2025-05-12 11:08:29,018 - ERROR - Exception traceback: self = <test.test_aa.TestAa object at 0x105abf940>
+
+    def test_aa_6c28458c(self):
+        self.driver.get("https://www.aa.com/homePage.do")
+        adc_header_element = self.driver.find_element(By.CSS_SELECTOR, "adc-header")
+        main_navigation_element = adc_header_element.shadow_root.find_element(By.ID, "main-navigation")
+        plan_travel_element = main_navigation_element.find_element(By.CSS_SELECTOR, "adc-tab[label='Plan travel']")
+        plan_travel_element.click()
+    
+        new_adc_header_element = self.driver.find_element(By.CSS_SELECTOR, "adc-header")
+        new_main_navigation_element = new_adc_header_element.shadow_root.find_element(By.ID, "main-navigation")
+        hp_header_link_element = new_main_navigation_element.find_element(By.CSS_SELECTOR, "hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link']")
+        self.driver.execute_script("arguments[0].click()", hp_header_link_element.shadow_root.find_element(By.CSS_SELECTOR, "a"))
+        # self.driver.find_element(By.XPATH, "//span[contains(.,'Multi city')]").click()
+        trip_type_adc_dropdown_shadow = self.driver.find_element(By.ID, "trip-type")
+        trip_type_adc_dropdown_shadow.click()
+        trip_type_adc_dropdown_list = trip_type_adc_dropdown_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.aileron-dropdown__menu > adc-dropdown-listbox")
+        multi_city_option = trip_type_adc_dropdown_list.shadow_root.find_element(By.ID, "adc-lb-2")
+        multi_city_option.click()
+    
+        first_origin_airport_shadow = self.driver.find_element(By.ID, "originAirport1")
+        first_origin_airport_input_shadow = first_origin_airport_shadow.shadow_root.find_element(By.ID, "airport-code-input")
+        geolocator_input_shadow = first_origin_airport_input_shadow.shadow_root.find_element(By.ID, "geolocator-input")
+        first_origin_input = geolocator_input_shadow.shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+        first_origin_input.click()
+        first_origin_input.clear()
+        first_origin_input.send_keys("JFK")
+        # self.driver.find_element(By.ID, "segments0.origin").click()
+        # self.driver.find_element(By.ID, "segments0.origin").clear()
+        # self.driver.find_element(By.ID, "segments0.origin").send_keys("JFK")
+>       self.driver.find_element(By.XPATH, "//a[contains(.,'JFK - New York John F Kennedy Intl, NY')]").click()
+
+test/test_aa.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:164: in find_element
+    raise e
+conftest.py:148: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x105b29000>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001026db8b8 undetected_chromedriver + 5986488
+E       1   undetected_chromedriver             0x00000001026d29ea undetected_chromedriver + 5949930
+E       2   undetected_chromedriver             0x000000010218b600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001021dd304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001021dd521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x000000010222d204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010220333d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x000000010222a566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001022030e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001021cf61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001021d0281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000102699580 undetected_chromedriver + 5715328
+E       12  undetected_chromedriver             0x000000010269d445 undetected_chromedriver + 5731397
+E       13  undetected_chromedriver             0x0000000102673ed0 undetected_chromedriver + 5562064
+E       14  undetected_chromedriver             0x000000010269de7b undetected_chromedriver + 5734011
+E       15  undetected_chromedriver             0x0000000102662de4 undetected_chromedriver + 5492196
+E       16  undetected_chromedriver             0x00000001026c0a98 undetected_chromedriver + 5876376
+E       17  undetected_chromedriver             0x00000001026c0c60 undetected_chromedriver + 5876832
+E       18  undetected_chromedriver             0x00000001026d25b1 undetected_chromedriver + 5948849
+E       19  libsystem_pthread.dylib             0x00007ff80d7bcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80d7b8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-12 11:07:51,479 - INFO - Attempting to navigate to URL: https://www.aa.com/homePage.do
+2025-05-12 11:07:53,328 - INFO - Successfully navigated to URL: https://www.aa.com/homePage.do
+2025-05-12 11:07:55,333 - INFO - Attempting to find element: css selector = adc-header
+2025-05-12 11:07:55,351 - INFO - Successfully find element: css selector = adc-header
+2025-05-12 11:07:55,351 - INFO - Getting the shadow root of current element: css selector = adc-header
+2025-05-12 11:07:55,355 - INFO - Attempting to find element in shadow root: id = main-navigation
+2025-05-12 11:07:55,361 - INFO - Element found in shadow root: id = main-navigation
+2025-05-12 11:07:55,361 - INFO - Attempting to find element: css selector = adc-tab[label='Plan travel'] within element: id = main-navigation
+2025-05-12 11:07:55,367 - INFO - Successfully find element: css selector = adc-tab[label='Plan travel'] within element: id = main-navigation
+2025-05-12 11:07:55,367 - INFO - Attempting to click element: css selector = adc-tab[label='Plan travel']
+2025-05-12 11:07:55,367 - INFO - Attempting to find element: css selector = adc-tab[label='Plan travel'] within element: id = main-navigation
+2025-05-12 11:07:55,371 - INFO - Successfully find element: css selector = adc-tab[label='Plan travel'] within element: id = main-navigation
+2025-05-12 11:07:55,431 - INFO - Element clicked: css selector = adc-tab[label='Plan travel']
+2025-05-12 11:07:55,431 - INFO - Attempting to find element: css selector = adc-header
+2025-05-12 11:07:55,436 - INFO - Successfully find element: css selector = adc-header
+2025-05-12 11:07:55,436 - INFO - Getting the shadow root of current element: css selector = adc-header
+2025-05-12 11:07:55,440 - INFO - Attempting to find element in shadow root: id = main-navigation
+2025-05-12 11:07:55,444 - INFO - Element found in shadow root: id = main-navigation
+2025-05-12 11:07:55,444 - INFO - Attempting to find element: css selector = hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link'] within element: id = main-navigation
+2025-05-12 11:07:55,452 - INFO - Successfully find element: css selector = hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link'] within element: id = main-navigation
+2025-05-12 11:07:55,453 - INFO - Getting the shadow root of current element: css selector = hp-header-link[href*='/reservation/roundTripSearchAccess.do'][class='panel-links adc-link']
+2025-05-12 11:07:56,736 - INFO - Attempting to find element: id = trip-type
+2025-05-12 11:07:57,714 - INFO - Successfully find element: id = trip-type
+2025-05-12 11:07:57,714 - INFO - Attempting to click element: id = trip-type
+2025-05-12 11:07:57,715 - INFO - Attempting to find element: id = trip-type
+2025-05-12 11:07:57,719 - INFO - Successfully find element: id = trip-type
+2025-05-12 11:07:57,765 - INFO - Element clicked: id = trip-type
+2025-05-12 11:07:57,765 - INFO - Getting the shadow root of current element: id = trip-type
+2025-05-12 11:07:57,770 - INFO - Attempting to find element in shadow root: css selector = div > div.aileron-dropdown__menu > adc-dropdown-listbox
+2025-05-12 11:07:57,776 - INFO - Element found in shadow root: css selector = div > div.aileron-dropdown__menu > adc-dropdown-listbox
+2025-05-12 11:07:57,776 - INFO - Getting the shadow root of current element: css selector = div > div.aileron-dropdown__menu > adc-dropdown-listbox
+2025-05-12 11:07:57,779 - INFO - Attempting to find element in shadow root: id = adc-lb-2
+2025-05-12 11:07:57,784 - INFO - Element found in shadow root: id = adc-lb-2
+2025-05-12 11:07:57,784 - INFO - Attempting to click element: id = adc-lb-2
+2025-05-12 11:07:57,832 - INFO - Element clicked: id = adc-lb-2
+2025-05-12 11:07:57,832 - INFO - Attempting to find element: id = originAirport1
+2025-05-12 11:07:57,838 - INFO - Successfully find element: id = originAirport1
+2025-05-12 11:07:57,838 - INFO - Getting the shadow root of current element: id = originAirport1
+2025-05-12 11:07:57,841 - INFO - Attempting to find element in shadow root: id = airport-code-input
+2025-05-12 11:07:57,847 - INFO - Element found in shadow root: id = airport-code-input
+2025-05-12 11:07:57,847 - INFO - Getting the shadow root of current element: id = airport-code-input
+2025-05-12 11:07:57,850 - INFO - Attempting to find element in shadow root: id = geolocator-input
+2025-05-12 11:07:57,857 - INFO - Element found in shadow root: id = geolocator-input
+2025-05-12 11:07:57,857 - INFO - Getting the shadow root of current element: id = geolocator-input
+2025-05-12 11:07:57,861 - INFO - Attempting to find element in shadow root: css selector = #container > input
+2025-05-12 11:07:57,867 - INFO - Element found in shadow root: css selector = #container > input
+2025-05-12 11:07:57,867 - INFO - Attempting to click element: css selector = #container > input
+2025-05-12 11:07:57,992 - INFO - Element clicked: css selector = #container > input
+2025-05-12 11:07:58,249 - INFO - Attempting to find element: xpath = //a[contains(.,'JFK - New York John F Kennedy Intl, NY')]
+2025-05-12 11:08:28,404 - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[contains(.,'JFK - New York John F Kennedy Intl, NY')] (Current page URL: https://www.aa.com/booking/search/find-flights)
+2025-05-12 11:09:19,258 - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1):  Airport suggestion items are rendered as <li>, not <a>
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//a[contains(.,'JFK - New York John F Kennedy Intl, NY')]").click()
+Fixed code line/lines:
+self.driver.find_element(By.XPATH, "//li[contains(.,'JFK - New York John F Kennedy Intl, NY')]").click()
+-------------------------------------------------------
+Potential fix (2):  Use the auto-complete listbox role instead of hard-coding text
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//a[contains(.,'JFK - New York John F Kennedy Intl, NY')]").click()
+Fixed code line/lines:
+self.driver.find_element(
+    By.CSS_SELECTOR, "ul[role='listbox'] li:nth-child(1)"
+).click()
+-------------------------------------------------------
+Potential fix (3):  Rely on keyboard selection instead of clicking the suggestion
+Original code line/lines:
+first_origin_input.send_keys("JFK")
+self.driver.find_element(By.XPATH, "//a[contains(.,'JFK - New York John F Kennedy Intl, NY')]").click()
+Fixed code line/lines:
+from selenium.webdriver.common.keys import Keys
+first_origin_input.send_keys("JFK", Keys.ARROW_DOWN, Keys.ENTER)
+-------------------------------------------------------
+Potential fix (4):  Use the top-level input id already on the page (avoids deep shadow DOM)
+Original code line/lines:
+first_origin_airport_shadow = self.driver.find_element(By.ID, "originAirport1")
+...
+first_origin_input = geolocator_input_shadow.shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
+Fixed code line/lines:
+first_origin_input = self.driver.find_element(By.ID, "segments0.origin")
+first_origin_input.clear()
+first_origin_input.send_keys("JFK", Keys.ARROW_DOWN, Keys.ENTER)
+-------------------------------------------------------
+Potential fix (5):  Wait explicitly for the auto-complete list to appear before clicking
+Original code line/lines:
+first_origin_input.send_keys("JFK")
+self.driver.find_element(By.XPATH, "//a[contains(.,'JFK - New York John F Kennedy Intl, NY')]").click()
+Fixed code line/lines:
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+first_origin_input.send_keys("JFK")
+WebDriverWait(self.driver, 10).until(
+    EC.visibility_of_element_located((By.CSS_SELECTOR, "ul[role='listbox']"))
+)
+self.driver.find_element(By.CSS_SELECTOR, "ul[role='listbox'] li").click()
+-------------------------------------------------------
