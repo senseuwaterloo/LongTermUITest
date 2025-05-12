@@ -71,7 +71,7 @@ class TestAa:
         second_origin_input = second_origin_airport_input_shadow.shadow_root.find_element(By.ID, "geolocator-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
         second_origin_input.click()
         second_origin_input.clear()
-        second_origin_input.send_keys("Heathrow")
+        second_origin_input.send_keys("LHR")
         time.sleep(2)
         second_origin_airport_shadow.shadow_root.find_element(By.CSS_SELECTOR, "div > div.adc-airport-code--options > adc-airport-code-listbox").send_keys(Keys.ARROW_DOWN, Keys.ENTER)
 
@@ -129,7 +129,7 @@ class TestAa:
         third_datepicker_shadow = self.driver.find_element(By.ID, "datePicker3")
         third_date_input = third_datepicker_shadow.shadow_root.find_element(By.ID, "first-input").shadow_root.find_element(By.CSS_SELECTOR, "#container > input")
         third_date_input.clear()
-        third_date_input.send_keys("08/21/2025")
+        third_date_input.send_keys("08/23/2025")
 
         # self.driver.find_element(By.ID, "flightSearchSubmitBtn").click()
         self.driver.find_element(By.XPATH, "//button[@type='submit' and contains(.,'Search')]").click()
