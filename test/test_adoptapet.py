@@ -10,9 +10,10 @@ from browser_helper import scroll_to_element
 class TestAdoptapet:
     def test_adoptapet_b49c669d(self):
         self.driver.get("https://adoptapet.com")
-        self.driver.find_element(By.XPATH, "//div[@id='onetrust-close-btn-container']/button").click()
 
-        self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()
+        # self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()
+        self.driver.find_element(By.XPATH, "//span[@title='Find a Pet']").click()
+
         self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a dog')]").click()
 
         time.sleep(1)

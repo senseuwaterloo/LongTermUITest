@@ -1,0 +1,207 @@
+2025-05-12 17:58:10,681 - ERROR - Test test_adoptapet_b49c669d failed.
+2025-05-12 17:58:10,684 - ERROR - URL at failure: https://www.adoptapet.com/
+2025-05-12 17:58:10,684 - ERROR - Exception traceback: self = <test.test_adoptapet.TestAdoptapet object at 0x1099df820>
+
+    def test_adoptapet_b49c669d(self):
+        self.driver.get("https://adoptapet.com")
+    
+>       self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()
+
+test/test_adoptapet.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:231: in click
+    raise e
+conftest.py:212: in click
+    WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.element_to_be_clickable((self.by, self.value)))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="c7296e25c5e54b77a336ef27a6806afc")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x109a10700>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-12 17:57:35,043 - INFO - Attempting to navigate to URL: https://adoptapet.com
+2025-05-12 17:57:35,709 - INFO - Successfully navigated to URL: https://adoptapet.com
+2025-05-12 17:57:39,376 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:39,387 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:39,387 - INFO - Attempting to click element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:39,387 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:39,392 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:39,902 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:39,910 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:40,420 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:40,435 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:40,947 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:40,961 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:41,471 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:41,484 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:41,997 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:42,011 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:42,523 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:42,538 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:43,050 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:43,065 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:43,577 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:43,584 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:44,093 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:44,102 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:44,613 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:44,628 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:45,140 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:45,156 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:45,668 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:45,682 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:46,194 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:46,208 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:46,721 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:46,734 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:47,246 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:47,257 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:47,768 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:47,779 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:48,292 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:48,307 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:48,819 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:48,832 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:49,344 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:49,359 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:49,871 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:49,886 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:50,398 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:50,412 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:50,924 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:50,937 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:51,449 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:51,463 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:51,975 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:51,986 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:52,499 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:52,513 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:53,026 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:53,039 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:53,551 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:53,568 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:54,081 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:54,096 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:54,608 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:54,623 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:55,135 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:55,149 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:55,662 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:55,677 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:56,189 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:56,205 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:56,717 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:56,731 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:57,244 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:57,260 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:57,773 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:57,787 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:58,299 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:58,316 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:58,829 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:58,842 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:59,355 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:59,381 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:59,894 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:57:59,908 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:00,420 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:00,436 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:00,948 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:00,962 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:01,474 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:01,487 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:01,999 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:02,013 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:02,526 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:02,541 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:03,050 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:03,063 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:03,575 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:03,591 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:04,103 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:04,116 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:04,628 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:04,642 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:05,154 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:05,167 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:05,679 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:05,694 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:06,207 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:06,219 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:06,730 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:06,745 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:07,257 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:07,271 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:07,783 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:07,798 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:08,310 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:08,320 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:08,829 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:08,845 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:09,358 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:09,372 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a pet')]
+2025-05-12 17:58:09,895 - ERROR - TimeoutException: Element not clickable within 30 seconds: xpath = //span[contains(text(),'Find a pet')] (Current page URL: https://www.adoptapet.com/)
+2025-05-12 17:58:56,002 - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Match the element exactly by its title attribute (avoids case-sensitive text issues)  
+Original code line/lines:  
+self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()  
+Fixed code line/lines:  
+self.driver.find_element(By.XPATH, "//span[@title='Find a Pet']").click()
+-------------------------------------------------------
+Potential fix (2): Use a CSS selector that is shorter and more robust than the XPath text query  
+Original code line/lines:  
+self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()  
+Fixed code line/lines:  
+self.driver.find_element(By.CSS_SELECTOR, "span[title='Find a Pet']").click()
+-------------------------------------------------------
+Potential fix (3): Scroll the header into view before clicking to eliminate “element not clickable” overlay errors  
+Original code line/lines:  
+self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()  
+Fixed code line/lines:  
+find_pet = self.driver.find_element(By.XPATH, "//span[@title='Find a Pet']")  
+self.driver.execute_script("arguments[0].scrollIntoView(true);", find_pet)  
+find_pet.click()
+-------------------------------------------------------
+Potential fix (4): Fallback to JavaScript click to bypass hit-point interception  
+Original code line/lines:  
+self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()  
+Fixed code line/lines:  
+find_pet = self.driver.find_element(By.XPATH, "//span[@title='Find a Pet']")  
+self.driver.execute_script("arguments[0].click();", find_pet)
+-------------------------------------------------------
+Potential fix (5): Force desktop viewport so the <span class="hidden desktop:block"> element is actually rendered and clickable  
+Original code line/lines:  
+self.driver.get("https://adoptapet.com")  
+Fixed code line/lines:  
+self.driver.set_window_size(1920, 1080)  
+self.driver.get("https://adoptapet.com")
+-------------------------------------------------------
