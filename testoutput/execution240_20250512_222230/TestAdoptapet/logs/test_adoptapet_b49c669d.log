@@ -1,0 +1,206 @@
+2025-05-12 22:23:44,147 - ERROR - Test test_adoptapet_b49c669d failed.
+2025-05-12 22:23:44,150 - ERROR - URL at failure: https://www.adoptapet.com/pet-search?speciesId=1&radius=50&postalCode=10019&city=null&state=null&transport=false&breedId[0]=70&sortOption=Nearest
+2025-05-12 22:23:44,150 - ERROR - Exception traceback: self = <test.test_adoptapet.TestAdoptapet object at 0x105a43700>
+
+    def test_adoptapet_b49c669d(self):
+        self.driver.get("https://adoptapet.com")
+    
+        # self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()
+        self.driver.find_element(By.XPATH, "//span[@title='Find a Pet']").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a dog')]").click()
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a dog')]").click()
+    
+        time.sleep(1)
+    
+        # breed_element = self.driver.find_element(By.ID, "location-1")
+        # scroll_to_element(self.driver, breed_element)
+        # self.driver.find_element(By.ID, "location-1").clear()
+        # self.driver.find_element(By.ID, "location-1").send_keys("10019")
+        wrapper = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='location-search']")
+        scroll_to_element(self.driver, wrapper)
+        wrapper.click()  # activates the real input
+        location_input = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='location-search'] input:not(.hidden)")
+        location_input.send_keys(get_control_key(), "a", Keys.DELETE)
+        location_input.send_keys("10019")
+    
+        self.driver.find_element(By.XPATH, "//button[contains(text(),'Add Dog Criteria')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
+        # self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
+        breed_dd = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='breed-selectedOption']")
+        breed_dd.click()  # expose the real input
+        breed_input = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='breed-selectedOption'] input:not(.hidden)")
+        breed_input.clear()
+        breed_input.send_keys("jack russell")
+    
+        self.driver.find_element(By.XPATH, "//label[contains(text(),'Jack Russell Terrier')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
+        self.driver.find_element(By.XPATH, "//button[text()='Save & Search']").click()
+    
+        self.driver.find_element(By.XPATH, "//button[contains(.,'Create an Alert')]").click()
+    
+        self.driver.find_element(By.ID, "email-2").clear()
+        self.driver.find_element(By.ID, "email-2").send_keys("uiteststudy@gmail.com")
+    
+>       self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
+
+test/test_adoptapet.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:164: in find_element
+    raise e
+conftest.py:148: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x105a99bd0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104c4e8b8 undetected_chromedriver + 5986488
+E       1   undetected_chromedriver             0x0000000104c459ea undetected_chromedriver + 5949930
+E       2   undetected_chromedriver             0x00000001046fe600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104750304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104750521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001047a0204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010477633d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x000000010479d566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001047760e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010474261d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104743281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104c0c580 undetected_chromedriver + 5715328
+E       12  undetected_chromedriver             0x0000000104c10445 undetected_chromedriver + 5731397
+E       13  undetected_chromedriver             0x0000000104be6ed0 undetected_chromedriver + 5562064
+E       14  undetected_chromedriver             0x0000000104c10e7b undetected_chromedriver + 5734011
+E       15  undetected_chromedriver             0x0000000104bd5de4 undetected_chromedriver + 5492196
+E       16  undetected_chromedriver             0x0000000104c33a98 undetected_chromedriver + 5876376
+E       17  undetected_chromedriver             0x0000000104c33c60 undetected_chromedriver + 5876832
+E       18  undetected_chromedriver             0x0000000104c455b1 undetected_chromedriver + 5948849
+E       19  libsystem_pthread.dylib             0x00007ff813214df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff813210857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-12 22:22:36,308 - INFO - Attempting to navigate to URL: https://adoptapet.com
+2025-05-12 22:22:42,540 - INFO - Successfully navigated to URL: https://adoptapet.com
+2025-05-12 22:22:45,875 - INFO - Attempting to find element: xpath = //span[@title='Find a Pet']
+2025-05-12 22:22:45,899 - INFO - Successfully find element: xpath = //span[@title='Find a Pet']
+2025-05-12 22:22:45,900 - INFO - Attempting to click element: xpath = //span[@title='Find a Pet']
+2025-05-12 22:22:45,900 - INFO - Attempting to find element: xpath = //span[@title='Find a Pet']
+2025-05-12 22:22:45,908 - INFO - Successfully find element: xpath = //span[@title='Find a Pet']
+2025-05-12 22:22:45,962 - INFO - Element clicked: xpath = //span[@title='Find a Pet']
+2025-05-12 22:22:45,962 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:22:45,970 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:22:45,970 - INFO - Attempting to click element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:22:45,970 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:22:45,974 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:22:46,017 - INFO - Element clicked: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:22:47,022 - INFO - Attempting to find element: css selector = [data-testid='location-search']
+2025-05-12 22:22:47,044 - INFO - Successfully find element: css selector = [data-testid='location-search']
+2025-05-12 22:22:48,053 - INFO - Attempting to click element: css selector = [data-testid='location-search']
+2025-05-12 22:22:48,054 - INFO - Attempting to find element: css selector = [data-testid='location-search']
+2025-05-12 22:22:48,067 - INFO - Successfully find element: css selector = [data-testid='location-search']
+2025-05-12 22:22:48,132 - INFO - Element clicked: css selector = [data-testid='location-search']
+2025-05-12 22:22:48,132 - INFO - Attempting to find element: css selector = [data-testid='location-search'] input:not(.hidden)
+2025-05-12 22:22:48,149 - INFO - Successfully find element: css selector = [data-testid='location-search'] input:not(.hidden)
+2025-05-12 22:22:48,267 - INFO - Attempting to find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:22:59,114 - INFO - Successfully find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:22:59,115 - INFO - Attempting to click element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:22:59,115 - INFO - Attempting to find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:22:59,121 - INFO - Successfully find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:22:59,258 - INFO - Element clicked: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:22:59,259 - INFO - Attempting to find element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:22:59,266 - INFO - Successfully find element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:22:59,267 - INFO - Attempting to click element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:22:59,267 - INFO - Attempting to find element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:22:59,271 - INFO - Successfully find element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:22:59,346 - INFO - Element clicked: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:22:59,346 - INFO - Attempting to find element: css selector = [data-testid='breed-selectedOption'] input:not(.hidden)
+2025-05-12 22:22:59,352 - INFO - Successfully find element: css selector = [data-testid='breed-selectedOption'] input:not(.hidden)
+2025-05-12 22:22:59,431 - INFO - Attempting to find element: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:22:59,455 - INFO - Successfully find element: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:22:59,455 - INFO - Attempting to click element: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:22:59,455 - INFO - Attempting to find element: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:22:59,461 - INFO - Successfully find element: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:22:59,519 - INFO - Element clicked: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:22:59,519 - INFO - Attempting to find element: xpath = //button[text()='Save & Search']
+2025-05-12 22:22:59,528 - INFO - Successfully find element: xpath = //button[text()='Save & Search']
+2025-05-12 22:22:59,529 - INFO - Attempting to click element: xpath = //button[text()='Save & Search']
+2025-05-12 22:22:59,529 - INFO - Attempting to find element: xpath = //button[text()='Save & Search']
+2025-05-12 22:22:59,533 - INFO - Successfully find element: xpath = //button[text()='Save & Search']
+2025-05-12 22:22:59,595 - INFO - Element clicked: xpath = //button[text()='Save & Search']
+2025-05-12 22:22:59,595 - INFO - Attempting to find element: xpath = //button[contains(.,'Create an Alert')]
+2025-05-12 22:23:11,293 - INFO - Successfully find element: xpath = //button[contains(.,'Create an Alert')]
+2025-05-12 22:23:11,294 - INFO - Attempting to click element: xpath = //button[contains(.,'Create an Alert')]
+2025-05-12 22:23:11,294 - INFO - Attempting to find element: xpath = //button[contains(.,'Create an Alert')]
+2025-05-12 22:23:11,300 - INFO - Successfully find element: xpath = //button[contains(.,'Create an Alert')]
+2025-05-12 22:23:11,446 - INFO - Element clicked: xpath = //button[contains(.,'Create an Alert')]
+2025-05-12 22:23:11,446 - INFO - Attempting to find element: id = email-2
+2025-05-12 22:23:12,659 - INFO - Successfully find element: id = email-2
+2025-05-12 22:23:12,685 - INFO - Attempting to find element: id = email-2
+2025-05-12 22:23:12,690 - INFO - Successfully find element: id = email-2
+2025-05-12 22:23:12,766 - INFO - Attempting to find element: xpath = //*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]
+2025-05-12 22:23:43,199 - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2] (Current page URL: https://www.adoptapet.com/pet-search?speciesId=1&radius=50&postalCode=10019&city=null&state=null&transport=false&breedId[0]=70&sortOption=Nearest)
+2025-05-12 22:25:36,620 - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1):  Replace brittle absolute-XPath with a text-based locator that clicks the “Free Alert” card.
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
+Fixed code line/lines:
+self.driver.find_element(By.XPATH, "//h6[contains(text(),'Free Alert')]/ancestor::div[contains(@class,'group')]").click()
+-------------------------------------------------------
+Potential fix (2):  Click the radio button directly via its input element (first radio after the “Free Alert” header).
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
+Fixed code line/lines:
+self.driver.find_element(By.XPATH, "//h6[contains(text(),'Free Alert')]/preceding::input[@type='radio'][1]").click()
+-------------------------------------------------------
+Potential fix (3):  Scroll the element into view before clicking to guarantee it’s rendered inside the modal.
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
+Fixed code line/lines:
+target = self.driver.find_element(By.XPATH, "//h6[contains(text(),'Free Alert')]")
+scroll_to_element(self.driver, target)
+target.click()
+-------------------------------------------------------
+Potential fix (4):  Use a shorter relative-XPath starting from the modal and the element’s unique text.
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
+Fixed code line/lines:
+self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']//h6[text()='Premium Alert']/ancestor::div[contains(@class,'group')]").click()
+-------------------------------------------------------
+Potential fix (5):  Fall back to JavaScript click if standard click fails due to overlay issues.
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
+Fixed code line/lines:
+elem = self.driver.find_element(By.XPATH, "//h6[contains(text(),'Free Alert')]/ancestor::div[contains(@class,'group')]")
+self.driver.execute_script("arguments[0].click();", elem)
+-------------------------------------------------------
+

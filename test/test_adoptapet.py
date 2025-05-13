@@ -51,7 +51,8 @@ class TestAdoptapet:
         self.driver.find_element(By.ID, "email-2").clear()
         self.driver.find_element(By.ID, "email-2").send_keys("uiteststudy@gmail.com")
 
-        self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
+        # self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
+        self.driver.find_element(By.XPATH, "//h5[contains(text(),'Free Alert')]").click()
 
         self.driver.find_element(By.XPATH, "//button[contains(text(),'Subscribe Now')]")
     
