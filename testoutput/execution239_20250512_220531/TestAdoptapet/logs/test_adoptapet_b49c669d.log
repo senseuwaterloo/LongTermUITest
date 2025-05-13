@@ -1,0 +1,265 @@
+2025-05-12 22:05:47,309 - ERROR - Test test_adoptapet_b49c669d failed.
+2025-05-12 22:05:47,312 - ERROR - URL at failure: https://www.adoptapet.com/dog-adoption
+2025-05-12 22:05:47,312 - ERROR - Exception traceback: self = <test.test_adoptapet.TestAdoptapet object at 0x105797700>
+
+    def test_adoptapet_b49c669d(self):
+        self.driver.get("https://adoptapet.com")
+    
+        # self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()
+        self.driver.find_element(By.XPATH, "//span[@title='Find a Pet']").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a dog')]").click()
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a dog')]").click()
+    
+        time.sleep(1)
+    
+        # breed_element = self.driver.find_element(By.ID, "location-1")
+        # scroll_to_element(self.driver, breed_element)
+        # self.driver.find_element(By.ID, "location-1").clear()
+        # self.driver.find_element(By.ID, "location-1").send_keys("10019")
+        wrapper = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='location-search']")
+        scroll_to_element(self.driver, wrapper)
+        wrapper.click()  # activates the real input
+        location_input = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='location-search'] input:not(.hidden)")
+        location_input.send_keys(get_control_key(), "a", Keys.DELETE)
+        location_input.send_keys("10019")
+    
+        self.driver.find_element(By.XPATH, "//button[contains(text(),'Add Dog Criteria')]").click()
+    
+        # self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
+        # self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
+        breed_dd = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='breed-selectedOption']")
+        breed_dd.click()  # expose the real input
+        breed_input = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='breed-selectedOption'] input:not(.hidden)")
+        breed_input.clear()
+        breed_input.send_keys("jack russell")
+    
+        self.driver.find_element(By.XPATH, "//label[contains(text(),'Jack Russell Terrier')]").click()
+>       self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
+
+test/test_adoptapet.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:238: in click
+    raise e
+conftest.py:213: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x105796350>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff80a1a0df1 _pthread_start + 99\\n24  libsystem_pthread.dylib             0x00007ff80a19c857 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <button type="submit" class="focus:outline-none flex items-center justify-center relative button-v2 button-large button-v2-primary button-v2-leading-icon w-1/2 min-w-[6.25rem] whitespace-nowrap">...</button> is not clickable at point (549, 633). Other element would receive the click: <div class="desktop:overflow-hidden desktop:overflow-y-auto desktop:max-h-minus-254">...</div>
+E         (Session info: chrome=136.0.7103.93)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001030ae8b8 undetected_chromedriver + 5986488
+E       1   undetected_chromedriver             0x00000001030a59ea undetected_chromedriver + 5949930
+E       2   undetected_chromedriver             0x0000000102b5e600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102bb71b0 undetected_chromedriver + 778672
+E       4   undetected_chromedriver             0x0000000102bb5011 undetected_chromedriver + 770065
+E       5   undetected_chromedriver             0x0000000102bb26a2 undetected_chromedriver + 759458
+E       6   undetected_chromedriver             0x0000000102bb1d6e undetected_chromedriver + 757102
+E       7   undetected_chromedriver             0x0000000102ba442d undetected_chromedriver + 701485
+E       8   undetected_chromedriver             0x0000000102bd6312 undetected_chromedriver + 906002
+E       9   undetected_chromedriver             0x0000000102ba3da8 undetected_chromedriver + 699816
+E       10  undetected_chromedriver             0x0000000102bd64ce undetected_chromedriver + 906446
+E       11  undetected_chromedriver             0x0000000102bfd566 undetected_chromedriver + 1066342
+E       12  undetected_chromedriver             0x0000000102bd60e3 undetected_chromedriver + 905443
+E       13  undetected_chromedriver             0x0000000102ba261d undetected_chromedriver + 693789
+E       14  undetected_chromedriver             0x0000000102ba3281 undetected_chromedriver + 696961
+E       15  undetected_chromedriver             0x000000010306c580 undetected_chromedriver + 5715328
+E       16  undetected_chromedriver             0x0000000103070445 undetected_chromedriver + 5731397
+E       17  undetected_chromedriver             0x0000000103046ed0 undetected_chromedriver + 5562064
+E       18  undetected_chromedriver             0x0000000103070e7b undetected_chromedriver + 5734011
+E       19  undetected_chromedriver             0x0000000103035de4 undetected_chromedriver + 5492196
+E       20  undetected_chromedriver             0x0000000103093a98 undetected_chromedriver + 5876376
+E       21  undetected_chromedriver             0x0000000103093c60 undetected_chromedriver + 5876832
+E       22  undetected_chromedriver             0x00000001030a55b1 undetected_chromedriver + 5948849
+E       23  libsystem_pthread.dylib             0x00007ff80a1a0df1 _pthread_start + 99
+E       24  libsystem_pthread.dylib             0x00007ff80a19c857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2025-05-12 22:05:37,147 - INFO - Attempting to navigate to URL: https://adoptapet.com
+2025-05-12 22:05:38,601 - INFO - Successfully navigated to URL: https://adoptapet.com
+2025-05-12 22:05:42,311 - INFO - Attempting to find element: xpath = //span[@title='Find a Pet']
+2025-05-12 22:05:42,333 - INFO - Successfully find element: xpath = //span[@title='Find a Pet']
+2025-05-12 22:05:42,333 - INFO - Attempting to click element: xpath = //span[@title='Find a Pet']
+2025-05-12 22:05:42,333 - INFO - Attempting to find element: xpath = //span[@title='Find a Pet']
+2025-05-12 22:05:42,341 - INFO - Successfully find element: xpath = //span[@title='Find a Pet']
+2025-05-12 22:05:42,393 - INFO - Element clicked: xpath = //span[@title='Find a Pet']
+2025-05-12 22:05:42,393 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:05:42,401 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:05:42,401 - INFO - Attempting to click element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:05:42,401 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:05:42,405 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:05:42,447 - INFO - Element clicked: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 22:05:43,451 - INFO - Attempting to find element: css selector = [data-testid='location-search']
+2025-05-12 22:05:43,467 - INFO - Successfully find element: css selector = [data-testid='location-search']
+2025-05-12 22:05:44,482 - INFO - Attempting to click element: css selector = [data-testid='location-search']
+2025-05-12 22:05:44,483 - INFO - Attempting to find element: css selector = [data-testid='location-search']
+2025-05-12 22:05:44,494 - INFO - Successfully find element: css selector = [data-testid='location-search']
+2025-05-12 22:05:44,563 - INFO - Element clicked: css selector = [data-testid='location-search']
+2025-05-12 22:05:44,563 - INFO - Attempting to find element: css selector = [data-testid='location-search'] input:not(.hidden)
+2025-05-12 22:05:44,575 - INFO - Successfully find element: css selector = [data-testid='location-search'] input:not(.hidden)
+2025-05-12 22:05:44,681 - INFO - Attempting to find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:05:44,690 - INFO - Successfully find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:05:44,690 - INFO - Attempting to click element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:05:44,690 - INFO - Attempting to find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:05:44,695 - INFO - Successfully find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:05:44,805 - INFO - Element clicked: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 22:05:44,805 - INFO - Attempting to find element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:05:44,812 - INFO - Successfully find element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:05:44,812 - INFO - Attempting to click element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:05:44,812 - INFO - Attempting to find element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:05:44,816 - INFO - Successfully find element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:05:45,326 - INFO - Attempting to find element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:05:45,341 - INFO - Successfully find element: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:05:45,418 - INFO - Element clicked: css selector = [data-testid='breed-selectedOption']
+2025-05-12 22:05:45,418 - INFO - Attempting to find element: css selector = [data-testid='breed-selectedOption'] input:not(.hidden)
+2025-05-12 22:05:45,427 - INFO - Successfully find element: css selector = [data-testid='breed-selectedOption'] input:not(.hidden)
+2025-05-12 22:05:45,503 - INFO - Attempting to find element: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:05:45,521 - INFO - Successfully find element: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:05:45,521 - INFO - Attempting to click element: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:05:45,521 - INFO - Attempting to find element: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:05:45,526 - INFO - Successfully find element: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:05:45,580 - INFO - Element clicked: xpath = //label[contains(text(),'Jack Russell Terrier')]
+2025-05-12 22:05:45,580 - INFO - Attempting to find element: xpath = //button[@type='submit']
+2025-05-12 22:05:45,589 - INFO - Successfully find element: xpath = //button[@type='submit']
+2025-05-12 22:05:45,589 - INFO - Attempting to click element: xpath = //button[@type='submit']
+2025-05-12 22:05:45,589 - INFO - Attempting to find element: xpath = //button[@type='submit']
+2025-05-12 22:05:45,593 - INFO - Successfully find element: xpath = //button[@type='submit']
+2025-05-12 22:05:46,667 - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //button[@type='submit'] (Current page URL: https://www.adoptapet.com/dog-adoption)
+2025-05-12 22:06:31,797 - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Scroll the submit button into view before clicking to avoid overlay interception  
+Original code line/lines:  
+self.driver.find_element(By.XPATH, "//button[@type='submit']").click()  
+Fixed code line/lines:  
+submit_btn = self.driver.find_element(By.XPATH, "//button[@type='submit']")  
+scroll_to_element(self.driver, submit_btn)  
+submit_btn.click()  
+-------------------------------------------------------
+Potential fix (2): Target the visible submit button inside the dog-search form instead of the first one found in the DOM  
+Original code line/lines:  
+self.driver.find_element(By.XPATH, "//button[@type='submit']").click()  
+Fixed code line/lines:  
+self.driver.find_element(By.XPATH, "//form[@id='dog-search']//button[@type='submit']").click()  
+-------------------------------------------------------
+Potential fix (3): Bypass ElementClickInterceptedException with a JavaScript-based click  
+Original code line/lines:  
+self.driver.find_element(By.XPATH, "//button[@type='submit']").click()  
+Fixed code line/lines:  
+submit_btn = self.driver.find_element(By.XPATH, "//button[@type='submit']")  
+self.driver.execute_script("arguments[0].click();", submit_btn)  
+-------------------------------------------------------
+Potential fix (4): Close the breed dropdown after selecting the breed so no menu covers the submit button  
+Original code line/lines:  
+self.driver.find_element(By.XPATH, "//label[contains(text(),'Jack Russell Terrier')]").click()  
+Fixed code line/lines:  
+breed_option = self.driver.find_element(By.XPATH, "//label[contains(text(),'Jack Russell Terrier')]")  
+breed_option.click()  
+breed_option.send_keys(Keys.ESCAPE)        # collapse dropdown  
+-------------------------------------------------------
+Potential fix (5): Explicitly wait until the submit button is clickable before clicking  
+Original code line/lines:  
+self.driver.find_element(By.XPATH, "//button[@type='submit']").click()  
+Fixed code line/lines:  
+submit_btn = WebDriverWait(self.driver, 10).until(  
+    EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))  
+)  
+submit_btn.click()  
+-------------------------------------------------------

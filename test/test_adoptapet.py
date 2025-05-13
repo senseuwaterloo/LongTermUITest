@@ -42,7 +42,9 @@ class TestAdoptapet:
         breed_input.send_keys("jack russell")
 
         self.driver.find_element(By.XPATH, "//label[contains(text(),'Jack Russell Terrier')]").click()
-        self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
+
+        # self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
+        self.driver.find_element(By.XPATH, "//button[text()='Save & Search']").click()
 
         self.driver.find_element(By.XPATH, "//button[contains(.,'Create an Alert')]").click()
 
