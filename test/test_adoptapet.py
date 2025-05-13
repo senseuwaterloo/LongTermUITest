@@ -1,9 +1,10 @@
 import time
 
 import pytest
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
-from browser_helper import scroll_to_element
+from browser_helper import scroll_to_element, get_control_key
 
 
 @pytest.mark.usefixtures("setup_class")
@@ -19,11 +20,16 @@ class TestAdoptapet:
 
         time.sleep(1)
 
-        breed_element = self.driver.find_element(By.ID, "location-1")
-        scroll_to_element(self.driver, breed_element)
-
-        self.driver.find_element(By.ID, "location-1").clear()
-        self.driver.find_element(By.ID, "location-1").send_keys("10019")
+        # breed_element = self.driver.find_element(By.ID, "location-1")
+        # scroll_to_element(self.driver, breed_element)
+        # self.driver.find_element(By.ID, "location-1").clear()
+        # self.driver.find_element(By.ID, "location-1").send_keys("10019")
+        wrapper = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='location-search']")
+        scroll_to_element(self.driver, wrapper)
+        wrapper.click()  # activates the real input
+        location_input = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='location-search'] input:not(.hidden)")
+        location_input.send_keys(get_control_key(), "a", Keys.DELETE)
+        location_input.send_keys("10019")
 
         self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
         self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
@@ -37,5 +43,5 @@ class TestAdoptapet:
 
         self.driver.find_element(By.XPATH, "//*[@id='livewire-ui-modal']/div/div/div[2]/div/div/div[2]/form/div[1]/div[2]/div[2]").click()
 
-        self.driver.find_element(By.XPATH, "//button[contains(text(),'Subscribe Now')]").click()
+        self.driver.find_element(By.XPATH, "//button[contains(text(),'Subscribe Now')]")
     
