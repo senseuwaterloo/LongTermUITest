@@ -24,9 +24,12 @@ class TestAgoda:
         self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']").click()
         self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']").click()
 
-        dropdown_element = self.driver.find_element(By.XPATH, "//select[@data-selenium='dropdownInput' and contains(@aria-label, 'Age of Child 1')]")
-        select = Select(dropdown_element)
-        select.select_by_value('5')
+        # dropdown_element = self.driver.find_element(By.XPATH, "//select[@data-selenium='dropdownInput' and contains(@aria-label, 'Age of Child 1')]")
+        # select = Select(dropdown_element)
+        # select.select_by_value('5')
+        self.driver.find_element(By.XPATH, "//button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]").click()
+        self.driver.find_element(By.XPATH, "//span[@data-testid='title' and text()='5 years old']").click()
+
         dropdown_element = self.driver.find_element(By.XPATH, "//select[@data-selenium='dropdownInput' and contains(@aria-label, 'Age of Child 2')]")
         select = Select(dropdown_element)
         select.select_by_value('12')

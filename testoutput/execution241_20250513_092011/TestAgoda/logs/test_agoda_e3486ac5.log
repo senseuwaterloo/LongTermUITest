@@ -1,0 +1,177 @@
+2025-05-13 09:20:56,434 - ERROR - Test test_agoda_e3486ac5 failed.
+2025-05-13 09:20:56,437 - ERROR - URL at failure: https://www.agoda.com/?ds=rhRxUEyvcVoBGPe8#homes
+2025-05-13 09:20:56,437 - ERROR - Exception traceback: self = <test.test_agoda.TestAgoda object at 0x10839b3a0>
+
+    def test_agoda_e3486ac5(self):
+        self.driver.get("https://agoda.com")
+    
+        self.driver.find_element(By.XPATH, "//li[@id='tab-home']/div[1]/div[1]").click()
+        self.driver.find_element(By.ID, "textInput").clear()
+        self.driver.find_element(By.ID, "textInput").send_keys("bali")
+    
+        self.driver.find_element(By.XPATH, "//div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]").click()
+    
+        start_date_str, end_date_str = calculate_dates(20, 24)
+        self.driver.find_element(By.CSS_SELECTOR, f"span[data-selenium-date='{start_date_str}']").click()
+        self.driver.find_element(By.CSS_SELECTOR, f"span[data-selenium-date='{end_date_str}']").click()
+    
+        self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']").click()
+        self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']").click()
+        self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']").click()
+    
+>       dropdown_element = self.driver.find_element(By.XPATH, "//select[@data-selenium='dropdownInput' and contains(@aria-label, 'Age of Child 1')]")
+
+test/test_agoda.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:164: in find_element
+    raise e
+conftest.py:148: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1068c5510>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010128c8b8 undetected_chromedriver + 5986488
+E       1   undetected_chromedriver             0x00000001012839ea undetected_chromedriver + 5949930
+E       2   undetected_chromedriver             0x0000000100d3c600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100d8e304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100d8e521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100dde204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000100db433d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100ddb566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100db40e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100d8061d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100d81281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x000000010124a580 undetected_chromedriver + 5715328
+E       12  undetected_chromedriver             0x000000010124e445 undetected_chromedriver + 5731397
+E       13  undetected_chromedriver             0x0000000101224ed0 undetected_chromedriver + 5562064
+E       14  undetected_chromedriver             0x000000010124ee7b undetected_chromedriver + 5734011
+E       15  undetected_chromedriver             0x0000000101213de4 undetected_chromedriver + 5492196
+E       16  undetected_chromedriver             0x0000000101271a98 undetected_chromedriver + 5876376
+E       17  undetected_chromedriver             0x0000000101271c60 undetected_chromedriver + 5876832
+E       18  undetected_chromedriver             0x00000001012835b1 undetected_chromedriver + 5948849
+E       19  libsystem_pthread.dylib             0x00007ff81b3e8df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff81b3e4857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-13 09:20:18,013 - INFO - Attempting to navigate to URL: https://agoda.com
+2025-05-13 09:20:20,460 - INFO - Successfully navigated to URL: https://agoda.com
+2025-05-13 09:20:22,523 - INFO - Attempting to find element: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 09:20:22,542 - INFO - Successfully find element: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 09:20:22,542 - INFO - Attempting to click element: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 09:20:22,543 - INFO - Attempting to find element: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 09:20:22,550 - INFO - Successfully find element: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 09:20:22,626 - INFO - Element clicked: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 09:20:22,626 - INFO - Attempting to find element: id = textInput
+2025-05-13 09:20:22,633 - INFO - Successfully find element: id = textInput
+2025-05-13 09:20:22,651 - INFO - Attempting to find element: id = textInput
+2025-05-13 09:20:22,655 - INFO - Successfully find element: id = textInput
+2025-05-13 09:20:22,858 - INFO - Attempting to find element: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 09:20:23,385 - INFO - Successfully find element: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 09:20:23,385 - INFO - Attempting to click element: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 09:20:23,385 - INFO - Attempting to find element: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 09:20:23,390 - INFO - Successfully find element: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 09:20:23,455 - INFO - Element clicked: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 09:20:23,456 - INFO - Attempting to find element: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 09:20:23,973 - INFO - Successfully find element: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 09:20:23,973 - INFO - Attempting to click element: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 09:20:23,973 - INFO - Attempting to find element: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 09:20:23,977 - INFO - Successfully find element: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 09:20:24,046 - INFO - Element clicked: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 09:20:24,046 - INFO - Attempting to find element: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 09:20:24,053 - INFO - Successfully find element: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 09:20:24,053 - INFO - Attempting to click element: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 09:20:24,053 - INFO - Attempting to find element: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 09:20:24,057 - INFO - Successfully find element: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 09:20:24,112 - INFO - Element clicked: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 09:20:24,112 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 09:20:24,713 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 09:20:24,713 - INFO - Attempting to click element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 09:20:24,713 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 09:20:24,717 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 09:20:24,760 - INFO - Element clicked: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 09:20:24,760 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,767 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,767 - INFO - Attempting to click element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,767 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,771 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,821 - INFO - Element clicked: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,821 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,827 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,827 - INFO - Attempting to click element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,827 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,832 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,878 - INFO - Element clicked: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 09:20:24,878 - INFO - Attempting to find element: xpath = //select[@data-selenium='dropdownInput' and contains(@aria-label, 'Age of Child 1')]
+2025-05-13 09:20:55,401 - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //select[@data-selenium='dropdownInput' and contains(@aria-label, 'Age of Child 1')] (Current page URL: https://www.agoda.com/?ds=rhRxUEyvcVoBGPe8#homes)
+2025-05-13 09:22:46,009 - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): locator changed – ‟Age of Child” control is now a button, not a <select>
+Original code line: 
+dropdown_element = self.driver.find_element(By.XPATH, "//select[@data-selenium='dropdownInput' and contains(@aria-label, 'Age of Child 1')]")
+Fixed code line: 
+dropdown_element = self.driver.find_element(By.XPATH, "//button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]")
+-------------------------------------------------------
+Potential fix (2): open the occupancy panel explicitly before interacting with the + buttons
+Original code line/lines: 
+# first interaction with + button
+self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']").click()
+Fixed code line/lines:
+self.driver.find_element(By.XPATH, "//*[@data-selenium='occupancyBox']").click()      # open panel
+self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']").click()
+-------------------------------------------------------
+Potential fix (3): wait until the child-age dropdown becomes visible
+Original code line: 
+dropdown_element = self.driver.find_element(By.XPATH, "//select[@data-selenium='dropdownInput' and contains(@aria-label, 'Age of Child 1')]")
+Fixed code line/lines:
+dropdown_element = WebDriverWait(self.driver, 10).until(
+    EC.visibility_of_element_located(
+        (By.XPATH, "//button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]")
+    )
+)
+-------------------------------------------------------
+Potential fix (4): use loop for children “+” clicks (safer and clearer)
+Original code lines:
+self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']").click()
+self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']").click()
+Fixed code lines:
+for _ in range(2):                                   # add two children
+    self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']").click()
+-------------------------------------------------------
+Potential fix (5): select age value via list-box option instead of Select()
+Original code lines:
+select = Select(dropdown_element)
+select.select_by_value('5')
+Fixed code line/lines:
+dropdown_element.click()                                                # open list
+self.driver.find_element(By.XPATH, "//li[@role='option' and text()='5']").click()   # pick age
+-------------------------------------------------------
