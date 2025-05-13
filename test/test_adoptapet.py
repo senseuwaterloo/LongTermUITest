@@ -32,8 +32,15 @@ class TestAdoptapet:
         location_input.send_keys("10019")
 
         self.driver.find_element(By.XPATH, "//button[contains(text(),'Add Dog Criteria')]").click()
-        self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
-        self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
+
+        # self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
+        # self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
+        breed_dd = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='breed-selectedOption']")
+        breed_dd.click()  # expose the real input
+        breed_input = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='breed-selectedOption'] input:not(.hidden)")
+        breed_input.clear()
+        breed_input.send_keys("jack russell")
+
         self.driver.find_element(By.XPATH, "//label[contains(text(),'Jack Russell Terrier')]").click()
         self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
 

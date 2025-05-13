@@ -1,0 +1,167 @@
+2025-05-12 21:58:56,301 - ERROR - Test test_adoptapet_b49c669d failed.
+2025-05-12 21:58:56,304 - ERROR - URL at failure: https://www.adoptapet.com/dog-adoption
+2025-05-12 21:58:56,304 - ERROR - Exception traceback: self = <test.test_adoptapet.TestAdoptapet object at 0x1058cb700>
+
+    def test_adoptapet_b49c669d(self):
+        self.driver.get("https://adoptapet.com")
+    
+        # self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a pet')]").click()
+        self.driver.find_element(By.XPATH, "//span[@title='Find a Pet']").click()
+    
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a dog')]").click()
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Find a dog')]").click()
+    
+        time.sleep(1)
+    
+        # breed_element = self.driver.find_element(By.ID, "location-1")
+        # scroll_to_element(self.driver, breed_element)
+        # self.driver.find_element(By.ID, "location-1").clear()
+        # self.driver.find_element(By.ID, "location-1").send_keys("10019")
+        wrapper = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='location-search']")
+        scroll_to_element(self.driver, wrapper)
+        wrapper.click()  # activates the real input
+        location_input = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='location-search'] input:not(.hidden)")
+        location_input.send_keys(get_control_key(), "a", Keys.DELETE)
+        location_input.send_keys("10019")
+    
+        self.driver.find_element(By.XPATH, "//button[contains(text(),'Add Dog Criteria')]").click()
+>       self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
+
+test/test_adoptapet.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:164: in find_element
+    raise e
+conftest.py:148: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x105920e50>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001055938b8 undetected_chromedriver + 5986488
+E       1   undetected_chromedriver             0x000000010558a9ea undetected_chromedriver + 5949930
+E       2   undetected_chromedriver             0x0000000105043600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000105095304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000105095521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001050e5204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x00000001050bb33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001050e2566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001050bb0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010508761d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000105088281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000105551580 undetected_chromedriver + 5715328
+E       12  undetected_chromedriver             0x0000000105555445 undetected_chromedriver + 5731397
+E       13  undetected_chromedriver             0x000000010552bed0 undetected_chromedriver + 5562064
+E       14  undetected_chromedriver             0x0000000105555e7b undetected_chromedriver + 5734011
+E       15  undetected_chromedriver             0x000000010551ade4 undetected_chromedriver + 5492196
+E       16  undetected_chromedriver             0x0000000105578a98 undetected_chromedriver + 5876376
+E       17  undetected_chromedriver             0x0000000105578c60 undetected_chromedriver + 5876832
+E       18  undetected_chromedriver             0x000000010558a5b1 undetected_chromedriver + 5948849
+E       19  libsystem_pthread.dylib             0x00007ff8136f0df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff8136ec857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-12 21:58:08,205 - INFO - Attempting to navigate to URL: https://adoptapet.com
+2025-05-12 21:58:10,870 - INFO - Successfully navigated to URL: https://adoptapet.com
+2025-05-12 21:58:13,946 - INFO - Attempting to find element: xpath = //span[@title='Find a Pet']
+2025-05-12 21:58:13,968 - INFO - Successfully find element: xpath = //span[@title='Find a Pet']
+2025-05-12 21:58:13,968 - INFO - Attempting to click element: xpath = //span[@title='Find a Pet']
+2025-05-12 21:58:13,969 - INFO - Attempting to find element: xpath = //span[@title='Find a Pet']
+2025-05-12 21:58:13,976 - INFO - Successfully find element: xpath = //span[@title='Find a Pet']
+2025-05-12 21:58:14,029 - INFO - Element clicked: xpath = //span[@title='Find a Pet']
+2025-05-12 21:58:14,029 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 21:58:14,036 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 21:58:14,036 - INFO - Attempting to click element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 21:58:14,036 - INFO - Attempting to find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 21:58:14,042 - INFO - Successfully find element: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 21:58:17,541 - INFO - Element clicked: xpath = //span[contains(text(),'Find a dog')]
+2025-05-12 21:58:18,546 - INFO - Attempting to find element: css selector = [data-testid='location-search']
+2025-05-12 21:58:18,572 - INFO - Successfully find element: css selector = [data-testid='location-search']
+2025-05-12 21:58:19,582 - INFO - Attempting to click element: css selector = [data-testid='location-search']
+2025-05-12 21:58:19,582 - INFO - Attempting to find element: css selector = [data-testid='location-search']
+2025-05-12 21:58:19,587 - INFO - Successfully find element: css selector = [data-testid='location-search']
+2025-05-12 21:58:19,640 - INFO - Element clicked: css selector = [data-testid='location-search']
+2025-05-12 21:58:19,640 - INFO - Attempting to find element: css selector = [data-testid='location-search'] input:not(.hidden)
+2025-05-12 21:58:19,646 - INFO - Successfully find element: css selector = [data-testid='location-search'] input:not(.hidden)
+2025-05-12 21:58:19,761 - INFO - Attempting to find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 21:58:25,443 - INFO - Successfully find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 21:58:25,443 - INFO - Attempting to click element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 21:58:25,443 - INFO - Attempting to find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 21:58:25,448 - INFO - Successfully find element: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 21:58:25,564 - INFO - Element clicked: xpath = //button[contains(text(),'Add Dog Criteria')]
+2025-05-12 21:58:25,564 - INFO - Attempting to find element: xpath = //form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input
+2025-05-12 21:58:55,686 - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input (Current page URL: https://www.adoptapet.com/dog-adoption)
+2025-05-12 21:59:42,659 - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use the modal’s stable data-testid and open the dropdown before typing.  
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
+self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
+Fixed code line/lines:
+breed_dd = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='breed-selectedOption']")
+breed_dd.click()                                              # expose the real input
+breed_input = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='breed-selectedOption'] input:not(.hidden)")
+breed_input.clear()
+breed_input.send_keys("jack russell")
+-------------------------------------------------------
+Potential fix (2): Wait for the breed input to be visible instead of relying on immediate presence.  
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
+Fixed code line/lines:
+breed_input = WebDriverWait(self.driver, 10).until(
+    EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-testid='breed-selectedOption'] input:not(.hidden)"))
+)
+breed_input.clear()
+-------------------------------------------------------
+Potential fix (3): Rely on the input’s id (#breed) after the dropdown is opened.  
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
+Fixed code line/lines:
+self.driver.find_element(By.ID, "breed").send_keys("jack russell")
+-------------------------------------------------------
+Potential fix (4): Ensure the “Add Dog Criteria” modal has fully rendered before looking for the breed input.  
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//button[contains(text(),'Add Dog Criteria')]").click()
+Fixed code line/lines:
+self.driver.find_element(By.XPATH, "//button[contains(text(),'Add Dog Criteria')]").click()
+WebDriverWait(self.driver, 10).until(
+    EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-testid='breed-selectedOption']"))
+)
+-------------------------------------------------------
+Potential fix (5): Use a shorter, less brittle XPath tied to the label text.  
+Original code line/lines:
+self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
+self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
+Fixed code line/lines:
+breed_input = self.driver.find_element(By.XPATH, "//label[@for='breed']/following::input[1]")
+breed_input.clear()
+breed_input.send_keys("jack russell")
+-------------------------------------------------------
