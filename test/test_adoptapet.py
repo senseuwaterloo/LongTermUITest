@@ -31,6 +31,7 @@ class TestAdoptapet:
         location_input.send_keys(get_control_key(), "a", Keys.DELETE)
         location_input.send_keys("10019")
 
+        self.driver.find_element(By.XPATH, "//button[contains(text(),'Add Dog Criteria')]").click()
         self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").clear()
         self.driver.find_element(By.XPATH, "//form[@id='dog-search']/div/div[2]/div[2]/ul/div[1]/input").send_keys("jack russell")
         self.driver.find_element(By.XPATH, "//label[contains(text(),'Jack Russell Terrier')]").click()
