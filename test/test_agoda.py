@@ -47,5 +47,6 @@ class TestAgoda:
         self.driver.find_element(By.XPATH, "//span[contains(text(), 'Balcony/terrace') and @data-selenium='filter-item-text']").click()
         self.driver.find_element(By.XPATH, "//span[contains(text(), 'Breakfast included')]").click()
         self.driver.find_element(By.XPATH, "//span[contains(text(), 'Double') and @data-selenium='filter-item-text']").click()
-        self.driver.find_element(By.XPATH, "//a[@data-element-name='search-sort-price']").click()
-    
+
+        # self.driver.find_element(By.XPATH, "//a[@data-element-name='search-sort-price']").click()
+        self.driver.find_element(By.XPATH, "//button[@data-element-name='search-sort-price']").click()

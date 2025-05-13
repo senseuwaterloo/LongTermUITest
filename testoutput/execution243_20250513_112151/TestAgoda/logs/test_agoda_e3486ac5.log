@@ -1,0 +1,252 @@
+2025-05-13 11:23:01,169 - ERROR - Test test_agoda_e3486ac5 failed.
+2025-05-13 11:23:01,172 - ERROR - URL at failure: https://www.agoda.com/search?guid=e134ce9f-a5a6-4386-b665-b17dd92d70c7&asq=u2qcKLxwzRU5NDuxJ0kOF3T91go8JoYYMxAgy8FkBH1BN0lGAtYH25sdXoy34qb94xyT2q%2FjCPwcf8ml2BMRHNMwSFCqk9vkekuLoxdhPW5njFG8ptgrCHp4uqwixtioCpAzJy%2BIPcIhZIlXClDyyipV9918GlE28uJBYmSJU%2BFwp5BHmzPEN7m60gTtvO1GW6v%2B1z7ngi%2Fh%2BcIMzh%2Fx3w%3D%3D&city=17193&tick=638827717234&locale=en-us&ckuid=35d677cc-c772-4748-87b5-e026ca638b3f&prid=0&currency=USD&correlationId=a1c49d93-d5b9-4736-b206-cc221b6c1135&analyticsSessionId=-2479860877362890499&pageTypeId=1&realLanguageId=1&languageId=1&origin=US&stateCode=MA&cid=-1&userId=35d677cc-c772-4748-87b5-e026ca638b3f&whitelabelid=1&loginLvl=0&storefrontId=3&currencyId=7&currencyCode=USD&htmlLanguage=en-us&cultureInfoName=en-us&machineName=as-pc-3f-acm-web-user-f847fffcb-wdf75&trafficGroupId=4&trafficSubGroupId=4&aid=130243&useFullPageLogin=true&cttp=4&isRealUser=true&mode=production&browserFamily=Chrome&cdnDomain=agoda.net&checkIn=2025-06-02&checkOut=2025-06-06&rooms=1&adults=2&children=2&childages=5%2C12&priceCur=USD&los=4&textToSearch=Bali&travellerType=2&familyMode=off&ds=T4HMKqCIMIP4ZZsu&roomAmenities=43&groupedBedTypes=2&benefits=78322&hotelAccom=108&productType=2
+2025-05-13 11:23:01,172 - ERROR - Exception traceback: self = <test.test_agoda.TestAgoda object at 0x1070db280>
+
+    def test_agoda_e3486ac5(self):
+        self.driver.get("https://agoda.com")
+    
+        self.driver.find_element(By.XPATH, "//li[@id='tab-home']/div[1]/div[1]").click()
+        self.driver.find_element(By.ID, "textInput").clear()
+        self.driver.find_element(By.ID, "textInput").send_keys("bali")
+    
+        self.driver.find_element(By.XPATH, "//div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]").click()
+    
+        start_date_str, end_date_str = calculate_dates(20, 24)
+        self.driver.find_element(By.CSS_SELECTOR, f"span[data-selenium-date='{start_date_str}']").click()
+        self.driver.find_element(By.CSS_SELECTOR, f"span[data-selenium-date='{end_date_str}']").click()
+    
+        self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']").click()
+        self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']").click()
+        self.driver.find_element(By.XPATH, "//button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']").click()
+    
+        # dropdown_element = self.driver.find_element(By.XPATH, "//select[@data-selenium='dropdownInput' and contains(@aria-label, 'Age of Child 1')]")
+        # select = Select(dropdown_element)
+        # select.select_by_value('5')
+        self.driver.find_element(By.XPATH, "//button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]").click()
+        self.driver.find_element(By.XPATH, "//span[@data-testid='title' and text()='5 years old']").click()
+    
+        # dropdown_element = self.driver.find_element(By.XPATH, "//select[@data-selenium='dropdownInput' and contains(@aria-label, 'Age of Child 2')]")
+        # select = Select(dropdown_element)
+        # select.select_by_value('12')
+        self.driver.find_element(By.XPATH, "//button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 2')]]").click()
+        # wait a few seconds to let the previous list disappear to avoid stale reference exception
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//span[@data-testid='title' and text()='12 years old']").click()
+    
+        self.driver.find_element(By.XPATH, "//*[@data-selenium='occupancyBox']").click()
+        self.driver.find_element(By.XPATH, "//button[@data-selenium='searchButton']").click()
+        switch_to_new_tab_and_close_old(self.driver)
+        self.driver.find_element(By.XPATH, "//span[contains(text(), 'Homestay') and @data-selenium='filter-item-text']").click()
+        self.driver.find_element(By.XPATH, "//span[contains(text(), 'Balcony/terrace') and @data-selenium='filter-item-text']").click()
+        self.driver.find_element(By.XPATH, "//span[contains(text(), 'Breakfast included')]").click()
+        self.driver.find_element(By.XPATH, "//span[contains(text(), 'Double') and @data-selenium='filter-item-text']").click()
+>       self.driver.find_element(By.XPATH, "//a[@data-element-name='search-sort-price']").click()
+
+test/test_agoda.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conftest.py:164: in find_element
+    raise e
+conftest.py:148: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1070ee710>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010148a8b8 undetected_chromedriver + 5986488
+E       1   undetected_chromedriver             0x00000001014819ea undetected_chromedriver + 5949930
+E       2   undetected_chromedriver             0x0000000100f3a600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100f8c304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100f8c521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100fdc204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000100fb233d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100fd9566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100fb20e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100f7e61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100f7f281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000101448580 undetected_chromedriver + 5715328
+E       12  undetected_chromedriver             0x000000010144c445 undetected_chromedriver + 5731397
+E       13  undetected_chromedriver             0x0000000101422ed0 undetected_chromedriver + 5562064
+E       14  undetected_chromedriver             0x000000010144ce7b undetected_chromedriver + 5734011
+E       15  undetected_chromedriver             0x0000000101411de4 undetected_chromedriver + 5492196
+E       16  undetected_chromedriver             0x000000010146fa98 undetected_chromedriver + 5876376
+E       17  undetected_chromedriver             0x000000010146fc60 undetected_chromedriver + 5876832
+E       18  undetected_chromedriver             0x00000001014815b1 undetected_chromedriver + 5948849
+E       19  libsystem_pthread.dylib             0x00007ff815c44df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff815c40857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-13 11:21:57,977 - INFO - Attempting to navigate to URL: https://agoda.com
+2025-05-13 11:21:58,935 - INFO - Successfully navigated to URL: https://agoda.com
+2025-05-13 11:22:02,838 - INFO - Attempting to find element: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 11:22:02,850 - INFO - Successfully find element: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 11:22:02,850 - INFO - Attempting to click element: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 11:22:02,850 - INFO - Attempting to find element: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 11:22:02,857 - INFO - Successfully find element: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 11:22:02,966 - INFO - Element clicked: xpath = //li[@id='tab-home']/div[1]/div[1]
+2025-05-13 11:22:02,966 - INFO - Attempting to find element: id = textInput
+2025-05-13 11:22:02,988 - INFO - Successfully find element: id = textInput
+2025-05-13 11:22:03,023 - INFO - Attempting to find element: id = textInput
+2025-05-13 11:22:03,029 - INFO - Successfully find element: id = textInput
+2025-05-13 11:22:03,198 - INFO - Attempting to find element: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 11:22:03,723 - INFO - Successfully find element: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 11:22:03,723 - INFO - Attempting to click element: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 11:22:03,723 - INFO - Attempting to find element: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 11:22:03,731 - INFO - Successfully find element: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 11:22:03,817 - INFO - Element clicked: xpath = //div[@id='SearchBoxContainer']/div[1]/div[1]/div[2]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[2]/span[1]
+2025-05-13 11:22:03,818 - INFO - Attempting to find element: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 11:22:04,342 - INFO - Successfully find element: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 11:22:04,343 - INFO - Attempting to click element: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 11:22:04,343 - INFO - Attempting to find element: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 11:22:04,349 - INFO - Successfully find element: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 11:22:04,459 - INFO - Element clicked: css selector = span[data-selenium-date='2025-06-02']
+2025-05-13 11:22:04,459 - INFO - Attempting to find element: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 11:22:04,599 - INFO - Successfully find element: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 11:22:04,600 - INFO - Attempting to click element: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 11:22:04,600 - INFO - Attempting to find element: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 11:22:04,606 - INFO - Successfully find element: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 11:22:04,705 - INFO - Element clicked: css selector = span[data-selenium-date='2025-06-06']
+2025-05-13 11:22:04,705 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 11:22:05,228 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 11:22:05,228 - INFO - Attempting to click element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 11:22:05,228 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 11:22:05,235 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 11:22:05,312 - INFO - Element clicked: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-adult']
+2025-05-13 11:22:05,312 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,321 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,321 - INFO - Attempting to click element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,322 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,329 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,419 - INFO - Element clicked: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,419 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,426 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,426 - INFO - Attempting to click element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,426 - INFO - Attempting to find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,433 - INFO - Successfully find element: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,516 - INFO - Element clicked: xpath = //button[@data-selenium='plus' and @data-element-name='occupancy-selector-panel-children']
+2025-05-13 11:22:05,517 - INFO - Attempting to find element: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]
+2025-05-13 11:22:05,526 - INFO - Successfully find element: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]
+2025-05-13 11:22:05,527 - INFO - Attempting to click element: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]
+2025-05-13 11:22:05,527 - INFO - Attempting to find element: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]
+2025-05-13 11:22:05,534 - INFO - Successfully find element: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]
+2025-05-13 11:22:05,629 - INFO - Element clicked: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]
+2025-05-13 11:22:05,629 - INFO - Attempting to find element: xpath = //span[@data-testid='title' and text()='5 years old']
+2025-05-13 11:22:05,638 - INFO - Successfully find element: xpath = //span[@data-testid='title' and text()='5 years old']
+2025-05-13 11:22:05,638 - INFO - Attempting to click element: xpath = //span[@data-testid='title' and text()='5 years old']
+2025-05-13 11:22:05,639 - INFO - Attempting to find element: xpath = //span[@data-testid='title' and text()='5 years old']
+2025-05-13 11:22:05,647 - INFO - Successfully find element: xpath = //span[@data-testid='title' and text()='5 years old']
+2025-05-13 11:22:05,743 - INFO - Element clicked: xpath = //span[@data-testid='title' and text()='5 years old']
+2025-05-13 11:22:05,743 - INFO - Attempting to find element: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 2')]]
+2025-05-13 11:22:05,752 - INFO - Successfully find element: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 2')]]
+2025-05-13 11:22:05,752 - INFO - Attempting to click element: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 2')]]
+2025-05-13 11:22:05,752 - INFO - Attempting to find element: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 2')]]
+2025-05-13 11:22:05,760 - INFO - Successfully find element: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 2')]]
+2025-05-13 11:22:05,850 - INFO - Element clicked: xpath = //button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 2')]]
+2025-05-13 11:22:07,855 - INFO - Attempting to find element: xpath = //span[@data-testid='title' and text()='12 years old']
+2025-05-13 11:22:07,866 - INFO - Successfully find element: xpath = //span[@data-testid='title' and text()='12 years old']
+2025-05-13 11:22:07,866 - INFO - Attempting to click element: xpath = //span[@data-testid='title' and text()='12 years old']
+2025-05-13 11:22:07,866 - INFO - Attempting to find element: xpath = //span[@data-testid='title' and text()='12 years old']
+2025-05-13 11:22:07,873 - INFO - Successfully find element: xpath = //span[@data-testid='title' and text()='12 years old']
+2025-05-13 11:22:07,956 - INFO - Element clicked: xpath = //span[@data-testid='title' and text()='12 years old']
+2025-05-13 11:22:07,956 - INFO - Attempting to find element: xpath = //*[@data-selenium='occupancyBox']
+2025-05-13 11:22:07,966 - INFO - Successfully find element: xpath = //*[@data-selenium='occupancyBox']
+2025-05-13 11:22:07,966 - INFO - Attempting to click element: xpath = //*[@data-selenium='occupancyBox']
+2025-05-13 11:22:07,966 - INFO - Attempting to find element: xpath = //*[@data-selenium='occupancyBox']
+2025-05-13 11:22:07,973 - INFO - Successfully find element: xpath = //*[@data-selenium='occupancyBox']
+2025-05-13 11:22:08,047 - INFO - Element clicked: xpath = //*[@data-selenium='occupancyBox']
+2025-05-13 11:22:08,047 - INFO - Attempting to find element: xpath = //button[@data-selenium='searchButton']
+2025-05-13 11:22:08,056 - INFO - Successfully find element: xpath = //button[@data-selenium='searchButton']
+2025-05-13 11:22:08,057 - INFO - Attempting to click element: xpath = //button[@data-selenium='searchButton']
+2025-05-13 11:22:08,057 - INFO - Attempting to find element: xpath = //button[@data-selenium='searchButton']
+2025-05-13 11:22:08,064 - INFO - Successfully find element: xpath = //button[@data-selenium='searchButton']
+2025-05-13 11:22:19,818 - INFO - Element clicked: xpath = //button[@data-selenium='searchButton']
+2025-05-13 11:22:26,913 - INFO - Attempting to find element: xpath = //span[contains(text(), 'Homestay') and @data-selenium='filter-item-text']
+2025-05-13 11:22:26,930 - INFO - Successfully find element: xpath = //span[contains(text(), 'Homestay') and @data-selenium='filter-item-text']
+2025-05-13 11:22:26,930 - INFO - Attempting to click element: xpath = //span[contains(text(), 'Homestay') and @data-selenium='filter-item-text']
+2025-05-13 11:22:26,930 - INFO - Attempting to find element: xpath = //span[contains(text(), 'Homestay') and @data-selenium='filter-item-text']
+2025-05-13 11:22:26,938 - INFO - Successfully find element: xpath = //span[contains(text(), 'Homestay') and @data-selenium='filter-item-text']
+2025-05-13 11:22:27,150 - INFO - Element clicked: xpath = //span[contains(text(), 'Homestay') and @data-selenium='filter-item-text']
+2025-05-13 11:22:27,151 - INFO - Attempting to find element: xpath = //span[contains(text(), 'Balcony/terrace') and @data-selenium='filter-item-text']
+2025-05-13 11:22:28,704 - INFO - Successfully find element: xpath = //span[contains(text(), 'Balcony/terrace') and @data-selenium='filter-item-text']
+2025-05-13 11:22:28,705 - INFO - Attempting to click element: xpath = //span[contains(text(), 'Balcony/terrace') and @data-selenium='filter-item-text']
+2025-05-13 11:22:28,705 - INFO - Attempting to find element: xpath = //span[contains(text(), 'Balcony/terrace') and @data-selenium='filter-item-text']
+2025-05-13 11:22:28,714 - INFO - Successfully find element: xpath = //span[contains(text(), 'Balcony/terrace') and @data-selenium='filter-item-text']
+2025-05-13 11:22:28,916 - INFO - Element clicked: xpath = //span[contains(text(), 'Balcony/terrace') and @data-selenium='filter-item-text']
+2025-05-13 11:22:28,917 - INFO - Attempting to find element: xpath = //span[contains(text(), 'Breakfast included')]
+2025-05-13 11:22:28,926 - INFO - Successfully find element: xpath = //span[contains(text(), 'Breakfast included')]
+2025-05-13 11:22:28,926 - INFO - Attempting to click element: xpath = //span[contains(text(), 'Breakfast included')]
+2025-05-13 11:22:28,927 - INFO - Attempting to find element: xpath = //span[contains(text(), 'Breakfast included')]
+2025-05-13 11:22:28,932 - INFO - Successfully find element: xpath = //span[contains(text(), 'Breakfast included')]
+2025-05-13 11:22:29,089 - INFO - Element clicked: xpath = //span[contains(text(), 'Breakfast included')]
+2025-05-13 11:22:29,090 - INFO - Attempting to find element: xpath = //span[contains(text(), 'Double') and @data-selenium='filter-item-text']
+2025-05-13 11:22:29,099 - INFO - Successfully find element: xpath = //span[contains(text(), 'Double') and @data-selenium='filter-item-text']
+2025-05-13 11:22:29,099 - INFO - Attempting to click element: xpath = //span[contains(text(), 'Double') and @data-selenium='filter-item-text']
+2025-05-13 11:22:29,099 - INFO - Attempting to find element: xpath = //span[contains(text(), 'Double') and @data-selenium='filter-item-text']
+2025-05-13 11:22:29,104 - INFO - Successfully find element: xpath = //span[contains(text(), 'Double') and @data-selenium='filter-item-text']
+2025-05-13 11:22:29,275 - INFO - Element clicked: xpath = //span[contains(text(), 'Double') and @data-selenium='filter-item-text']
+2025-05-13 11:22:29,276 - INFO - Attempting to find element: xpath = //a[@data-element-name='search-sort-price']
+2025-05-13 11:22:59,618 - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[@data-element-name='search-sort-price'] (Current page URL: https://www.agoda.com/search?guid=e134ce9f-a5a6-4386-b665-b17dd92d70c7&asq=u2qcKLxwzRU5NDuxJ0kOF3T91go8JoYYMxAgy8FkBH1BN0lGAtYH25sdXoy34qb94xyT2q%2FjCPwcf8ml2BMRHNMwSFCqk9vkekuLoxdhPW5njFG8ptgrCHp4uqwixtioCpAzJy%2BIPcIhZIlXClDyyipV9918GlE28uJBYmSJU%2BFwp5BHmzPEN7m60gTtvO1GW6v%2B1z7ngi%2Fh%2BcIMzh%2Fx3w%3D%3D&city=17193&tick=638827717234&locale=en-us&ckuid=35d677cc-c772-4748-87b5-e026ca638b3f&prid=0&currency=USD&correlationId=a1c49d93-d5b9-4736-b206-cc221b6c1135&analyticsSessionId=-2479860877362890499&pageTypeId=1&realLanguageId=1&languageId=1&origin=US&stateCode=MA&cid=-1&userId=35d677cc-c772-4748-87b5-e026ca638b3f&whitelabelid=1&loginLvl=0&storefrontId=3&currencyId=7&currencyCode=USD&htmlLanguage=en-us&cultureInfoName=en-us&machineName=as-pc-3f-acm-web-user-f847fffcb-wdf75&trafficGroupId=4&trafficSubGroupId=4&aid=130243&useFullPageLogin=true&cttp=4&isRealUser=true&mode=production&browserFamily=Chrome&cdnDomain=agoda.net&checkIn=2025-06-02&checkOut=2025-06-06&rooms=1&adults=2&children=2&childages=5%2C12&priceCur=USD&los=4&textToSearch=Bali&travellerType=2&familyMode=off&ds=T4HMKqCIMIP4ZZsu&roomAmenities=43&groupedBedTypes=2&benefits=78322&hotelAccom=108&productType=2)
+2025-05-13 11:23:44,176 - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Wrong tag used – the element is a <button>, not an <a>
+Original code line: 
+self.driver.find_element(By.XPATH, "//a[@data-element-name='search-sort-price']").click()
+Fixed code line: 
+self.driver.find_element(By.XPATH, "//button[@data-element-name='search-sort-price']").click()
+-------------------------------------------------------
+Potential fix (2): Use a tag-agnostic CSS selector to make locator robust
+Original code line: 
+self.driver.find_element(By.XPATH, "//a[@data-element-name='search-sort-price']").click()
+Fixed code line: 
+self.driver.find_element(By.CSS_SELECTOR, "[data-element-name='search-sort-price']").click()
+-------------------------------------------------------
+Potential fix (3): Ensure the sort bar is rendered before interacting (explicit wait)
+Original code line: 
+self.driver.find_element(By.XPATH, "//a[@data-element-name='search-sort-price']").click()
+Fixed code lines: 
+WebDriverWait(self.driver, 30).until(
+    EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-element-name='search-sort-price']"))
+).click()
+-------------------------------------------------------
+Potential fix (4): Scroll sort element into view (some browsers won’t click off-screen)
+Original code line: 
+self.driver.find_element(By.XPATH, "//a[@data-element-name='search-sort-price']").click()
+Fixed code lines: 
+sort_btn = self.driver.find_element(By.CSS_SELECTOR, "[data-element-name='search-sort-price']")
+self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", sort_btn)
+sort_btn.click()
+-------------------------------------------------------
+Potential fix (5): Locate via visible text to survive attribute/name changes
+Original code line: 
+self.driver.find_element(By.XPATH, "//a[@data-element-name='search-sort-price']").click()
+Fixed code line: 
+self.driver.find_element(By.XPATH, "//span[normalize-space(.)='Lowest price first']/ancestor::button").click()
+-------------------------------------------------------
