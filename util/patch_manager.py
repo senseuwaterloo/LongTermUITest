@@ -252,8 +252,9 @@ def get_failing_line_number_from_traceback(traceback_text: str, target_file_abs_
 
 
 def run_specific_test(
-        test_node_id: str,  # e.g., "tests/test_example.py::TestExample::test_one"
-        test_file_abs_path: str  # Absolute path to the test file
+        test_node_id: str,
+        test_file_abs_path: str,
+        is_verification_run: bool = False
 ) -> Tuple[bool, Optional[str], Optional[int]]:
     """
     Runs a specific test using a subprocess call to pytest.
@@ -286,6 +287,8 @@ def run_specific_test(
     # Command to run pytest
     # Using the node ID is the most specific way to target a test.
     cmd = [pytest_executable, test_node_id, f"--report-log={report_log_path}", "-v"]
+    if is_verification_run:
+        cmd.append("--internal-rerun")
     logger.info(f"Executing test with command: {' '.join(cmd)}")
 
     try:

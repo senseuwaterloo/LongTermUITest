@@ -69,40 +69,57 @@ def driver_session(request):
 
 @pytest.fixture(autouse=True)
 def auto_fix_on_failure(request, driver_session: CustomWebDriver):
-    # test_class_name = request.node.cls.__name__
-    # website_domain_name = convert_class_name(test_class_name)
-    # website_url = get_website_url(website_domain_name)
-    # driver = request.cls.driver
-    # # open_url_and_handle_cookie(driver, website_url)
-    #
-    # execution_folder = request.config.execution_folder
-
     driver = driver_session
+    autofix_mode = request.config.getoption("--autofix-mode")
+    is_internal_rerun = request.config.getoption("--internal-rerun")
 
-    # Clear the global_logging_messages list for each test
-    list_handler_instance = get_list_handler()
-    if list_handler_instance:
-        list_handler_instance.log_list.clear()
-    else:
-        logger.warning("Could not find ListHandler to clear messages.")
+    # Clear logs only if we are in a primary run, not an internal rerun
+    current_list_handler_instance = get_list_handler()
+    if not is_internal_rerun:
+        if current_list_handler_instance:
+            current_list_handler_instance.log_list.clear()
+        else:
+            logger.warning("Could not find ListHandler to clear messages.")
 
     yield
     # if not request.node.rep_call.failed:
     #     return
+    failure_file_handler = None
+    original_handlers_snapshot = list(logger.handlers)
+    if is_internal_rerun:
+        logger.debug(f"Internal re-run for verifying{request.node.name}. Skipping auto-fix logic in this nested run.")
+        return
+
+    if autofix_mode == "none":
+        if getattr(request.node, "rep_call", None) and request.node.rep_call.failed:
+            logger.info(f"Test {request.node.name} failed. Auto-fix mode is 'none'. Skipping fix attempts.")
+        return
 
     call_report = getattr(request.node, "rep_call", None)
-    if call_report and call_report.failed:
 
-        logger.info(f"Test {request.node.name} failed. Initiating auto-fix process.")
+    if not (call_report and call_report.failed):
+        if not call_report:
+            logger.warning(f"Could not find call report (rep_call) for test {request.node.name}. Skipping auto-fix.")
+        else:
+            logger.info(f"Test {request.node.name} did not fail the call phase. Skipping auto-fix.")
+
+        return
+
+    try:
+        logger.info(f"Test {request.node.name} failed. Auto-fix mode: {autofix_mode}. Initiating process.")
+        collected_logs_from_list_handler = []
+        if current_list_handler_instance:
+            collected_logs_from_list_handler = list(current_list_handler_instance.log_list)
+        else:
+            logger.warning("ListHandler instance was None during teardown; cannot retrieve its logs.")
+
+        # Data gathering
         execution_folder = request.config.execution_folder
         test_class_name = request.node.cls.__name__ if request.node.cls else "UnknownClass"
-
         class_folder = f"{execution_folder}/{test_class_name}"
         os.makedirs(f"{class_folder}/screenshots", exist_ok=True)
         os.makedirs(f"{class_folder}/logs", exist_ok=True)
         os.makedirs(f"{class_folder}/dom", exist_ok=True)
-
-        # Data gathering
         try:
             _, _, web_elements_text = get_web_element_rect(driver)
             screenshot_path = f"{class_folder}/screenshots/{request.node.name}.png"
@@ -115,34 +132,39 @@ def auto_fix_on_failure(request, driver_session: CustomWebDriver):
             logger.error(f"Error during data gathering for failed test: {e}")
             return
 
-        original_handlers = list(logger.handlers)
-        for h in original_handlers:
+        for h in logger.handlers:
             if not isinstance(h, logging.FileHandler):
                 logger.removeHandler(h)
-        # logger.removeHandler(handler)
+
+        # Setup dedicated failure log handler
         log_path = f"{execution_folder}/{test_class_name}/logs/{request.node.name}.log"
-        # file_handler = logging.FileHandler(log_path)
-        # file_handler.setLevel(logging.INFO)
-        # file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-        # logger.addHandler(file_handler)
-        # logger.error(f"Test {request.node.name} failed.")
-        # logger.error(f"URL at failure: {driver.current_url}")
-        # logger.error(f"Exception traceback: {request.node.rep_call.longreprtext}")
-        failure_file_handler = logging.FileHandler(log_path, mode='a')  # Append to allow multiple entries if needed
+
+        failure_file_handler = logging.FileHandler(log_path, mode='a')
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         failure_file_handler.setFormatter(formatter)
+        # Modify global logger: remove non-FileHandlers, add our failure_file_handler
+        for h in list(logger.handlers):
+            logger.removeHandler(h)
         logger.addHandler(failure_file_handler)
 
         logger.error(f"--- Test {request.node.name} FAILED ---")
         logger.error(f"URL at failure: {current_url_at_failure}")
         logger.error(f"Traceback:\n{request.node.rep_call.longreprtext}")
 
-        # formatted_logs = "\n".join(logging_messages)
+        # list_handler_instance = get_list_handler()
+        # formatted_logs = "\n".join(list_handler_instance.log_list)
+        # with open(log_path, "a", encoding="utf-8") as f:
+        #     f.write(formatted_logs + "\n")
 
-        # Write in-memory logs (from ListHandler)
-        formatted_logs = "\n".join(list_handler_instance.log_list)
-        with open(log_path, "a", encoding="utf-8") as f:
-            f.write(formatted_logs + "\n")
+        if collected_logs_from_list_handler:
+            tmp_log = "\n".join(collected_logs_from_list_handler)
+            with open(log_path, "a", encoding="utf-8") as f:
+                f.write(tmp_log + "\n")
+        else:
+            logger.info("No logs were collected by ListHandler during the test run.")
+
+        # For LLM
+        formatted_logs = "\n".join(collected_logs_from_list_handler)
 
         # Get fix from LLM
         test_method_source, failing_line_code, original_failing_line_in_file_abs = gather_test_code_and_failing_line(request)
@@ -160,45 +182,25 @@ def auto_fix_on_failure(request, driver_session: CustomWebDriver):
             failing_line_code=failing_line_code
         )
 
-        # if suggestions:
-        #     logger.info("GPT suggestions:\n" + suggestions)
-        # else:
-        #     logger.error("No GPT suggestions available.")
-
         if not suggestions:
             logger.error("No suggestions received from LLM. Aborting auto-fix.")
-            logger.removeHandler(failure_file_handler)
-            failure_file_handler.close()
-            # Restore original handlers
-            for h_orig in original_handlers:
-                if not any(isinstance(h_orig, type(h_exist)) for h_exist in logger.handlers):
-                    logger.addHandler(h_orig)
-
-            driver.delete_all_cookies()
-            driver.execute_script('window.localStorage.clear();')
-            driver.execute_script('window.sessionStorage.clear();')
             return
 
         logger.info("GPT suggestions:\n" + suggestions)
+
+        if autofix_mode == "suggest":
+            logger.info("Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.")
+            return
+
         parsed_suggestions = parse_gpt_suggestions(suggestions)
 
         if not parsed_suggestions:
             logger.error("Could not parse LLM suggestions. Aborting auto-fix.")
-            logger.removeHandler(failure_file_handler)
-            for h_orig in original_handlers:
-                if not any(isinstance(h_orig, type(h_exist)) for h_exist in logger.handlers):
-                    logger.addHandler(h_orig)
-
-            driver.delete_all_cookies()
-            driver.execute_script('window.localStorage.clear();')
-            driver.execute_script('window.sessionStorage.clear();')
             return
 
         # --- Attempt to apply fixes and verify ---
         test_file_path = str(request.node.fspath)
-        # e.g. path/to/file.py::TestClass::test_method
         test_node_id = request.node.nodeid
-        # Backup the original test file
         backup_file_path = test_file_path + ".autofix_backup"
         shutil.copy2(test_file_path, backup_file_path)
         logger.info(f"Backed up original test file to {backup_file_path}")
@@ -217,7 +219,7 @@ def auto_fix_on_failure(request, driver_session: CustomWebDriver):
             logger.info(f"Original Code:\n{fix_detail['original_code']}")
             logger.info(f"Fixed Code:\n{fix_detail['fixed_code']}")
 
-            # 1. Apply the fix to the method source string
+            # Apply the fix to the method source string
             patched_method_source = apply_fix_to_method_source(
                 test_method_source,
                 fix_detail['original_code'],
@@ -230,7 +232,7 @@ def auto_fix_on_failure(request, driver_session: CustomWebDriver):
                 shutil.copy2(backup_file_path, test_file_path)
                 continue
 
-            # 2. Replace the entire method in the file using AST
+            # Replace the entire method in the file using AST
             # Note: `request.node.cls` can be None for tests not in a class.
             method_class_name = request.node.cls.__name__ if request.node.cls else None
 
@@ -239,12 +241,12 @@ def auto_fix_on_failure(request, driver_session: CustomWebDriver):
             # This requires original_test_method_source to be the full method source.
             if not replace_method_in_file_ast(test_file_path, method_class_name, request.node.name, patched_method_source):
                 logger.error("Failed to replace method in file using AST. Reverting and skipping suggestion.")
-                shutil.copy2(backup_file_path, test_file_path)  # Restore from backup
+                shutil.copy2(backup_file_path, test_file_path)
                 continue
 
             logger.info(f"Successfully patched file: {test_file_path}")
 
-            # 3. Re-run the test
+            # Re-run the test
             # Before re-running, ensure WebDriver is in a clean state if possible, or re-initialize.
             # For simplicity now, assume test re-run handles its own setup.
             # If test needs driver, it's already in request.cls.driver. Subprocess run won't share it.
@@ -253,19 +255,24 @@ def auto_fix_on_failure(request, driver_session: CustomWebDriver):
             # OR, the run_specific_test needs to manage the PyTest context more deeply (harder).
             # The current `run_specific_test` calls pytest CLI, which is fine.
 
-            logger.info(f"Re-running test: {test_node_id}")
-            passed, new_traceback, new_failing_line_abs = run_specific_test(test_node_id, test_file_path)
+            logger.info(f"Re-running test: {test_node_id} (with --internal-rerun flag)")
+            passed, new_traceback, new_failing_line_abs = run_specific_test(test_node_id, test_file_path, is_verification_run=True)
 
-            # 4. Verify
+            # Verify
             if passed:
-                logger.info(f"SUCCESS! Fix #{attempt_count} worked. Test {request.node.name} PASSED.")
+                logger.info(f"SUCCESS! Fix #{attempt_count} worked. Test {request.node.name} PASSED after auto-fix.")
                 original_failure_resolved = True
-                # Keep the patched file. The backup can be removed or kept.
-                # For now, let's remove the backup on success.
-                if os.path.exists(backup_file_path): os.remove(backup_file_path)
-                request.node.rep_call.passed = True  # Mark as passed for reporting
-                request.node.rep_call.outcome = "passed"
-                break  # Exit suggestion loop
+
+                if os.path.exists(backup_file_path):
+                    os.remove(backup_file_path)
+
+                call_report_to_modify = getattr(request.node, "rep_call", None)
+                if call_report_to_modify:
+                    call_report_to_modify.outcome = "passed"
+                else:
+                    logger.warning(f"Could not find rep_call for {request.node.name} to update its outcome to passed.")
+
+                break
             else:
                 logger.warning(f"Fix #{attempt_count} did NOT resolve the test. Test still FAILED.")
                 if new_traceback:
@@ -278,13 +285,13 @@ def auto_fix_on_failure(request, driver_session: CustomWebDriver):
                             f"({new_failing_line_abs} vs original {original_failing_line_in_file_abs}). "
                             "Considering original issue resolved."
                         )
-                        original_failure_resolved = True  # The specific point of failure moved
-                        # Keep the patched file. The next failure will be handled by a subsequent pytest run.
-                        if os.path.exists(backup_file_path): os.remove(backup_file_path)
+                        original_failure_resolved = True
+                        if os.path.exists(backup_file_path):
+                            os.remove(backup_file_path)
                         # The test is still marked as failed overall for this run, but the autofix made progress.
                         # We can update the original report's traceback to the new one for clarity.
                         request.node.rep_call.longrepr = new_traceback
-                        break  # Exit suggestion loop
+                        break
                     elif new_failing_line_abs == original_failing_line_in_file_abs:
                         logger.info(f"NO PROGRESS: Test failed at the SAME line ({new_failing_line_abs}).")
                     else:
@@ -308,54 +315,28 @@ def auto_fix_on_failure(request, driver_session: CustomWebDriver):
             if os.path.exists(backup_file_path):  # Ensure original is restored
                 shutil.copy2(backup_file_path, test_file_path)
             if attempt_count >= MAX_FIX_ATTEMPTS_PER_FAILURE_POINT:
-                # This could be a place to raise a specific exception if strict failure is needed
                 logger.error(f"LLM failed to fix {request.node.name} after exhausting retries for the initial failure point.")
-                # raise Exception(f"Auto-fix failed for {request.node.name} after {MAX_FIX_ATTEMPTS_PER_FAILURE_POINT} retries.")
 
-        if os.path.exists(backup_file_path):  # Clean up backup if loop finished (either success or all attempts failed)
+        if os.path.exists(backup_file_path):
             os.remove(backup_file_path)
             logger.info(f"Removed backup file: {backup_file_path}")
+    finally:
+        if failure_file_handler:
+            logger.removeHandler(failure_file_handler)
+            failure_file_handler.close()
 
-        # Finalize logging for this failure
-        logger.removeHandler(failure_file_handler)
-        failure_file_handler.close()
-        # Restore original logger handlers (e.g., ListHandler, console handler)
-        # Clear existing handlers that might have been added by mistake or are the failure_file_handler
-        for h in logger.handlers[:]:
-            logger.removeHandler(h)
-            h.close()
-        for h_orig in original_handlers:
+        for h_exist in list(logger.handlers):
+            logger.removeHandler(h_exist)
+            if h_exist not in original_handlers_snapshot:
+                h_exist.close()
+
+        for h_orig in original_handlers_snapshot:
             logger.addHandler(h_orig)
-    elif not call_report:
-        logger.warning(f"Could not find call report (rep_call) for test {request.node.name}. Skipping auto-fix.")
-    else:  # call_report exists but not call_report.failed
-        logger.info(f"Test {request.node.name} did not fail the call phase (or rep_call missing failed attribute). Skipping auto-fix.")
 
-
-
-    # Cleanup selenium state (cookies, local storage) if test failed or even if passed via autofix
-    # This was in your original code for handling failures.
-    # if request.node.rep_call.failed and not original_failure_resolved:  # Only if truly failed and not fixed
-    #     logger.removeHandler(handler)  # Remove list handler
-    #     # Log to dedicated file as in your original snippet
-    #     log_path = f"{execution_folder}/{test_class_name}/logs/{request.node.name}_final_fail.log"
-    #     file_handler = logging.FileHandler(log_path)
-    #     # ... (set formatter, add handler, log final failure details, remove handler) ...
-    #     logger.addHandler(file_handler)
-    #     logger.error(f"Test {request.node.name} ultimately failed.")
-    #     # ...
-    #     logger.removeHandler(file_handler)
-    #     logger.addHandler(handler)  # Re-add original handler for other tests
-    #
-    # if hasattr(request.cls, 'driver'):  # Check if driver exists
-    #     driver = request.cls.driver
-    #     driver.delete_all_cookies()
-    #     driver.execute_script('window.localStorage.clear();')
-    #     driver.execute_script('window.sessionStorage.clear();')
-    try:
-        logger.debug(f"Cleaning up cookies/storage for driver after test {request.node.name}")
-        driver.delete_all_cookies()
-        driver.execute_script('window.localStorage.clear();')
-        driver.execute_script('window.sessionStorage.clear();')
-    except Exception as e:
-        logger.warning(f"Error during post-test cleanup of driver for {request.node.name}: {e}")
+        try:
+            logger.debug(f"Cleaning up cookies/storage for driver after test {request.node.name}")
+            driver.delete_all_cookies()
+            driver.execute_script('window.localStorage.clear();')
+            driver.execute_script('window.sessionStorage.clear();')
+        except Exception as e:
+            logger.warning(f"Error during post-test cleanup of driver for {request.node.name}: {e}")
