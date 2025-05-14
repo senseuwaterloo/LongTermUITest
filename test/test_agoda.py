@@ -3,6 +3,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates, switch_to_new_tab_and_close_old
 
+
 @pytest.mark.usefixtures('driver_session')
 class TestAgoda:
 

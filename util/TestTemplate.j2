@@ -10,7 +10,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class {{ class_name }}:
     {% for method in method_list %}
     def {{ method.method_name }}(self):
