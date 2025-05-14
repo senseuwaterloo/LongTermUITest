@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import get_control_key
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestZocdoc:
     def test_zocdoc_73178018(self):
         self.driver.get("https://zocdoc.com")

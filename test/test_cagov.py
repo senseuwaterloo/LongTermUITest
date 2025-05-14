@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import switch_to_new_tab
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestCaGov:
     def test_cagov_1b4901e9(self):
         self.driver.get("https://www.ca.gov/")

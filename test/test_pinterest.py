@@ -5,7 +5,7 @@ from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestPinterest:
     def test_pinterest_70cb365b(self):
         self.driver.get("https://pinterest.com")

@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates_ticketcenter_format, scroll_down
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestTrip:
     def test_trip_b5cabe51(self):
         self.driver.get("https://us.trip.com/?locale=en-us")

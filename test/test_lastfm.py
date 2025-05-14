@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestLastFm:
     def test_lastfm_b83120d9(self):
         self.driver.get("https://last.fm/")

@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import scroll_down
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestSixflags:
     def test_sixflags_521d9006(self):
         self.driver.get("https://sixflags.com")

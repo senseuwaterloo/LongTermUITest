@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestBooking:
     def test_booking_fc552b69(self):
         self.driver.get("https://booking.com")

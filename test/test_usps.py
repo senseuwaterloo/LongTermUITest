@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import switch_to_new_tab
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestUsps:
     def test_usps_277e3468(self):
         self.driver.get("https://usps.com")

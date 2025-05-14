@@ -5,7 +5,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import switch_to_new_tab, calculate_dates_slash_format, scroll_to_element
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestAkcOrg:
     def test_akcorg_9d42f53a(self):
         self.driver.get("https://www.akc.org/")

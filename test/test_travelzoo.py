@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestTravelzoo:
     def test_travelzoo_b770af80(self):
         self.driver.get("https://travelzoo.com")

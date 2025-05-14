@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates_slash_format
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestDelta:
     def test_delta_295380ed(self):
         self.driver.get("https://www.delta.com")

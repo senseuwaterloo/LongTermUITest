@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import switch_to_new_tab
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestMovoto:
     def test_movoto_d6fe3275(self):
         self.driver.get("https://movoto.com")

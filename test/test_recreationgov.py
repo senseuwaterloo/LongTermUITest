@@ -5,7 +5,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import calculate_dates_full_month_name
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestRecreationGov:
     def test_recreationgov_986bfa5e(self):
         self.driver.get("https://www.recreation.gov/")

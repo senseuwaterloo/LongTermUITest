@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import calculate_dates
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestAmctheatres:
     def test_amctheatres_29f47ddb(self):
         self.driver.get("https://www.amctheatres.com")

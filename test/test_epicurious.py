@@ -3,7 +3,7 @@ from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestEpicurious:
     def test_epicurious_d7fb2a4f(self):
         self.driver.get("https://epicurious.com")

@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import get_control_key
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestWebmd:
     def test_webmd_b3f27ec6(self):
         self.driver.get("https://www.webmd.com/")

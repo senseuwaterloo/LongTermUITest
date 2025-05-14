@@ -9,7 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from browser_helper import switch_to_new_tab
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestOsuEdu:
     def test_osuedu_efa85d1d(self):
         self.driver.get("https://osu.edu")

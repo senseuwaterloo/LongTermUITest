@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestYellowpages:
     def test_yellowpages_32174c75(self):
         self.driver.get("https://www.yellowpages.com/")

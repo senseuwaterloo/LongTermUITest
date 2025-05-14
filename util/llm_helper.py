@@ -1,6 +1,7 @@
 import base64
 import inspect
 import logging
+import os
 import re
 import time
 
@@ -186,37 +187,99 @@ def encode_image(image_path):
         return base64.b64encode(image_file.read()).decode('utf-8')
 
 
-def gather_test_code_and_failing_line(request):
+# def gather_test_code_and_failing_line(request):
+#     """
+#     Returns (test_method_source, failing_line_code) for the test that just failed.
+#     - test_method_source: the entire Python source of the failing test method
+#     - failing_line_code: the exact line from the traceback
+#     """
+#     test_method_obj = getattr(request.node.cls, request.node.name, None)
+#     test_method_source = None
+#     if test_method_obj:
+#         try:
+#             test_method_source = inspect.getsource(test_method_obj)
+#         except OSError:
+#             test_method_source = "Could not retrieve test method source."
+#
+#     traceback_str = request.node.rep_call.longreprtext
+#     # Typical line pattern in the traceback: 'File "/path/to/test_file.py", line 15, in test_aa_6c28458c'
+#     pattern = r"(?m)^(test/test_.*?\.py):(\d+):\s*(.*)$"
+#     match = re.search(pattern, traceback_str)
+#     failing_line_code = "Unknown"
+#     if match:
+#         failing_file, failing_line, _ = match.groups()
+#         try:
+#             failing_line = int(failing_line)
+#             with open(failing_file, "r", encoding="utf-8") as f:
+#                 lines = f.readlines()
+#             # Lines are 1-based in traceback, so subtract 1
+#             failing_line_code = lines[failing_line - 1].strip()
+#         except (FileNotFoundError, IndexError):
+#             pass
+#
+#     return test_method_source, failing_line_code
+
+
+def gather_test_code_and_failing_line(request) -> tuple[str, str, int | None]:
     """
-    Returns (test_method_source, failing_line_code) for the test that just failed.
+    Returns (test_method_source, failing_line_code, failing_line_number_in_file)
     - test_method_source: the entire Python source of the failing test method
     - failing_line_code: the exact line from the traceback
+    - failing_line_number_in_file: The absolute line number in the file where the failure occurred
     """
     test_method_obj = getattr(request.node.cls, request.node.name, None)
-    test_method_source = None
+    test_method_source = "Could not retrieve test method source."
     if test_method_obj:
         try:
             test_method_source = inspect.getsource(test_method_obj)
         except OSError:
-            test_method_source = "Could not retrieve test method source."
+            pass  # Keep default message
 
     traceback_str = request.node.rep_call.longreprtext
-    # Typical line pattern in the traceback: 'File "/path/to/test_file.py", line 15, in test_aa_6c28458c'
-    pattern = r"(?m)^(test/test_.*?\.py):(\d+):\s*(.*)$"
-    match = re.search(pattern, traceback_str)
     failing_line_code = "Unknown"
-    if match:
-        failing_file, failing_line, _ = match.groups()
-        try:
-            failing_line = int(failing_line)
-            with open(failing_file, "r", encoding="utf-8") as f:
-                lines = f.readlines()
-            # Lines are 1-based in traceback, so subtract 1
-            failing_line_code = lines[failing_line - 1].strip()
-        except (FileNotFoundError, IndexError):
-            pass
+    failing_line_number_in_file = None
+    test_file_abs_path = str(request.node.fspath)
 
-    return test_method_source, failing_line_code
+    # Attempt to find the most relevant failing line in the current test file
+    # Regex for "File "/path/to/file.py", line XXX"
+    # Iterate from bottom of traceback up
+    for line in reversed(traceback_str.splitlines()):
+        match = re.search(r'^\s*File\s*"(.+?)",\s*line\s*(\d+)', line)
+        if match:
+            file_path_in_tb = os.path.normpath(match.group(1))
+            if file_path_in_tb == test_file_abs_path:
+                failing_line_number_in_file = int(match.group(2))
+                try:
+                    with open(test_file_abs_path, "r", encoding="utf-8") as f:
+                        lines = f.readlines()
+                    # Adjust for 0-indexed list from 1-based line number
+                    failing_line_code = lines[failing_line_number_in_file - 1].strip()
+                except (FileNotFoundError, IndexError):
+                    failing_line_code = "Could not retrieve failing line code from file."
+                break  # Found the deepest call within our test file
+
+    if failing_line_number_in_file is None:
+        # Fallback to a simpler regex that might catch pytest's summary line (e.g., "test_file.py:LINENO: Error")
+        # This pattern is less precise about which file it's from if multiple files are in traceback.
+        simple_pattern = r"([a-zA-Z0-9_/\\.-]+?\.py):(\d+):"
+        for tb_line_str in reversed(traceback_str.splitlines()):
+            match_simple = re.search(simple_pattern, tb_line_str)
+            if match_simple:
+                potential_file = match_simple.group(1)
+                if test_file_abs_path.endswith(potential_file):  # Check if it's our file
+                    failing_line_number_in_file = int(match_simple.group(2))
+                    try:
+                        with open(test_file_abs_path, "r", encoding="utf-8") as f:
+                            lines = f.readlines()
+                        failing_line_code = lines[failing_line_number_in_file - 1].strip()
+                    except (FileNotFoundError, IndexError):
+                        failing_line_code = "Could not retrieve failing line code (fallback)."
+                    break
+
+    if not failing_line_number_in_file:
+        logging.warning(f"Could not determine failing line number from traceback for {test_file_abs_path}.")
+
+    return test_method_source, failing_line_code, failing_line_number_in_file
 
 
 def call_gpt_api(args, openai_client, messages):

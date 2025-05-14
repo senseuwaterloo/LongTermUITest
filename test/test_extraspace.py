@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import scroll_down
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestExtraspace:
     def test_extraspace_8fb3e11e(self):
         self.driver.get("https://extraspace.com")

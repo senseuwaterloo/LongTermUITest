@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestCookpad:
     def test_cookpad_ceac063d(self):
         self.driver.get("https://cookpad.com")

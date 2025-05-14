@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestOhiomeansjobsOhioGov:
     def test_ohiomeansjobsohiogov_63b039d1(self):
         self.driver.get("https://ohiomeansjobs.ohio.gov")

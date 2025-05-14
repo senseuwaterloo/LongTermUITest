@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import scroll_to_element, scroll_down
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestIndeed:
     def test_indeed_4ce51ed5(self):
         self.driver.get("https://www.indeed.com/worldwide")

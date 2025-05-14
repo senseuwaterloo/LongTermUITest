@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import get_control_key
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestYelp:
     def test_yelp_63e3020c(self):
         self.driver.get("https://yelp.com")

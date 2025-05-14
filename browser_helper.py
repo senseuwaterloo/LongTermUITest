@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 from selenium.webdriver import Keys
 
-from conftest import CustomWebElement
+from framework.custom_selenium import CustomWebElement
 
 
 def switch_to_new_tab(driver, website_url=""):

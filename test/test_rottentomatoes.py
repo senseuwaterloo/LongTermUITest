@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestRottentomatoes:
     def test_rottentomatoes_d4d4a01e(self):
         self.driver.get("https://rottentomatoes.com")

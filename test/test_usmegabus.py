@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates_full_month_name
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestUsMegabus:
     def test_usmegabus_54d60a7c(self):
         self.driver.get("https://us.megabus.com")

@@ -5,7 +5,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import switch_to_new_tab_and_close_old
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestOhioGov:
     def test_ohiogov_77269ea5(self):
         self.driver.get("https://ohio.gov/")

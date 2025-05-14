@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestUps:
     def test_ups_8ae1041c(self):
         self.driver.get("https://www.ups.com/us/en/Home.page")

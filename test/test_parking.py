@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_budget_dates, scroll_to_element
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestParking:
     def test_parking_1c0acb0e(self):
         self.driver.get("https://parking.com")

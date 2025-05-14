@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import calculate_dates_weekday_mta_format
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestNewMtaInfo:
     def test_newmtainfo_db203a3a(self):
         self.driver.get("https://new.mta.info/")

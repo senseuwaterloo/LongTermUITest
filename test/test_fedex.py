@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import switch_to_new_tab
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestFedex:
     def test_fedex_27437134(self):
         self.driver.get("https://www.fedex.com/en-us/home.html")

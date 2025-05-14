@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestFlightaware:
     def test_flightaware_4ffca7c8(self):
         self.driver.get("https://www.flightaware.com/")

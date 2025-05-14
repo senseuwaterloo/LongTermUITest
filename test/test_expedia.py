@@ -5,7 +5,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import calculate_dates_weekday_format
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestExpedia:
     def test_expedia_97e3f951(self):
         self.driver.get("https://expedia.com")

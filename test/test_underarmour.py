@@ -5,7 +5,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestUnderarmour:
     def test_underarmour_90bd64ec(self):
         self.driver.get("https://www.underarmour.com/en-us/")

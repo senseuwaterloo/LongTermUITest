@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestCarnival:
     def test_carnival_c1b8361d(self):
         self.driver.get("https://www.carnival.com/")

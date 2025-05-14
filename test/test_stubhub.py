@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import switch_to_new_tab
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestStubhub:
     def test_stubhub_1567bfa7(self):
         self.driver.get("https://stubhub.com")

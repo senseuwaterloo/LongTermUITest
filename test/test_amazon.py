@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestAmazon:
     def test_amazon_1c6bfd10(self):
         self.driver.get("https://www.amazon.com/")

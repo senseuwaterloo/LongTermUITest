@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import calculate_dates_slash_format
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestSpothero:
     def test_spothero_749dfeeb(self):
         self.driver.get("https://spothero.com/")

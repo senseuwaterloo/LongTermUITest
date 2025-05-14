@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestThumbtack:
     def test_thumbtack_5a55aaa5(self):
         self.driver.get("https://www.thumbtack.com/")

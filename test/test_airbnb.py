@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestAirbnb:
     def test_airbnb_cdf4d2ec(self):
         self.driver.get("https://www.airbnb.com/")

@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_first_last_dates, scroll_to_element
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestSeatgeek:
     def test_seatgeek_8f6261cf(self):
         self.driver.get("https://seatgeek.com")

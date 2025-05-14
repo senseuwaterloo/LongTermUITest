@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestGamestop:
     def test_gamestop_2705de3e(self):
         self.driver.get("https://gamestop.com")

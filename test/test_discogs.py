@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import switch_to_new_tab, scroll_to_element
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestDiscogs:
     def test_discogs_ec472065(self):
         self.driver.get("https://discogs.com")

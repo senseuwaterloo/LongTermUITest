@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import scroll_down
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestKbb:
     def test_kbb_d3a4e6c3(self):
         self.driver.get("https://kbb.com")

@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import calculate_dates_full_month_name, scroll_to_element
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestResy:
     def test_resy_75db63ac(self):
         self.driver.get("https://resy.com")

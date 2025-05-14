@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates_full_month_name, switch_to_new_tab
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestKayak:
     def test_kayak_f7c2c65f(self):
         self.driver.get("https://www.kayak.com/?ispredir=true")

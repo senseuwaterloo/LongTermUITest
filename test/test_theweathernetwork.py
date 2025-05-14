@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestTheweathernetwork:
     def test_theweathernetwork_7ba05167(self):
         self.driver.get("https://theweathernetwork.com")

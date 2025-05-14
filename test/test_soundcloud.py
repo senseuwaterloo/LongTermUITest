@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestSoundcloud:
     def test_soundcloud_57f72023(self):
         self.driver.get("https://soundcloud.com")

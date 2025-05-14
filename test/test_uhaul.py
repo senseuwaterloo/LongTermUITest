@@ -5,7 +5,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import calculate_budget_dates
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestUhaul:
     def test_uhaul_9d8ba96c(self):
         self.driver.get("https://uhaul.com")

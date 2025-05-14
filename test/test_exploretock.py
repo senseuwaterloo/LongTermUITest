@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import calculate_dates_with_suffix
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestExploretock:
     def test_exploretock_a6372f23(self):
         self.driver.get("https://exploretock.com")

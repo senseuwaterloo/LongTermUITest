@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import scroll_to_element, switch_to_new_tab
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestAmtrak:
     def test_amtrak_b910229f(self):
         self.driver.get("https://amtrak.com")

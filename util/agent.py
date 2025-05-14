@@ -25,6 +25,14 @@ def call_gpt_for_candidate_fixes(
 
     # "IMPORTANT: Do not use ellipsis ('...') to indicate omitted code. Always provide the full, exact code lines before and after the change without abbreviation."
     # task_description = "finding the lowest travel time flight for 1 traveler from JFK, NYC to Heathrow, London on 04/19/2025, then from Heathrow, London to CDG, Paris on 04/21/2025 and then from CDG, Paris to JFK, NYC on 04/23/2025"
+    # "Limit your output to a maximum of 5 suggestions (it doesn't have to always be five) and terminate your answer after listing them. "
+    # "Each suggestion must be a short, direct, concise, and actionable code change, not vague commentary, redundant fixes or pseudo answers. "
+    # "If you believe the issue is with an element locator, and if the broken element appears in the provided HTML textual list of interactable elements "
+    # "(each element corresponds to the one annotated with numbered boxes in the screenshot), generate a new robust locator using that information. "
+    # "Keep your commentary minimal—just enough to clarify each solution. "
+    # "Note: The find_element and click methods have already been overridden to implement "
+    # "dynamic waiting and to ignore most exceptions within the assigned timeout. Please do not suggest changes that duplicate "
+    # "this behavior unless absolutely necessary.\n\n"
     system_msg = {
         "role": "system",
         "content": (
@@ -34,18 +42,20 @@ def call_gpt_for_candidate_fixes(
             "Your goal is to propose multiple short, concise, and actionable code or configuration changes that might fix the test. "
             "For each suggestion, provide the following in the exact format:\n"
             "-------------------------------------------------------\n"
-            "Potential fix (X): [brief description of suggestion]\n"
-            "Original code line/lines: [exact original code line(s) that should be replaced]\n"
-            "Fixed code line/lines: [replacement code line(s) or patch/diff with sufficient context]\n"
+            "Potential fix (X): [A brief, one-sentence description of your suggested fix and the reasoning]\n"
+            "Original code line/lines: [The EXACT, contiguous original code line(s) from the test method that should be replaced. Preserve indentation and ensure it's a valid block.]\n"
+            "Fixed code line/lines: [The EXACT, contiguous replacement code line(s). Ensure this code is complete, correctly indented, and ready to be inserted. Do NOT use placeholders or ellipsis (...) for omitted code. Provide the full, runnable snippet.]\n"
             "-------------------------------------------------------\n"
-            "Limit your output to a maximum of 5 suggestions (it doesn't have to always be five) and terminate your answer after listing them. "
-            "Each suggestion must be a short, direct, concise, and actionable code change, not vague commentary, redundant fixes or pseudo answers. "
-            "If you believe the issue is with an element locator, and if the broken element appears in the provided HTML textual list of interactable elements "
-            "(each element corresponds to the one annotated with numbered boxes in the screenshot), generate a new robust locator using that information. "
-            "Keep your commentary minimal—just enough to clarify each solution. "
-            "Note: The find_element and click methods have already been overridden to implement "
-            "dynamic waiting and to ignore most exceptions within the assigned timeout. Please do not suggest changes that duplicate "
-            "this behavior unless absolutely necessary.\n\n"
+            "Key Instructions:\n"
+            "1. Limit your output to a maximum of 5 suggestions. It's okay to provide fewer if appropriate.\n"
+            "2. Terminate your answer immediately after listing all suggestions. Do not add any concluding remarks.\n"
+            "3. Each suggestion must be a direct code change. Avoid vague commentary, redundant fixes, or pseudo-answers.\n"
+            "4. If an element locator is the issue and the element appears in the provided HTML list, propose a robust new locator using that information.\n"
+            "5. Keep your descriptions brief. Focus on the code.\n"
+            "6. The `find_element` and `click` methods in this framework already have built-in dynamic waits and exception handling. Do not suggest adding explicit waits unless truly necessary for a specific condition not covered by the framework's defaults.\n"
+            "7. Ensure the 'Original code line/lines' and 'Fixed code line/lines' are precise, complete, and maintain correct Python syntax and indentation relative to their position within a method.\n"
+            "8. The 'Fixed code line/lines' should be a direct replacement for 'Original code line/lines'. If adding new lines, include them in the 'Fixed code line/lines' and adjust 'Original code line/lines' to represent the line(s) being replaced or the line before which new code is inserted (if no lines are replaced).\n"
+            "9. If the fix involves changing a configuration or an import, clearly state this in the description and provide the code change as if it were part of the method for context, or specify where the change should be made if outside the method (e.g., 'Update configuration file X with Y'). However, prioritize in-method code fixes.\n"
         )
     }
 

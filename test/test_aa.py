@@ -5,7 +5,7 @@ from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestAa:
     def test_aa_6c28458c(self):
         self.driver.get("https://www.aa.com/homePage.do")

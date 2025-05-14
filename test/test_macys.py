@@ -9,7 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from browser_helper import scroll_to_element, switch_to_new_tab, switch_to_new_tab_and_close_old
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestMacys:
     def test_macys_c3a97f15(self):
         self.driver.get("https://www.macys.com/")

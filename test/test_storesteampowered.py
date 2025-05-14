@@ -3,7 +3,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestStoreSteampowered:
     def test_storesteampowered_29f639c1(self):
         self.driver.get("https://store.steampowered.com")

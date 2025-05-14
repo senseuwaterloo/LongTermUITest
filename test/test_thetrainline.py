@@ -5,7 +5,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import calculate_dates_slash_format
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestThetrainline:
     def test_thetrainline_5b37d2e1(self):
         self.driver.get("https://www.thetrainline.com/en-us")

@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import calculate_next_first_last_day
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestViator:
     def test_viator_8308d10f(self):
         self.driver.get("https://www.viator.com/")

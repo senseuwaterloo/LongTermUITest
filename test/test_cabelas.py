@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import scroll_to_element
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestCabelas:
     def test_cabelas_3f62b47b(self):
         self.driver.get("https://cabelas.com")

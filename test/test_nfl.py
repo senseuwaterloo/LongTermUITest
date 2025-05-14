@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestNfl:
     def test_nfl_91843d71(self):
         self.driver.get("https://www.nfl.com/")

@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestUniqlo:
     def test_uniqlo_122178b3(self):
         self.driver.get("https://www.uniqlo.com/us/en/")

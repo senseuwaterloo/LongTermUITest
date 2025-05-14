@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestCourseraOrg:
     def test_courseraorg_228fc81a(self):
         self.driver.get("https://www.coursera.org/")

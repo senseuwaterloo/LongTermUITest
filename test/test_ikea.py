@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestIkea:
     def test_ikea_813e47ec(self):
         self.driver.get("https://www.ikea.com/us/en/")

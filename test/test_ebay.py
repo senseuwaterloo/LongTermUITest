@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestEbay:
     def test_ebay_4a0bd619(self):
         self.driver.get("https://ebay.com")

@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestFinanceGoogle:
     def test_financegoogle_d78d07bf(self):
         self.driver.get("https://www.google.com/finance/")

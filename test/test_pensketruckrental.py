@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates_day_month_format, scroll_down
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestPensketruckrental:
     def test_pensketruckrental_d1c3d4d2(self):
         self.driver.get("https://pensketruckrental.com")

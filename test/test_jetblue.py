@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates_slash_format, switch_to_new_tab, get_control_key, scroll_down, scroll_to_element
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestJetblue:
     def test_jetblue_1ee63f83(self):
         self.driver.get("https://www.jetblue.com/")

@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestDmvVirginiaGov:
     def test_dmvvirginiagov_7752731f(self):
         self.driver.get("https://www.dmv.virginia.gov/")

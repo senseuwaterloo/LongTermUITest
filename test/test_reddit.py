@@ -3,7 +3,7 @@ from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestReddit:
     def test_reddit_f83262c3(self):
         self.driver.get("https://reddit.com")

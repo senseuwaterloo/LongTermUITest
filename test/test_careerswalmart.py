@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestCareersWalmart:
     def test_careerswalmart_051a421d(self):
         self.driver.get("https://careers.walmart.com/")

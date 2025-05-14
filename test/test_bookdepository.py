@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import scroll_to_element
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestBookdepository:
     def test_bookdepository_c1f584e2(self):
         self.driver.get("https://www.barnesandnoble.com/")

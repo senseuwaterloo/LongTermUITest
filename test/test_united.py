@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates_without_space, switch_to_new_tab_and_close_old
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestUnited:
     def test_united_fdf322bd(self):
         self.driver.get("https://www.united.com/en/us")

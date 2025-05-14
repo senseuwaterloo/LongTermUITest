@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import switch_to_new_tab_and_return_old
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestInstacart:
     def test_instacart_10b2af14(self):
         self.driver.get("https://instacart.com")

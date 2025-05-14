@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestUltimateGuitar:
     def test_ultimateguitar_61d28a34(self):
         self.driver.get("https://www.ultimate-guitar.com/")

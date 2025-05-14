@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from browser_helper import scroll_inside_element
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestNewegg:
     def test_newegg_e483a49f(self):
         self.driver.get("https://newegg.com")

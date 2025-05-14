@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestCoinmarketcap:
     def test_coinmarketcap_5f0c4ebf(self):
         self.driver.get("https://coinmarketcap.com")

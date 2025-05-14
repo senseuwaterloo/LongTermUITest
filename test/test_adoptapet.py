@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import scroll_to_element, get_control_key
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestAdoptapet:
     def test_adoptapet_b49c669d(self):
         self.driver.get("https://adoptapet.com")

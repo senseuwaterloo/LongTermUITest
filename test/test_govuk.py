@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestGovUk:
     def test_govuk_593f78ad(self):
         self.driver.get("https://www.gov.uk/")

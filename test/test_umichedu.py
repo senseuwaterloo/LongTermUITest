@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from browser_helper import calculate_budget_dates
 
 
-@pytest.mark.usefixtures("setup_class")
+@pytest.mark.usefixtures("driver_session")
 class TestUmichEdu:
     def test_umichedu_bcfeed8e(self):
         self.driver.get("https://www.umich.edu")
