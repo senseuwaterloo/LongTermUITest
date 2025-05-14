@@ -1,0 +1,135 @@
+2025-05-14 15:59:00,388 - AutoTestFixer - ERROR - --- Test test_airbnb_cdf4d2ec FAILED ---
+2025-05-14 15:59:00,389 - AutoTestFixer - ERROR - URL at failure: https://www.airbnb.ca/experiences?locale=en&_set_bev_on_new_domain=1747252694_EAZjRiY2QwZjAxMm
+2025-05-14 15:59:00,389 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_airbnb.TestAirbnb object at 0x106473dc0>
+
+    def test_airbnb_cdf4d2ec(self):
+        self.driver.get("https://www.airbnb.com/")
+        self.driver.find_element(By.XPATH, "//input[@data-testid='structured-search-input-field-query']").click()
+        # self.driver.find_element(By.XPATH, "//button[@data-testid='header-tab-search-block-tab-EXPERIENCES']").click()
+        self.driver.find_element(By.CSS_SELECTOR, "a[data-tabid='tabBarItem-EXPERIENCES']").click()
+        self.driver.find_element(By.ID, "bigsearch-query-location-input").clear()
+        self.driver.find_element(By.ID, "bigsearch-query-location-input").send_keys("portugal")
+>       self.driver.find_element(By.XPATH, "//div[@id='bigsearch-query-location-suggestion-0']/div[2]/div[1]").click()
+
+test/test_airbnb.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10648e950>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001014bc8a8 undetected_chromedriver + 5986472
+E       1   undetected_chromedriver             0x00000001014b39da undetected_chromedriver + 5949914
+E       2   undetected_chromedriver             0x0000000100f6c600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100fbe304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100fbe521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x000000010100e204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000100fe433d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x000000010100b566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100fe40e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100fb061d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100fb1281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x000000010147a570 undetected_chromedriver + 5715312
+E       12  undetected_chromedriver             0x000000010147e435 undetected_chromedriver + 5731381
+E       13  undetected_chromedriver             0x0000000101454ec0 undetected_chromedriver + 5562048
+E       14  undetected_chromedriver             0x000000010147ee6b undetected_chromedriver + 5733995
+E       15  undetected_chromedriver             0x0000000101443dd4 undetected_chromedriver + 5492180
+E       16  undetected_chromedriver             0x00000001014a1a88 undetected_chromedriver + 5876360
+E       17  undetected_chromedriver             0x00000001014a1c50 undetected_chromedriver + 5876816
+E       18  undetected_chromedriver             0x00000001014b35a1 undetected_chromedriver + 5948833
+E       19  libsystem_pthread.dylib             0x00007ff807570df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80756c857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-14 15:58:14,218 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.airbnb.com/
+2025-05-14 15:58:16,913 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.airbnb.com/
+2025-05-14 15:58:26,249 - AutoTestFixer - WARNING - handle cookie window error, element located by xpath with locator //button[@aria-label='Close'] not found, continue without dismissing cookie window
+2025-05-14 15:58:28,253 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@data-testid='structured-search-input-field-query']
+2025-05-14 15:58:28,272 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@data-testid='structured-search-input-field-query']
+2025-05-14 15:58:28,272 - AutoTestFixer - INFO - Attempting to click element: xpath = //input[@data-testid='structured-search-input-field-query']
+2025-05-14 15:58:28,272 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@data-testid='structured-search-input-field-query']
+2025-05-14 15:58:28,280 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@data-testid='structured-search-input-field-query']
+2025-05-14 15:58:28,343 - AutoTestFixer - INFO - Element clicked: xpath = //input[@data-testid='structured-search-input-field-query']
+2025-05-14 15:58:28,343 - AutoTestFixer - INFO - Attempting to find element: css selector = a[data-tabid='tabBarItem-EXPERIENCES']
+2025-05-14 15:58:28,361 - AutoTestFixer - INFO - Successfully find element: css selector = a[data-tabid='tabBarItem-EXPERIENCES']
+2025-05-14 15:58:28,361 - AutoTestFixer - INFO - Attempting to click element: css selector = a[data-tabid='tabBarItem-EXPERIENCES']
+2025-05-14 15:58:28,361 - AutoTestFixer - INFO - Attempting to find element: css selector = a[data-tabid='tabBarItem-EXPERIENCES']
+2025-05-14 15:58:28,370 - AutoTestFixer - INFO - Successfully find element: css selector = a[data-tabid='tabBarItem-EXPERIENCES']
+2025-05-14 15:58:28,467 - AutoTestFixer - INFO - Element clicked: css selector = a[data-tabid='tabBarItem-EXPERIENCES']
+2025-05-14 15:58:28,468 - AutoTestFixer - INFO - Attempting to find element: id = bigsearch-query-location-input
+2025-05-14 15:58:28,517 - AutoTestFixer - INFO - Successfully find element: id = bigsearch-query-location-input
+2025-05-14 15:58:28,543 - AutoTestFixer - INFO - Attempting to find element: id = bigsearch-query-location-input
+2025-05-14 15:58:28,549 - AutoTestFixer - INFO - Successfully find element: id = bigsearch-query-location-input
+2025-05-14 15:58:28,666 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='bigsearch-query-location-suggestion-0']/div[2]/div[1]
+2025-05-14 15:58:58,808 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='bigsearch-query-location-suggestion-0']/div[2]/div[1] (Current page URL: https://www.airbnb.ca/experiences?locale=en&_set_bev_on_new_domain=1747252694_EAZjRiY2QwZjAxMm)
+2025-05-14 15:58:58,882 - AutoTestFixer - INFO - Test test_airbnb_cdf4d2ec failed. Auto-fix mode: suggest. Initiating process.
+2025-05-14 16:00:07,564 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Select the location by pressing ENTER instead of clicking a fragile suggestion element.
+Original code line/lines:
+        self.driver.find_element(By.ID, "bigsearch-query-location-input").send_keys("portugal")
+        self.driver.find_element(By.XPATH, "//div[@id='bigsearch-query-location-suggestion-0']/div[2]/div[1]").click()
+Fixed code line/lines:
+        from selenium.webdriver.common.keys import Keys
+        input_box = self.driver.find_element(By.ID, "bigsearch-query-location-input")
+        input_box.send_keys("portugal")
+        input_box.send_keys(Keys.ENTER)
+-------------------------------------------------------
+Potential fix (2): Use a text-based locator for the suggestion so the test is not tied to dynamic IDs.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='bigsearch-query-location-suggestion-0']/div[2]/div[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@role='option'][.//b[text()='Portugal']]").click()
+-------------------------------------------------------
+Potential fix (3): Target the first option in the listbox generically via CSS to avoid any ID dependence.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='bigsearch-query-location-suggestion-0']/div[2]/div[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "#bigsearch-query-location-listbox [role='option']:first-child").click()
+-------------------------------------------------------
+Potential fix (4): Use contains-text matching to tolerate minor text or whitespace changes in the option.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='bigsearch-query-location-suggestion-0']/div[2]/div[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@role='option' and contains(normalize-space(.), 'Portugal')]").click()
+-------------------------------------------------------
+Potential fix (5): Leverage ARIA selected state to click whichever option becomes highlighted automatically.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='bigsearch-query-location-suggestion-0']/div[2]/div[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@role='option' and @aria-selected='true']").click()
+-------------------------------------------------------
+2025-05-14 16:00:07,564 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
