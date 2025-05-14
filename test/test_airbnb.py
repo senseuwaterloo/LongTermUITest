@@ -9,7 +9,8 @@ class TestAirbnb:
     def test_airbnb_cdf4d2ec(self):
         self.driver.get("https://www.airbnb.com/")
         self.driver.find_element(By.XPATH, "//input[@data-testid='structured-search-input-field-query']").click()
-        self.driver.find_element(By.XPATH, "//button[@data-testid='header-tab-search-block-tab-EXPERIENCES']").click()
+        # self.driver.find_element(By.XPATH, "//button[@data-testid='header-tab-search-block-tab-EXPERIENCES']").click()
+        self.driver.find_element(By.CSS_SELECTOR, "a[data-tabid='tabBarItem-EXPERIENCES']").click()
         self.driver.find_element(By.ID, "bigsearch-query-location-input").clear()
         self.driver.find_element(By.ID, "bigsearch-query-location-input").send_keys("portugal")
         self.driver.find_element(By.XPATH, "//div[@id='bigsearch-query-location-suggestion-0']/div[2]/div[1]").click()

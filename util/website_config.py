@@ -53,8 +53,9 @@ cookie_locator_dict = {# 'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmul
                        # (By.XPATH, "//button[@aria-label='Close Message' and @class='ab-close-button']")
                        # 'https://agoda.com': [(By.ID, "secondaryButton"), (By.XPATH, "//a[contains(text(), 'No thanks')]"), (By.XPATH, "//button[contains(text(), 'No thanks')]")],
                        'https://agoda.com': [(By.XPATH, "//button[@data-element-name='consent-banner-reject-btn']")],
-                       'https://www.airbnb.com/': [(By.XPATH, "//button[text()='Cookie Preferences']/following::button[text()='OK']")],
-                       'https://www.akc.org/': [(By.XPATH, "//a[@title='Close' and @aria-label='Close this option']")],
+                       # 'https://www.airbnb.com/': [(By.XPATH, "//button[text()='Cookie Preferences']/following::button[text()='OK']")],
+                        'https://www.airbnb.com/': [(By.XPATH, "//button[@aria-label='Close']")],
+                        'https://www.akc.org/': [(By.XPATH, "//a[@title='Close' and @aria-label='Close this option']")],
                        'https://amtrak.com': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://apartments.com': [(By.ID, "onetrust-accept-btn-handler")],
                        'https://bbb.org': [(By.XPATH, "//button[text()='Accept All Cookies']")],
