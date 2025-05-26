@@ -9,7 +9,8 @@ from browser_helper import switch_to_new_tab, calculate_dates_slash_format, scro
 class TestAkcOrg:
     def test_akcorg_9d42f53a(self):
         self.driver.get("https://www.akc.org/")
-        self.driver.find_element(By.XPATH, "//a[contains(text(),'Sports & Events')]").click()
+        # self.driver.find_element(By.XPATH, "//a[contains(text(),'Sports & Events')]").click()
+        self.driver.find_element(By.ID, "tab__sports-events").click()
         self.driver.find_element(By.XPATH, "//a[contains(text(),'Event Search')]").click()
         switch_to_new_tab(self.driver)
         self.driver.find_element(By.XPATH, "//div[@class='desktop-view row']//span[contains(text(),'Search near City')]").click()

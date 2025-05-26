@@ -1,0 +1,112 @@
+2025-05-26 13:42:55,787 - AutoTestFixer - ERROR - --- Test test_akcorg_9d42f53a FAILED ---
+2025-05-26 13:42:55,787 - AutoTestFixer - ERROR - URL at failure: https://www.akc.org/
+2025-05-26 13:42:55,787 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_akcorg.TestAkcOrg object at 0x1060b0340>
+
+    def test_akcorg_9d42f53a(self):
+        self.driver.get("https://www.akc.org/")
+>       self.driver.find_element(By.XPATH, "//a[contains(text(),'Sports & Events')]").click()
+
+test/test_akcorg.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10603f400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102c15898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000102c0c9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001026c5600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102717304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000102717521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102767204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010273d33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000102764566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010273d0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010270961d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x000000010270a281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000102bd3560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000102bd7425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000102badeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000102bd7e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000102b9cdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000102bfaa78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000102bfac40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000102c0c591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff8046ccdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff8046c8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 13:42:21,026 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.akc.org/
+2025-05-26 13:42:21,923 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.akc.org/
+2025-05-26 13:42:24,605 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Sports & Events')]
+2025-05-26 13:42:54,693 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[contains(text(),'Sports & Events')] (Current page URL: https://www.akc.org/)
+2025-05-26 13:42:54,768 - AutoTestFixer - INFO - Test test_akcorg_9d42f53a failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 13:44:42,870 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use the visible tab span with a stable id instead of a non-existent anchor.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Sports & Events')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "tab__sports-events").click()
+-------------------------------------------------------
+Potential fix (2): Locate the tab by its role and text to avoid reliance on tag name.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Sports & Events')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[@role='tab' and normalize-space()='Sports & Events']").click()
+-------------------------------------------------------
+Potential fix (3): Click the hero “Sports & Events” CTA anchor which is always present.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Sports & Events')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@class='interactive-anchor' and contains(.,'Sports & Events')]").click()
+-------------------------------------------------------
+Potential fix (4): Use a CSS selector for the tab; simpler and less brittle.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Sports & Events')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "span#tab__sports-events").click()
+-------------------------------------------------------
+Potential fix (5): If the header is collapsible on small widths, first ensure the element is in view before clicking.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Sports & Events')]").click()
+Fixed code line/lines:
+        sports_tab = self.driver.find_element(By.ID, "tab__sports-events")
+        scroll_to_element(self.driver, sports_tab)
+        sports_tab.click()
+-------------------------------------------------------
+
+2025-05-26 13:44:42,870 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.

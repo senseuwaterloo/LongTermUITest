@@ -3,7 +3,6 @@ import pytest
 from selenium.webdriver.common.by import By
 from browser_helper import calculate_dates, switch_to_new_tab_and_close_old
 
-
 @pytest.mark.usefixtures('driver_session')
 class TestAgoda:
 
@@ -22,17 +21,17 @@ class TestAgoda:
         self.driver.find_element(By.XPATH, "//button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 1')]]").click()
         self.driver.find_element(By.XPATH, "//span[@data-testid='title' and text()='5 years old']").click()
         self.driver.find_element(By.XPATH, "//button[@data-element-name='occ-child-age-dropdown'][.//p[contains(text(),'Age of Child 2')]]").click()
-        time.sleep(2)
+        time.sleep(3)
         self.driver.find_element(By.XPATH, "//span[@data-testid='title' and text()='12 years old']").click()
         self.driver.find_element(By.XPATH, "//*[@data-selenium='occupancyBox']").click()
         self.driver.find_element(By.XPATH, "//button[@data-selenium='searchButton']").click()
         switch_to_new_tab_and_close_old(self.driver)
         self.driver.find_element(By.XPATH, "//span[contains(text(), 'Homestay') and @data-selenium='filter-item-text']").click()
-        time.sleep(1)
+        time.sleep(2)
         self.driver.find_element(By.XPATH, "//span[contains(text(), 'Balcony/terrace') and @data-selenium='filter-item-text']").click()
-        time.sleep(1)
+        time.sleep(2)
         self.driver.find_element(By.XPATH, "//span[contains(text(), 'Breakfast included')]").click()
-        time.sleep(1)
+        time.sleep(2)
         self.driver.find_element(By.XPATH, "//span[contains(text(), 'Double') and @data-selenium='filter-item-text']").click()
-        time.sleep(1)
+        time.sleep(2)
         self.driver.find_element(By.XPATH, "//button[@data-element-name='search-sort-price']").click()
