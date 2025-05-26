@@ -1,0 +1,212 @@
+2025-05-26 13:54:26,306 - AutoTestFixer - ERROR - --- Test test_allrecipes_87db8a52 FAILED ---
+2025-05-26 13:54:26,306 - AutoTestFixer - ERROR - URL at failure: https://www.allrecipes.com/ingredients-a-z-6740416
+2025-05-26 13:54:26,306 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_allrecipes.TestAllrecipes object at 0x104c8ba30>
+
+    def test_allrecipes_87db8a52(self):
+        self.driver.get("https://www.allrecipes.com/")
+        self.driver.find_element(By.XPATH, "//nav[@id='mntl-header-nav_1-0']//a[contains(text(),'Ingredients')]").click()
+>       self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").click()
+
+test/test_allrecipes.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:145: in click
+    raise e
+framework/custom_selenium.py:120: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x104cd5ff0>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff8046ccdf1 _pthread_start + 99\\n24  libsystem_pthread.dylib             0x00007ff8046c8857 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <input type="text" name="q" id="mntl-search-form--hero__search-input" class="mntl-search-form__input" placeholder="Search" required="required" value="" autocomplete="off"> is not clickable at point (642, 259). Other element would receive the click: <a href="https://www.allrecipes.com/recipes/205/meat-and-poultry/pork/" rel="nocaes">...</a>
+E         (Session info: chrome=137.0.7151.41)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102c15898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000102c0c9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001026c5600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x000000010271e1b0 undetected_chromedriver + 778672
+E       4   undetected_chromedriver             0x000000010271c011 undetected_chromedriver + 770065
+E       5   undetected_chromedriver             0x00000001027196a2 undetected_chromedriver + 759458
+E       6   undetected_chromedriver             0x0000000102718d6e undetected_chromedriver + 757102
+E       7   undetected_chromedriver             0x000000010270b42d undetected_chromedriver + 701485
+E       8   undetected_chromedriver             0x000000010273d312 undetected_chromedriver + 906002
+E       9   undetected_chromedriver             0x000000010270ada8 undetected_chromedriver + 699816
+E       10  undetected_chromedriver             0x000000010273d4ce undetected_chromedriver + 906446
+E       11  undetected_chromedriver             0x0000000102764566 undetected_chromedriver + 1066342
+E       12  undetected_chromedriver             0x000000010273d0e3 undetected_chromedriver + 905443
+E       13  undetected_chromedriver             0x000000010270961d undetected_chromedriver + 693789
+E       14  undetected_chromedriver             0x000000010270a281 undetected_chromedriver + 696961
+E       15  undetected_chromedriver             0x0000000102bd3560 undetected_chromedriver + 5715296
+E       16  undetected_chromedriver             0x0000000102bd7425 undetected_chromedriver + 5731365
+E       17  undetected_chromedriver             0x0000000102badeb0 undetected_chromedriver + 5562032
+E       18  undetected_chromedriver             0x0000000102bd7e5b undetected_chromedriver + 5733979
+E       19  undetected_chromedriver             0x0000000102b9cdc4 undetected_chromedriver + 5492164
+E       20  undetected_chromedriver             0x0000000102bfaa78 undetected_chromedriver + 5876344
+E       21  undetected_chromedriver             0x0000000102bfac40 undetected_chromedriver + 5876800
+E       22  undetected_chromedriver             0x0000000102c0c591 undetected_chromedriver + 5948817
+E       23  libsystem_pthread.dylib             0x00007ff8046ccdf1 _pthread_start + 99
+E       24  libsystem_pthread.dylib             0x00007ff8046c8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2025-05-26 13:54:21,016 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.allrecipes.com/
+2025-05-26 13:54:21,542 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.allrecipes.com/
+2025-05-26 13:54:23,548 - AutoTestFixer - INFO - Attempting to find element: xpath = //nav[@id='mntl-header-nav_1-0']//a[contains(text(),'Ingredients')]
+2025-05-26 13:54:23,577 - AutoTestFixer - INFO - Successfully find element: xpath = //nav[@id='mntl-header-nav_1-0']//a[contains(text(),'Ingredients')]
+2025-05-26 13:54:23,577 - AutoTestFixer - INFO - Attempting to click element: xpath = //nav[@id='mntl-header-nav_1-0']//a[contains(text(),'Ingredients')]
+2025-05-26 13:54:23,577 - AutoTestFixer - INFO - Attempting to find element: xpath = //nav[@id='mntl-header-nav_1-0']//a[contains(text(),'Ingredients')]
+2025-05-26 13:54:23,584 - AutoTestFixer - INFO - Successfully find element: xpath = //nav[@id='mntl-header-nav_1-0']//a[contains(text(),'Ingredients')]
+2025-05-26 13:54:23,660 - AutoTestFixer - INFO - Element clicked: xpath = //nav[@id='mntl-header-nav_1-0']//a[contains(text(),'Ingredients')]
+2025-05-26 13:54:23,660 - AutoTestFixer - INFO - Attempting to find element: id = mntl-search-form--hero__search-input
+2025-05-26 13:54:23,990 - AutoTestFixer - INFO - Successfully find element: id = mntl-search-form--hero__search-input
+2025-05-26 13:54:23,990 - AutoTestFixer - INFO - Attempting to click element: id = mntl-search-form--hero__search-input
+2025-05-26 13:54:23,990 - AutoTestFixer - INFO - Attempting to find element: id = mntl-search-form--hero__search-input
+2025-05-26 13:54:23,994 - AutoTestFixer - INFO - Successfully find element: id = mntl-search-form--hero__search-input
+2025-05-26 13:54:25,096 - AutoTestFixer - ERROR - ElementClickInterceptedException: Element click intercepted: id = mntl-search-form--hero__search-input (Current page URL: https://www.allrecipes.com/ingredients-a-z-6740416)
+2025-05-26 13:54:25,195 - AutoTestFixer - INFO - Test test_allrecipes_87db8a52 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 13:56:11,950 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use the visible header-search field (id “mntl-search-form--open__search-input”) instead of the hidden hero field that’s being intercepted.  
+Original code line/lines:
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").click()
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").clear()
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").send_keys("cinnamon")
+Fixed code line/lines:
+        search_input = self.driver.find_element(By.ID, "mntl-search-form--open__search-input")
+        search_input.clear()
+        search_input.send_keys("cinnamon")
+-------------------------------------------------------
+Potential fix (2): Locate the search field generically by its placeholder text to stay resilient against id changes.  
+Original code line/lines:
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").click()
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").clear()
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").send_keys("cinnamon")
+Fixed code line/lines:
+        search_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder='Find a recipe or ingredient']")
+        search_input.clear()
+        search_input.send_keys("cinnamon")
+-------------------------------------------------------
+Potential fix (3): Skip the unnecessary click that is intercepted; directly clear and type into the element.  
+Original code line/lines:
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").click()
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").clear()
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").send_keys("cinnamon")
+Fixed code line/lines:
+        search_input = self.driver.find_element(By.ID, "mntl-search-form--hero__search-input")
+        search_input.clear()
+        search_input.send_keys("cinnamon")
+-------------------------------------------------------
+Potential fix (4): Open the header search panel with its icon, then type into the now-visible input.  
+Original code line/lines:
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").click()
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").clear()
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").send_keys("cinnamon")
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button[aria-label='Search']").click()
+        search_input = self.driver.find_element(By.ID, "mntl-search-form--open__search-input")
+        search_input.clear()
+        search_input.send_keys("cinnamon")
+-------------------------------------------------------
+Potential fix (5): Bypass the intercept by triggering the click with JavaScript.  
+Original code line/lines:
+        self.driver.find_element(By.ID, "mntl-search-form--hero__search-input").click()
+Fixed code line/lines:
+        element = self.driver.find_element(By.ID, "mntl-search-form--hero__search-input")
+        self.driver.execute_script("arguments[0].click();", element)
+-------------------------------------------------------
+2025-05-26 13:56:11,951 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
