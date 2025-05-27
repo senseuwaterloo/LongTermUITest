@@ -1,0 +1,112 @@
+2025-05-26 15:03:56,690 - AutoTestFixer - ERROR - --- Test test_booking_fc552b69 FAILED ---
+2025-05-26 15:03:56,690 - AutoTestFixer - ERROR - URL at failure: https://www.booking.com/
+2025-05-26 15:03:56,691 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_booking.TestBooking object at 0x1047ea590>
+
+    def test_booking_fc552b69(self):
+        self.driver.get("https://booking.com")
+>       self.driver.find_element(By.XPATH, "//span[text()='Sign in or register']").click()
+
+test/test_booking.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10477f400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010117f898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001011769ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100c2f600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100c81304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100c81521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100cd1204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000100ca733d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100cce566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100ca70e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100c7361d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100c74281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x000000010113d560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000101141425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000101117eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000101141e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000101106dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000101164a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000101164c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000101176591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff80f6bcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80f6b8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 15:03:21,300 - AutoTestFixer - INFO - Attempting to navigate to URL: https://booking.com
+2025-05-26 15:03:23,525 - AutoTestFixer - INFO - Successfully navigated to URL: https://booking.com
+2025-05-26 15:03:25,530 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Sign in or register']
+2025-05-26 15:03:55,586 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //span[text()='Sign in or register'] (Current page URL: https://www.booking.com/)
+2025-05-26 15:03:55,660 - AutoTestFixer - INFO - Test test_booking_fc552b69 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 15:04:18,758 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update locator to Booking’s current sign-in link using data-test id.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Sign in or register']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@data-testid='header-sign-in-button']").click()
+-------------------------------------------------------
+Potential fix (2): Select the sign-in button by its visible text inside the anchor.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Sign in or register']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(@class,'js-header-login-link')]//span[normalize-space()='Sign in']").click()
+-------------------------------------------------------
+Potential fix (3): Use CSS selector targeting the dedicated sign-in anchor for added robustness.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Sign in or register']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a[data-testid='header-sign-in-button']").click()
+-------------------------------------------------------
+Potential fix (4): Fall back to either “Sign in” or “Register” by clicking the first available auth button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Sign in or register']").click()
+Fixed code line/lines:
+        auth_btn = self.driver.find_element(By.XPATH, "(//a[@data-testid='header-sign-in-button'] | //a[@data-testid='header-sign-up-button'])[1]")
+        auth_btn.click()
+-------------------------------------------------------
+Potential fix (5): Scroll to the top before locating the header button to avoid rare off-viewport issues.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Sign in or register']").click()
+Fixed code line/lines:
+        self.driver.execute_script("window.scrollTo(0, 0);")
+        self.driver.find_element(By.XPATH, "//a[@data-testid='header-sign-in-button']").click()
+-------------------------------------------------------
+
+2025-05-26 15:04:18,758 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
