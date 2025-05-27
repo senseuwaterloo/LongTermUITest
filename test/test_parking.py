@@ -26,7 +26,7 @@ class TestParking:
         time.sleep(2)
         self.driver.find_element(By.ID, "entranceDateFormatted").click()
 
-        (start_date_year, start_date_month_adjusted, start_date_day), (end_date_year, end_date_month_adjusted, end_date_day) = calculate_budget_dates(7, 8)
+        (start_date_year, start_date_month_adjusted, start_date_day), (end_date_year, end_date_month_adjusted, end_date_day) = calculate_budget_dates(4, 5)
         if self.driver.find_element(By.XPATH, f"//div[@role='calendar' and not(contains(@style, 'display: none;'))]//td[@year='{start_date_year}' and @month='{start_date_month_adjusted}' and @day='{start_date_day}']") is None:
             self.driver.find_element(By.XPATH, "//div[@role='calendar' and not(contains(@style, 'display: none;'))]//div[@role='navigator']/div[3]/i").click()
         self.driver.find_element(By.XPATH, f"//div[@role='calendar' and not(contains(@style, 'display: none;'))]//td[@year='{start_date_year}' and @month='{start_date_month_adjusted}' and @day='{start_date_day}']").click()

@@ -24,7 +24,7 @@ class TestNewMtaInfo:
         self.driver.find_element(By.XPATH, "//a[@id='link_tp_when']/span[2]").click()
         self.driver.find_element(By.ID, "datePickerId").click()
 
-        leave_date, arrive_date = calculate_dates_weekday_mta_format(7, 8)
+        leave_date, arrive_date = calculate_dates_weekday_mta_format(3, 4)
         if self.driver.find_element(By.XPATH, f"//td[@aria-label='{leave_date}']") is None:
             self.driver.find_element(By.XPATH, "//td[@aria-label='Next Month' and @title='Next Month']").click()
         self.driver.find_element(By.XPATH, f"//td[@aria-label='{leave_date}']").click()

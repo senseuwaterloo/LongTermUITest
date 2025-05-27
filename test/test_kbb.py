@@ -15,8 +15,8 @@ class TestKbb:
         self.driver.find_element(By.XPATH, "//div/a[contains(text(),'Car Values')]").click()
 
         time.sleep(3)
-        if self.driver.find_element(By.XPATH, "//button[text()='No Thanks']") is not None:
-            self.driver.find_element(By.XPATH, "//button[text()='No Thanks']").click()
+        # if self.driver.find_element(By.XPATH, "//button[text()='No Thanks']") is not None:
+        #     self.driver.find_element(By.XPATH, "//button[text()='No Thanks']").click()
         scroll_down(self.driver, 500)
 
         self.driver.find_element(By.XPATH, "//div[text()=\"My Car's Value\"]").click()
@@ -39,8 +39,8 @@ class TestKbb:
         self.driver.find_element(By.XPATH, "//button[@data-testid='vehicle_picker_submit_button' and not(@disabled)]").click()
 
         time.sleep(3)
-        if self.driver.find_element(By.XPATH, "//button[text()='No Thanks']") is not None:
-            self.driver.find_element(By.XPATH, "//button[text()='No Thanks']").click()
+        # if self.driver.find_element(By.XPATH, "//button[text()='No Thanks']") is not None:
+        #     self.driver.find_element(By.XPATH, "//button[text()='No Thanks']").click()
         scroll_down(self.driver, 500)
 
         self.driver.find_element(By.XPATH, "//div[@id='box-style']/div[4]/label[1]/div[1]/div[1]/div[1]").click()

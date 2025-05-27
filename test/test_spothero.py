@@ -27,9 +27,9 @@ class TestSpothero:
 
         self.driver.find_element(By.XPATH, "//input[@value='Today' and @type='text' and @placeholder='Start Date']").click()
 
-        start_date_str, end_date_str = calculate_dates_slash_format(7, 7)
-        if self.driver.find_element(By.XPATH, f"//span[@data-date='{start_date_str}']") is None:
-            self.driver.find_element(By.XPATH, "//button[contains(@class, 'DayPicker-NavButton--next')]").click()
+        start_date_str, end_date_str = calculate_dates_slash_format(5, 5)
+        # if self.driver.find_element(By.XPATH, f"//span[@data-date='{start_date_str}']") is None:
+        #     self.driver.find_element(By.XPATH, "//button[contains(@class, 'DayPicker-NavButton--next')]").click()
         self.driver.find_element(By.XPATH, f"//span[@data-date='{start_date_str}']").click()
 
         start_time_dropdown = self.driver.find_element(By.XPATH, "//select[@class='FormElement-item' and @aria-label='Start Time']")

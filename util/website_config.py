@@ -64,7 +64,7 @@ cookie_locator_dict = {# 'https://www.aa.com/homePage.do': [(By.NAME, 'optoutmul
                        # 'https://booking.com': [(By.XPATH, "//button[@aria-label='Dismiss sign in information.']")],
                        'https://www.budget.com/en/home': [(By.XPATH, "//div[@id='member-benefits-terms-generic-modal']/preceding-sibling::h4/span[@aria-label='Close']"),
                                                           (By.ID, "onetrust-accept-btn-handler")],
-                       'https://cabelas.com': [(By.ID, "SSCACloseBtn"), (By.ID, "CookieTrackingDisclosureButton")],
+                       # 'https://cabelas.com': [(By.ID, "SSCACloseBtn"), (By.ID, "CookieTrackingDisclosureButton")],
                        # 'https://www.carnival.com/': [(By.ID, "cookie-consent-btn")],
                        'https://www.cars.com/': [(By.ID, "onetrust-accept-btn-handler")],
                        # 'https://coinmarketcap.com': [(By.ID, "onetrust-accept-btn-handler")],

@@ -296,7 +296,7 @@ def call_gpt_api(args, openai_client, messages):
             openai_response = openai_client.chat.completions.create(
                 model=model_name,
                 messages=messages,
-                max_completion_tokens=100000,
+                max_completion_tokens=90000,
                 # temperature=0.5,
             )
 

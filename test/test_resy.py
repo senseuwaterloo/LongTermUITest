@@ -20,14 +20,14 @@ class TestResy:
 
         self.driver.find_element(By.XPATH, "//button[text()='Chicago']").click()
 
-        if self.driver.find_element(By.XPATH, "//button[@data-test-id='announcement_modal-button-close']") is not None:
-            self.driver.find_element(By.XPATH, "//button[@data-test-id='announcement_modal-button-close']").click()
+        # if self.driver.find_element(By.XPATH, "//button[@data-test-id='announcement_modal-button-close']") is not None:
+        #     self.driver.find_element(By.XPATH, "//button[@data-test-id='announcement_modal-button-close']").click()
 
         self.driver.find_element(By.ID, "DateSelector__button").click()
 
-        start_date_str, _ = calculate_dates_full_month_name(7, 7)
-        if self.driver.find_element(By.XPATH, f"//button[contains(@aria-label, '{start_date_str}')]") is None:
-            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+        start_date_str, _ = calculate_dates_full_month_name(5, 5)
+        # if self.driver.find_element(By.XPATH, f"//button[contains(@aria-label, '{start_date_str}')]") is None:
+        #     self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
         self.driver.find_element(By.XPATH, f"//button[contains(@aria-label, '{start_date_str}')]").click()
 
         party_size_dropdown = self.driver.find_element(By.ID, "party_size")
