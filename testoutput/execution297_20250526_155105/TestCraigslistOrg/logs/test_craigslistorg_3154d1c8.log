@@ -1,0 +1,141 @@
+2025-05-26 15:51:49,070 - AutoTestFixer - ERROR - --- Test test_craigslistorg_3154d1c8 FAILED ---
+2025-05-26 15:51:49,070 - AutoTestFixer - ERROR - URL at failure: https://newyork.craigslist.org/search/apa?hasPic=1#search=2~gallery~0
+2025-05-26 15:51:49,071 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_craigslistorg.TestCraigslistOrg object at 0x106212e00>
+
+    def test_craigslistorg_3154d1c8(self):
+        self.driver.get("https://craigslist.org")
+    
+        self.driver.find_element(By.XPATH, "//h5[text()='us cities']").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(), 'new') and contains(text(), 'york') and @href='//newyork.craigslist.org']").click()
+    
+        self.driver.find_element(By.XPATH, "//ul[@id='hhh0']/li[1]/a[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//input[@name='hasPic' and @value='1' and @type='checkbox']").click()
+>       self.driver.find_element(By.XPATH, "//div[@id='search-toolbars-1']/div[1]/div[1]/div[1]/button[1]/span[1]").click()
+
+test/test_craigslistorg.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x106269900>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100d53898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000100d4a9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100803600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100855304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100855521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001008a5204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010087b33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001008a2566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010087b0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010084761d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100848281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000100d11560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000100d15425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000100cebeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000100d15e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000100cdadc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000100d38a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000100d38c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000100d4a591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812eccdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812ec8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 15:51:10,442 - AutoTestFixer - INFO - Attempting to navigate to URL: https://craigslist.org
+2025-05-26 15:51:12,388 - AutoTestFixer - INFO - Successfully navigated to URL: https://craigslist.org
+2025-05-26 15:51:14,393 - AutoTestFixer - INFO - Attempting to find element: xpath = //h5[text()='us cities']
+2025-05-26 15:51:14,413 - AutoTestFixer - INFO - Successfully find element: xpath = //h5[text()='us cities']
+2025-05-26 15:51:14,413 - AutoTestFixer - INFO - Attempting to click element: xpath = //h5[text()='us cities']
+2025-05-26 15:51:14,413 - AutoTestFixer - INFO - Attempting to find element: xpath = //h5[text()='us cities']
+2025-05-26 15:51:14,420 - AutoTestFixer - INFO - Successfully find element: xpath = //h5[text()='us cities']
+2025-05-26 15:51:14,489 - AutoTestFixer - INFO - Element clicked: xpath = //h5[text()='us cities']
+2025-05-26 15:51:14,489 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), 'new') and contains(text(), 'york') and @href='//newyork.craigslist.org']
+2025-05-26 15:51:14,496 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), 'new') and contains(text(), 'york') and @href='//newyork.craigslist.org']
+2025-05-26 15:51:14,497 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(), 'new') and contains(text(), 'york') and @href='//newyork.craigslist.org']
+2025-05-26 15:51:14,497 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), 'new') and contains(text(), 'york') and @href='//newyork.craigslist.org']
+2025-05-26 15:51:14,501 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), 'new') and contains(text(), 'york') and @href='//newyork.craigslist.org']
+2025-05-26 15:51:15,348 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(), 'new') and contains(text(), 'york') and @href='//newyork.craigslist.org']
+2025-05-26 15:51:15,348 - AutoTestFixer - INFO - Attempting to find element: xpath = //ul[@id='hhh0']/li[1]/a[1]/span[1]
+2025-05-26 15:51:15,356 - AutoTestFixer - INFO - Successfully find element: xpath = //ul[@id='hhh0']/li[1]/a[1]/span[1]
+2025-05-26 15:51:15,356 - AutoTestFixer - INFO - Attempting to click element: xpath = //ul[@id='hhh0']/li[1]/a[1]/span[1]
+2025-05-26 15:51:15,356 - AutoTestFixer - INFO - Attempting to find element: xpath = //ul[@id='hhh0']/li[1]/a[1]/span[1]
+2025-05-26 15:51:15,360 - AutoTestFixer - INFO - Successfully find element: xpath = //ul[@id='hhh0']/li[1]/a[1]/span[1]
+2025-05-26 15:51:15,946 - AutoTestFixer - INFO - Element clicked: xpath = //ul[@id='hhh0']/li[1]/a[1]/span[1]
+2025-05-26 15:51:15,946 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@name='hasPic' and @value='1' and @type='checkbox']
+2025-05-26 15:51:16,464 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@name='hasPic' and @value='1' and @type='checkbox']
+2025-05-26 15:51:16,464 - AutoTestFixer - INFO - Attempting to click element: xpath = //input[@name='hasPic' and @value='1' and @type='checkbox']
+2025-05-26 15:51:16,464 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@name='hasPic' and @value='1' and @type='checkbox']
+2025-05-26 15:51:16,469 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@name='hasPic' and @value='1' and @type='checkbox']
+2025-05-26 15:51:16,580 - AutoTestFixer - INFO - Element clicked: xpath = //input[@name='hasPic' and @value='1' and @type='checkbox']
+2025-05-26 15:51:16,580 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='search-toolbars-1']/div[1]/div[1]/div[1]/button[1]/span[1]
+2025-05-26 15:51:46,811 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='search-toolbars-1']/div[1]/div[1]/div[1]/button[1]/span[1] (Current page URL: https://newyork.craigslist.org/search/apa?hasPic=1#search=2~gallery~0)
+2025-05-26 15:51:46,883 - AutoTestFixer - INFO - Test test_craigslistorg_3154d1c8 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 15:52:49,253 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle absolute-path locator with the unique ‘cl-exec-search’ button that performs the same action.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='search-toolbars-1']/div[1]/div[1]/div[1]/button[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[contains(@class,'cl-exec-search')]").click()
+-------------------------------------------------------
+Potential fix (2): Target the visible “apply” button by its text instead of relying on nested DIV indexes.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='search-toolbars-1']/div[1]/div[1]/div[1]/button[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[.//span[normalize-space()='apply']]").click()
+-------------------------------------------------------
+Potential fix (3): Generalize the ID in the XPATH so it works whether Craigslist renders “search-toolbars-0”, “search-toolbars-1”, etc.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='search-toolbars-1']/div[1]/div[1]/div[1]/button[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[starts-with(@id,'search-toolbars')]/div[1]/div[1]/div[1]/button[1]/span[1]").click()
+-------------------------------------------------------
+Potential fix (4): Use a concise CSS selector for the first button inside any “search-toolbars” container to avoid deep XPATH.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='search-toolbars-1']/div[1]/div[1]/div[1]/button[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "div[id^='search-toolbars'] button.bd-button").click()
+-------------------------------------------------------
+Potential fix (5): Remove the unnecessary click entirely—Craigslist auto-refreshes when ‘hasPic’ is ticked.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='search-toolbars-1']/div[1]/div[1]/div[1]/button[1]/span[1]").click()
+Fixed code line/lines:
+        # Craigslist auto-applies the filter; no click needed
+        pass
+-------------------------------------------------------
+
+2025-05-26 15:52:49,254 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
