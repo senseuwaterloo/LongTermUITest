@@ -1,0 +1,192 @@
+2025-05-26 16:19:16,002 - AutoTestFixer - ERROR - --- Test test_enterprise_d5054276 FAILED ---
+2025-05-26 16:19:16,002 - AutoTestFixer - ERROR - URL at failure: https://www.enterprise.com/en/home.html
+2025-05-26 16:19:16,003 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_enterprise.TestEnterprise object at 0x105296a70>
+
+    def test_enterprise_d5054276(self):
+        self.driver.get("https://enterprise.com")
+        # time.sleep(10)
+>       self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']/ul[1]/li[3]/div[2]").click()
+
+test/test_enterprise.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:145: in click
+    raise e
+framework/custom_selenium.py:120: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1052972e0>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff812eccdf1 _pthread_start + 99\\n24  libsystem_pthread.dylib             0x00007ff812ec8857 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <div class="primary-nav-label" role="button" tabindex="0" aria-expanded="false" aria-controls="navContentLocations" data-analytics-tracking="universalTracking|_|Menu|_|Nav|_|Locations">...</div> is not clickable at point (793, 95). Other element would receive the click: <div role="button" tabindex="-1" class="login-curtain login-curtain--transparent" style="height:4943px;"></div>
+E         (Session info: chrome=137.0.7151.41)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000103133898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010312a9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000102be3600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102c3c1b0 undetected_chromedriver + 778672
+E       4   undetected_chromedriver             0x0000000102c3a011 undetected_chromedriver + 770065
+E       5   undetected_chromedriver             0x0000000102c376a2 undetected_chromedriver + 759458
+E       6   undetected_chromedriver             0x0000000102c36d6e undetected_chromedriver + 757102
+E       7   undetected_chromedriver             0x0000000102c2942d undetected_chromedriver + 701485
+E       8   undetected_chromedriver             0x0000000102c5b312 undetected_chromedriver + 906002
+E       9   undetected_chromedriver             0x0000000102c28da8 undetected_chromedriver + 699816
+E       10  undetected_chromedriver             0x0000000102c5b4ce undetected_chromedriver + 906446
+E       11  undetected_chromedriver             0x0000000102c82566 undetected_chromedriver + 1066342
+E       12  undetected_chromedriver             0x0000000102c5b0e3 undetected_chromedriver + 905443
+E       13  undetected_chromedriver             0x0000000102c2761d undetected_chromedriver + 693789
+E       14  undetected_chromedriver             0x0000000102c28281 undetected_chromedriver + 696961
+E       15  undetected_chromedriver             0x00000001030f1560 undetected_chromedriver + 5715296
+E       16  undetected_chromedriver             0x00000001030f5425 undetected_chromedriver + 5731365
+E       17  undetected_chromedriver             0x00000001030cbeb0 undetected_chromedriver + 5562032
+E       18  undetected_chromedriver             0x00000001030f5e5b undetected_chromedriver + 5733979
+E       19  undetected_chromedriver             0x00000001030badc4 undetected_chromedriver + 5492164
+E       20  undetected_chromedriver             0x0000000103118a78 undetected_chromedriver + 5876344
+E       21  undetected_chromedriver             0x0000000103118c40 undetected_chromedriver + 5876800
+E       22  undetected_chromedriver             0x000000010312a591 undetected_chromedriver + 5948817
+E       23  libsystem_pthread.dylib             0x00007ff812eccdf1 _pthread_start + 99
+E       24  libsystem_pthread.dylib             0x00007ff812ec8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2025-05-26 16:19:09,503 - AutoTestFixer - INFO - Attempting to navigate to URL: https://enterprise.com
+2025-05-26 16:19:11,307 - AutoTestFixer - INFO - Successfully navigated to URL: https://enterprise.com
+2025-05-26 16:19:13,976 - AutoTestFixer - INFO - Attempting to find element: xpath = //nav[@id='primary-nav']/ul[1]/li[3]/div[2]
+2025-05-26 16:19:14,005 - AutoTestFixer - INFO - Successfully find element: xpath = //nav[@id='primary-nav']/ul[1]/li[3]/div[2]
+2025-05-26 16:19:14,005 - AutoTestFixer - INFO - Attempting to click element: xpath = //nav[@id='primary-nav']/ul[1]/li[3]/div[2]
+2025-05-26 16:19:14,006 - AutoTestFixer - INFO - Attempting to find element: xpath = //nav[@id='primary-nav']/ul[1]/li[3]/div[2]
+2025-05-26 16:19:14,012 - AutoTestFixer - INFO - Successfully find element: xpath = //nav[@id='primary-nav']/ul[1]/li[3]/div[2]
+2025-05-26 16:19:15,085 - AutoTestFixer - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //nav[@id='primary-nav']/ul[1]/li[3]/div[2] (Current page URL: https://www.enterprise.com/en/home.html)
+2025-05-26 16:19:15,181 - AutoTestFixer - INFO - Test test_enterprise_d5054276 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 16:20:54,154 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle absolute-index XPath with a text-based locator for the “Locations” link to avoid index changes and hidden overlays.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']/ul[1]/li[3]/div[2]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']//a[normalize-space()='Locations']").click()
+-------------------------------------------------------
+Potential fix (2): Use the simpler built-in LINK_TEXT locator for the same element, improving readability and stability.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']/ul[1]/li[3]/div[2]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.LINK_TEXT, "Locations").click()
+-------------------------------------------------------
+Potential fix (3): Collapse the “Sign In / Join” drawer if it auto-opens and obstructs the nav bar before attempting the click.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']/ul[1]/li[3]/div[2]").click()
+Fixed code line/lines:
+        if self.driver.find_element(By.CSS_SELECTOR, "button[aria-controls='signin-content']").get_attribute("aria-expanded") == "true":
+            self.driver.find_element(By.CSS_SELECTOR, "button[aria-controls='signin-content']").click()
+        self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']//a[normalize-space()='Locations']").click()
+-------------------------------------------------------
+Potential fix (4): Perform a JavaScript click on the “Locations” anchor to bypass any minor overlay that might still intercept Selenium’s native click.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']/ul[1]/li[3]/div[2]").click()
+Fixed code line/lines:
+        locations_link = self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']//a[normalize-space()='Locations']")
+        self.driver.execute_script("arguments[0].click();", locations_link)
+-------------------------------------------------------
+Potential fix (5): Ensure the nav bar is fully visible by scrolling to the top before clicking, preventing interception by mid-page overlays.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']/ul[1]/li[3]/div[2]").click()
+Fixed code line/lines:
+        self.driver.execute_script("window.scrollTo(0, 0);")
+        self.driver.find_element(By.XPATH, "//nav[@id='primary-nav']//a[normalize-space()='Locations']").click()
+-------------------------------------------------------
+2025-05-26 16:20:54,154 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
