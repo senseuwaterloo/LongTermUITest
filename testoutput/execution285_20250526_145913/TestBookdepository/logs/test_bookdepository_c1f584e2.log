@@ -1,0 +1,214 @@
+2025-05-26 15:00:09,618 - AutoTestFixer - ERROR - --- Test test_bookdepository_c1f584e2 FAILED ---
+2025-05-26 15:00:09,618 - AutoTestFixer - ERROR - URL at failure: https://www.barnesandnoble.com/s/game+of+thrones/_/N-1z141wbZ8qf
+2025-05-26 15:00:09,618 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_bookdepository.TestBookdepository object at 0x1054eed40>
+
+    def test_bookdepository_c1f584e2(self):
+        self.driver.get("https://www.barnesandnoble.com/")
+    
+        self.driver.find_element(By.XPATH, "//a[contains(., ' My Account')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(), 'Sign In')]").click()
+    
+        login_iframe = self.driver.find_element(By.XPATH, "//iframe[@title='Sign in or Create an Account']").get_native_element()
+        self.driver.switch_to.frame(login_iframe)
+        self.driver.find_element(By.ID, "email").click()
+        self.driver.find_element(By.ID, "email").send_keys("uiteststudy@gmail.com")
+        self.driver.find_element(By.ID, "password").click()
+        self.driver.find_element(By.ID, "password").send_keys("UITestStudy2024")
+        self.driver.find_element(By.XPATH, "//button[contains(., 'Sign In & Continue')]").click()
+        self.driver.switch_to.default_content()
+    
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search by Title, Author, Keyword or ISBN']").clear()
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search by Title, Author, Keyword or ISBN']").send_keys("game of thrones")
+        self.driver.find_element(By.XPATH, "//button[@aria-label='Search button']").click()
+    
+        language_filter = self.driver.find_element(By.XPATH, "//div[@aria-label='left-nav']//div[@id='Language_category']")
+        scroll_to_element(self.driver, language_filter)
+        language_filter.click()
+        self.driver.find_element(By.XPATH, "//div[@aria-label='left-nav']//div[@id='Language_category']/ul[1]/li[1]/a[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@aria-label='left-nav']//ul[@id='sidebar-section-0']/li[11]/a").click()
+        self.driver.find_element(By.XPATH, "//div[contains(@class, 'filter-section justify-content-md-end')]//a[@id='list-view']/div").click()
+    
+        self.driver.find_element(By.XPATH, "//form[@id='addToBagForm_0700304046659']/input[11]").click()
+>       self.driver.find_element(By.XPATH, "//form[@id='addToBagForm_0810011720022']/input[11]").click()
+
+test/test_bookdepository.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1054fb880>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010473f898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001047369ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001041ef600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104241304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104241521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104291204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010426733d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x000000010428e566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001042670e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010423361d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104234281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001046fd560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104701425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001046d7eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104701e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001046c6dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104724a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104724c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104736591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff809bbcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff809bb8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 14:59:19,502 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.barnesandnoble.com/
+2025-05-26 14:59:22,365 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.barnesandnoble.com/
+2025-05-26 14:59:24,726 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(., ' My Account')]
+2025-05-26 14:59:24,742 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(., ' My Account')]
+2025-05-26 14:59:24,742 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(., ' My Account')]
+2025-05-26 14:59:24,742 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(., ' My Account')]
+2025-05-26 14:59:24,750 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(., ' My Account')]
+2025-05-26 14:59:24,907 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(., ' My Account')]
+2025-05-26 14:59:24,907 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), 'Sign In')]
+2025-05-26 14:59:24,917 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), 'Sign In')]
+2025-05-26 14:59:24,917 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(), 'Sign In')]
+2025-05-26 14:59:24,917 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), 'Sign In')]
+2025-05-26 14:59:24,925 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), 'Sign In')]
+2025-05-26 14:59:25,089 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(), 'Sign In')]
+2025-05-26 14:59:25,089 - AutoTestFixer - INFO - Attempting to find element: xpath = //iframe[@title='Sign in or Create an Account']
+2025-05-26 14:59:25,612 - AutoTestFixer - INFO - Successfully find element: xpath = //iframe[@title='Sign in or Create an Account']
+2025-05-26 14:59:26,714 - AutoTestFixer - INFO - Attempting to find element: id = email
+2025-05-26 14:59:26,722 - AutoTestFixer - INFO - Successfully find element: id = email
+2025-05-26 14:59:26,722 - AutoTestFixer - INFO - Attempting to click element: id = email
+2025-05-26 14:59:26,722 - AutoTestFixer - INFO - Attempting to find element: id = email
+2025-05-26 14:59:26,728 - AutoTestFixer - INFO - Successfully find element: id = email
+2025-05-26 14:59:26,901 - AutoTestFixer - INFO - Element clicked: id = email
+2025-05-26 14:59:26,901 - AutoTestFixer - INFO - Attempting to find element: id = email
+2025-05-26 14:59:26,905 - AutoTestFixer - INFO - Successfully find element: id = email
+2025-05-26 14:59:27,017 - AutoTestFixer - INFO - Attempting to find element: id = password
+2025-05-26 14:59:27,024 - AutoTestFixer - INFO - Successfully find element: id = password
+2025-05-26 14:59:27,024 - AutoTestFixer - INFO - Attempting to click element: id = password
+2025-05-26 14:59:27,024 - AutoTestFixer - INFO - Attempting to find element: id = password
+2025-05-26 14:59:27,030 - AutoTestFixer - INFO - Successfully find element: id = password
+2025-05-26 14:59:27,146 - AutoTestFixer - INFO - Element clicked: id = password
+2025-05-26 14:59:27,147 - AutoTestFixer - INFO - Attempting to find element: id = password
+2025-05-26 14:59:27,151 - AutoTestFixer - INFO - Successfully find element: id = password
+2025-05-26 14:59:27,184 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(., 'Sign In & Continue')]
+2025-05-26 14:59:27,190 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(., 'Sign In & Continue')]
+2025-05-26 14:59:27,190 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[contains(., 'Sign In & Continue')]
+2025-05-26 14:59:27,190 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(., 'Sign In & Continue')]
+2025-05-26 14:59:27,194 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(., 'Sign In & Continue')]
+2025-05-26 14:59:27,297 - AutoTestFixer - INFO - Element clicked: xpath = //button[contains(., 'Sign In & Continue')]
+2025-05-26 14:59:29,302 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@placeholder='Search by Title, Author, Keyword or ISBN']
+2025-05-26 14:59:29,855 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@placeholder='Search by Title, Author, Keyword or ISBN']
+2025-05-26 14:59:29,874 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@placeholder='Search by Title, Author, Keyword or ISBN']
+2025-05-26 14:59:29,883 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@placeholder='Search by Title, Author, Keyword or ISBN']
+2025-05-26 14:59:30,004 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@aria-label='Search button']
+2025-05-26 14:59:30,015 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@aria-label='Search button']
+2025-05-26 14:59:30,016 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@aria-label='Search button']
+2025-05-26 14:59:30,016 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@aria-label='Search button']
+2025-05-26 14:59:30,022 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@aria-label='Search button']
+2025-05-26 14:59:32,159 - AutoTestFixer - INFO - Element clicked: xpath = //button[@aria-label='Search button']
+2025-05-26 14:59:32,159 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']
+2025-05-26 14:59:32,200 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']
+2025-05-26 14:59:33,208 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']
+2025-05-26 14:59:33,209 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']
+2025-05-26 14:59:33,228 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']
+2025-05-26 14:59:33,318 - AutoTestFixer - INFO - Element clicked: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']
+2025-05-26 14:59:33,318 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']/ul[1]/li[1]/a[1]
+2025-05-26 14:59:33,347 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']/ul[1]/li[1]/a[1]
+2025-05-26 14:59:33,347 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']/ul[1]/li[1]/a[1]
+2025-05-26 14:59:33,348 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']/ul[1]/li[1]/a[1]
+2025-05-26 14:59:33,372 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']/ul[1]/li[1]/a[1]
+2025-05-26 14:59:34,607 - AutoTestFixer - INFO - Element clicked: xpath = //div[@aria-label='left-nav']//div[@id='Language_category']/ul[1]/li[1]/a[1]
+2025-05-26 14:59:34,607 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@aria-label='left-nav']//ul[@id='sidebar-section-0']/li[11]/a
+2025-05-26 14:59:34,770 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@aria-label='left-nav']//ul[@id='sidebar-section-0']/li[11]/a
+2025-05-26 14:59:34,770 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@aria-label='left-nav']//ul[@id='sidebar-section-0']/li[11]/a
+2025-05-26 14:59:34,770 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@aria-label='left-nav']//ul[@id='sidebar-section-0']/li[11]/a
+2025-05-26 14:59:34,835 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@aria-label='left-nav']//ul[@id='sidebar-section-0']/li[11]/a
+2025-05-26 14:59:36,561 - AutoTestFixer - INFO - Element clicked: xpath = //div[@aria-label='left-nav']//ul[@id='sidebar-section-0']/li[11]/a
+2025-05-26 14:59:36,562 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[contains(@class, 'filter-section justify-content-md-end')]//a[@id='list-view']/div
+2025-05-26 14:59:36,847 - AutoTestFixer - INFO - Successfully find element: xpath = //div[contains(@class, 'filter-section justify-content-md-end')]//a[@id='list-view']/div
+2025-05-26 14:59:36,848 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[contains(@class, 'filter-section justify-content-md-end')]//a[@id='list-view']/div
+2025-05-26 14:59:36,848 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[contains(@class, 'filter-section justify-content-md-end')]//a[@id='list-view']/div
+2025-05-26 14:59:36,854 - AutoTestFixer - INFO - Successfully find element: xpath = //div[contains(@class, 'filter-section justify-content-md-end')]//a[@id='list-view']/div
+2025-05-26 14:59:38,296 - AutoTestFixer - INFO - Element clicked: xpath = //div[contains(@class, 'filter-section justify-content-md-end')]//a[@id='list-view']/div
+2025-05-26 14:59:38,296 - AutoTestFixer - INFO - Attempting to find element: xpath = //form[@id='addToBagForm_0700304046659']/input[11]
+2025-05-26 14:59:38,306 - AutoTestFixer - INFO - Successfully find element: xpath = //form[@id='addToBagForm_0700304046659']/input[11]
+2025-05-26 14:59:38,306 - AutoTestFixer - INFO - Attempting to click element: xpath = //form[@id='addToBagForm_0700304046659']/input[11]
+2025-05-26 14:59:38,306 - AutoTestFixer - INFO - Attempting to find element: xpath = //form[@id='addToBagForm_0700304046659']/input[11]
+2025-05-26 14:59:38,313 - AutoTestFixer - INFO - Successfully find element: xpath = //form[@id='addToBagForm_0700304046659']/input[11]
+2025-05-26 14:59:38,406 - AutoTestFixer - INFO - Element clicked: xpath = //form[@id='addToBagForm_0700304046659']/input[11]
+2025-05-26 14:59:38,406 - AutoTestFixer - INFO - Attempting to find element: xpath = //form[@id='addToBagForm_0810011720022']/input[11]
+2025-05-26 15:00:08,527 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //form[@id='addToBagForm_0810011720022']/input[11] (Current page URL: https://www.barnesandnoble.com/s/game+of+thrones/_/N-1z141wbZ8qf)
+2025-05-26 15:00:08,586 - AutoTestFixer - INFO - Test test_bookdepository_c1f584e2 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 15:01:09,864 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace the wrong product-ID with the one that actually exists in the results list.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//form[@id='addToBagForm_0810011720022']/input[11]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//form[@id='addToBagForm_0850049111829']/input[@value='ADD TO CART']").click()
+-------------------------------------------------------
+Potential fix (2): Click the 2nd “ADD TO CART” button on the page instead of hard-coding the ID.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//form[@id='addToBagForm_0810011720022']/input[11]").click()
+Fixed code line/lines:
+        add_to_cart_buttons = self.driver.find_elements(By.CSS_SELECTOR, "form[id^='addToBagForm_'] input[value='ADD TO CART']")
+        add_to_cart_buttons[1].click()
+-------------------------------------------------------
+Potential fix (3): Locate the button through the product title to avoid any ID dependency.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//form[@id='addToBagForm_0810011720022']/input[11]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@product-title-plp='Game of Thrones Playing Cards']/ancestor::div[contains(@class,'product-shelf')]//input[@value='ADD TO CART']").click()
+-------------------------------------------------------
+Potential fix (4): Scroll the second item into view before clicking so lazy-loaded products are present.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//form[@id='addToBagForm_0810011720022']/input[11]").click()
+Fixed code line/lines:
+        second_item_form = self.driver.find_element(By.XPATH, "//form[@id='addToBagForm_0810011720022']")
+        scroll_to_element(self.driver, second_item_form)
+        second_item_form.find_element(By.CSS_SELECTOR, "input[value='ADD TO CART']").click()
+-------------------------------------------------------
+Potential fix (5): Use an XPath that matches any later “ADD TO CART” button whose product has not yet been added.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//form[@id='addToBagForm_0810011720022']/input[11]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "(//form[starts-with(@id,'addToBagForm_')]/input[@value='ADD TO CART' and not(@disabled)])[2]").click()
+-------------------------------------------------------
+2025-05-26 15:01:09,864 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
