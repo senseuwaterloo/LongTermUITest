@@ -1,0 +1,116 @@
+2025-05-26 16:56:00,003 - AutoTestFixer - ERROR - --- Test test_foxsports_af97084c FAILED ---
+2025-05-26 16:56:00,003 - AutoTestFixer - ERROR - URL at failure: https://www.foxsports.com/
+2025-05-26 16:56:00,003 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_foxsports.TestFoxsports object at 0x10362ba30>
+
+    def test_foxsports_af97084c(self):
+        self.driver.get("https://foxsports.com")
+        self.driver.find_element(By.XPATH, "//div[@id='__layout']/div[1]/div[2]/div[1]/div[2]/button[1]/span[1]").click()
+>       self.driver.find_element(By.XPATH, "//div[@id='ssrExploreSports']/div[2]/a[7]/div[1]/div[1]").click()
+
+test/test_foxsports.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1036641f0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000105341898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001053389ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104df1600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104e43304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104e43521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104e93204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000104e6933d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000104e90566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000104e690e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000104e3561d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104e36281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001052ff560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000105303425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001052d9eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000105303e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001052c8dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000105326a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000105326c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000105338591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff81b7f0df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff81b7ec857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 16:55:15,962 - AutoTestFixer - INFO - Attempting to navigate to URL: https://foxsports.com
+2025-05-26 16:55:26,959 - AutoTestFixer - INFO - Successfully navigated to URL: https://foxsports.com
+2025-05-26 16:55:28,965 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='__layout']/div[1]/div[2]/div[1]/div[2]/button[1]/span[1]
+2025-05-26 16:55:28,994 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='__layout']/div[1]/div[2]/div[1]/div[2]/button[1]/span[1]
+2025-05-26 16:55:28,994 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='__layout']/div[1]/div[2]/div[1]/div[2]/button[1]/span[1]
+2025-05-26 16:55:28,994 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='__layout']/div[1]/div[2]/div[1]/div[2]/button[1]/span[1]
+2025-05-26 16:55:29,001 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='__layout']/div[1]/div[2]/div[1]/div[2]/button[1]/span[1]
+2025-05-26 16:55:29,103 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='__layout']/div[1]/div[2]/div[1]/div[2]/button[1]/span[1]
+2025-05-26 16:55:29,103 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='ssrExploreSports']/div[2]/a[7]/div[1]/div[1]
+2025-05-26 16:55:59,182 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='ssrExploreSports']/div[2]/a[7]/div[1]/div[1] (Current page URL: https://www.foxsports.com/)
+2025-05-26 16:55:59,256 - AutoTestFixer - INFO - Test test_foxsports_af97084c failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 16:56:56,978 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle position-based XPath with a text-based locator that always targets “Major League Baseball” in the Popular Searches list.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='ssrExploreSports']/div[2]/a[7]/div[1]/div[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[.//div[contains(@class,'entity-list-row-title')][contains(text(),'Major League Baseball')]]").click()
+-------------------------------------------------------
+Potential fix (2): Click the “SPORTS & TEAMS” navigation button (id=explore-sports-nav) instead of relying on the now-missing ssrExploreSports container.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='ssrExploreSports']/div[2]/a[7]/div[1]/div[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "explore-sports-nav").click()
+-------------------------------------------------------
+Potential fix (3): Use the first Popular Search item (“NTT INDYCAR SERIES”) to keep the flow but avoid index shifts.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='ssrExploreSports']/div[2]/a[7]/div[1]/div[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[.//div[contains(@class,'entity-list-row-title')][contains(text(),'NTT INDYCAR SERIES')]]").click()
+-------------------------------------------------------
+Potential fix (4): Target the visible “National Football League” option via its title text rather than hard-coded indexes.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='ssrExploreSports']/div[2]/a[7]/div[1]/div[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[.//div[contains(@class,'entity-list-row-title')][contains(text(),'National Football League')]]").click()
+-------------------------------------------------------
+Potential fix (5): Select the seventh anchor generically with CSS, which is less prone to structural changes than the verbose XPath.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='ssrExploreSports']/div[2]/a[7]/div[1]/div[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "#ssrExploreSports > div:nth-of-type(2) > a:nth-of-type(7)").click()
+-------------------------------------------------------
+2025-05-26 16:56:56,979 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
