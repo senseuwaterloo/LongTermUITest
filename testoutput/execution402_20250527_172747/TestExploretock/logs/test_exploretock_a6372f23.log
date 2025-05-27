@@ -1,0 +1,161 @@
+2025-05-27 17:28:31,614 - AutoTestFixer - ERROR - --- Test test_exploretock_a6372f23 FAILED ---
+2025-05-27 17:28:31,614 - AutoTestFixer - ERROR - URL at failure: https://www.exploretock.com/
+2025-05-27 17:28:31,615 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_exploretock.TestExploretock object at 0x1063eabc0>
+
+    def test_exploretock_a6372f23(self):
+        self.driver.get("https://exploretock.com")
+    
+        reservation_type_dropdown = self.driver.find_element(By.ID, "reservations-city-search-type")
+        reservation_type_select = Select(reservation_type_dropdown)
+        reservation_type_select.select_by_value('wineries')
+    
+        self.driver.find_element(By.XPATH, "//main[@id='maincontent']/div/div[1]/div[1]/div/div/div[2]/div/div/button").click()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and @placeholder='Find a location']").clear()
+        self.driver.find_element(By.XPATH, "//input[@type='search' and @placeholder='Find a location']").send_keys("NAPA VALLEY")
+        self.driver.find_element(By.XPATH, "//ul[@aria-label='Location search results']//span[text()='Napa Valley']").click()
+    
+        self.driver.find_element(By.XPATH, "//main[@id='maincontent']/div/div[1]/div[1]/div/div/div[3]/div/div").click()
+        start_date_str, end_date_str = calculate_dates_with_suffix(4, 4)
+        self.driver.find_element(By.XPATH, f"//button[@aria-label='{start_date_str}']").click()
+    
+>       reservation_time_dropdown = self.driver.find_element(By.ID, "wineries-city-search-time")
+
+test/test_exploretock.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1063f72e0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104d6b0c8 undetected_chromedriver + 6140104
+E       1   undetected_chromedriver             0x0000000104d6282a undetected_chromedriver + 6105130
+E       2   undetected_chromedriver             0x00000001047f63b0 undetected_chromedriver + 418736
+E       3   undetected_chromedriver             0x0000000104847fab undetected_chromedriver + 753579
+E       4   undetected_chromedriver             0x00000001048481c1 undetected_chromedriver + 754113
+E       5   undetected_chromedriver             0x0000000104898a34 undetected_chromedriver + 1083956
+E       6   undetected_chromedriver             0x000000010486e29d undetected_chromedriver + 909981
+E       7   undetected_chromedriver             0x0000000104895dd3 undetected_chromedriver + 1072595
+E       8   undetected_chromedriver             0x000000010486e043 undetected_chromedriver + 909379
+E       9   undetected_chromedriver             0x000000010483a287 undetected_chromedriver + 696967
+E       10  undetected_chromedriver             0x000000010483aef1 undetected_chromedriver + 700145
+E       11  undetected_chromedriver             0x0000000104d28c30 undetected_chromedriver + 5868592
+E       12  undetected_chromedriver             0x0000000104d2cbaf undetected_chromedriver + 5884847
+E       13  undetected_chromedriver             0x0000000104d03ee6 undetected_chromedriver + 5717734
+E       14  undetected_chromedriver             0x0000000104d2d50f undetected_chromedriver + 5887247
+E       15  undetected_chromedriver             0x0000000104cf2794 undetected_chromedriver + 5646228
+E       16  undetected_chromedriver             0x0000000104d501c8 undetected_chromedriver + 6029768
+E       17  undetected_chromedriver             0x0000000104d50390 undetected_chromedriver + 6030224
+E       18  undetected_chromedriver             0x0000000104d623f1 undetected_chromedriver + 6104049
+E       19  libsystem_pthread.dylib             0x00007ff80b678df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80b674857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-27 17:27:54,121 - AutoTestFixer - INFO - Attempting to navigate to URL: https://exploretock.com
+2025-05-27 17:27:56,131 - AutoTestFixer - INFO - Successfully navigated to URL: https://exploretock.com
+2025-05-27 17:27:58,136 - AutoTestFixer - INFO - Attempting to find element: id = reservations-city-search-type
+2025-05-27 17:27:58,156 - AutoTestFixer - INFO - Successfully find element: id = reservations-city-search-type
+2025-05-27 17:27:58,166 - AutoTestFixer - INFO - Attempting to find elements: css selector = option[value ="wineries"] within element: id = reservations-city-search-type
+2025-05-27 17:27:58,176 - AutoTestFixer - INFO - Successfully find elements: css selector = option[value ="wineries"] within element: id = reservations-city-search-type
+2025-05-27 17:27:58,188 - AutoTestFixer - INFO - Attempting to click element: css selector = option[value ="wineries"]
+2025-05-27 17:27:58,188 - AutoTestFixer - INFO - Attempting to find element: css selector = option[value ="wineries"] within element: id = reservations-city-search-type
+2025-05-27 17:27:58,195 - AutoTestFixer - INFO - Successfully find element: css selector = option[value ="wineries"] within element: id = reservations-city-search-type
+2025-05-27 17:27:58,230 - AutoTestFixer - INFO - Element clicked: css selector = option[value ="wineries"]
+2025-05-27 17:27:58,230 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[2]/div/div/button
+2025-05-27 17:27:58,237 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[2]/div/div/button
+2025-05-27 17:27:58,237 - AutoTestFixer - INFO - Attempting to click element: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[2]/div/div/button
+2025-05-27 17:27:58,237 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[2]/div/div/button
+2025-05-27 17:27:58,241 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[2]/div/div/button
+2025-05-27 17:27:58,312 - AutoTestFixer - INFO - Element clicked: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[2]/div/div/button
+2025-05-27 17:27:58,312 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@type='search' and @placeholder='Find a location']
+2025-05-27 17:27:58,832 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@type='search' and @placeholder='Find a location']
+2025-05-27 17:27:58,852 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@type='search' and @placeholder='Find a location']
+2025-05-27 17:27:58,856 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@type='search' and @placeholder='Find a location']
+2025-05-27 17:27:59,059 - AutoTestFixer - INFO - Attempting to find element: xpath = //ul[@aria-label='Location search results']//span[text()='Napa Valley']
+2025-05-27 17:28:00,094 - AutoTestFixer - INFO - Successfully find element: xpath = //ul[@aria-label='Location search results']//span[text()='Napa Valley']
+2025-05-27 17:28:00,095 - AutoTestFixer - INFO - Attempting to click element: xpath = //ul[@aria-label='Location search results']//span[text()='Napa Valley']
+2025-05-27 17:28:00,095 - AutoTestFixer - INFO - Attempting to find element: xpath = //ul[@aria-label='Location search results']//span[text()='Napa Valley']
+2025-05-27 17:28:00,101 - AutoTestFixer - INFO - Successfully find element: xpath = //ul[@aria-label='Location search results']//span[text()='Napa Valley']
+2025-05-27 17:28:00,155 - AutoTestFixer - INFO - Element clicked: xpath = //ul[@aria-label='Location search results']//span[text()='Napa Valley']
+2025-05-27 17:28:00,155 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[3]/div/div
+2025-05-27 17:28:00,162 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[3]/div/div
+2025-05-27 17:28:00,162 - AutoTestFixer - INFO - Attempting to click element: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[3]/div/div
+2025-05-27 17:28:00,162 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[3]/div/div
+2025-05-27 17:28:00,167 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[3]/div/div
+2025-05-27 17:28:00,545 - AutoTestFixer - INFO - Element clicked: xpath = //main[@id='maincontent']/div/div[1]/div[1]/div/div/div[3]/div/div
+2025-05-27 17:28:00,545 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@aria-label='31st May (Saturday)']
+2025-05-27 17:28:00,553 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@aria-label='31st May (Saturday)']
+2025-05-27 17:28:00,553 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@aria-label='31st May (Saturday)']
+2025-05-27 17:28:00,553 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@aria-label='31st May (Saturday)']
+2025-05-27 17:28:00,558 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@aria-label='31st May (Saturday)']
+2025-05-27 17:28:00,657 - AutoTestFixer - INFO - Element clicked: xpath = //button[@aria-label='31st May (Saturday)']
+2025-05-27 17:28:00,657 - AutoTestFixer - INFO - Attempting to find element: id = wineries-city-search-time
+2025-05-27 17:28:30,674 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: id = wineries-city-search-time (Current page URL: https://www.exploretock.com/)
+2025-05-27 17:28:30,747 - AutoTestFixer - INFO - Test test_exploretock_a6372f23 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-27 17:30:12,494 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use the correct existing dropdown id (`reservations-city-search-time`) instead of the non-existent `wineries-city-search-time`.
+Original code line/lines:
+        reservation_time_dropdown = self.driver.find_element(By.ID, "wineries-city-search-time")
+Fixed code line/lines:
+        reservation_time_dropdown = self.driver.find_element(By.ID, "reservations-city-search-time")
+-------------------------------------------------------
+Potential fix (2): Update the guests dropdown id to the one that actually exists on the page (`reservations-city-search-guests`).
+Original code line/lines:
+        guest_size_dropdown = self.driver.find_element(By.ID, "wineries-city-search-guests")
+Fixed code line/lines:
+        guest_size_dropdown = self.driver.find_element(By.ID, "reservations-city-search-guests")
+-------------------------------------------------------
+Potential fix (3): Make the time dropdown locator more robust by targeting the stable `name` attribute.
+Original code line/lines:
+        reservation_time_dropdown = self.driver.find_element(By.ID, "wineries-city-search-time")
+Fixed code line/lines:
+        reservation_time_dropdown = self.driver.find_element(By.NAME, "time")
+-------------------------------------------------------
+Potential fix (4): Make the guests dropdown locator more robust by targeting its `name` attribute instead of a changing id.
+Original code line/lines:
+        guest_size_dropdown = self.driver.find_element(By.ID, "wineries-city-search-guests")
+Fixed code line/lines:
+        guest_size_dropdown = self.driver.find_element(By.NAME, "guests")
+-------------------------------------------------------
+Potential fix (5): Retrieve both dropdowns with a single, resilient CSS selector that is independent of reservation type.
+Original code line/lines:
+        reservation_time_dropdown = self.driver.find_element(By.ID, "wineries-city-search-time")
+        reservation_time_select = Select(reservation_time_dropdown)
+Fixed code line/lines:
+        reservation_time_select = Select(self.driver.find_element(By.CSS_SELECTOR, "select[name='time']"))
+-------------------------------------------------------
+
+2025-05-27 17:30:12,494 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.

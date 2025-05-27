@@ -22,7 +22,7 @@ class TestExploretock:
         self.driver.find_element(By.XPATH, "//ul[@aria-label='Location search results']//span[text()='Napa Valley']").click()
 
         self.driver.find_element(By.XPATH, "//main[@id='maincontent']/div/div[1]/div[1]/div/div/div[3]/div/div").click()
-        start_date_str, end_date_str = calculate_dates_with_suffix(7, 7)
+        start_date_str, end_date_str = calculate_dates_with_suffix(4, 4)
         self.driver.find_element(By.XPATH, f"//button[@aria-label='{start_date_str}']").click()
 
         reservation_time_dropdown = self.driver.find_element(By.ID, "wineries-city-search-time")
