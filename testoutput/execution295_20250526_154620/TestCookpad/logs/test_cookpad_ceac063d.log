@@ -1,0 +1,184 @@
+2025-05-26 15:46:29,023 - AutoTestFixer - ERROR - --- Test test_cookpad_ceac063d FAILED ---
+2025-05-26 15:46:29,023 - AutoTestFixer - ERROR - URL at failure: https://cookpad.com/us
+2025-05-26 15:46:29,023 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_cookpad.TestCookpad object at 0x105dcfa30>
+
+    def test_cookpad_ceac063d(self):
+        self.driver.get("https://cookpad.com")
+    
+>       self.driver.find_element(By.ID, "navigation_search").clear()
+
+test/test_cookpad.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:117: in clear
+    self._execute(Command.CLEAR_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x105e19ff0>
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...7ff812eccdf1 _pthread_start + 99\\n20  libsystem_pthread.dylib             0x00007ff812ec8857 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+E         (Session info: chrome=137.0.7151.41)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000101159898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001011509ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100c09443 undetected_chromedriver + 414787
+E       3   undetected_chromedriver             0x0000000100c51842 undetected_chromedriver + 710722
+E       4   undetected_chromedriver             0x0000000100c81312 undetected_chromedriver + 906002
+E       5   undetected_chromedriver             0x0000000100c4eda8 undetected_chromedriver + 699816
+E       6   undetected_chromedriver             0x0000000100c814ce undetected_chromedriver + 906446
+E       7   undetected_chromedriver             0x0000000100ca8566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100c810e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100c4d61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100c4e281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000101117560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x000000010111b425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001010f1eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x000000010111be5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001010e0dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x000000010113ea78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x000000010113ec40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000101150591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812eccdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812ec8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementNotInteractableException
+2025-05-26 15:46:25,217 - AutoTestFixer - INFO - Attempting to navigate to URL: https://cookpad.com
+2025-05-26 15:46:26,200 - AutoTestFixer - INFO - Successfully navigated to URL: https://cookpad.com
+2025-05-26 15:46:28,205 - AutoTestFixer - INFO - Attempting to find element: id = navigation_search
+2025-05-26 15:46:28,226 - AutoTestFixer - INFO - Successfully find element: id = navigation_search
+2025-05-26 15:46:28,326 - AutoTestFixer - INFO - Test test_cookpad_ceac063d failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 15:46:52,899 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Point directly to the US homepage to avoid locale-dependent DOM differences.
+Original code line/lines:
+        self.driver.get("https://cookpad.com")
+Fixed code line/lines:
+        self.driver.get("https://cookpad.com/us")
+-------------------------------------------------------
+Potential fix (2): Use the visible search input (name="q") instead of the absent/hidden id="navigation_search".
+Original code line/lines:
+        self.driver.find_element(By.ID, "navigation_search").clear()
+        self.driver.find_element(By.ID, "navigation_search").send_keys("pancake")
+Fixed code line/lines:
+        search_field = self.driver.find_element(By.CSS_SELECTOR, "input[name='q']")
+        search_field.clear()
+        search_field.send_keys("pancake")
+-------------------------------------------------------
+Potential fix (3): If clearing is not necessary, send keys directly to the correct input.
+Original code line/lines:
+        self.driver.find_element(By.ID, "navigation_search").clear()
+        self.driver.find_element(By.ID, "navigation_search").send_keys("pancake")
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "input[name='q']").send_keys("pancake")
+-------------------------------------------------------
+Potential fix (4): Click the current “Search” submit input instead of the outdated button locator.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@name='button' and @type='submit']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "input[type='submit'][value='Search']").click()
+-------------------------------------------------------
+Potential fix (5): Ensure the element is interactable by clicking before clearing/typing.
+Original code line/lines:
+        self.driver.find_element(By.ID, "navigation_search").clear()
+        self.driver.find_element(By.ID, "navigation_search").send_keys("pancake")
+Fixed code line/lines:
+        search_field = self.driver.find_element(By.CSS_SELECTOR, "input[name='q']")
+        search_field.click()
+        search_field.clear()
+        search_field.send_keys("pancake")
+-------------------------------------------------------
+2025-05-26 15:46:52,900 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
