@@ -1,0 +1,109 @@
+2025-05-26 16:33:19,219 - AutoTestFixer - ERROR - --- Test test_expedia_97e3f951 FAILED ---
+2025-05-26 16:33:19,219 - AutoTestFixer - ERROR - URL at failure: https://www.expedia.com/
+2025-05-26 16:33:19,219 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_expedia.TestExpedia object at 0x107996c50>
+
+    def test_expedia_97e3f951(self):
+        self.driver.get("https://expedia.com")
+>       self.driver.find_element(By.XPATH, "//div[@id='multi-product-search-form-1']/div/div/div/div/div[1]/ul/li[2]/a/span").click()
+
+test/test_expedia.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10797f400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001029e7898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001029de9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000102497600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001024e9304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001024e9521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102539204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010250f33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000102536566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010250f0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001024db61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001024dc281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001029a5560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001029a9425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x000000010297feb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001029a9e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010296edc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001029cca78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001029ccc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x00000001029de591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff81b7f0df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff81b7ec857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 16:32:43,206 - AutoTestFixer - INFO - Attempting to navigate to URL: https://expedia.com
+2025-05-26 16:32:46,232 - AutoTestFixer - INFO - Successfully navigated to URL: https://expedia.com
+2025-05-26 16:32:48,234 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='multi-product-search-form-1']/div/div/div/div/div[1]/ul/li[2]/a/span
+2025-05-26 16:33:18,304 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='multi-product-search-form-1']/div/div/div/div/div[1]/ul/li[2]/a/span (Current page URL: https://www.expedia.com/)
+2025-05-26 16:33:18,365 - AutoTestFixer - INFO - Test test_expedia_97e3f951 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 16:34:00,826 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle absolute XPath with a stable one that targets the Flights tab via its aria-controls attribute.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='multi-product-search-form-1']/div/div/div/div/div[1]/ul/li[2]/a/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@aria-controls='search_form_product_selector_flights']").click()
+-------------------------------------------------------
+Potential fix (2): Use link text to click the Flights tab, avoiding any dependency on the surrounding DOM structure.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='multi-product-search-form-1']/div/div/div/div/div[1]/ul/li[2]/a/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.LINK_TEXT, "Flights").click()
+-------------------------------------------------------
+Potential fix (3): Switch to a concise CSS selector that targets the Flights tab by its aria-controls attribute.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='multi-product-search-form-1']/div/div/div/div/div[1]/ul/li[2]/a/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a[aria-controls='search_form_product_selector_flights']").click()
+-------------------------------------------------------
+Potential fix (4): Use an XPath that searches for the visible text inside the span, then clicks the ancestor anchor—still robust but keeps XPath if preferred.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='multi-product-search-form-1']/div/div/div/div/div[1]/ul/li[2]/a/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[normalize-space()='Flights']/ancestor::a").click()
+-------------------------------------------------------
+Potential fix (5): Update to a selector based on the known href for the Flights tab to decouple from layout changes.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='multi-product-search-form-1']/div/div/div/div/div[1]/ul/li[2]/a/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a[href='/Flights']").click()
+-------------------------------------------------------
+2025-05-26 16:34:00,826 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
