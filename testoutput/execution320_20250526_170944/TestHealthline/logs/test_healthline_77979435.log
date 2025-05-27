@@ -1,0 +1,103 @@
+2025-05-26 17:10:29,149 - AutoTestFixer - ERROR - --- Test test_healthline_77979435 FAILED ---
+2025-05-26 17:10:29,149 - AutoTestFixer - ERROR - URL at failure: https://www.healthline.com/
+2025-05-26 17:10:29,149 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_healthline.TestHealthline object at 0x1104ef850>
+
+    def test_healthline_77979435(self):
+        self.driver.get("https://healthline.com")
+>       self.driver.find_element(By.XPATH, "//div[@id='site-header']/div[1]/div[1]/div[3]/ul[1]/li[3]/button[1]/span[1]").click()
+
+test/test_healthline.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x110483400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104b59898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000104b509ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104609600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x000000010465b304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x000000010465b521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001046ab204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010468133d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001046a8566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001046810e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010464d61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x000000010464e281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104b17560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104b1b425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104af1eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104b1be5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104ae0dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104b3ea78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104b3ec40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104b50591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff8136dcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff8136d8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 17:09:50,951 - AutoTestFixer - INFO - Attempting to navigate to URL: https://healthline.com
+2025-05-26 17:09:56,186 - AutoTestFixer - INFO - Successfully navigated to URL: https://healthline.com
+2025-05-26 17:09:58,187 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='site-header']/div[1]/div[1]/div[3]/ul[1]/li[3]/button[1]/span[1]
+2025-05-26 17:10:28,346 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='site-header']/div[1]/div[1]/div[3]/ul[1]/li[3]/button[1]/span[1] (Current page URL: https://www.healthline.com/)
+2025-05-26 17:10:28,418 - AutoTestFixer - INFO - Test test_healthline_77979435 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 17:11:09,009 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle absolute XPath with stable CSS selector using aria-label for the “Tools” menu button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='site-header']/div[1]/div[1]/div[3]/ul[1]/li[3]/button[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button[aria-label='Expand Tools options']").click()
+-------------------------------------------------------
+Potential fix (2): Use a simple text-based XPath that directly targets the button containing the visible “Tools” text.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='site-header']/div[1]/div[1]/div[3]/ul[1]/li[3]/button[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[span[normalize-space()='Tools']]").click()
+-------------------------------------------------------
+Potential fix (3): Navigate to the canonical www subdomain to avoid possible redirect timing issues before element lookup.
+Original code line/lines:
+        self.driver.get("https://healthline.com")
+Fixed code line/lines:
+        self.driver.get("https://www.healthline.com")
+-------------------------------------------------------
+Potential fix (4): Target the “Tools” button via its role and index-free structure to avoid DOM depth changes.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='site-header']/div[1]/div[1]/div[3]/ul[1]/li[3]/button[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@role='menuitem' and span[text()='Tools']]").click()
+-------------------------------------------------------
+2025-05-26 17:11:09,009 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
