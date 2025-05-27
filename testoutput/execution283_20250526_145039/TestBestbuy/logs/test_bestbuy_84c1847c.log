@@ -1,0 +1,124 @@
+2025-05-26 14:51:26,658 - AutoTestFixer - ERROR - --- Test test_bestbuy_84c1847c FAILED ---
+2025-05-26 14:51:26,658 - AutoTestFixer - ERROR - URL at failure: https://www.bestbuy.com/site/searchpage.jsp?st=iphone+15&id=pcat17071
+2025-05-26 14:51:26,659 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_bestbuy.TestBestbuy object at 0x104204220>
+
+    def test_bestbuy_84c1847c(self):
+        self.driver.get("https://www.bestbuy.com/?intl=nosplash")
+        self.driver.find_element(By.ID, "gh-search-input").clear()
+    
+        self.driver.find_element(By.ID, "gh-search-input").send_keys("iPhone 15")
+        self.driver.find_element(By.XPATH, "//div[@data-testid='SuggestedSearches']/div[1]/div[2]/div/div/ul/li/a").click()
+>       pre_owned_checkbox = self.driver.find_element(By.ID, "condition_facet-Pre-Owned-1")
+
+test/test_bestbuy.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1041f9ab0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100655898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010064c9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100105600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100157304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100157521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001001a7204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010017d33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001001a4566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010017d0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010014961d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x000000010014a281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000100613560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000100617425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001005edeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000100617e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001005dcdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x000000010063aa78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x000000010063ac40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010064c591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff809bbcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff809bb8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 14:50:45,205 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.bestbuy.com/?intl=nosplash
+2025-05-26 14:50:45,604 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.bestbuy.com/?intl=nosplash
+2025-05-26 14:50:47,609 - AutoTestFixer - INFO - Attempting to find element: id = gh-search-input
+2025-05-26 14:50:50,535 - AutoTestFixer - INFO - Successfully find element: id = gh-search-input
+2025-05-26 14:50:50,566 - AutoTestFixer - INFO - Attempting to find element: id = gh-search-input
+2025-05-26 14:50:50,570 - AutoTestFixer - INFO - Successfully find element: id = gh-search-input
+2025-05-26 14:50:50,691 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='SuggestedSearches']/div[1]/div[2]/div/div/ul/li/a
+2025-05-26 14:50:51,221 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='SuggestedSearches']/div[1]/div[2]/div/div/ul/li/a
+2025-05-26 14:50:51,221 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@data-testid='SuggestedSearches']/div[1]/div[2]/div/div/ul/li/a
+2025-05-26 14:50:51,221 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='SuggestedSearches']/div[1]/div[2]/div/div/ul/li/a
+2025-05-26 14:50:51,230 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='SuggestedSearches']/div[1]/div[2]/div/div/ul/li/a
+2025-05-26 14:50:54,998 - AutoTestFixer - INFO - Element clicked: xpath = //div[@data-testid='SuggestedSearches']/div[1]/div[2]/div/div/ul/li/a
+2025-05-26 14:50:54,998 - AutoTestFixer - INFO - Attempting to find element: id = condition_facet-Pre-Owned-1
+2025-05-26 14:51:25,153 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: id = condition_facet-Pre-Owned-1 (Current page URL: https://www.bestbuy.com/site/searchpage.jsp?st=iphone+15&id=pcat17071)
+2025-05-26 14:51:25,225 - AutoTestFixer - INFO - Test test_bestbuy_84c1847c failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 14:54:16,561 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace outdated checkbox id with a robust XPATH that targets the visible “Pre-Owned” tile-checkbox.  
+Original code line/lines:
+        pre_owned_checkbox = self.driver.find_element(By.ID, "condition_facet-Pre-Owned-1")
+        scroll_to_element(self.driver, pre_owned_checkbox)
+        pre_owned_checkbox.click()
+Fixed code line/lines:
+        pre_owned_checkbox = self.driver.find_element(By.XPATH, "//button[contains(@class,'tile-checkbox') and .//div[@class='tile-title' and normalize-space()='Pre-Owned']]")
+        scroll_to_element(self.driver, pre_owned_checkbox)
+        pre_owned_checkbox.click()
+-------------------------------------------------------
+Potential fix (2): Locate the correct filter by iterating through all tile-checkbox buttons and matching on text.  
+Original code line/lines:
+        pre_owned_checkbox = self.driver.find_element(By.ID, "condition_facet-Pre-Owned-1")
+        scroll_to_element(self.driver, pre_owned_checkbox)
+        pre_owned_checkbox.click()
+Fixed code line/lines:
+        pre_owned_checkbox = next(filter(lambda el: 'Pre-Owned' in el.text, self.driver.find_elements(By.CSS_SELECTOR, "button.tile-checkbox")), None)
+        assert pre_owned_checkbox is not None, "Pre-Owned filter not found"
+        scroll_to_element(self.driver, pre_owned_checkbox)
+        pre_owned_checkbox.click()
+-------------------------------------------------------
+Potential fix (3): Scroll to the “Condition” section first, then click the updated Pre-Owned tile.  
+Original code line/lines:
+        pre_owned_checkbox = self.driver.find_element(By.ID, "condition_facet-Pre-Owned-1")
+        scroll_to_element(self.driver, pre_owned_checkbox)
+        pre_owned_checkbox.click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[contains(text(),'Condition')]").location_once_scrolled_into_view
+        pre_owned_checkbox = self.driver.find_element(By.XPATH, "//button[contains(@class,'tile-checkbox') and .//div[normalize-space()='Pre-Owned']]")
+        pre_owned_checkbox.click()
+-------------------------------------------------------
+2025-05-26 14:54:16,562 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
