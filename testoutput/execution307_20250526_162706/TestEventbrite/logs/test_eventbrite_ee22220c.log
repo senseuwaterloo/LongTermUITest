@@ -1,0 +1,117 @@
+2025-05-26 16:27:50,871 - AutoTestFixer - ERROR - --- Test test_eventbrite_ee22220c FAILED ---
+2025-05-26 16:27:50,871 - AutoTestFixer - ERROR - URL at failure: https://www.eventbrite.com/organizer/contact-sales/
+2025-05-26 16:27:50,871 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_eventbrite.TestEventbrite object at 0x10360bb50>
+
+    def test_eventbrite_ee22220c(self):
+        self.driver.get("https://www.eventbrite.com/")
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a").click()
+    
+>       self.driver.find_element(By.ID, "search-autocomplete-input").clear()
+
+test/test_eventbrite.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1035f77f0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102745898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010273c9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001021f5600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102247304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000102247521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102297204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010226d33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000102294566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010226d0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010223961d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x000000010223a281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000102703560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000102707425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001026ddeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000102707e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001026ccdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x000000010272aa78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x000000010272ac40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010273c591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff810070df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff81006c857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 16:27:12,284 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.eventbrite.com/
+2025-05-26 16:27:16,234 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.eventbrite.com/
+2025-05-26 16:27:18,240 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a
+2025-05-26 16:27:18,266 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a
+2025-05-26 16:27:18,266 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a
+2025-05-26 16:27:18,266 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a
+2025-05-26 16:27:18,271 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a
+2025-05-26 16:27:19,966 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a
+2025-05-26 16:27:19,966 - AutoTestFixer - INFO - Attempting to find element: id = search-autocomplete-input
+2025-05-26 16:27:50,022 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: id = search-autocomplete-input (Current page URL: https://www.eventbrite.com/organizer/contact-sales/)
+2025-05-26 16:27:50,093 - AutoTestFixer - INFO - Test test_eventbrite_ee22220c failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 16:30:35,744 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Click directly on the search box instead of the “Contact Sales” nav link, keeping the browser on the homepage.  
+Original code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a").click()  
+Fixed code line/lines:  
+        self.driver.find_element(By.ID, "search-autocomplete-input").click()  
+-------------------------------------------------------
+Potential fix (2): Remove the erroneous click altogether so the test starts typing immediately in the existing search field.  
+Original code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a").click()  
+Fixed code line/lines:  
+        # Removed click that navigated away from homepage  
+-------------------------------------------------------
+Potential fix (3): Point the locator to the correct “Search for events” input using a robust CSS selector.  
+Original code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a").click()  
+Fixed code line/lines:  
+        self.driver.find_element(By.CSS_SELECTOR, "input[placeholder='Search for events']").click()  
+-------------------------------------------------------
+Potential fix (4): If the search bar is hidden until activated, open the search overlay by clicking its icon instead of the “Contact Sales” link.  
+Original code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a").click()  
+Fixed code line/lines:  
+        self.driver.find_element(By.XPATH, "//button[@aria-label='Search']").click()  
+-------------------------------------------------------
+Potential fix (5): Skip the nav click and directly load the search-results URL to bypass homepage interaction entirely.  
+Original code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div/div[1]/header/nav/div/div[3]/ul[1]/li[1]/a").click()  
+Fixed code line/lines:  
+        self.driver.get("https://www.eventbrite.com/d/online/all-events/")  
+-------------------------------------------------------
+2025-05-26 16:30:35,744 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
