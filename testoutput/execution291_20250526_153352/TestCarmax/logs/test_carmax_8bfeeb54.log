@@ -1,0 +1,125 @@
+2025-05-26 15:34:36,275 - AutoTestFixer - ERROR - --- Test test_carmax_8bfeeb54 FAILED ---
+2025-05-26 15:34:36,275 - AutoTestFixer - ERROR - URL at failure: https://www.carmax.com/cars
+2025-05-26 15:34:36,276 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_carmax.TestCarmax object at 0x105be2560>
+
+    def test_carmax_8bfeeb54(self):
+        self.driver.get("https://carmax.com")
+    
+        self.driver.find_element(By.XPATH, "//section[@id='first-time-visitor-hero']/div/div/div/div/hzn-button").click()
+        self.driver.find_element(By.XPATH, "//div[@id='Distance']/button[1]").click()
+    
+>       self.driver.find_element(By.XPATH, "//div[@id='filter-panel']/div/div/div[2]/div[1]/div/div/div/div[1]/div[1]/div[1]/div[2]").click()
+
+test/test_carmax.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x105bf4af0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001048f9898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001048f09ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001043a9600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001043fb304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001043fb521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x000000010444b204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010442133d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000104448566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001044210e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001043ed61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001043ee281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001048b7560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001048bb425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104891eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001048bbe5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104880dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001048dea78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001048dec40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x00000001048f0591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff80943cdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff809438857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 15:33:57,733 - AutoTestFixer - INFO - Attempting to navigate to URL: https://carmax.com
+2025-05-26 15:34:00,216 - AutoTestFixer - INFO - Successfully navigated to URL: https://carmax.com
+2025-05-26 15:34:02,218 - AutoTestFixer - INFO - Attempting to find element: xpath = //section[@id='first-time-visitor-hero']/div/div/div/div/hzn-button
+2025-05-26 15:34:02,244 - AutoTestFixer - INFO - Successfully find element: xpath = //section[@id='first-time-visitor-hero']/div/div/div/div/hzn-button
+2025-05-26 15:34:02,244 - AutoTestFixer - INFO - Attempting to click element: xpath = //section[@id='first-time-visitor-hero']/div/div/div/div/hzn-button
+2025-05-26 15:34:02,244 - AutoTestFixer - INFO - Attempting to find element: xpath = //section[@id='first-time-visitor-hero']/div/div/div/div/hzn-button
+2025-05-26 15:34:02,249 - AutoTestFixer - INFO - Successfully find element: xpath = //section[@id='first-time-visitor-hero']/div/div/div/div/hzn-button
+2025-05-26 15:34:04,333 - AutoTestFixer - INFO - Element clicked: xpath = //section[@id='first-time-visitor-hero']/div/div/div/div/hzn-button
+2025-05-26 15:34:04,333 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='Distance']/button[1]
+2025-05-26 15:34:04,353 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='Distance']/button[1]
+2025-05-26 15:34:04,353 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='Distance']/button[1]
+2025-05-26 15:34:04,353 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='Distance']/button[1]
+2025-05-26 15:34:04,367 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='Distance']/button[1]
+2025-05-26 15:34:04,416 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='Distance']/button[1]
+2025-05-26 15:34:04,416 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='filter-panel']/div/div/div[2]/div[1]/div/div/div/div[1]/div[1]/div[1]/div[2]
+2025-05-26 15:34:34,833 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='filter-panel']/div/div/div[2]/div[1]/div/div/div/div[1]/div[1]/div[1]/div[2] (Current page URL: https://www.carmax.com/cars)
+2025-05-26 15:34:34,896 - AutoTestFixer - INFO - Test test_carmax_8bfeeb54 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 15:35:33,030 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle deep-path XPath with direct link-text locator for the visible “Change store” control.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filter-panel']/div/div/div[2]/div[1]/div/div/div/div[1]/div[1]/div[1]/div[2]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.LINK_TEXT, "Change store").click()
+-------------------------------------------------------
+Potential fix (2): Use a robust text-based XPath that matches either casing of the “Change store” button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filter-panel']/div/div/div[2]/div[1]/div/div/div/div[1]/div[1]/div[1]/div[2]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[contains(., 'Change store') or contains(., 'Change Store')]").click()
+-------------------------------------------------------
+Potential fix (3): Target the same element via a concise CSS selector keyed off a data-test id often present on this control.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filter-panel']/div/div/div[2]/div[1]/div/div/div/div[1]/div[1]/div[1]/div[2]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a[data-testid='change-store-link'], button[data-testid='change-store-link']").click()
+-------------------------------------------------------
+Potential fix (4): Leverage the element’s accessible label instead of DOM position.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filter-panel']/div/div/div[2]/div[1]/div/div/div/div[1]/div[1]/div[1]/div[2]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//*[@aria-label='Change store']").click()
+-------------------------------------------------------
+Potential fix (5): Directly open the store-selection tab via its stable id before entering the ZIP.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filter-panel']/div/div/div[2]/div[1]/div/div/div/div[1]/div[1]/div[1]/div[2]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "radix-6-trigger-distanceShippingLocations").click()
+-------------------------------------------------------
+2025-05-26 15:35:33,030 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
