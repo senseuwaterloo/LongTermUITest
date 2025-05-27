@@ -1,0 +1,112 @@
+2025-05-26 15:15:16,435 - AutoTestFixer - ERROR - --- Test test_cagov_1b4901e9 FAILED ---
+2025-05-26 15:15:16,436 - AutoTestFixer - ERROR - URL at failure: https://www.ca.gov/
+2025-05-26 15:15:16,436 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_cagov.TestCaGov object at 0x103cbf580>
+
+    def test_cagov_1b4901e9(self):
+        self.driver.get("https://www.ca.gov/")
+>       self.driver.find_element(By.XPATH, "//ul[@id='nav_list']/li[7]/a[1]").click()
+
+test/test_cagov.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x103c6f400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100717898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010070e9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001001c7600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100219304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100219521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100269204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010023f33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100266566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010023f0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010020b61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x000000010020c281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001006d5560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001006d9425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001006afeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001006d9e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010069edc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001006fca78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001006fcc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010070e591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff8152b0df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff8152ac857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 15:14:42,607 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.ca.gov/
+2025-05-26 15:14:43,820 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.ca.gov/
+2025-05-26 15:14:45,825 - AutoTestFixer - INFO - Attempting to find element: xpath = //ul[@id='nav_list']/li[7]/a[1]
+2025-05-26 15:15:15,896 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //ul[@id='nav_list']/li[7]/a[1] (Current page URL: https://www.ca.gov/)
+2025-05-26 15:15:15,965 - AutoTestFixer - INFO - Test test_cagov_1b4901e9 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 15:16:06,179 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update the locator to click the visible “Services” link instead of the missing 7-th list item.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='nav_list']/li[7]/a[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.LINK_TEXT, "Services").click()
+-------------------------------------------------------
+Potential fix (2): Use a CSS selector that targets the same “Services” link more robustly.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='nav_list']/li[7]/a[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a.first-level-link[href='/services/']").click()
+-------------------------------------------------------
+Potential fix (3): Ensure the desktop navigation is rendered by enlarging the window before searching for the link.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='nav_list']/li[7]/a[1]").click()
+Fixed code line/lines:
+        self.driver.set_window_size(1920, 1080)
+        self.driver.find_element(By.LINK_TEXT, "Services").click()
+-------------------------------------------------------
+Potential fix (4): Open the collapsed mobile menu first, then click the desired link.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='nav_list']/li[7]/a[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button.navbar-toggler").click()
+        self.driver.find_element(By.LINK_TEXT, "Services").click()
+-------------------------------------------------------
+Potential fix (5): Narrow the XPath to the “Services” anchor directly, avoiding positional indices.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='nav_list']/li[7]/a[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@class='first-level-link' and normalize-space(text())='Services']").click()
+-------------------------------------------------------
+
+2025-05-26 15:16:06,179 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
