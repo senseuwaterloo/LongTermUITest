@@ -1,0 +1,121 @@
+2025-05-26 17:03:57,144 - AutoTestFixer - ERROR - --- Test test_govuk_593f78ad FAILED ---
+2025-05-26 17:03:57,144 - AutoTestFixer - ERROR - URL at failure: https://www.gov.uk/
+2025-05-26 17:03:57,144 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_govuk.TestGovUk object at 0x109597b50>
+
+    def test_govuk_593f78ad(self):
+        self.driver.get("https://www.gov.uk/")
+    
+>       self.driver.find_element(By.XPATH, "//div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q']").clear()
+
+test/test_govuk.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x109583400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000103397898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010338e9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000102e47600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102e99304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000102e99521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102ee9204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000102ebf33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000102ee6566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000102ebf0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000102e8b61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000102e8c281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000103355560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000103359425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x000000010332feb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000103359e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010331edc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x000000010337ca78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x000000010337cc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010338e591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff81b7f0df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff81b7ec857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 17:03:24,047 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.gov.uk/
+2025-05-26 17:03:24,534 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.gov.uk/
+2025-05-26 17:03:26,653 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q']
+2025-05-26 17:03:56,716 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q'] (Current page URL: https://www.gov.uk/)
+2025-05-26 17:03:56,788 - AutoTestFixer - INFO - Test test_govuk_593f78ad failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 17:04:35,112 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update the locator’s name attribute from ‘q’ to the current ‘keywords’.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q']").clear()
+        self.driver.find_element(By.XPATH, "//div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q']").send_keys("benefits")
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//input[starts-with(@id,'search-main-') and @name='keywords']").clear()
+        self.driver.find_element(By.XPATH, "//input[starts-with(@id,'search-main-') and @name='keywords']").send_keys("benefits")
+-------------------------------------------------------
+Potential fix (2): Drop the brittle wrapper path and target the input solely by its dynamic id prefix.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q']").clear()
+        self.driver.find_element(By.XPATH, "//div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q']").send_keys("benefits")
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//input[starts-with(@id,'search-main-')]").clear()
+        self.driver.find_element(By.XPATH, "//input[starts-with(@id,'search-main-')]").send_keys("benefits")
+-------------------------------------------------------
+Potential fix (3): Use a clearer, robust CSS selector and store the element in a variable before interacting.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q']").clear()
+        self.driver.find_element(By.XPATH, "//div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q']").send_keys("benefits")
+Fixed code line/lines:
+        search_box = self.driver.find_element(By.CSS_SELECTOR, "input[id^='search-main-'][role='combobox']")
+        search_box.clear()
+        search_box.send_keys("benefits")
+-------------------------------------------------------
+Potential fix (4): Simplify and harden the button locator by removing the ‘wrapper’ dependency.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='wrapper']//button[@enterkeyhint='search']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@enterkeyhint='search']").click()
+-------------------------------------------------------
+Potential fix (5): Replace multiple identical XPaths with a single variable to reduce duplication and potential locator drift.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q']").clear()
+        self.driver.find_element(By.XPATH, "//div[@id='wrapper']//input[contains(@id, 'search-main-') and @name='q']").send_keys("benefits")
+Fixed code line/lines:
+        search_input_xpath = "//input[starts-with(@id,'search-main-') and @name='keywords']"
+        self.driver.find_element(By.XPATH, search_input_xpath).clear()
+        self.driver.find_element(By.XPATH, search_input_xpath).send_keys("benefits")
+-------------------------------------------------------
+
+2025-05-26 17:04:35,112 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
