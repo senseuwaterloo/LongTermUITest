@@ -1,0 +1,148 @@
+2025-05-26 16:12:45,072 - AutoTestFixer - ERROR - --- Test test_drugs_bb78798e FAILED ---
+2025-05-26 16:12:45,072 - AutoTestFixer - ERROR - URL at failure: https://www.drugs.com/imprints.php
+2025-05-26 16:12:45,072 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_drugs.TestDrugs object at 0x1035fdf00>
+
+    def test_drugs_bb78798e(self):
+        self.driver.get("https://www.drugs.com/")
+        self.driver.find_element(By.XPATH, "/html/body[1]/div[2]/div[1]/ul[1]/li[2]/a[1]/img[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Agree and Continue')]").click()
+        self.driver.find_element(By.ID, "livesearch-imprint").clear()
+        self.driver.find_element(By.ID, "livesearch-imprint").send_keys("894 5")
+    
+        color_list = self.driver.find_element(By.ID, "color-select")
+        color_select = Select(color_list)
+        color_select.select_by_visible_text('Pink')
+    
+        shape_list = self.driver.find_element(By.ID, "shape-select")
+        shape_select = Select(shape_list)
+        shape_select.select_by_visible_text('Oval')
+    
+>       self.driver.find_element(By.XPATH, "//button[@data-submit='Searching...' and @type='submit']").click()
+
+test/test_drugs.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x103601ab0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102d44898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000102d3b9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001027f4600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102846304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000102846521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102896204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010286c33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000102893566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010286c0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010283861d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000102839281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000102d02560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000102d06425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000102cdceb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000102d06e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000102ccbdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000102d29a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000102d29c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000102d3b591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812eccdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812ec8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 16:12:09,503 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.drugs.com/
+2025-05-26 16:12:10,559 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.drugs.com/
+2025-05-26 16:12:12,564 - AutoTestFixer - INFO - Attempting to find element: xpath = /html/body[1]/div[2]/div[1]/ul[1]/li[2]/a[1]/img[1]
+2025-05-26 16:12:12,590 - AutoTestFixer - INFO - Successfully find element: xpath = /html/body[1]/div[2]/div[1]/ul[1]/li[2]/a[1]/img[1]
+2025-05-26 16:12:12,590 - AutoTestFixer - INFO - Attempting to click element: xpath = /html/body[1]/div[2]/div[1]/ul[1]/li[2]/a[1]/img[1]
+2025-05-26 16:12:12,590 - AutoTestFixer - INFO - Attempting to find element: xpath = /html/body[1]/div[2]/div[1]/ul[1]/li[2]/a[1]/img[1]
+2025-05-26 16:12:12,598 - AutoTestFixer - INFO - Successfully find element: xpath = /html/body[1]/div[2]/div[1]/ul[1]/li[2]/a[1]/img[1]
+2025-05-26 16:12:13,086 - AutoTestFixer - INFO - Element clicked: xpath = /html/body[1]/div[2]/div[1]/ul[1]/li[2]/a[1]/img[1]
+2025-05-26 16:12:13,086 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Agree and Continue')]
+2025-05-26 16:12:13,130 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Agree and Continue')]
+2025-05-26 16:12:13,130 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'Agree and Continue')]
+2025-05-26 16:12:13,130 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Agree and Continue')]
+2025-05-26 16:12:13,135 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Agree and Continue')]
+2025-05-26 16:12:13,608 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'Agree and Continue')]
+2025-05-26 16:12:13,608 - AutoTestFixer - INFO - Attempting to find element: id = livesearch-imprint
+2025-05-26 16:12:13,633 - AutoTestFixer - INFO - Successfully find element: id = livesearch-imprint
+2025-05-26 16:12:13,651 - AutoTestFixer - INFO - Attempting to find element: id = livesearch-imprint
+2025-05-26 16:12:13,656 - AutoTestFixer - INFO - Successfully find element: id = livesearch-imprint
+2025-05-26 16:12:13,741 - AutoTestFixer - INFO - Attempting to find element: id = color-select
+2025-05-26 16:12:13,746 - AutoTestFixer - INFO - Successfully find element: id = color-select
+2025-05-26 16:12:13,753 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "Pink"] within element: id = color-select
+2025-05-26 16:12:13,760 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "Pink"] within element: id = color-select
+2025-05-26 16:12:13,770 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "Pink"]
+2025-05-26 16:12:13,770 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "Pink"] within element: id = color-select
+2025-05-26 16:12:13,776 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "Pink"] within element: id = color-select
+2025-05-26 16:12:13,799 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "Pink"]
+2025-05-26 16:12:13,799 - AutoTestFixer - INFO - Attempting to find element: id = shape-select
+2025-05-26 16:12:13,805 - AutoTestFixer - INFO - Successfully find element: id = shape-select
+2025-05-26 16:12:13,810 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "Oval"] within element: id = shape-select
+2025-05-26 16:12:13,817 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "Oval"] within element: id = shape-select
+2025-05-26 16:12:13,825 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "Oval"]
+2025-05-26 16:12:13,825 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "Oval"] within element: id = shape-select
+2025-05-26 16:12:13,833 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "Oval"] within element: id = shape-select
+2025-05-26 16:12:13,851 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "Oval"]
+2025-05-26 16:12:13,851 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-submit='Searching...' and @type='submit']
+2025-05-26 16:12:43,870 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //button[@data-submit='Searching...' and @type='submit'] (Current page URL: https://www.drugs.com/imprints.php)
+2025-05-26 16:12:43,944 - AutoTestFixer - INFO - Test test_drugs_bb78798e failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 16:13:08,746 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update the locator to use the current attribute data-submit-loading which is present on the button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@data-submit='Searching...' and @type='submit']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@data-submit-loading and @type='submit']").click()
+-------------------------------------------------------
+Potential fix (2): Locate the button by its visible text “Search” instead of a changing data attribute.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@data-submit='Searching...' and @type='submit']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@type='submit' and normalize-space()='Search']").click()
+-------------------------------------------------------
+Potential fix (3): Use the stable class combination to identify the submit button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@data-submit='Searching...' and @type='submit']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button.ddc-btn.ddc-btn-block[type='submit']").click()
+-------------------------------------------------------
+Potential fix (4): Select the first submit button inside the pill search form with a shorter, less brittle XPath.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@data-submit='Searching...' and @type='submit']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "(//form//button[@type='submit'])[1]").click()
+-------------------------------------------------------
+2025-05-26 16:13:08,746 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
