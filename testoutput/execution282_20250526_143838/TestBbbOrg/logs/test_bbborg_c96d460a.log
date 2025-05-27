@@ -1,0 +1,137 @@
+2025-05-26 14:39:22,805 - AutoTestFixer - ERROR - --- Test test_bbborg_c96d460a FAILED ---
+2025-05-26 14:39:22,805 - AutoTestFixer - ERROR - URL at failure: https://www.bbb.org/
+2025-05-26 14:39:22,805 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_bbborg.TestBbbOrg object at 0x106e87b20>
+
+    def test_bbborg_c96d460a(self):
+        self.driver.get("https://bbb.org")
+        self.driver.find_element(By.XPATH, "//main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/div/span[1]").click()
+        self.driver.find_element(By.XPATH, "//main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/ul/li[1]").click()
+    
+        self.driver.find_element(By.XPATH, "//main[@id='content']//input[@placeholder='businesses, category']").click()
+        self.driver.find_element(By.XPATH, "//main[@id='content']//input[@placeholder='businesses, category']").send_keys("SOLAR")
+        time.sleep(2)
+>       self.driver.find_element(By.ID, "downshift-2-item-0").click()
+
+test/test_bbborg.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x106eb40d0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102890898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001028879ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000102340600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102392304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000102392521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001023e2204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x00000001023b833d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001023df566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001023b80e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010238461d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000102385281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x000000010284e560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000102852425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000102828eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000102852e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000102817dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000102875a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000102875c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000102887591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff809bbcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff809bb8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 14:38:43,670 - AutoTestFixer - INFO - Attempting to navigate to URL: https://bbb.org
+2025-05-26 14:38:46,753 - AutoTestFixer - INFO - Successfully navigated to URL: https://bbb.org
+2025-05-26 14:38:48,945 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/div/span[1]
+2025-05-26 14:38:48,967 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/div/span[1]
+2025-05-26 14:38:48,967 - AutoTestFixer - INFO - Attempting to click element: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/div/span[1]
+2025-05-26 14:38:48,967 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/div/span[1]
+2025-05-26 14:38:48,972 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/div/span[1]
+2025-05-26 14:38:49,021 - AutoTestFixer - INFO - Element clicked: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/div/span[1]
+2025-05-26 14:38:49,022 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/ul/li[1]
+2025-05-26 14:38:49,031 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/ul/li[1]
+2025-05-26 14:38:49,031 - AutoTestFixer - INFO - Attempting to click element: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/ul/li[1]
+2025-05-26 14:38:49,031 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/ul/li[1]
+2025-05-26 14:38:49,035 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/ul/li[1]
+2025-05-26 14:38:49,089 - AutoTestFixer - INFO - Element clicked: xpath = //main[@id='content']/div[1]/div/div/div[2]/form/div/div[2]/div[2]/ul/li[1]
+2025-05-26 14:38:49,089 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='content']//input[@placeholder='businesses, category']
+2025-05-26 14:38:49,096 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='content']//input[@placeholder='businesses, category']
+2025-05-26 14:38:49,096 - AutoTestFixer - INFO - Attempting to click element: xpath = //main[@id='content']//input[@placeholder='businesses, category']
+2025-05-26 14:38:49,096 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='content']//input[@placeholder='businesses, category']
+2025-05-26 14:38:49,101 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='content']//input[@placeholder='businesses, category']
+2025-05-26 14:38:49,161 - AutoTestFixer - INFO - Element clicked: xpath = //main[@id='content']//input[@placeholder='businesses, category']
+2025-05-26 14:38:49,161 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='content']//input[@placeholder='businesses, category']
+2025-05-26 14:38:49,167 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='content']//input[@placeholder='businesses, category']
+2025-05-26 14:38:51,273 - AutoTestFixer - INFO - Attempting to find element: id = downshift-2-item-0
+2025-05-26 14:39:21,748 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: id = downshift-2-item-0 (Current page URL: https://www.bbb.org/)
+2025-05-26 14:39:21,823 - AutoTestFixer - INFO - Test test_bbborg_c96d460a failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 14:41:20,818 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use a stable CSS selector that matches any suggestion item whose id ends with “item-0”, avoiding the dynamic “downshift-*” prefix.
+Original code line/lines:
+        self.driver.find_element(By.ID, "downshift-2-item-0").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "[id$='item-0']").click()
+-------------------------------------------------------
+Potential fix (2): Switch to an XPath that clicks the first visible suggestion element rendered with role="button", making the locator independent of dynamic ids.
+Original code line/lines:
+        self.driver.find_element(By.ID, "downshift-2-item-0").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "(//div[@role='button' and contains(@class,'find-ta-suggestion')])[1]").click()
+-------------------------------------------------------
+Potential fix (3): Select the first suggestion via keyboard navigation (ARROW_DOWN + ENTER) instead of clicking a dynamically generated element.
+Original code line/lines:
+        self.driver.find_element(By.ID, "downshift-2-item-0").click()
+Fixed code line/lines:
+        from selenium.webdriver.common.keys import Keys
+        self.driver.find_element(By.XPATH, "//main[@id='content']//input[@placeholder='businesses, category']").send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+-------------------------------------------------------
+Potential fix (4): Narrow the locator to the first suggestion immediately following the “Find” input using a sibling relationship, eliminating reliance on id or class randomness.
+Original code line/lines:
+        self.driver.find_element(By.ID, "downshift-2-item-0").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//input[@placeholder='businesses, category']/following::div[@role='button'][1]").click()
+-------------------------------------------------------
+Potential fix (5): Use JavaScript to click the first suggestion in the list to bypass any overlay or focus issues that could block a normal Selenium click.
+Original code line/lines:
+        self.driver.find_element(By.ID, "downshift-2-item-0").click()
+Fixed code line/lines:
+        first_suggestion = self.driver.find_element(By.CSS_SELECTOR, "[id$='item-0']")
+        self.driver.execute_script("arguments[0].click();", first_suggestion)
+-------------------------------------------------------
+2025-05-26 14:41:20,819 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
