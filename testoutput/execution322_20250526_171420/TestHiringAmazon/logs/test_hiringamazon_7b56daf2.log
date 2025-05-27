@@ -1,0 +1,133 @@
+2025-05-26 17:15:10,080 - AutoTestFixer - ERROR - --- Test test_hiringamazon_7b56daf2 FAILED ---
+2025-05-26 17:15:10,080 - AutoTestFixer - ERROR - URL at failure: https://dspjobhub.com/jobs-near-you
+2025-05-26 17:15:10,080 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_hiringamazon.TestHiringAmazon object at 0x103c97fd0>
+
+    def test_hiringamazon_7b56daf2(self):
+        self.driver.get("https://hiring.amazon.com")
+    
+        self.driver.find_element(By.XPATH, "//div[@data-test-component='StencilText' and text()='Job Opportunities']").click()
+    
+        self.driver.find_element(By.XPATH, "//div[@data-test-component='StencilText' and text()='DSP Delivery Driver']").click()
+    
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//a[contains(text(),'Apply with a Delivery Service Partner')]").get_native_element())
+    
+        switch_to_new_tab_and_close_old(self.driver)
+    
+>       self.driver.find_element(By.XPATH, "//div[text()='Accept All']").click()
+
+test/test_hiringamazon.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x103c4b400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104adc898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000104ad39ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x000000010458c600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001045de304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001045de521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x000000010462e204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010460433d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x000000010462b566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001046040e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001045d061d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001045d1281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104a9a560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104a9e425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104a74eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104a9ee5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104a63dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104ac1a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104ac1c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104ad3591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff8136dcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff8136d8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 17:14:26,145 - AutoTestFixer - INFO - Attempting to navigate to URL: https://hiring.amazon.com
+2025-05-26 17:14:28,428 - AutoTestFixer - INFO - Successfully navigated to URL: https://hiring.amazon.com
+2025-05-26 17:14:30,587 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-test-component='StencilText' and text()='Job Opportunities']
+2025-05-26 17:14:30,608 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-test-component='StencilText' and text()='Job Opportunities']
+2025-05-26 17:14:30,608 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@data-test-component='StencilText' and text()='Job Opportunities']
+2025-05-26 17:14:30,609 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-test-component='StencilText' and text()='Job Opportunities']
+2025-05-26 17:14:30,615 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-test-component='StencilText' and text()='Job Opportunities']
+2025-05-26 17:14:30,664 - AutoTestFixer - INFO - Element clicked: xpath = //div[@data-test-component='StencilText' and text()='Job Opportunities']
+2025-05-26 17:14:30,664 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-test-component='StencilText' and text()='DSP Delivery Driver']
+2025-05-26 17:14:30,670 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-test-component='StencilText' and text()='DSP Delivery Driver']
+2025-05-26 17:14:30,670 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@data-test-component='StencilText' and text()='DSP Delivery Driver']
+2025-05-26 17:14:30,670 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-test-component='StencilText' and text()='DSP Delivery Driver']
+2025-05-26 17:14:30,674 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-test-component='StencilText' and text()='DSP Delivery Driver']
+2025-05-26 17:14:31,757 - AutoTestFixer - INFO - Element clicked: xpath = //div[@data-test-component='StencilText' and text()='DSP Delivery Driver']
+2025-05-26 17:14:31,758 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Apply with a Delivery Service Partner')]
+2025-05-26 17:14:31,795 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Apply with a Delivery Service Partner')]
+2025-05-26 17:14:38,956 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[text()='Accept All']
+2025-05-26 17:15:09,043 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[text()='Accept All'] (Current page URL: https://dspjobhub.com/jobs-near-you)
+2025-05-26 17:15:09,115 - AutoTestFixer - INFO - Test test_hiringamazon_7b56daf2 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 17:15:52,217 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use stable element id `cookiescript_accept` to click the cookie banner instead of the case-sensitive text match.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[text()='Accept All']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "cookiescript_accept").click()
+-------------------------------------------------------
+Potential fix (2): Make the XPath case-insensitive so it matches “Accept all”.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[text()='Accept All']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[contains(translate(normalize-space(text()), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'accept all')]").click()
+-------------------------------------------------------
+Potential fix (3): Dismiss the banner via its close (“×”) button when present.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[text()='Accept All']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "cookiescript_close").click()
+-------------------------------------------------------
+Potential fix (4): Use JavaScript to click the accept button to bypass any overlay interception.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[text()='Accept All']").click()
+Fixed code line/lines:
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.ID, "cookiescript_accept").get_native_element())
+-------------------------------------------------------
+Potential fix (5): Switch to a concise CSS selector targeting the accept button by id.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[text()='Accept All']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "#cookiescript_accept").click()
+-------------------------------------------------------
+
+2025-05-26 17:15:52,217 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
