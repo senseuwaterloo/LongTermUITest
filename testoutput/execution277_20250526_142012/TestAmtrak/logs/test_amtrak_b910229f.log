@@ -1,0 +1,110 @@
+2025-05-26 14:20:59,290 - AutoTestFixer - ERROR - --- Test test_amtrak_b910229f FAILED ---
+2025-05-26 14:20:59,290 - AutoTestFixer - ERROR - URL at failure: https://www.amtrak.com/home.html
+2025-05-26 14:20:59,290 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_amtrak.TestAmtrak object at 0x10357b640>
+
+    def test_amtrak_b910229f(self):
+        self.driver.get("https://amtrak.com")
+>       self.driver.find_element(By.XPATH, "//a[contains(text(),'DEALS') and @data-automation-id='sitePrimarySubnav']").click()
+
+test/test_amtrak.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x103513400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001026e3898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001026da9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000102193600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001021e5304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001021e5521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102235204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010220b33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000102232566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010220b0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001021d761d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001021d8281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001026a1560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001026a5425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x000000010267beb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001026a5e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010266adc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001026c8a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001026c8c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x00000001026da591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff809bbcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff809bb8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 14:20:18,270 - AutoTestFixer - INFO - Attempting to navigate to URL: https://amtrak.com
+2025-05-26 14:20:25,411 - AutoTestFixer - INFO - Successfully navigated to URL: https://amtrak.com
+2025-05-26 14:20:27,537 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'DEALS') and @data-automation-id='sitePrimarySubnav']
+2025-05-26 14:20:57,757 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[contains(text(),'DEALS') and @data-automation-id='sitePrimarySubnav'] (Current page URL: https://www.amtrak.com/home.html)
+2025-05-26 14:20:57,829 - AutoTestFixer - INFO - Test test_amtrak_b910229f failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 14:21:33,921 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use simple link-text locator since the anchor has no data-automation-id attribute.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'DEALS') and @data-automation-id='sitePrimarySubnav']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.LINK_TEXT, "DEALS").click()
+-------------------------------------------------------
+Potential fix (2): Update the XPath to target the visible nav-link without relying on the missing attribute.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'DEALS') and @data-automation-id='sitePrimarySubnav']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(@class,'nav-link') and normalize-space()='DEALS']").click()
+-------------------------------------------------------
+Potential fix (3): Ensure the navigation bar is fully visible by maximizing the window before locating “DEALS”.
+Original code line/lines:
+        self.driver.get("https://amtrak.com")
+Fixed code line/lines:
+        self.driver.get("https://amtrak.com")
+        self.driver.maximize_window()
+-------------------------------------------------------
+Potential fix (4): Use partial link-text to tolerate minor text changes (e.g., “Deals” vs “DEALS”).
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'DEALS') and @data-automation-id='sitePrimarySubnav']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.PARTIAL_LINK_TEXT, "DEALS").click()
+-------------------------------------------------------
+Potential fix (5): Make the XPath case-insensitive so it works even if the label changes to “Deals”.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'DEALS') and @data-automation-id='sitePrimarySubnav']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//*[translate(normalize-space(text()),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')='DEALS' and contains(@class,'nav-link')]").click()
+-------------------------------------------------------
+2025-05-26 14:21:33,922 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
