@@ -1,0 +1,117 @@
+2025-05-26 17:06:54,657 - AutoTestFixer - ERROR - --- Test test_healthgrades_8aa9bddc FAILED ---
+2025-05-26 17:06:54,657 - AutoTestFixer - ERROR - URL at failure: https://www.healthgrades.com/
+2025-05-26 17:06:54,658 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_healthgrades.TestHealthgrades object at 0x106352f20>
+
+    def test_healthgrades_8aa9bddc(self):
+        self.driver.get("https://www.healthgrades.com/")
+    
+>       self.driver.find_element(By.ID, "homepage-search-input").clear()
+
+test/test_healthgrades.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10633f400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000101454898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010144b9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100f04600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100f56304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100f56521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100fa6204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000100f7c33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100fa3566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100f7c0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100f4861d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100f49281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000101412560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000101416425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001013eceb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000101416e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001013dbdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000101439a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000101439c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010144b591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff81b7f0df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff81b7ec857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 17:06:21,219 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.healthgrades.com/
+2025-05-26 17:06:21,913 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.healthgrades.com/
+2025-05-26 17:06:23,918 - AutoTestFixer - INFO - Attempting to find element: id = homepage-search-input
+2025-05-26 17:06:53,951 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: id = homepage-search-input (Current page URL: https://www.healthgrades.com/)
+2025-05-26 17:06:54,023 - AutoTestFixer - INFO - Test test_healthgrades_8aa9bddc failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 17:07:23,515 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace outdated search input id with current "home-search-input".
+Original code line/lines:
+        self.driver.find_element(By.ID, "homepage-search-input").clear()
+        self.driver.find_element(By.ID, "homepage-search-input").send_keys("allergy")
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "home-search-input").clear()
+        self.driver.find_element(By.ID, "home-search-input").send_keys("allergy")
+-------------------------------------------------------
+Potential fix (2): Use data-qa-target selector for a more stable search input locator.
+Original code line/lines:
+        self.driver.find_element(By.ID, "homepage-search-input").clear()
+        self.driver.find_element(By.ID, "homepage-search-input").send_keys("allergy")
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "[data-qa-target='home-search-input']").clear()
+        self.driver.find_element(By.CSS_SELECTOR, "[data-qa-target='home-search-input']").send_keys("allergy")
+-------------------------------------------------------
+Potential fix (3): Update location input id to match current "home-location-input".
+Original code line/lines:
+        self.driver.find_element(By.ID, "synd-header-location-input").clear()
+        self.driver.find_element(By.ID, "synd-header-location-input").send_keys("stamford")
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "home-location-input").clear()
+        self.driver.find_element(By.ID, "home-location-input").send_keys("stamford")
+-------------------------------------------------------
+Potential fix (4): Click the first search suggestion using a robust starts-with id pattern.
+Original code line/lines:
+        self.driver.find_element(By.ID, "homepage-search-drawer-sugg-6").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "[id^='home-search-drawer-sugg-']").click()
+-------------------------------------------------------
+Potential fix (5): Adapt location suggestion xpath to new prefix "home-location-drawer-sugg-".
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//li[contains(@id, 'synd-header-location-drawer-sugg-')]//span[contains(., 'Stamford,') and contains(., 'CT')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//li[contains(@id, 'home-location-drawer-sugg-')]//span[contains(., 'Stamford,') and contains(., 'CT')]").click()
+-------------------------------------------------------
+
+2025-05-26 17:07:23,516 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
