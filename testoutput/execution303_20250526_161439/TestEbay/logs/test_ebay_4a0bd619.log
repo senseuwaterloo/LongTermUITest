@@ -1,0 +1,120 @@
+2025-05-26 16:15:20,448 - AutoTestFixer - ERROR - --- Test test_ebay_4a0bd619 FAILED ---
+2025-05-26 16:15:20,448 - AutoTestFixer - ERROR - URL at failure: https://www.ebay.com/b/Electronics/bn_7000259124
+2025-05-26 16:15:20,449 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_ebay.TestEbay object at 0x105f53b50>
+
+    def test_ebay_4a0bd619(self):
+        self.driver.get("https://ebay.com")
+    
+        self.driver.find_element(By.XPATH, "//div[@id='vl-flyout-nav']/ul/li[4]/a").click()
+    
+>       self.driver.find_element(By.XPATH, "//a[contains(text(),'Antiques')]").click()
+
+test/test_ebay.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x105f3f400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001054c6898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001054bd9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104f76600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104fc8304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104fc8521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000105018204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000104fee33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000105015566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000104fee0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000104fba61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104fbb281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000105484560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000105488425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x000000010545eeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000105488e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010544ddc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001054aba78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001054abc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x00000001054bd591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812eccdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812ec8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 16:14:45,287 - AutoTestFixer - INFO - Attempting to navigate to URL: https://ebay.com
+2025-05-26 16:14:46,248 - AutoTestFixer - INFO - Successfully navigated to URL: https://ebay.com
+2025-05-26 16:14:48,253 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='vl-flyout-nav']/ul/li[4]/a
+2025-05-26 16:14:48,291 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='vl-flyout-nav']/ul/li[4]/a
+2025-05-26 16:14:48,291 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='vl-flyout-nav']/ul/li[4]/a
+2025-05-26 16:14:48,291 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='vl-flyout-nav']/ul/li[4]/a
+2025-05-26 16:14:48,297 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='vl-flyout-nav']/ul/li[4]/a
+2025-05-26 16:14:49,279 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='vl-flyout-nav']/ul/li[4]/a
+2025-05-26 16:14:49,279 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Antiques')]
+2025-05-26 16:15:19,365 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[contains(text(),'Antiques')] (Current page URL: https://www.ebay.com/b/Electronics/bn_7000259124)
+2025-05-26 16:15:19,437 - AutoTestFixer - INFO - Test test_ebay_4a0bd619 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 16:17:06,145 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Switch to clicking the explicit “Collectibles & Art” top-level category so the subsequent “Antiques” link is present.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='vl-flyout-nav']/ul/li[4]/a").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='vl-flyout-nav']//a[normalize-space()='Collectibles & Art']").click()
+-------------------------------------------------------
+Potential fix (2): Choose “Antiques” through the header category dropdown instead of looking for a missing link on the Electronics page.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Antiques')]").click()
+Fixed code line/lines:
+        from selenium.webdriver.support.ui import Select
+        Select(self.driver.find_element(By.ID, "gh-cat")).select_by_visible_text("Antiques")
+        self.driver.find_element(By.ID, "gh-search-btn").click()
+-------------------------------------------------------
+Potential fix (3): Navigate directly to the Antiques landing page, bypassing the unreliable intermediate click.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Antiques')]").click()
+Fixed code line/lines:
+        self.driver.get("https://www.ebay.com/b/Antiques/bn_7000259153")
+-------------------------------------------------------
+Potential fix (4): Use a more robust locator for the Antiques link that appears under the Collectibles page sidebar.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Antiques')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a[href*='/b/Antiques/']").click()
+-------------------------------------------------------
+Potential fix (5): Adjust the original Electronics click to target Electronics explicitly, then update the failing locator to a visible sub-category link under Electronics (if Antiques was mis-named).
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='vl-flyout-nav']/ul/li[4]/a").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='vl-flyout-nav']//a[normalize-space()='Electronics']").click()
+-------------------------------------------------------
+2025-05-26 16:17:06,146 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
