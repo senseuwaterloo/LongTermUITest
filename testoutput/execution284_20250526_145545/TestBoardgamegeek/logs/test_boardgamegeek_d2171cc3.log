@@ -1,0 +1,235 @@
+2025-05-26 14:56:47,909 - AutoTestFixer - ERROR - --- Test test_boardgamegeek_d2171cc3 FAILED ---
+2025-05-26 14:56:47,909 - AutoTestFixer - ERROR - URL at failure: https://boardgamegeek.com/boardgame/161936/pandemic-legacy-season-1
+2025-05-26 14:56:47,910 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_boardgamegeek.TestBoardgamegeek object at 0x103a73a90>
+
+    def test_boardgamegeek_d2171cc3(self):
+        self.driver.get("https://boardgamegeek.com")
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Sign In')]").click()
+        self.driver.find_element(By.ID, "inputUsername").click()
+        self.driver.find_element(By.ID, "inputUsername").send_keys("UITestStudy")
+        self.driver.find_element(By.ID, "inputPassword").click()
+        self.driver.find_element(By.ID, "inputPassword").send_keys("UITestStudy2024")
+        self.driver.find_element(By.XPATH, "//button[contains(text(),'Sign In')]").click()
+        time.sleep(5)
+        self.driver.find_element(By.XPATH, "//button[contains(.,'GeekLists')]").click()
+    
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//a[contains(text(),'Hot')]").get_native_element())
+        self.driver.find_element(By.XPATH, "/html/body[1]/gg-app[1]/div[1]/gg-header[1]/header[1]/nav[1]/div[1]/button[2]").click()
+        self.driver.find_element(By.XPATH, "//button[contains(.,'Browse')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'All Boardgames')]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='results_objectname1']/a").click()
+    
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//button[contains(., 'Add To') and contains(., 'Collection')]").get_native_element())
+        self.driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]").click()
+        time.sleep(2)
+    
+        self.driver.find_element(By.XPATH, "//button[contains(.,'Browse')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'All Boardgames')]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='results_objectname3']/a").click()
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//button[contains(., 'Add To') and contains(., 'Collection')]").get_native_element())
+        self.driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]").click()
+        time.sleep(2)
+    
+>       self.driver.find_element(By.XPATH, "//*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/button").click()
+
+test/test_boardgamegeek.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x103a91cf0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010540e898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001054059ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104ebe600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104f10304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104f10521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104f60204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000104f3633d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000104f5d566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000104f360e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000104f0261d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104f03281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001053cc560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001053d0425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001053a6eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001053d0e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000105395dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001053f3a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001053f3c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000105405591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff809bbcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff809bb8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 14:55:51,200 - AutoTestFixer - INFO - Attempting to navigate to URL: https://boardgamegeek.com
+2025-05-26 14:55:52,840 - AutoTestFixer - INFO - Successfully navigated to URL: https://boardgamegeek.com
+2025-05-26 14:55:54,841 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Sign In')]
+2025-05-26 14:55:54,861 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Sign In')]
+2025-05-26 14:55:54,861 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'Sign In')]
+2025-05-26 14:55:54,861 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Sign In')]
+2025-05-26 14:55:54,867 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Sign In')]
+2025-05-26 14:55:54,959 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'Sign In')]
+2025-05-26 14:55:54,960 - AutoTestFixer - INFO - Attempting to find element: id = inputUsername
+2025-05-26 14:55:54,974 - AutoTestFixer - INFO - Successfully find element: id = inputUsername
+2025-05-26 14:55:54,974 - AutoTestFixer - INFO - Attempting to click element: id = inputUsername
+2025-05-26 14:55:54,974 - AutoTestFixer - INFO - Attempting to find element: id = inputUsername
+2025-05-26 14:55:54,985 - AutoTestFixer - INFO - Successfully find element: id = inputUsername
+2025-05-26 14:55:55,035 - AutoTestFixer - INFO - Element clicked: id = inputUsername
+2025-05-26 14:55:55,035 - AutoTestFixer - INFO - Attempting to find element: id = inputUsername
+2025-05-26 14:55:55,039 - AutoTestFixer - INFO - Successfully find element: id = inputUsername
+2025-05-26 14:55:55,111 - AutoTestFixer - INFO - Attempting to find element: id = inputPassword
+2025-05-26 14:55:55,117 - AutoTestFixer - INFO - Successfully find element: id = inputPassword
+2025-05-26 14:55:55,117 - AutoTestFixer - INFO - Attempting to click element: id = inputPassword
+2025-05-26 14:55:55,117 - AutoTestFixer - INFO - Attempting to find element: id = inputPassword
+2025-05-26 14:55:55,122 - AutoTestFixer - INFO - Successfully find element: id = inputPassword
+2025-05-26 14:55:55,171 - AutoTestFixer - INFO - Element clicked: id = inputPassword
+2025-05-26 14:55:55,171 - AutoTestFixer - INFO - Attempting to find element: id = inputPassword
+2025-05-26 14:55:55,175 - AutoTestFixer - INFO - Successfully find element: id = inputPassword
+2025-05-26 14:55:55,195 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(text(),'Sign In')]
+2025-05-26 14:55:55,201 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(text(),'Sign In')]
+2025-05-26 14:55:55,201 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[contains(text(),'Sign In')]
+2025-05-26 14:55:55,201 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(text(),'Sign In')]
+2025-05-26 14:55:55,206 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(text(),'Sign In')]
+2025-05-26 14:55:55,247 - AutoTestFixer - INFO - Element clicked: xpath = //button[contains(text(),'Sign In')]
+2025-05-26 14:56:00,252 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(.,'GeekLists')]
+2025-05-26 14:56:00,276 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(.,'GeekLists')]
+2025-05-26 14:56:00,276 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[contains(.,'GeekLists')]
+2025-05-26 14:56:00,276 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(.,'GeekLists')]
+2025-05-26 14:56:00,283 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(.,'GeekLists')]
+2025-05-26 14:56:00,330 - AutoTestFixer - INFO - Element clicked: xpath = //button[contains(.,'GeekLists')]
+2025-05-26 14:56:00,330 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Hot')]
+2025-05-26 14:56:00,336 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Hot')]
+2025-05-26 14:56:00,343 - AutoTestFixer - INFO - Attempting to find element: xpath = /html/body[1]/gg-app[1]/div[1]/gg-header[1]/header[1]/nav[1]/div[1]/button[2]
+2025-05-26 14:56:00,350 - AutoTestFixer - INFO - Successfully find element: xpath = /html/body[1]/gg-app[1]/div[1]/gg-header[1]/header[1]/nav[1]/div[1]/button[2]
+2025-05-26 14:56:00,350 - AutoTestFixer - INFO - Attempting to click element: xpath = /html/body[1]/gg-app[1]/div[1]/gg-header[1]/header[1]/nav[1]/div[1]/button[2]
+2025-05-26 14:56:00,350 - AutoTestFixer - INFO - Attempting to find element: xpath = /html/body[1]/gg-app[1]/div[1]/gg-header[1]/header[1]/nav[1]/div[1]/button[2]
+2025-05-26 14:56:00,354 - AutoTestFixer - INFO - Successfully find element: xpath = /html/body[1]/gg-app[1]/div[1]/gg-header[1]/header[1]/nav[1]/div[1]/button[2]
+2025-05-26 14:56:00,412 - AutoTestFixer - INFO - Element clicked: xpath = /html/body[1]/gg-app[1]/div[1]/gg-header[1]/header[1]/nav[1]/div[1]/button[2]
+2025-05-26 14:56:00,412 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:00,465 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:00,465 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:00,465 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:00,471 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:00,519 - AutoTestFixer - INFO - Element clicked: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:00,519 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:00,526 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:00,526 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:00,526 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:00,531 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:02,056 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:02,056 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='results_objectname1']/a
+2025-05-26 14:56:02,064 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='results_objectname1']/a
+2025-05-26 14:56:02,064 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='results_objectname1']/a
+2025-05-26 14:56:02,064 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='results_objectname1']/a
+2025-05-26 14:56:02,069 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='results_objectname1']/a
+2025-05-26 14:56:03,236 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='results_objectname1']/a
+2025-05-26 14:56:03,236 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(., 'Add To') and contains(., 'Collection')]
+2025-05-26 14:56:03,243 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(., 'Add To') and contains(., 'Collection')]
+2025-05-26 14:56:03,290 - AutoTestFixer - INFO - Attempting to find element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:03,363 - AutoTestFixer - INFO - Successfully find element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:03,363 - AutoTestFixer - INFO - Attempting to click element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:03,363 - AutoTestFixer - INFO - Attempting to find element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:03,369 - AutoTestFixer - INFO - Successfully find element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:03,877 - AutoTestFixer - INFO - Attempting to find element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:03,890 - AutoTestFixer - INFO - Successfully find element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:03,942 - AutoTestFixer - INFO - Element clicked: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:05,948 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:05,969 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:05,969 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:05,969 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:05,976 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:06,028 - AutoTestFixer - INFO - Element clicked: xpath = //button[contains(.,'Browse')]
+2025-05-26 14:56:06,028 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:06,033 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:06,033 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:06,033 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:06,038 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:11,884 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'All Boardgames')]
+2025-05-26 14:56:11,884 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='results_objectname3']/a
+2025-05-26 14:56:11,892 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='results_objectname3']/a
+2025-05-26 14:56:11,892 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='results_objectname3']/a
+2025-05-26 14:56:11,892 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='results_objectname3']/a
+2025-05-26 14:56:11,898 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='results_objectname3']/a
+2025-05-26 14:56:12,901 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='results_objectname3']/a
+2025-05-26 14:56:12,901 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[contains(., 'Add To') and contains(., 'Collection')]
+2025-05-26 14:56:12,907 - AutoTestFixer - INFO - Successfully find element: xpath = //button[contains(., 'Add To') and contains(., 'Collection')]
+2025-05-26 14:56:12,953 - AutoTestFixer - INFO - Attempting to find element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:13,030 - AutoTestFixer - INFO - Successfully find element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:13,031 - AutoTestFixer - INFO - Attempting to click element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:13,031 - AutoTestFixer - INFO - Attempting to find element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:13,036 - AutoTestFixer - INFO - Successfully find element: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:13,089 - AutoTestFixer - INFO - Element clicked: xpath = /html/body/div[1]/div/div/div/form/div/div/div[3]/button[1]
+2025-05-26 14:56:15,095 - AutoTestFixer - INFO - Attempting to find element: xpath = //*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/button
+2025-05-26 14:56:45,397 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/button (Current page URL: https://boardgamegeek.com/boardgame/161936/pandemic-legacy-season-1)
+2025-05-26 14:56:45,470 - AutoTestFixer - INFO - Test test_boardgamegeek_d2171cc3 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 14:57:19,920 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace fragile absolute-path locator with a stable selector that targets the avatar/profile button directly.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/button").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button.avatar-dropdown__btn").click()
+-------------------------------------------------------
+Potential fix (2): Use the element’s accessible label instead of positional indices to make the locator resilient to DOM changes.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/button").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@aria-label='Profile Menu' or contains(@class,'avatar-dropdown__btn')]").click()
+-------------------------------------------------------
+Potential fix (3): Update both the profile button and “Collection” link locators to robust, text-based XPaths.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/button").click()
+        self.driver.find_element(By.XPATH, "//*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/div/ul[1]/li[3]/a").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[contains(@class,'avatar-dropdown__btn')]").click()
+        self.driver.find_element(By.XPATH, "//ul[contains(@class,'dropdown-menu')]//a[contains(text(),'Collection')]").click()
+-------------------------------------------------------
+Potential fix (4): Scroll to the top before clicking to guarantee the header (and avatar button) is in view, then use a stable selector.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/button").click()
+Fixed code line/lines:
+        self.driver.execute_script("window.scrollTo(0, 0);")
+        self.driver.find_element(By.CSS_SELECTOR, "button.avatar-dropdown__btn").click()
+-------------------------------------------------------
+Potential fix (5): Click the avatar button via JavaScript execution to bypass any visibility/interception issues, using a resilient locator.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//*[@id='global-header-outer']/header/nav/div/div[2]/div/div[1]/ul/li[8]/button").click()
+Fixed code line/lines:
+        self.driver.execute_script("arguments[0].click();", self.driver.find_element(By.CSS_SELECTOR, "button.avatar-dropdown__btn"))
+-------------------------------------------------------
+
+2025-05-26 14:57:19,920 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
