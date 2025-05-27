@@ -1,0 +1,111 @@
+2025-05-26 15:12:00,410 - AutoTestFixer - ERROR - --- Test test_cabelas_3f62b47b FAILED ---
+2025-05-26 15:12:00,410 - AutoTestFixer - ERROR - URL at failure: https://www.cabelas.com/home
+2025-05-26 15:12:00,410 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_cabelas.TestCabelas object at 0x103607d90>
+
+    def test_cabelas_3f62b47b(self):
+        self.driver.get("https://cabelas.com")
+>       self.driver.find_element(By.ID, "departmentButton_3074457345616967316").click()
+
+test/test_cabelas.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1035bb400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000101112898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001011099ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100bc2600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100c14304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100c14521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100c64204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000100c3a33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100c61566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100c3a0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100c0661d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100c07281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001010d0560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001010d4425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001010aaeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001010d4e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000101099dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001010f7a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001010f7c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000101109591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff8152b0df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff8152ac857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 15:11:24,436 - AutoTestFixer - INFO - Attempting to navigate to URL: https://cabelas.com
+2025-05-26 15:11:26,501 - AutoTestFixer - INFO - Successfully navigated to URL: https://cabelas.com
+2025-05-26 15:11:28,506 - AutoTestFixer - INFO - Attempting to find element: id = departmentButton_3074457345616967316
+2025-05-26 15:11:58,777 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: id = departmentButton_3074457345616967316 (Current page URL: https://www.cabelas.com/home)
+2025-05-26 15:11:58,849 - AutoTestFixer - INFO - Test test_cabelas_3f62b47b failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 15:12:42,242 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace flaky, dynamic-ID locators with stable link-text clicks for the “Fishing” department and its “Ice Fishing” sub-link.
+Original code line/lines:
+        self.driver.find_element(By.ID, "departmentButton_3074457345616967316").click()
+        self.driver.find_element(By.ID, "moreLink_3074457345616967316_3074457345616967320").click()
+Fixed code line/lines:
+        self.driver.find_element(By.LINK_TEXT, "Fishing").click()
+        self.driver.find_element(By.LINK_TEXT, "Ice Fishing").click()
+-------------------------------------------------------
+Potential fix (2): Use a robust XPath that matches the department button by visible text and the data-test attribute instead of the volatile ID.
+Original code line/lines:
+        self.driver.find_element(By.ID, "departmentButton_3074457345616967316").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@data-testid='externalLinkTestID' and normalize-space()='Fishing']").click()
+-------------------------------------------------------
+Potential fix (3): Point the test to the final “www” domain directly, avoiding an extra redirect that can delay element availability.
+Original code line/lines:
+        self.driver.get("https://cabelas.com")
+Fixed code line/lines:
+        self.driver.get("https://www.cabelas.com")
+-------------------------------------------------------
+Potential fix (4): Target the “Fishing” department button with a CSS selector that is resistant to ID churn.
+Original code line/lines:
+        self.driver.find_element(By.ID, "departmentButton_3074457345616967316").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a.styles_DepartmentButton__8Oa2x[href*='/fishing']").click()
+-------------------------------------------------------
+Potential fix (5): Skip the now-missing “moreLink” click and jump straight to the sub-category checkbox using its visible label.
+Original code line/lines:
+        self.driver.find_element(By.ID, "moreLink_3074457345616967316_3074457345616967320").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//label[normalize-space(text())='Ice Fishing']").click()
+-------------------------------------------------------
+2025-05-26 15:12:42,243 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
