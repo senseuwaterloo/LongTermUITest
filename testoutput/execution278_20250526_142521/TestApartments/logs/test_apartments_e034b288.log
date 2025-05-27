@@ -1,0 +1,123 @@
+2025-05-26 14:26:16,154 - AutoTestFixer - ERROR - --- Test test_apartments_e034b288 FAILED ---
+2025-05-26 14:26:16,154 - AutoTestFixer - ERROR - URL at failure: https://www.apartments.com/
+2025-05-26 14:26:16,154 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_apartments.TestApartments object at 0x1183ebb50>
+
+    def test_apartments_e034b288(self):
+        self.driver.get("https://apartments.com")
+        self.driver.find_element(By.ID, "quickSearchLookup").click()
+        self.driver.find_element(By.ID, "quickSearchLookup").send_keys("nyc")
+>       self.driver.find_element(By.XPATH, "//li[contains(@id, 'quickSearchLookup_typeahead') and text()='New York, NY']").click()
+
+test/test_apartments.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x11837fe20>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001009fd898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001009f49ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001004ad600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001004ff304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001004ff521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x000000010054f204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010052533d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x000000010054c566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001005250e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001004f161d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001004f2281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001009bb560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001009bf425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000100995eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001009bfe5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000100984dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001009e2a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001009e2c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x00000001009f4591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff809bbcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff809bb8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 14:25:28,259 - AutoTestFixer - INFO - Attempting to navigate to URL: https://apartments.com
+2025-05-26 14:25:33,149 - AutoTestFixer - INFO - Successfully navigated to URL: https://apartments.com
+2025-05-26 14:25:42,453 - AutoTestFixer - WARNING - handle cookie window error, element located by id with locator onetrust-accept-btn-handler not found, continue without dismissing cookie window
+2025-05-26 14:25:44,459 - AutoTestFixer - INFO - Attempting to find element: id = quickSearchLookup
+2025-05-26 14:25:44,477 - AutoTestFixer - INFO - Successfully find element: id = quickSearchLookup
+2025-05-26 14:25:44,477 - AutoTestFixer - INFO - Attempting to click element: id = quickSearchLookup
+2025-05-26 14:25:44,478 - AutoTestFixer - INFO - Attempting to find element: id = quickSearchLookup
+2025-05-26 14:25:44,485 - AutoTestFixer - INFO - Successfully find element: id = quickSearchLookup
+2025-05-26 14:25:44,569 - AutoTestFixer - INFO - Element clicked: id = quickSearchLookup
+2025-05-26 14:25:44,569 - AutoTestFixer - INFO - Attempting to find element: id = quickSearchLookup
+2025-05-26 14:25:44,574 - AutoTestFixer - INFO - Successfully find element: id = quickSearchLookup
+2025-05-26 14:25:44,649 - AutoTestFixer - INFO - Attempting to find element: xpath = //li[contains(@id, 'quickSearchLookup_typeahead') and text()='New York, NY']
+2025-05-26 14:26:14,719 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //li[contains(@id, 'quickSearchLookup_typeahead') and text()='New York, NY'] (Current page URL: https://www.apartments.com/)
+2025-05-26 14:26:14,791 - AutoTestFixer - INFO - Test test_apartments_e034b288 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 14:27:14,479 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Click the search button instead of relying on a suggestion that may not appear.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//li[contains(@id, 'quickSearchLookup_typeahead') and text()='New York, NY']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button.typeaheadSearch").click()
+-------------------------------------------------------
+Potential fix (2): Loosen the XPath so any suggestion containing “New York” is accepted.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//li[contains(@id, 'quickSearchLookup_typeahead') and text()='New York, NY']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//li[contains(@id,'quickSearchLookup_typeahead') and contains(.,'New York')][1]").click()
+-------------------------------------------------------
+Potential fix (3): Use keyboard navigation to select the first suggestion, avoiding a brittle click.
+Original code line/lines:
+        self.driver.find_element(By.ID, "quickSearchLookup").send_keys("nyc")
+        self.driver.find_element(By.XPATH, "//li[contains(@id, 'quickSearchLookup_typeahead') and text()='New York, NY']").click()
+Fixed code line/lines:
+        from selenium.webdriver.common.keys import Keys
+        search_box = self.driver.find_element(By.ID, "quickSearchLookup")
+        search_box.send_keys("nyc" + Keys.ARROW_DOWN + Keys.ENTER)
+-------------------------------------------------------
+Potential fix (4): Enter the full city name so the expected suggestion appears.
+Original code line/lines:
+        self.driver.find_element(By.ID, "quickSearchLookup").send_keys("nyc")
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "quickSearchLookup").send_keys("New York, NY")
+-------------------------------------------------------
+Potential fix (5): Target the newer v2 suggestion element ID pattern.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//li[contains(@id, 'quickSearchLookup_typeahead') and text()='New York, NY']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//li[starts-with(@id,'quickSearchLookup_typeaheadv2')][1]").click()
+-------------------------------------------------------
+2025-05-26 14:27:14,480 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
