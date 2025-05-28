@@ -1,0 +1,120 @@
+2025-05-26 23:36:36,854 - AutoTestFixer - ERROR - --- Test test_united_fdf322bd FAILED ---
+2025-05-26 23:36:36,854 - AutoTestFixer - ERROR - URL at failure: https://www.united.com/en/us
+2025-05-26 23:36:36,855 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_united.TestUnited object at 0x1080f24d0>
+
+    def test_united_fdf322bd(self):
+        self.driver.get("https://www.united.com/en/us")
+    
+        self.driver.find_element(By.XPATH, "//button/span[text()='Book']").click()
+    
+>       self.driver.find_element(By.XPATH, "//a[text()='Vacation packages']").click()
+
+test/test_united.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x108083490>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000103523898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010351a9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000102fd3600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000103025304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000103025521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000103075204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010304b33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000103072566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010304b0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010301761d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000103018281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001034e1560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001034e5425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001034bbeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001034e5e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001034aadc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000103508a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000103508c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010351a591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff804c18df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff804c14857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 23:35:56,961 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.united.com/en/us
+2025-05-26 23:36:00,043 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.united.com/en/us
+2025-05-26 23:36:02,224 - AutoTestFixer - INFO - Attempting to find element: xpath = //button/span[text()='Book']
+2025-05-26 23:36:05,002 - AutoTestFixer - INFO - Successfully find element: xpath = //button/span[text()='Book']
+2025-05-26 23:36:05,003 - AutoTestFixer - INFO - Attempting to click element: xpath = //button/span[text()='Book']
+2025-05-26 23:36:05,003 - AutoTestFixer - INFO - Attempting to find element: xpath = //button/span[text()='Book']
+2025-05-26 23:36:05,011 - AutoTestFixer - INFO - Successfully find element: xpath = //button/span[text()='Book']
+2025-05-26 23:36:05,084 - AutoTestFixer - INFO - Element clicked: xpath = //button/span[text()='Book']
+2025-05-26 23:36:05,084 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='Vacation packages']
+2025-05-26 23:36:35,566 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[text()='Vacation packages'] (Current page URL: https://www.united.com/en/us)
+2025-05-26 23:36:35,641 - AutoTestFixer - INFO - Test test_united_fdf322bd failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 23:37:33,323 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update locator to match the new visible text “Packages: Bundle and save”.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Vacation packages']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Packages: Bundle and save']").click()
+-------------------------------------------------------
+Potential fix (2): Use a more robust locator that looks for any link containing “Packages” and “save”.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Vacation packages']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(), 'Packages') and contains(text(), 'save')]").click()
+-------------------------------------------------------
+Potential fix (3): Locate the menu item by its destination URL substring instead of display text.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Vacation packages']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(@href, 'vacationpackages')]").click()
+-------------------------------------------------------
+Potential fix (4): Click the element via JavaScript to bypass any overlay that blocks a normal click.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Vacation packages']").click()
+Fixed code line/lines:
+        self.driver.execute_script("arguments[0].click()", self.driver.find_element(By.XPATH, "//a[contains(@href, 'vacationpackages')]"))
+-------------------------------------------------------
+Potential fix (5): Scroll the target element into view before clicking to ensure visibility.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Vacation packages']").click()
+Fixed code line/lines:
+        elem = self.driver.find_element(By.XPATH, "//a[contains(@href, 'vacationpackages')]")
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", elem)
+        elem.click()
+-------------------------------------------------------
+2025-05-26 23:37:33,324 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
