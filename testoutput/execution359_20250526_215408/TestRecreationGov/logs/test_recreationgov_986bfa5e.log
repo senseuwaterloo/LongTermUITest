@@ -1,0 +1,128 @@
+2025-05-26 21:54:49,671 - AutoTestFixer - ERROR - --- Test test_recreationgov_986bfa5e FAILED ---
+2025-05-26 21:54:49,671 - AutoTestFixer - ERROR - URL at failure: https://www.recreation.gov/
+2025-05-26 21:54:49,671 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_recreationgov.TestRecreationGov object at 0x105d3ead0>
+
+    def test_recreationgov_986bfa5e(self):
+        self.driver.get("https://www.recreation.gov/")
+    
+        self.driver.find_element(By.ID, "tabs-button-1").click()
+    
+        self.driver.find_element(By.ID, "hero-camping-search-input").clear()
+        self.driver.find_element(By.ID, "hero-camping-search-input").send_keys("Illinois")
+>       self.driver.find_element(By.XPATH, "//li[@id='react-autowhatever-hero-camping-search-input-section-1-item-0']/div[1]/div[2]/span[1]").click()
+
+test/test_recreationgov.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x105d4a9e0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010464e898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001046459ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001040fe600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104150304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104150521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001041a0204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010417633d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x000000010419d566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001041760e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010414261d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104143281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x000000010460c560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104610425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001045e6eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104610e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001045d5dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104633a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104633c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104645591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff80db54df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80db50857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 21:54:14,343 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.recreation.gov/
+2025-05-26 21:54:15,932 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.recreation.gov/
+2025-05-26 21:54:17,937 - AutoTestFixer - INFO - Attempting to find element: id = tabs-button-1
+2025-05-26 21:54:17,962 - AutoTestFixer - INFO - Successfully find element: id = tabs-button-1
+2025-05-26 21:54:17,962 - AutoTestFixer - INFO - Attempting to click element: id = tabs-button-1
+2025-05-26 21:54:17,963 - AutoTestFixer - INFO - Attempting to find element: id = tabs-button-1
+2025-05-26 21:54:17,969 - AutoTestFixer - INFO - Successfully find element: id = tabs-button-1
+2025-05-26 21:54:18,073 - AutoTestFixer - INFO - Element clicked: id = tabs-button-1
+2025-05-26 21:54:18,074 - AutoTestFixer - INFO - Attempting to find element: id = hero-camping-search-input
+2025-05-26 21:54:18,092 - AutoTestFixer - INFO - Successfully find element: id = hero-camping-search-input
+2025-05-26 21:54:18,114 - AutoTestFixer - INFO - Attempting to find element: id = hero-camping-search-input
+2025-05-26 21:54:18,119 - AutoTestFixer - INFO - Successfully find element: id = hero-camping-search-input
+2025-05-26 21:54:18,322 - AutoTestFixer - INFO - Attempting to find element: xpath = //li[@id='react-autowhatever-hero-camping-search-input-section-1-item-0']/div[1]/div[2]/span[1]
+2025-05-26 21:54:48,403 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //li[@id='react-autowhatever-hero-camping-search-input-section-1-item-0']/div[1]/div[2]/span[1] (Current page URL: https://www.recreation.gov/)
+2025-05-26 21:54:48,476 - AutoTestFixer - INFO - Test test_recreationgov_986bfa5e failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:55:32,933 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle, dynamically-generated id XPath with a stable locator that simply clicks the first autosuggest option.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//li[@id='react-autowhatever-hero-camping-search-input-section-1-item-0']/div[1]/div[2]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@role='option'][1]").click()
+-------------------------------------------------------
+Potential fix (2): Select the first autosuggest result via keyboard navigation instead of clicking a DOM element (add “from selenium.webdriver.common.keys import Keys” at top of file).
+Original code line/lines:
+        self.driver.find_element(By.ID, "hero-camping-search-input").clear()
+        self.driver.find_element(By.ID, "hero-camping-search-input").send_keys("Illinois")
+        self.driver.find_element(By.XPATH, "//li[@id='react-autowhatever-hero-camping-search-input-section-1-item-0']/div[1]/div[2]/span[1]").click()
+Fixed code line/lines:
+        search_input = self.driver.find_element(By.ID, "hero-camping-search-input")
+        search_input.clear()
+        search_input.send_keys("Illinois", Keys.ARROW_DOWN, Keys.ENTER)
+-------------------------------------------------------
+Potential fix (3): Use a CSS selector that targets any autosuggest option title, avoiding dynamic ids.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//li[@id='react-autowhatever-hero-camping-search-input-section-1-item-0']/div[1]/div[2]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "div[role='option'] div[data-testid='suggestion-title']").click()
+-------------------------------------------------------
+Potential fix (4): Use XPath with starts-with on the id so it matches regardless of section/index changes.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//li[@id='react-autowhatever-hero-camping-search-input-section-1-item-0']/div[1]/div[2]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//li[starts-with(@id,'react-autowhatever-hero-camping-search-input')][1]//span[1]").click()
+-------------------------------------------------------
+Potential fix (5): Click the first visible autosuggest option using find_elements to avoid unavailable elements entirely.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//li[@id='react-autowhatever-hero-camping-search-input-section-1-item-0']/div[1]/div[2]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_elements(By.CSS_SELECTOR, "div[role='option']")[0].click()
+-------------------------------------------------------
+2025-05-26 21:55:32,933 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
