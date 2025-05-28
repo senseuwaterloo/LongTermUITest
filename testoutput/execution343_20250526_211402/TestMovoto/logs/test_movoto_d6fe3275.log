@@ -1,0 +1,126 @@
+2025-05-26 21:14:47,334 - AutoTestFixer - ERROR - --- Test test_movoto_d6fe3275 FAILED ---
+2025-05-26 21:14:47,335 - AutoTestFixer - ERROR - URL at failure: https://www.movoto.com/#mvtDialog
+2025-05-26 21:14:47,335 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_movoto.TestMovoto object at 0x10762e590>
+
+    def test_movoto_d6fe3275(self):
+        self.driver.get("https://movoto.com")
+        time.sleep(6)
+        self.driver.find_element(By.XPATH, "//a[@role='button' and text()='Sign In']").click()
+>       self.driver.find_element(By.NAME, "username").clear()
+
+test/test_movoto.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107638f70>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102af0898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000102ae79ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001025a0600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001025f2304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001025f2521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102642204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010261833d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x000000010263f566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001026180e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001025e461d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001025e5281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000102aae560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000102ab2425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000102a88eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000102ab2e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000102a77dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000102ad5a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000102ad5c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000102ae7591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff806f50df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff806f4c857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 21:14:07,805 - AutoTestFixer - INFO - Attempting to navigate to URL: https://movoto.com
+2025-05-26 21:14:08,206 - AutoTestFixer - INFO - Successfully navigated to URL: https://movoto.com
+2025-05-26 21:14:16,217 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[@role='button' and text()='Sign In']
+2025-05-26 21:14:16,240 - AutoTestFixer - INFO - Successfully find element: xpath = //a[@role='button' and text()='Sign In']
+2025-05-26 21:14:16,240 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[@role='button' and text()='Sign In']
+2025-05-26 21:14:16,240 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[@role='button' and text()='Sign In']
+2025-05-26 21:14:16,247 - AutoTestFixer - INFO - Successfully find element: xpath = //a[@role='button' and text()='Sign In']
+2025-05-26 21:14:16,334 - AutoTestFixer - INFO - Element clicked: xpath = //a[@role='button' and text()='Sign In']
+2025-05-26 21:14:16,334 - AutoTestFixer - INFO - Attempting to find element: name = username
+2025-05-26 21:14:46,607 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: name = username (Current page URL: https://www.movoto.com/#mvtDialog)
+2025-05-26 21:14:46,681 - AutoTestFixer - INFO - Test test_movoto_d6fe3275 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:15:09,624 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use the correct field locator; the modal uses name="email", not "username".
+Original code line/lines:
+        self.driver.find_element(By.NAME, "username").clear()
+        self.driver.find_element(By.NAME, "username").send_keys("uiteststudy@gmail.com")
+Fixed code line/lines:
+        self.driver.find_element(By.NAME, "email").clear()
+        self.driver.find_element(By.NAME, "email").send_keys("uiteststudy@gmail.com")
+-------------------------------------------------------
+Potential fix (2): Use a more robust locator for the “Continue with Email” button that ignores internal span markup.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@type='submit' and text()='Continue with Email']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@type='submit' and contains(.,'Continue with Email')]").click()
+-------------------------------------------------------
+Potential fix (3): Replace the two-step clear-and-send with a single chained operation for better reliability.
+Original code line/lines:
+        self.driver.find_element(By.NAME, "username").clear()
+        self.driver.find_element(By.NAME, "username").send_keys("uiteststudy@gmail.com")
+Fixed code line/lines:
+        self.driver.find_element(By.NAME, "email").send_keys(Keys.CONTROL + "a" + Keys.DELETE + "uiteststudy@gmail.com")
+-------------------------------------------------------
+Potential fix (4): Locate the email field via CSS to decouple from “name” attribute changes.
+Original code line/lines:
+        self.driver.find_element(By.NAME, "username").clear()
+        self.driver.find_element(By.NAME, "username").send_keys("uiteststudy@gmail.com")
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "input[type='email']").clear()
+        self.driver.find_element(By.CSS_SELECTOR, "input[type='email']").send_keys("uiteststudy@gmail.com")
+-------------------------------------------------------
+Potential fix (5): Click the close icon if the authentication dialog fails to load the expected input, then retry locating the email field.
+Original code line/lines:
+        self.driver.find_element(By.NAME, "username").clear()
+Fixed code line/lines:
+        try:
+            self.driver.find_element(By.NAME, "email").clear()
+        except Exception:
+            self.driver.find_element(By.CSS_SELECTOR, "a.dialog-close[comp='mvtAuthenticate']").click()
+            self.driver.find_element(By.NAME, "email").clear()
+-------------------------------------------------------
+2025-05-26 21:15:09,624 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
