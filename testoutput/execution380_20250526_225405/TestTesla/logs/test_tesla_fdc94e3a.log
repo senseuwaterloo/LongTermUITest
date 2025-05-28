@@ -1,0 +1,129 @@
+2025-05-26 22:55:00,220 - AutoTestFixer - ERROR - --- Test test_tesla_fdc94e3a FAILED ---
+2025-05-26 22:55:00,220 - AutoTestFixer - ERROR - URL at failure: https://www.tesla.com/modely
+2025-05-26 22:55:00,221 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_tesla.TestTesla object at 0x1063a7a60>
+
+    def test_tesla_fdc94e3a(self):
+        self.driver.get("https://tesla.com")
+    
+        self.driver.find_element(By.ID, "dx-nav-item--vehicles").click()
+        self.driver.find_element(By.XPATH, "//img[@alt='Model Y']").click()
+    
+>       self.driver.find_element(By.XPATH, "//a[@title='Demo Drive' and @data-gtm-drawer='hero']").click()
+
+test/test_tesla.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1063cc160>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104d73898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000104d6a9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104823600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104875304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104875521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001048c5204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010489b33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001048c2566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010489b0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010486761d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104868281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104d31560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104d35425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104d0beb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104d35e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104cfadc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104d58a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104d58c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104d6a591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812e64df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812e60857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 22:54:10,999 - AutoTestFixer - INFO - Attempting to navigate to URL: https://tesla.com
+2025-05-26 22:54:12,190 - AutoTestFixer - INFO - Successfully navigated to URL: https://tesla.com
+2025-05-26 22:54:14,196 - AutoTestFixer - INFO - Attempting to find element: id = dx-nav-item--vehicles
+2025-05-26 22:54:25,610 - AutoTestFixer - INFO - Successfully find element: id = dx-nav-item--vehicles
+2025-05-26 22:54:25,610 - AutoTestFixer - INFO - Attempting to click element: id = dx-nav-item--vehicles
+2025-05-26 22:54:25,610 - AutoTestFixer - INFO - Attempting to find element: id = dx-nav-item--vehicles
+2025-05-26 22:54:25,614 - AutoTestFixer - INFO - Successfully find element: id = dx-nav-item--vehicles
+2025-05-26 22:54:25,730 - AutoTestFixer - INFO - Element clicked: id = dx-nav-item--vehicles
+2025-05-26 22:54:25,730 - AutoTestFixer - INFO - Attempting to find element: xpath = //img[@alt='Model Y']
+2025-05-26 22:54:25,744 - AutoTestFixer - INFO - Successfully find element: xpath = //img[@alt='Model Y']
+2025-05-26 22:54:25,744 - AutoTestFixer - INFO - Attempting to click element: xpath = //img[@alt='Model Y']
+2025-05-26 22:54:25,744 - AutoTestFixer - INFO - Attempting to find element: xpath = //img[@alt='Model Y']
+2025-05-26 22:54:25,748 - AutoTestFixer - INFO - Successfully find element: xpath = //img[@alt='Model Y']
+2025-05-26 22:54:26,255 - AutoTestFixer - INFO - Attempting to find element: xpath = //img[@alt='Model Y']
+2025-05-26 22:54:26,766 - AutoTestFixer - INFO - Successfully find element: xpath = //img[@alt='Model Y']
+2025-05-26 22:54:28,386 - AutoTestFixer - INFO - Element clicked: xpath = //img[@alt='Model Y']
+2025-05-26 22:54:28,386 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[@title='Demo Drive' and @data-gtm-drawer='hero']
+2025-05-26 22:54:58,789 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[@title='Demo Drive' and @data-gtm-drawer='hero'] (Current page URL: https://www.tesla.com/modely)
+2025-05-26 22:54:58,862 - AutoTestFixer - INFO - Test test_tesla_fdc94e3a failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 22:55:40,738 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle locator with simple link-text that matches the visible “Demo Drive” button.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@title='Demo Drive' and @data-gtm-drawer='hero']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.LINK_TEXT, "Demo Drive").click()
+-------------------------------------------------------
+Potential fix (2): Use a resilient XPATH that relies on href and button text instead of missing attributes.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@title='Demo Drive' and @data-gtm-drawer='hero']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(@href,'/drive') and contains(text(),'Demo Drive')]").click()
+-------------------------------------------------------
+Potential fix (3): Switch to a CSS selector targeting the CTA button class and href fragment.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@title='Demo Drive' and @data-gtm-drawer='hero']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a.tcl-button.tds-btn--tertiary[href*='/drive?']").click()
+-------------------------------------------------------
+Potential fix (4): Navigate to the canonical ‘www’ domain to avoid variant page structures that omit the attributes.  
+Original code line/lines:
+        self.driver.get("https://tesla.com")
+Fixed code line/lines:
+        self.driver.get("https://www.tesla.com")
+-------------------------------------------------------
+Potential fix (5): Scroll the “Demo Drive” button into view before clicking in case it’s just out of viewport.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@title='Demo Drive' and @data-gtm-drawer='hero']").click()
+Fixed code line/lines:
+        demo_drive_btn = self.driver.find_element(By.LINK_TEXT, "Demo Drive")
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", demo_drive_btn)
+        demo_drive_btn.click()
+-------------------------------------------------------
+2025-05-26 22:55:40,738 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
