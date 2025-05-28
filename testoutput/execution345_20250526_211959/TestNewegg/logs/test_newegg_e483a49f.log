@@ -1,0 +1,365 @@
+2025-05-26 21:21:47,633 - AutoTestFixer - ERROR - --- Test test_newegg_e483a49f FAILED ---
+2025-05-26 21:21:47,633 - AutoTestFixer - ERROR - URL at failure: https://www.newegg.com/tools/custom-pc-builder/pl/ID-574?diywishlist=0&tempPcbId=248326808.0001.5e9c9296e-1748308820449
+2025-05-26 21:21:47,634 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_newegg.TestNewegg object at 0x1044f2440>
+
+    def test_newegg_e483a49f(self):
+        self.driver.get("https://newegg.com")
+    
+        self.driver.find_element(By.XPATH, "//a[contains(@id, 'trendingBanner_')]/span[text()='PC Builder']").click()
+    
+        self.driver.find_element(By.XPATH, "//a[@class='pc-builder-icon']/i[@class='diy-cpu']").click()
+    
+        self.driver.find_element(By.XPATH, "//div[@class='pc-builder-icon']/a[1]/i[@class='diy-cpu']").click()
+    
+        self.driver.find_element(By.XPATH, "//span[text()='Intel Core i7']").click()
+    
+        self.driver.find_element(By.XPATH, "//button[text()=' Apply']").click()
+    
+        sort_by_dropdown = self.driver.find_element(By.XPATH, "//select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]")
+        sort_by_select = Select(sort_by_dropdown)
+        sort_by_select.select_by_visible_text("Lowest Price")
+    
+        self.driver.find_element(By.XPATH, "//table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]").click()
+    
+        self.driver.find_element(By.XPATH, "//div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']").click()
+        sort_by_dropdown = self.driver.find_element(By.XPATH, "//select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]")
+        sort_by_select = Select(sort_by_dropdown)
+        sort_by_select.select_by_visible_text("Lowest Price")
+    
+        self.driver.find_element(By.XPATH, "//table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]").click()
+        time.sleep(2)
+    
+        self.driver.find_element(By.XPATH, "//div[@class='pc-builder-icon']/a[1]/i[@class='diy-memory']").click()
+        sort_by_dropdown = self.driver.find_element(By.XPATH, "//select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]")
+        sort_by_select = Select(sort_by_dropdown)
+        sort_by_select.select_by_visible_text("Lowest Price")
+        self.driver.find_element(By.XPATH, "//table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]").click()
+    
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//div[@class='pc-builder-icon']/a[1]/i[@class='diy-gpu']").click()
+        sort_by_dropdown = self.driver.find_element(By.XPATH, "//select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]")
+        sort_by_select = Select(sort_by_dropdown)
+        sort_by_select.select_by_visible_text("Lowest Price")
+        self.driver.find_element(By.XPATH, "//table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]").click()
+    
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//div[@class='pc-builder-icon']/a[1]/i[@class='diy-case']").click()
+        sort_by_dropdown = self.driver.find_element(By.XPATH, "//select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]")
+        sort_by_select = Select(sort_by_dropdown)
+        sort_by_select.select_by_visible_text("Lowest Price")
+        self.driver.find_element(By.XPATH, "//table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]").click()
+    
+        time.sleep(2)
+        modal_dialog_div = self.driver.find_element(By.XPATH, "//div[@id='modal-pc-content']//div[@class='pc-builder-body']/div[1]").get_native_element()
+        scroll_inside_element(self.driver, modal_dialog_div)
+        self.driver.find_element(By.XPATH, "//div[@class='pc-builder-icon']/a[1]/i[@class='diy-psu']").click()
+        sort_by_dropdown = self.driver.find_element(By.XPATH, "//select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]")
+        sort_by_select = Select(sort_by_dropdown)
+        sort_by_select.select_by_visible_text("Lowest Price")
+        self.driver.find_element(By.XPATH, "//table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]").click()
+    
+        time.sleep(2)
+        modal_dialog_div = self.driver.find_element(By.XPATH, "//div[@id='modal-pc-content']//div[@class='pc-builder-body']/div[1]").get_native_element()
+        scroll_inside_element(self.driver, modal_dialog_div)
+        self.driver.find_element(By.XPATH, "//div[@class='pc-builder-icon']/a[1]/i[@class='diy-hdd']").click()
+        self.driver.find_element(By.XPATH, "//a[@class='pc-builder-icon']/strong[text()='SSD']").click()
+        sort_by_dropdown = self.driver.find_element(By.XPATH, "//select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]")
+        sort_by_select = Select(sort_by_dropdown)
+        sort_by_select.select_by_visible_text("Lowest Price")
+        self.driver.find_element(By.XPATH, "//table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]").click()
+    
+        time.sleep(2)
+        modal_dialog_div = self.driver.find_element(By.XPATH, "//div[@id='modal-pc-content']//div[@class='pc-builder-body']/div[1]").get_native_element()
+        scroll_inside_element(self.driver, modal_dialog_div)
+        self.driver.find_element(By.XPATH, "//div[@class='pc-builder-icon']/a[1]/i[@class='diy-cooling']").click()
+>       self.driver.find_element(By.XPATH, "//a[@class='pc-builder-icon']/strong[text()='Fan & Heatsink']").click()
+
+test/test_newegg.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1045ac3a0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102902898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001028f99ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001023b2600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102404304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000102404521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102454204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010242a33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000102451566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010242a0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001023f661d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001023f7281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001028c0560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001028c4425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x000000010289aeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001028c4e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000102889dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001028e7a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001028e7c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x00000001028f9591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff802d00df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff802cfc857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 21:20:05,423 - AutoTestFixer - INFO - Attempting to navigate to URL: https://newegg.com
+2025-05-26 21:20:08,512 - AutoTestFixer - INFO - Successfully navigated to URL: https://newegg.com
+2025-05-26 21:20:10,518 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(@id, 'trendingBanner_')]/span[text()='PC Builder']
+2025-05-26 21:20:10,542 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(@id, 'trendingBanner_')]/span[text()='PC Builder']
+2025-05-26 21:20:10,542 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(@id, 'trendingBanner_')]/span[text()='PC Builder']
+2025-05-26 21:20:10,543 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(@id, 'trendingBanner_')]/span[text()='PC Builder']
+2025-05-26 21:20:10,553 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(@id, 'trendingBanner_')]/span[text()='PC Builder']
+2025-05-26 21:20:13,217 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(@id, 'trendingBanner_')]/span[text()='PC Builder']
+2025-05-26 21:20:13,217 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[@class='pc-builder-icon']/i[@class='diy-cpu']
+2025-05-26 21:20:13,251 - AutoTestFixer - INFO - Successfully find element: xpath = //a[@class='pc-builder-icon']/i[@class='diy-cpu']
+2025-05-26 21:20:13,251 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[@class='pc-builder-icon']/i[@class='diy-cpu']
+2025-05-26 21:20:13,251 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[@class='pc-builder-icon']/i[@class='diy-cpu']
+2025-05-26 21:20:13,300 - AutoTestFixer - INFO - Successfully find element: xpath = //a[@class='pc-builder-icon']/i[@class='diy-cpu']
+2025-05-26 21:20:14,925 - AutoTestFixer - INFO - Element clicked: xpath = //a[@class='pc-builder-icon']/i[@class='diy-cpu']
+2025-05-26 21:20:14,925 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cpu']
+2025-05-26 21:20:15,200 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cpu']
+2025-05-26 21:20:15,200 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cpu']
+2025-05-26 21:20:15,200 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cpu']
+2025-05-26 21:20:15,270 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cpu']
+2025-05-26 21:20:15,523 - AutoTestFixer - INFO - Element clicked: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cpu']
+2025-05-26 21:20:15,524 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Intel Core i7']
+2025-05-26 21:20:15,535 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Intel Core i7']
+2025-05-26 21:20:15,535 - AutoTestFixer - INFO - Attempting to click element: xpath = //span[text()='Intel Core i7']
+2025-05-26 21:20:15,535 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Intel Core i7']
+2025-05-26 21:20:15,542 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Intel Core i7']
+2025-05-26 21:20:15,755 - AutoTestFixer - INFO - Element clicked: xpath = //span[text()='Intel Core i7']
+2025-05-26 21:20:15,755 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[text()=' Apply']
+2025-05-26 21:20:15,771 - AutoTestFixer - INFO - Successfully find element: xpath = //button[text()=' Apply']
+2025-05-26 21:20:15,771 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[text()=' Apply']
+2025-05-26 21:20:15,771 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[text()=' Apply']
+2025-05-26 21:20:15,778 - AutoTestFixer - INFO - Successfully find element: xpath = //button[text()=' Apply']
+2025-05-26 21:20:17,143 - AutoTestFixer - INFO - Element clicked: xpath = //button[text()=' Apply']
+2025-05-26 21:20:17,143 - AutoTestFixer - INFO - Attempting to find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:17,233 - AutoTestFixer - INFO - Successfully find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:17,271 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:17,285 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:17,361 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:17,361 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:17,411 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:18,965 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:18,965 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:19,055 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:19,055 - AutoTestFixer - INFO - Attempting to click element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:19,055 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:19,100 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:19,462 - AutoTestFixer - INFO - Element clicked: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:19,462 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:19,476 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:19,476 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:19,476 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:19,483 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:19,992 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:20,007 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:20,518 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:20,538 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:21,050 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:21,063 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:21,572 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:21,581 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:23,453 - AutoTestFixer - INFO - Element clicked: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-motherboard']
+2025-05-26 21:20:23,454 - AutoTestFixer - INFO - Attempting to find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:23,543 - AutoTestFixer - INFO - Successfully find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:23,644 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:23,681 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:23,730 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:23,730 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:23,736 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:25,050 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:25,051 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:25,135 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:25,135 - AutoTestFixer - INFO - Attempting to click element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:25,135 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:25,173 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:25,540 - AutoTestFixer - INFO - Element clicked: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:27,548 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-memory']
+2025-05-26 21:20:27,564 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-memory']
+2025-05-26 21:20:27,564 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-memory']
+2025-05-26 21:20:27,565 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-memory']
+2025-05-26 21:20:27,574 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-memory']
+2025-05-26 21:20:29,595 - AutoTestFixer - INFO - Element clicked: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-memory']
+2025-05-26 21:20:29,595 - AutoTestFixer - INFO - Attempting to find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:29,684 - AutoTestFixer - INFO - Successfully find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:29,692 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:29,698 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:29,740 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:29,740 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:29,777 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:31,472 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:31,472 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:31,561 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:31,561 - AutoTestFixer - INFO - Attempting to click element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:31,561 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:31,630 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:31,965 - AutoTestFixer - INFO - Element clicked: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:33,970 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-gpu']
+2025-05-26 21:20:33,994 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-gpu']
+2025-05-26 21:20:33,995 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-gpu']
+2025-05-26 21:20:33,995 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-gpu']
+2025-05-26 21:20:34,004 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-gpu']
+2025-05-26 21:20:36,275 - AutoTestFixer - INFO - Element clicked: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-gpu']
+2025-05-26 21:20:36,275 - AutoTestFixer - INFO - Attempting to find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:36,391 - AutoTestFixer - INFO - Successfully find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:36,448 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:36,494 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:36,652 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:36,653 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:36,670 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:38,262 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:38,262 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:38,354 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:38,354 - AutoTestFixer - INFO - Attempting to click element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:38,354 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:38,418 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:38,752 - AutoTestFixer - INFO - Element clicked: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:40,755 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-case']
+2025-05-26 21:20:40,780 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-case']
+2025-05-26 21:20:40,781 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-case']
+2025-05-26 21:20:40,781 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-case']
+2025-05-26 21:20:40,790 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-case']
+2025-05-26 21:20:43,199 - AutoTestFixer - INFO - Element clicked: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-case']
+2025-05-26 21:20:43,199 - AutoTestFixer - INFO - Attempting to find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:43,292 - AutoTestFixer - INFO - Successfully find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:43,383 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:43,417 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:43,579 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:43,579 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:43,585 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:45,438 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:45,438 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:45,528 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:45,528 - AutoTestFixer - INFO - Attempting to click element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:45,528 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:45,588 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:45,940 - AutoTestFixer - INFO - Element clicked: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:47,947 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='modal-pc-content']//div[@class='pc-builder-body']/div[1]
+2025-05-26 21:20:47,970 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='modal-pc-content']//div[@class='pc-builder-body']/div[1]
+2025-05-26 21:20:49,983 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-psu']
+2025-05-26 21:20:50,005 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-psu']
+2025-05-26 21:20:50,005 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-psu']
+2025-05-26 21:20:50,005 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-psu']
+2025-05-26 21:20:50,015 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-psu']
+2025-05-26 21:20:53,439 - AutoTestFixer - INFO - Element clicked: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-psu']
+2025-05-26 21:20:53,439 - AutoTestFixer - INFO - Attempting to find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:53,524 - AutoTestFixer - INFO - Successfully find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:53,634 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:53,665 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:53,814 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:53,815 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:53,821 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:20:55,812 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:20:55,812 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:55,899 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:55,899 - AutoTestFixer - INFO - Attempting to click element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:55,899 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:55,965 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:56,283 - AutoTestFixer - INFO - Element clicked: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:20:58,288 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='modal-pc-content']//div[@class='pc-builder-body']/div[1]
+2025-05-26 21:20:58,308 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='modal-pc-content']//div[@class='pc-builder-body']/div[1]
+2025-05-26 21:21:00,319 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-hdd']
+2025-05-26 21:21:00,340 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-hdd']
+2025-05-26 21:21:00,341 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-hdd']
+2025-05-26 21:21:00,341 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-hdd']
+2025-05-26 21:21:00,351 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-hdd']
+2025-05-26 21:21:03,003 - AutoTestFixer - INFO - Element clicked: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-hdd']
+2025-05-26 21:21:03,003 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[@class='pc-builder-icon']/strong[text()='SSD']
+2025-05-26 21:21:03,130 - AutoTestFixer - INFO - Successfully find element: xpath = //a[@class='pc-builder-icon']/strong[text()='SSD']
+2025-05-26 21:21:03,130 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[@class='pc-builder-icon']/strong[text()='SSD']
+2025-05-26 21:21:03,130 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[@class='pc-builder-icon']/strong[text()='SSD']
+2025-05-26 21:21:03,174 - AutoTestFixer - INFO - Successfully find element: xpath = //a[@class='pc-builder-icon']/strong[text()='SSD']
+2025-05-26 21:21:04,915 - AutoTestFixer - INFO - Element clicked: xpath = //a[@class='pc-builder-icon']/strong[text()='SSD']
+2025-05-26 21:21:04,915 - AutoTestFixer - INFO - Attempting to find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:21:05,008 - AutoTestFixer - INFO - Successfully find element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:21:05,116 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:21:05,161 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:21:05,229 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:21:05,229 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:21:05,288 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "Lowest Price"] within element: xpath = //select[ancestor::label[@class='form-select' and preceding-sibling::*[1][self::span and text()='Sort By:']]]
+2025-05-26 21:21:06,896 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "Lowest Price"]
+2025-05-26 21:21:06,896 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:21:06,980 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:21:06,980 - AutoTestFixer - INFO - Attempting to click element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:21:06,980 - AutoTestFixer - INFO - Attempting to find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:21:07,044 - AutoTestFixer - INFO - Successfully find element: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:21:07,288 - AutoTestFixer - INFO - Element clicked: xpath = //table[@class='table-vertical']/tbody[1]/tr[2]/td[@class='td-action']//div[@class='item-button-area']/button[1]
+2025-05-26 21:21:09,294 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='modal-pc-content']//div[@class='pc-builder-body']/div[1]
+2025-05-26 21:21:09,308 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='modal-pc-content']//div[@class='pc-builder-body']/div[1]
+2025-05-26 21:21:11,317 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cooling']
+2025-05-26 21:21:11,338 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cooling']
+2025-05-26 21:21:11,338 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cooling']
+2025-05-26 21:21:11,338 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cooling']
+2025-05-26 21:21:11,348 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cooling']
+2025-05-26 21:21:14,385 - AutoTestFixer - INFO - Element clicked: xpath = //div[@class='pc-builder-icon']/a[1]/i[@class='diy-cooling']
+2025-05-26 21:21:14,386 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[@class='pc-builder-icon']/strong[text()='Fan & Heatsink']
+2025-05-26 21:21:44,804 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[@class='pc-builder-icon']/strong[text()='Fan & Heatsink'] (Current page URL: https://www.newegg.com/tools/custom-pc-builder/pl/ID-574?diywishlist=0&tempPcbId=248326808.0001.5e9c9296e-1748308820449)
+2025-05-26 21:21:44,881 - AutoTestFixer - INFO - Test test_newegg_e483a49f failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:22:23,605 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Skip the click because “Fan & Heatsink” is already selected (now rendered as a non-clickable <li>).
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@class='pc-builder-icon']/strong[text()='Fan & Heatsink']").click()
+Fixed code line/lines:
+        # Fan & Heatsink is already the active sub-category; skipping click
+        pass
+-------------------------------------------------------
+Potential fix (2): Scroll the modal into view before attempting the click so the element becomes interactable.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@class='pc-builder-icon']/strong[text()='Fan & Heatsink']").click()
+Fixed code line/lines:
+        modal_dialog_div = self.driver.find_element(By.XPATH, "//div[@id='modal-pc-content']//div[@class='pc-builder-body']/div[1]").get_native_element()
+        scroll_inside_element(self.driver, modal_dialog_div)
+        self.driver.find_element(By.XPATH, "//a[@class='pc-builder-icon']/strong[normalize-space(text())='Fan & Heatsink']").click()
+-------------------------------------------------------
+Potential fix (3): Adjust the locator to the new non-clickable breadcrumb element (verification only, no click needed).
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@class='pc-builder-icon']/strong[text()='Fan & Heatsink']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//li[contains(@class,'is-current') and contains(normalize-space(.), 'Fan & Heatsink')]")
+-------------------------------------------------------
+Potential fix (4): Update the locator to match the current HTML where the text is inside a <span>, then click it.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@class='pc-builder-icon']/strong[text()='Fan & Heatsink']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@class='pc-builder-icon']/span[normalize-space(text())='Fan & Heatsink']").click()
+-------------------------------------------------------
+
+2025-05-26 21:22:23,606 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
