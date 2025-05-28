@@ -1,0 +1,159 @@
+2025-05-26 17:18:17,497 - AutoTestFixer - ERROR - --- Test test_ign_5ad0f114 FAILED ---
+2025-05-26 17:18:17,497 - AutoTestFixer - ERROR - URL at failure: https://www.ign.com/wikis/uncharted-legacy-of-thieves-collection
+2025-05-26 17:18:17,498 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_ign.TestIgn object at 0x104223b20>
+
+    def test_ign_5ad0f114(self):
+        self.driver.get("https://ign.com")
+    
+        self.driver.find_element(By.XPATH, "//div[@id='__next']/aside/nav/div[1]/div[1]/div[2]/div[3]/a[2]/div").click()
+    
+        self.driver.find_element(By.XPATH, "//main[@id='main-content']/div[2]/section/div[2]/div/button/div/div").click()
+    
+        self.driver.find_element(By.ID, "term").clear()
+        self.driver.find_element(By.ID, "term").send_keys("Uncharted Legacy of Thieves Collection")
+    
+        self.driver.find_element(By.XPATH, "//div[text()='Uncharted: Legacy of Thieves Collection']").click()
+    
+        self.driver.find_element(By.XPATH, "//main[@id='main-content']/div/div[4]/section[2]/div/div/a/div/button").click()
+    
+        self.driver.find_element(By.XPATH, "//div[@id='__next']/aside[1]/nav[1]/div[1]/div[1]/div[2]/div[5]/div[1]/div[1]/a[1]/div[1]").click()
+    
+>       self.driver.find_element(By.XPATH, "//main[@id='main-content']/div[3]/div[4]/div/div[2]/section[1]/section[9]/ul/li[2]/a").click()
+
+test/test_ign.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10277dd80>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104d36898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000104d2d9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001047e6600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104838304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104838521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104888204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010485e33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000104885566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010485e0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010482a61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x000000010482b281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104cf4560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104cf8425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104cceeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104cf8e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104cbddc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104d1ba78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104d1bc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104d2d591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff8136dcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff8136d8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 17:17:18,148 - AutoTestFixer - INFO - Attempting to navigate to URL: https://ign.com
+2025-05-26 17:17:38,591 - AutoTestFixer - INFO - Successfully navigated to URL: https://ign.com
+2025-05-26 17:17:40,597 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='__next']/aside/nav/div[1]/div[1]/div[2]/div[3]/a[2]/div
+2025-05-26 17:17:40,624 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='__next']/aside/nav/div[1]/div[1]/div[2]/div[3]/a[2]/div
+2025-05-26 17:17:40,625 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='__next']/aside/nav/div[1]/div[1]/div[2]/div[3]/a[2]/div
+2025-05-26 17:17:40,625 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='__next']/aside/nav/div[1]/div[1]/div[2]/div[3]/a[2]/div
+2025-05-26 17:17:40,633 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='__next']/aside/nav/div[1]/div[1]/div[2]/div[3]/a[2]/div
+2025-05-26 17:17:40,742 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='__next']/aside/nav/div[1]/div[1]/div[2]/div[3]/a[2]/div
+2025-05-26 17:17:40,743 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='main-content']/div[2]/section/div[2]/div/button/div/div
+2025-05-26 17:17:41,329 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='main-content']/div[2]/section/div[2]/div/button/div/div
+2025-05-26 17:17:41,329 - AutoTestFixer - INFO - Attempting to click element: xpath = //main[@id='main-content']/div[2]/section/div[2]/div/button/div/div
+2025-05-26 17:17:41,329 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='main-content']/div[2]/section/div[2]/div/button/div/div
+2025-05-26 17:17:41,335 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='main-content']/div[2]/section/div[2]/div/button/div/div
+2025-05-26 17:17:41,410 - AutoTestFixer - INFO - Element clicked: xpath = //main[@id='main-content']/div[2]/section/div[2]/div/button/div/div
+2025-05-26 17:17:41,410 - AutoTestFixer - INFO - Attempting to find element: id = term
+2025-05-26 17:17:41,420 - AutoTestFixer - INFO - Successfully find element: id = term
+2025-05-26 17:17:41,444 - AutoTestFixer - INFO - Attempting to find element: id = term
+2025-05-26 17:17:41,449 - AutoTestFixer - INFO - Successfully find element: id = term
+2025-05-26 17:17:41,581 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[text()='Uncharted: Legacy of Thieves Collection']
+2025-05-26 17:17:43,310 - AutoTestFixer - INFO - Successfully find element: xpath = //div[text()='Uncharted: Legacy of Thieves Collection']
+2025-05-26 17:17:43,310 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[text()='Uncharted: Legacy of Thieves Collection']
+2025-05-26 17:17:43,310 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[text()='Uncharted: Legacy of Thieves Collection']
+2025-05-26 17:17:43,316 - AutoTestFixer - INFO - Successfully find element: xpath = //div[text()='Uncharted: Legacy of Thieves Collection']
+2025-05-26 17:17:43,526 - AutoTestFixer - INFO - Element clicked: xpath = //div[text()='Uncharted: Legacy of Thieves Collection']
+2025-05-26 17:17:43,526 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='main-content']/div/div[4]/section[2]/div/div/a/div/button
+2025-05-26 17:17:44,394 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='main-content']/div/div[4]/section[2]/div/div/a/div/button
+2025-05-26 17:17:44,394 - AutoTestFixer - INFO - Attempting to click element: xpath = //main[@id='main-content']/div/div[4]/section[2]/div/div/a/div/button
+2025-05-26 17:17:44,394 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='main-content']/div/div[4]/section[2]/div/div/a/div/button
+2025-05-26 17:17:44,402 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='main-content']/div/div[4]/section[2]/div/div/a/div/button
+2025-05-26 17:17:44,540 - AutoTestFixer - INFO - Element clicked: xpath = //main[@id='main-content']/div/div[4]/section[2]/div/div/a/div/button
+2025-05-26 17:17:44,540 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='__next']/aside[1]/nav[1]/div[1]/div[1]/div[2]/div[5]/div[1]/div[1]/a[1]/div[1]
+2025-05-26 17:17:46,319 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='__next']/aside[1]/nav[1]/div[1]/div[1]/div[2]/div[5]/div[1]/div[1]/a[1]/div[1]
+2025-05-26 17:17:46,319 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='__next']/aside[1]/nav[1]/div[1]/div[1]/div[2]/div[5]/div[1]/div[1]/a[1]/div[1]
+2025-05-26 17:17:46,319 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='__next']/aside[1]/nav[1]/div[1]/div[1]/div[2]/div[5]/div[1]/div[1]/a[1]/div[1]
+2025-05-26 17:17:46,324 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='__next']/aside[1]/nav[1]/div[1]/div[1]/div[2]/div[5]/div[1]/div[1]/a[1]/div[1]
+2025-05-26 17:17:46,423 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='__next']/aside[1]/nav[1]/div[1]/div[1]/div[2]/div[5]/div[1]/div[1]/a[1]/div[1]
+2025-05-26 17:17:46,423 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='main-content']/div[3]/div[4]/div/div[2]/section[1]/section[9]/ul/li[2]/a
+2025-05-26 17:18:16,480 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //main[@id='main-content']/div[3]/div[4]/div/div[2]/section[1]/section[9]/ul/li[2]/a (Current page URL: https://www.ign.com/wikis/uncharted-legacy-of-thieves-collection)
+2025-05-26 17:18:16,553 - AutoTestFixer - INFO - Test test_ign_5ad0f114 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 17:19:15,791 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle absolute XPath with stable link-text locator for the Table-of-Contents entry.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//main[@id='main-content']/div[3]/div[4]/div/div[2]/section[1]/section[9]/ul/li[2]/a").click()
+Fixed code line/lines:
+        self.driver.find_element(By.LINK_TEXT, "Uncharted: Legacy of Thieves Walkthrough").click()
+-------------------------------------------------------
+Potential fix (2): Use partial link-text to tolerate minor wording changes while still selecting the Walkthrough link.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//main[@id='main-content']/div[3]/div[4]/div/div[2]/section[1]/section[9]/ul/li[2]/a").click()
+Fixed code line/lines:
+        self.driver.find_element(By.PARTIAL_LINK_TEXT, "Walkthrough").click()
+-------------------------------------------------------
+Potential fix (3): Target the element via its title attribute with a concise CSS selector.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//main[@id='main-content']/div[3]/div[4]/div/div[2]/section[1]/section[9]/ul/li[2]/a").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a[title='Uncharted: Legacy of Thieves Walkthrough']").click()
+-------------------------------------------------------
+Potential fix (4): Scroll the element into view before clicking to avoid hidden-element issues.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//main[@id='main-content']/div[3]/div[4]/div/div[2]/section[1]/section[9]/ul/li[2]/a").click()
+Fixed code line/lines:
+        element = self.driver.find_element(By.LINK_TEXT, "Uncharted: Legacy of Thieves Walkthrough")
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+        element.click()
+-------------------------------------------------------
+Potential fix (5): Switch to a shorter relative XPath that relies on visible text only.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//main[@id='main-content']/div[3]/div[4]/div/div[2]/section[1]/section[9]/ul/li[2]/a").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[normalize-space(text())='Uncharted: Legacy of Thieves Walkthrough']").click()
+-------------------------------------------------------
+2025-05-26 17:19:15,791 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
