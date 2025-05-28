@@ -1,0 +1,129 @@
+2025-05-26 17:21:09,439 - AutoTestFixer - ERROR - --- Test test_ikea_813e47ec FAILED ---
+2025-05-26 17:21:09,439 - AutoTestFixer - ERROR - URL at failure: https://www.ikea.com/us/en/cat/flatware-18865/
+2025-05-26 17:21:09,440 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_ikea.TestIkea object at 0x1037cbb50>
+
+    def test_ikea_813e47ec(self):
+        self.driver.get("https://www.ikea.com/us/en/")
+    
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Kitchenware & tableware')]").click()
+    
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Flatware & cutlery')]").click()
+    
+>       self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']/div[1]/div[1]/div/span").click()
+
+test/test_ikea.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1037f40d0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100e02898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000100df99ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001008b2600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100904304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100904521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100954204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010092a33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100951566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010092a0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001008f661d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001008f7281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000100dc0560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000100dc4425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000100d9aeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000100dc4e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000100d89dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000100de7a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000100de7c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000100df9591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff8136dcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff8136d8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 17:20:31,765 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.ikea.com/us/en/
+2025-05-26 17:20:35,156 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.ikea.com/us/en/
+2025-05-26 17:20:37,246 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[contains(text(),'Kitchenware & tableware')]
+2025-05-26 17:20:37,268 - AutoTestFixer - INFO - Successfully find element: xpath = //span[contains(text(),'Kitchenware & tableware')]
+2025-05-26 17:20:37,268 - AutoTestFixer - INFO - Attempting to click element: xpath = //span[contains(text(),'Kitchenware & tableware')]
+2025-05-26 17:20:37,268 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[contains(text(),'Kitchenware & tableware')]
+2025-05-26 17:20:37,272 - AutoTestFixer - INFO - Successfully find element: xpath = //span[contains(text(),'Kitchenware & tableware')]
+2025-05-26 17:20:37,338 - AutoTestFixer - INFO - Element clicked: xpath = //span[contains(text(),'Kitchenware & tableware')]
+2025-05-26 17:20:37,338 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Flatware & cutlery')]
+2025-05-26 17:20:37,344 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Flatware & cutlery')]
+2025-05-26 17:20:37,344 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'Flatware & cutlery')]
+2025-05-26 17:20:37,345 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Flatware & cutlery')]
+2025-05-26 17:20:37,351 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Flatware & cutlery')]
+2025-05-26 17:20:38,580 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'Flatware & cutlery')]
+2025-05-26 17:20:38,581 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='geo-ingka-navigation-desktop']/div[1]/div[1]/div/span
+2025-05-26 17:21:08,666 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='geo-ingka-navigation-desktop']/div[1]/div[1]/div/span (Current page URL: https://www.ikea.com/us/en/cat/flatware-18865/)
+2025-05-26 17:21:08,738 - AutoTestFixer - INFO - Test test_ikea_813e47ec failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 17:21:47,305 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle absolute-path XPath with stable CSS selector for the store-picker button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']/div[1]/div[1]/div/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a.hnf-utilities__storepicker-button").click()
+-------------------------------------------------------
+Potential fix (2): Use an attribute-based XPath that directly targets the “Select store” button via its aria-label.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']/div[1]/div[1]/div/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@role='button' and contains(@aria-label,'Select store')]").click()
+-------------------------------------------------------
+Potential fix (3): If the intent is to open the ZIP picker, click the postal-code button instead.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']/div[1]/div[1]/div/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a.hnf-utilities__postalcodepicker-button").click()
+-------------------------------------------------------
+Potential fix (4): Ensure the target element is scrolled into view before clicking to avoid visibility issues.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']/div[1]/div[1]/div/span").click()
+Fixed code line/lines:
+        element = self.driver.find_element(By.CSS_SELECTOR, "a.hnf-utilities__storepicker-button")
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+        element.click()
+-------------------------------------------------------
+Potential fix (5): Shorten the XPath by anchoring on the unique class, eliminating index segments that often change.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']/div[1]/div[1]/div/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='geo-ingka-navigation-desktop']//a[contains(@class,'storepicker-button')]/span").click()
+-------------------------------------------------------
+
+2025-05-26 17:21:47,305 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
