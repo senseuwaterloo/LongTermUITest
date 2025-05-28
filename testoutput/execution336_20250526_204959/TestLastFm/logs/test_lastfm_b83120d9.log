@@ -1,0 +1,209 @@
+2025-05-26 20:50:42,669 - AutoTestFixer - ERROR - --- Test test_lastfm_b83120d9 FAILED ---
+2025-05-26 20:50:42,669 - AutoTestFixer - ERROR - URL at failure: https://www.last.fm/
+2025-05-26 20:50:42,670 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_lastfm.TestLastFm object at 0x105befa90>
+
+    def test_lastfm_b83120d9(self):
+        self.driver.get("https://last.fm/")
+    
+>       self.driver.find_element(By.XPATH, "//a[contains(text(), ' Log In')]").click()
+
+test/test_lastfm.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:138: in click
+    raise e
+framework/custom_selenium.py:119: in click
+    WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.element_to_be_clickable((self.by, self.value)))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="d63f1707ff6ddafba805979e82075858")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x105b83400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 20:50:04,835 - AutoTestFixer - INFO - Attempting to navigate to URL: https://last.fm/
+2025-05-26 20:50:08,918 - AutoTestFixer - INFO - Successfully navigated to URL: https://last.fm/
+2025-05-26 20:50:10,919 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:10,941 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:10,941 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:10,941 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:10,948 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:11,462 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:11,476 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:11,990 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:12,004 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:12,516 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:12,531 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:13,042 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:13,053 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:13,562 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:13,571 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:14,083 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:14,091 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:14,601 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:14,615 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:15,127 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:15,141 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:15,652 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:15,662 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:16,175 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:16,189 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:16,701 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:16,717 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:17,228 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:17,241 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:17,753 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:17,767 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:18,280 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:18,294 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:18,805 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:18,814 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:19,324 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:19,330 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:19,843 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:19,854 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:20,368 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:20,379 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:20,889 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:20,900 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:21,413 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:21,425 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:21,939 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:21,954 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:22,463 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:22,472 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:22,980 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:22,987 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:23,496 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:23,505 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:24,016 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:24,027 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:24,539 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:24,555 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:25,067 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:25,081 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:25,592 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:25,607 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:26,119 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:26,129 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:26,640 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:26,655 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:27,167 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:27,179 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:27,691 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:27,704 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:28,217 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:28,231 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:28,744 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:28,756 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:29,266 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:29,281 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:29,793 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:29,808 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:30,320 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:30,333 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:30,845 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:30,858 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:31,368 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:31,376 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:31,888 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:31,901 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:32,414 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:32,427 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:32,940 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:32,953 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:33,465 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:33,476 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:33,987 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:34,002 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:34,515 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:34,526 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:35,038 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:35,053 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:35,563 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:35,575 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:36,087 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:36,100 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:36,612 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:36,626 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:37,138 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:37,147 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:37,658 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:37,672 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:38,185 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:38,198 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:38,710 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:38,723 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:39,235 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:39,248 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:39,760 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:39,773 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:40,284 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:40,298 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:40,814 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:40,834 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(), ' Log In')]
+2025-05-26 20:50:41,356 - AutoTestFixer - ERROR - TimeoutException: Element not clickable within 30 seconds: xpath = //a[contains(text(), ' Log In')] (Current page URL: https://www.last.fm/)
+2025-05-26 20:50:41,429 - AutoTestFixer - INFO - Test test_lastfm_b83120d9 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 20:51:04,755 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use a trimmed-text XPath so the locator matches regardless of leading/trailing spaces that prevent the element from being recognised as clickable.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(), ' Log In')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[normalize-space(text())='Log In']").click()
+-------------------------------------------------------
+Potential fix (2): Navigate straight to the login page and bypass the unreliable menu click altogether.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(), ' Log In')]").click()
+Fixed code line/lines:
+        self.driver.get("https://www.last.fm/login")
+-------------------------------------------------------
+Potential fix (3): Switch to a robust CSS selector that uniquely targets the visible “Log In” control.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(), ' Log In')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a.site-auth-control[href='/login']").click()
+-------------------------------------------------------
+Potential fix (4): Scroll the link into view before clicking to ensure no header/overlay blocks the element.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(), ' Log In')]").click()
+Fixed code line/lines:
+        login_link = self.driver.find_element(By.XPATH, "//a[normalize-space(text())='Log In']")
+        self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", login_link)
+        login_link.click()
+-------------------------------------------------------
+Potential fix (5): Click the element via JavaScript to avoid “element not clickable” interception issues.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(), ' Log In')]").click()
+Fixed code line/lines:
+        login_link = self.driver.find_element(By.XPATH, "//a[normalize-space(text())='Log In']")
+        self.driver.execute_script("arguments[0].click();", login_link)
+-------------------------------------------------------
+2025-05-26 20:51:04,755 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
