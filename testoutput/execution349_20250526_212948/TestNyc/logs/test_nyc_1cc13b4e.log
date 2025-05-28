@@ -1,0 +1,112 @@
+2025-05-26 21:30:28,345 - AutoTestFixer - ERROR - --- Test test_nyc_1cc13b4e FAILED ---
+2025-05-26 21:30:28,346 - AutoTestFixer - ERROR - URL at failure: https://www.nyc.com/
+2025-05-26 21:30:28,346 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_nyc.TestNyc object at 0x1113eb190>
+
+    def test_nyc_1cc13b4e(self):
+        self.driver.get("https://nyc.com")
+    
+>       self.driver.find_element(By.XPATH, "//div[@class='container' and not(ancestor::footer)]/nav[@class='topnav']/ul[1]//a[text()='hotels.']").click()
+
+test/test_nyc.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1113f9b40>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001010ed898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001010e49ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100b9d600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100bef304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100bef521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100c3f204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000100c1533d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100c3c566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100c150e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100be161d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100be2281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001010ab560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001010af425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000101085eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001010afe5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000101074dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001010d2a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001010d2c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x00000001010e4591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff80db54df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80db50857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 21:29:53,905 - AutoTestFixer - INFO - Attempting to navigate to URL: https://nyc.com
+2025-05-26 21:29:54,317 - AutoTestFixer - INFO - Successfully navigated to URL: https://nyc.com
+2025-05-26 21:29:56,322 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='container' and not(ancestor::footer)]/nav[@class='topnav']/ul[1]//a[text()='hotels.']
+2025-05-26 21:30:26,432 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@class='container' and not(ancestor::footer)]/nav[@class='topnav']/ul[1]//a[text()='hotels.'] (Current page URL: https://www.nyc.com/)
+2025-05-26 21:30:26,505 - AutoTestFixer - INFO - Test test_nyc_1cc13b4e failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:30:56,341 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use a simpler XPath that targets the visible “Hotels” link (without the stray period).  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@class='container' and not(ancestor::footer)]/nav[@class='topnav']/ul[1]//a[text()='hotels.']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[normalize-space(text())='Hotels']").click()
+-------------------------------------------------------
+Potential fix (2): Target the link via its href attribute instead of its text, avoiding any text-case issues.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@class='container' and not(ancestor::footer)]/nav[@class='topnav']/ul[1]//a[text()='hotels.']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(@href, '/hotels')]").click()
+-------------------------------------------------------
+Potential fix (3): If “Hotels” is nested under the “More” dropdown, open that menu first, then click the item.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@class='container' and not(ancestor::footer)]/nav[@class='topnav']/ul[1]//a[text()='hotels.']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[normalize-space(text())='More']").click()
+        self.driver.find_element(By.XPATH, "//a[normalize-space(text())='Hotels']").click()
+-------------------------------------------------------
+Potential fix (4): Skip the navigation menu entirely and load the Hotels page directly.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@class='container' and not(ancestor::footer)]/nav[@class='topnav']/ul[1]//a[text()='hotels.']").click()
+Fixed code line/lines:
+        self.driver.get("https://www.nyc.com/hotels/")
+-------------------------------------------------------
+Potential fix (5): Make the locator case- and trailing-space-agnostic by transforming text to lower-case in XPath.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@class='container' and not(ancestor::footer)]/nav[@class='topnav']/ul[1]//a[text()='hotels.']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[translate(normalize-space(text()), 'HOTELS', 'hotels')='hotels']").click()
+-------------------------------------------------------
+
+2025-05-26 21:30:56,341 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
