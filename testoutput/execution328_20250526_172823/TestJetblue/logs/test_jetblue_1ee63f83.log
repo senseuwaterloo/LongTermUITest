@@ -1,0 +1,152 @@
+2025-05-26 17:29:16,383 - AutoTestFixer - ERROR - --- Test test_jetblue_1ee63f83 FAILED ---
+2025-05-26 17:29:16,383 - AutoTestFixer - ERROR - URL at failure: https://www.jetblue.com/
+2025-05-26 17:29:16,383 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_jetblue.TestJetblue object at 0x10572be80>
+
+    def test_jetblue_1ee63f83(self):
+        self.driver.get("https://www.jetblue.com/")
+    
+        self.driver.find_element(By.XPATH, "//span[text()='Stays']").click()
+    
+        self.driver.find_element(By.NAME, "jtp-hotel-destination").send_keys(get_control_key() + "a")
+        self.driver.find_element(By.NAME, "jtp-hotel-destination").send_keys(Keys.DELETE)
+        self.driver.find_element(By.NAME, "jtp-hotel-destination").send_keys("TEXAS CITY")
+    
+        self.driver.find_element(By.XPATH, "//div[./span[contains(text(), 'Texas City')] and ./span[contains(text(), ' TX, USA')]]").click()
+    
+>       self.driver.find_element(By.NAME, "dates").click()
+
+test/test_jetblue.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x105752680>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000105213898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010520a9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104cc3600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104d15304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104d15521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104d65204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000104d3b33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000104d62566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000104d3b0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000104d0761d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104d08281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001051d1560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001051d5425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001051abeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001051d5e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010519adc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001051f8a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001051f8c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010520a591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff8136dcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff8136d8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 17:28:29,431 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.jetblue.com/
+2025-05-26 17:28:31,246 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.jetblue.com/
+2025-05-26 17:28:40,606 - AutoTestFixer - WARNING - handle cookie window error, element located by xpath with locator //a[text()='Accept All Cookies' and @role='button'] not found, continue without dismissing cookie window
+2025-05-26 17:28:42,609 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Stays']
+2025-05-26 17:28:42,633 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Stays']
+2025-05-26 17:28:42,633 - AutoTestFixer - INFO - Attempting to click element: xpath = //span[text()='Stays']
+2025-05-26 17:28:42,633 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Stays']
+2025-05-26 17:28:42,640 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Stays']
+2025-05-26 17:28:42,726 - AutoTestFixer - INFO - Element clicked: xpath = //span[text()='Stays']
+2025-05-26 17:28:42,727 - AutoTestFixer - INFO - Attempting to find element: name = jtp-hotel-destination
+2025-05-26 17:28:43,774 - AutoTestFixer - INFO - Successfully find element: name = jtp-hotel-destination
+2025-05-26 17:28:43,889 - AutoTestFixer - INFO - Attempting to find element: name = jtp-hotel-destination
+2025-05-26 17:28:43,895 - AutoTestFixer - INFO - Successfully find element: name = jtp-hotel-destination
+2025-05-26 17:28:43,928 - AutoTestFixer - INFO - Attempting to find element: name = jtp-hotel-destination
+2025-05-26 17:28:43,933 - AutoTestFixer - INFO - Successfully find element: name = jtp-hotel-destination
+2025-05-26 17:28:43,984 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[./span[contains(text(), 'Texas City')] and ./span[contains(text(), ' TX, USA')]]
+2025-05-26 17:28:45,056 - AutoTestFixer - INFO - Successfully find element: xpath = //div[./span[contains(text(), 'Texas City')] and ./span[contains(text(), ' TX, USA')]]
+2025-05-26 17:28:45,056 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[./span[contains(text(), 'Texas City')] and ./span[contains(text(), ' TX, USA')]]
+2025-05-26 17:28:45,056 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[./span[contains(text(), 'Texas City')] and ./span[contains(text(), ' TX, USA')]]
+2025-05-26 17:28:45,065 - AutoTestFixer - INFO - Successfully find element: xpath = //div[./span[contains(text(), 'Texas City')] and ./span[contains(text(), ' TX, USA')]]
+2025-05-26 17:28:45,131 - AutoTestFixer - INFO - Element clicked: xpath = //div[./span[contains(text(), 'Texas City')] and ./span[contains(text(), ' TX, USA')]]
+2025-05-26 17:28:45,132 - AutoTestFixer - INFO - Attempting to find element: name = dates
+2025-05-26 17:29:15,174 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: name = dates (Current page URL: https://www.jetblue.com/)
+2025-05-26 17:29:15,248 - AutoTestFixer - INFO - Test test_jetblue_1ee63f83 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 17:30:24,281 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace the wrong name locator with a stable aria-label based CSS selector.
+Original code line/lines:
+        self.driver.find_element(By.NAME, "dates").click()
+
+        first_flight_date, second_flight_date = calculate_dates_slash_format(30, 37)
+        self.driver.find_element(By.NAME, "dates").clear()
+        self.driver.find_element(By.NAME, "dates").send_keys(f"{first_flight_date} - {second_flight_date}")
+Fixed code line/lines:
+        date_input = self.driver.find_element(By.CSS_SELECTOR, "input[aria-label='Select a date range.']")
+        date_input.click()
+
+        first_flight_date, second_flight_date = calculate_dates_slash_format(30, 37)
+        date_input.clear()
+        date_input.send_keys(f"{first_flight_date} - {second_flight_date}")
+-------------------------------------------------------
+Potential fix (2): Use the placeholder attribute, which is also unique, to locate the date field.
+Original code line/lines:
+        self.driver.find_element(By.NAME, "dates").click()
+
+        first_flight_date, second_flight_date = calculate_dates_slash_format(30, 37)
+        self.driver.find_element(By.NAME, "dates").clear()
+        self.driver.find_element(By.NAME, "dates").send_keys(f"{first_flight_date} - {second_flight_date}")
+Fixed code line/lines:
+        date_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder='YYYY/MM/DD – YYYY/MM/DD']")
+        date_input.click()
+
+        first_flight_date, second_flight_date = calculate_dates_slash_format(30, 37)
+        date_input.clear()
+        date_input.send_keys(f"{first_flight_date} - {second_flight_date}")
+-------------------------------------------------------
+Potential fix (3): Switch to an XPath that follows the visible “Search dates” label to the input element.
+Original code line/lines:
+        self.driver.find_element(By.NAME, "dates").click()
+
+        first_flight_date, second_flight_date = calculate_dates_slash_format(30, 37)
+        self.driver.find_element(By.NAME, "dates").clear()
+        self.driver.find_element(By.NAME, "dates").send_keys(f"{first_flight_date} - {second_flight_date}")
+Fixed code line/lines:
+        date_input = self.driver.find_element(By.XPATH, "//span[text()='Search dates']/following::input[1]")
+        date_input.click()
+
+        first_flight_date, second_flight_date = calculate_dates_slash_format(30, 37)
+        date_input.clear()
+        date_input.send_keys(f"{first_flight_date} - {second_flight_date}")
+-------------------------------------------------------
+2025-05-26 17:30:24,282 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
