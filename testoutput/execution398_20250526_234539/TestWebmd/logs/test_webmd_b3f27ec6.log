@@ -1,0 +1,160 @@
+2025-05-26 23:46:32,020 - AutoTestFixer - ERROR - --- Test test_webmd_b3f27ec6 FAILED ---
+2025-05-26 23:46:32,020 - AutoTestFixer - ERROR - URL at failure: https://doctor.webmd.com/results?entity=all&q=Botox+(Botulinum+toxin)&pagenumber=1&pt=49.41,11.26&d=40&zc=90475&city=Nuremberg&state=by&isvirtualvisit=true
+2025-05-26 23:46:32,020 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_webmd.TestWebmd object at 0x107ebaec0>
+
+    def test_webmd_b3f27ec6(self):
+        self.driver.get("https://www.webmd.com/")
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Find a Doctor')]").click()
+    
+        self.driver.find_element(By.ID, "searchkeywords_desktop").clear()
+        self.driver.find_element(By.ID, "searchkeywords_desktop").send_keys('Botox (Botulinum toxin)')
+        self.driver.find_element(By.ID, "searchlocation_desktop").send_keys(get_control_key() + "a")
+        self.driver.find_element(By.ID, "searchlocation_desktop").send_keys(Keys.DELETE)
+        self.driver.find_element(By.ID, "searchlocation_desktop").send_keys('Bristol, RI')
+        self.driver.find_element(By.XPATH, "//span[@class='webmd-input-group__append']/button[@aria-label='Search']").click()
+    
+        self.driver.find_element(By.XPATH, "//div[@class='filters-container' and not(@style='display: none;')]//span[text()='Virtual Visit']").click()
+    
+        self.driver.find_element(By.XPATH, "//span[text()='Insurance']").click()
+    
+>       self.driver.find_element(By.XPATH, "//div[contains(@id, 'webmd-popover-')]//span[text()='Aetna']").click()
+
+test/test_webmd.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107e4f490>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104e14898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000104e0b9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001048c4600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104916304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104916521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104966204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010493c33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000104963566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010493c0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010490861d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104909281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104dd2560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104dd6425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104daceb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104dd6e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104d9bdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104df9a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104df9c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104e0b591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff804c18df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff804c14857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 23:45:44,844 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.webmd.com/
+2025-05-26 23:45:56,936 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.webmd.com/
+2025-05-26 23:45:58,942 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Find a Doctor')]
+2025-05-26 23:45:58,972 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Find a Doctor')]
+2025-05-26 23:45:58,972 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'Find a Doctor')]
+2025-05-26 23:45:58,972 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Find a Doctor')]
+2025-05-26 23:45:58,980 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Find a Doctor')]
+2025-05-26 23:46:00,000 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'Find a Doctor')]
+2025-05-26 23:46:00,000 - AutoTestFixer - INFO - Attempting to find element: id = searchkeywords_desktop
+2025-05-26 23:46:00,008 - AutoTestFixer - INFO - Successfully find element: id = searchkeywords_desktop
+2025-05-26 23:46:00,025 - AutoTestFixer - INFO - Attempting to find element: id = searchkeywords_desktop
+2025-05-26 23:46:00,029 - AutoTestFixer - INFO - Successfully find element: id = searchkeywords_desktop
+2025-05-26 23:46:00,202 - AutoTestFixer - INFO - Attempting to find element: id = searchlocation_desktop
+2025-05-26 23:46:00,208 - AutoTestFixer - INFO - Successfully find element: id = searchlocation_desktop
+2025-05-26 23:46:00,239 - AutoTestFixer - INFO - Attempting to find element: id = searchlocation_desktop
+2025-05-26 23:46:00,243 - AutoTestFixer - INFO - Successfully find element: id = searchlocation_desktop
+2025-05-26 23:46:00,257 - AutoTestFixer - INFO - Attempting to find element: id = searchlocation_desktop
+2025-05-26 23:46:00,261 - AutoTestFixer - INFO - Successfully find element: id = searchlocation_desktop
+2025-05-26 23:46:00,279 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[@class='webmd-input-group__append']/button[@aria-label='Search']
+2025-05-26 23:46:00,287 - AutoTestFixer - INFO - Successfully find element: xpath = //span[@class='webmd-input-group__append']/button[@aria-label='Search']
+2025-05-26 23:46:00,287 - AutoTestFixer - INFO - Attempting to click element: xpath = //span[@class='webmd-input-group__append']/button[@aria-label='Search']
+2025-05-26 23:46:00,287 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[@class='webmd-input-group__append']/button[@aria-label='Search']
+2025-05-26 23:46:00,291 - AutoTestFixer - INFO - Successfully find element: xpath = //span[@class='webmd-input-group__append']/button[@aria-label='Search']
+2025-05-26 23:46:00,935 - AutoTestFixer - INFO - Element clicked: xpath = //span[@class='webmd-input-group__append']/button[@aria-label='Search']
+2025-05-26 23:46:00,935 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='filters-container' and not(@style='display: none;')]//span[text()='Virtual Visit']
+2025-05-26 23:46:00,943 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='filters-container' and not(@style='display: none;')]//span[text()='Virtual Visit']
+2025-05-26 23:46:00,943 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@class='filters-container' and not(@style='display: none;')]//span[text()='Virtual Visit']
+2025-05-26 23:46:00,943 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@class='filters-container' and not(@style='display: none;')]//span[text()='Virtual Visit']
+2025-05-26 23:46:00,947 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@class='filters-container' and not(@style='display: none;')]//span[text()='Virtual Visit']
+2025-05-26 23:46:01,041 - AutoTestFixer - INFO - Element clicked: xpath = //div[@class='filters-container' and not(@style='display: none;')]//span[text()='Virtual Visit']
+2025-05-26 23:46:01,042 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Insurance']
+2025-05-26 23:46:01,050 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Insurance']
+2025-05-26 23:46:01,050 - AutoTestFixer - INFO - Attempting to click element: xpath = //span[text()='Insurance']
+2025-05-26 23:46:01,051 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Insurance']
+2025-05-26 23:46:01,055 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Insurance']
+2025-05-26 23:46:01,093 - AutoTestFixer - INFO - Element clicked: xpath = //span[text()='Insurance']
+2025-05-26 23:46:01,093 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[contains(@id, 'webmd-popover-')]//span[text()='Aetna']
+2025-05-26 23:46:31,220 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[contains(@id, 'webmd-popover-')]//span[text()='Aetna'] (Current page URL: https://doctor.webmd.com/results?entity=all&q=Botox+(Botulinum+toxin)&pagenumber=1&pt=49.41,11.26&d=40&zc=90475&city=Nuremberg&state=by&isvirtualvisit=true)
+2025-05-26 23:46:31,293 - AutoTestFixer - INFO - Test test_webmd_b3f27ec6 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 23:47:08,802 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Type “Aetna” in the Insurance-search box first, then click the suggested item rather than expecting it to be pre-listed.  
+Original code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[contains(@id, 'webmd-popover-')]//span[text()='Aetna']").click()  
+Fixed code line/lines:  
+        self.driver.find_element(By.CSS_SELECTOR, "input[placeholder='Search Insurance Carriers']").send_keys("Aetna")  
+        self.driver.find_element(By.XPATH, "//li//*[normalize-space(text())='Aetna']").click()  
+-------------------------------------------------------
+Potential fix (2): Use a locator that does not rely on the dynamic popover id.  
+Original code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[contains(@id, 'webmd-popover-')]//span[text()='Aetna']").click()  
+Fixed code line/lines:  
+        self.driver.find_element(By.XPATH, "//span[normalize-space(text())='Aetna']").click()  
+-------------------------------------------------------
+Potential fix (3): Narrow the locator to the visible, open popover only.  
+Original code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[contains(@id, 'webmd-popover-')]//span[text()='Aetna']").click()  
+Fixed code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[@role='dialog' and not(@aria-hidden='true')]//span[normalize-space(text())='Aetna']").click()  
+-------------------------------------------------------
+Potential fix (4): Fall back to keyboard navigation—search, press ENTER—to select the carrier.  
+Original code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[contains(@id, 'webmd-popover-')]//span[text()='Aetna']").click()  
+Fixed code line/lines:  
+        search_box = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder='Search Insurance Carriers']")  
+        search_box.send_keys("Aetna" + Keys.ENTER)  
+-------------------------------------------------------
+Potential fix (5): Re-open the Insurance filter if it was auto-collapsed before searching.  
+Original code line/lines:  
+        self.driver.find_element(By.XPATH, "//div[contains(@id, 'webmd-popover-')]//span[text()='Aetna']").click()  
+Fixed code line/lines:  
+        self.driver.find_element(By.XPATH, "//span[text()='Insurance']/ancestor::button").click()  
+        self.driver.find_element(By.CSS_SELECTOR, "input[placeholder='Search Insurance Carriers']").send_keys("Aetna")  
+        self.driver.find_element(By.XPATH, "//li//*[normalize-space(text())='Aetna']").click()  
+-------------------------------------------------------
+2025-05-26 23:47:08,803 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
