@@ -1,0 +1,201 @@
+2025-05-26 20:41:47,495 - AutoTestFixer - ERROR - --- Test test_kbb_d3a4e6c3 FAILED ---
+2025-05-26 20:41:47,495 - AutoTestFixer - ERROR - URL at failure: https://www.kbb.com/toyota/camry/2016/styles/?intent=trade-in-sell&mileage=40000
+2025-05-26 20:41:47,495 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_kbb.TestKbb object at 0x1068ebeb0>
+
+    def test_kbb_d3a4e6c3(self):
+        self.driver.get("https://kbb.com")
+    
+        self.driver.find_element(By.XPATH, "//div/a[contains(text(),'Car Values')]").click()
+    
+        time.sleep(3)
+        # if self.driver.find_element(By.XPATH, "//button[text()='No Thanks']") is not None:
+        #     self.driver.find_element(By.XPATH, "//button[text()='No Thanks']").click()
+        scroll_down(self.driver, 500)
+    
+        self.driver.find_element(By.XPATH, "//div[text()=\"My Car's Value\"]").click()
+    
+        year_dropdown = self.driver.find_element(By.XPATH, "//select[@aria-label='Year' and @placeholder='Year' and not(.//option[@value='2027'])]")
+        year_select = Select(year_dropdown)
+        year_select.select_by_visible_text('2016')
+        make_dropdown = self.driver.find_element(By.XPATH, "//select[@aria-label='Make' and @placeholder='Make' and .//option[@value='Acura']]")
+        make_select = Select(make_dropdown)
+        make_select.select_by_value('Toyota')
+        model_dropdown = self.driver.find_element(By.XPATH, "//select[@aria-label='Model' and @placeholder='Model' and .//option[@value='Camry']]")
+        model_select = Select(model_dropdown)
+        model_select.select_by_value('Camry')
+        self.driver.find_element(By.XPATH, "//input[contains(@class, 'mileage') and @type='tel']").clear()
+        self.driver.find_element(By.XPATH, "//input[contains(@class, 'mileage') and @type='tel']").send_keys("40000")
+    
+        self.driver.find_element(By.XPATH, "//input[contains(@class, 'zipcode') and @type='tel' and ./ancestor::label[1]/preceding-sibling::label]").clear()
+        self.driver.find_element(By.XPATH, "//input[contains(@class, 'zipcode') and @type='tel' and ./ancestor::label[1]/preceding-sibling::label]").send_keys("07055")
+    
+        self.driver.find_element(By.XPATH, "//button[@data-testid='vehicle_picker_submit_button' and not(@disabled)]").click()
+    
+        time.sleep(3)
+        # if self.driver.find_element(By.XPATH, "//button[text()='No Thanks']") is not None:
+        #     self.driver.find_element(By.XPATH, "//button[text()='No Thanks']").click()
+        scroll_down(self.driver, 500)
+    
+        self.driver.find_element(By.XPATH, "//div[@id='box-style']/div[4]/label[1]/div[1]/div[1]/div[1]").click()
+>       self.driver.find_element(By.XPATH, "//main[@id='content']/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/button[1]/span[1]").click()
+
+test/test_kbb.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1068f6d40>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100669898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001006609ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100119600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x000000010016b304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x000000010016b521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001001bb204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010019133d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001001b8566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001001910e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010015d61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x000000010015e281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000100627560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x000000010062b425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000100601eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x000000010062be5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001005f0dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x000000010064ea78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x000000010064ec40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000100660591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff806f50df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff806f4c857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 20:40:48,834 - AutoTestFixer - INFO - Attempting to navigate to URL: https://kbb.com
+2025-05-26 20:40:58,113 - AutoTestFixer - INFO - Successfully navigated to URL: https://kbb.com
+2025-05-26 20:41:00,119 - AutoTestFixer - INFO - Attempting to find element: xpath = //div/a[contains(text(),'Car Values')]
+2025-05-26 20:41:00,134 - AutoTestFixer - INFO - Successfully find element: xpath = //div/a[contains(text(),'Car Values')]
+2025-05-26 20:41:00,134 - AutoTestFixer - INFO - Attempting to click element: xpath = //div/a[contains(text(),'Car Values')]
+2025-05-26 20:41:00,134 - AutoTestFixer - INFO - Attempting to find element: xpath = //div/a[contains(text(),'Car Values')]
+2025-05-26 20:41:00,139 - AutoTestFixer - INFO - Successfully find element: xpath = //div/a[contains(text(),'Car Values')]
+2025-05-26 20:41:03,157 - AutoTestFixer - INFO - Element clicked: xpath = //div/a[contains(text(),'Car Values')]
+2025-05-26 20:41:07,183 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[text()="My Car's Value"]
+2025-05-26 20:41:07,196 - AutoTestFixer - INFO - Successfully find element: xpath = //div[text()="My Car's Value"]
+2025-05-26 20:41:07,196 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[text()="My Car's Value"]
+2025-05-26 20:41:07,197 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[text()="My Car's Value"]
+2025-05-26 20:41:07,206 - AutoTestFixer - INFO - Successfully find element: xpath = //div[text()="My Car's Value"]
+2025-05-26 20:41:07,280 - AutoTestFixer - INFO - Element clicked: xpath = //div[text()="My Car's Value"]
+2025-05-26 20:41:07,280 - AutoTestFixer - INFO - Attempting to find element: xpath = //select[@aria-label='Year' and @placeholder='Year' and not(.//option[@value='2027'])]
+2025-05-26 20:41:07,289 - AutoTestFixer - INFO - Successfully find element: xpath = //select[@aria-label='Year' and @placeholder='Year' and not(.//option[@value='2027'])]
+2025-05-26 20:41:07,296 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "2016"] within element: xpath = //select[@aria-label='Year' and @placeholder='Year' and not(.//option[@value='2027'])]
+2025-05-26 20:41:07,823 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "2016"] within element: xpath = //select[@aria-label='Year' and @placeholder='Year' and not(.//option[@value='2027'])]
+2025-05-26 20:41:07,840 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "2016"]
+2025-05-26 20:41:07,840 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "2016"] within element: xpath = //select[@aria-label='Year' and @placeholder='Year' and not(.//option[@value='2027'])]
+2025-05-26 20:41:07,850 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "2016"] within element: xpath = //select[@aria-label='Year' and @placeholder='Year' and not(.//option[@value='2027'])]
+2025-05-26 20:41:07,885 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "2016"]
+2025-05-26 20:41:07,885 - AutoTestFixer - INFO - Attempting to find element: xpath = //select[@aria-label='Make' and @placeholder='Make' and .//option[@value='Acura']]
+2025-05-26 20:41:08,406 - AutoTestFixer - INFO - Successfully find element: xpath = //select[@aria-label='Make' and @placeholder='Make' and .//option[@value='Acura']]
+2025-05-26 20:41:08,417 - AutoTestFixer - INFO - Attempting to find elements: css selector = option[value ="Toyota"] within element: xpath = //select[@aria-label='Make' and @placeholder='Make' and .//option[@value='Acura']]
+2025-05-26 20:41:08,428 - AutoTestFixer - INFO - Successfully find elements: css selector = option[value ="Toyota"] within element: xpath = //select[@aria-label='Make' and @placeholder='Make' and .//option[@value='Acura']]
+2025-05-26 20:41:08,439 - AutoTestFixer - INFO - Attempting to click element: css selector = option[value ="Toyota"]
+2025-05-26 20:41:08,440 - AutoTestFixer - INFO - Attempting to find element: css selector = option[value ="Toyota"] within element: xpath = //select[@aria-label='Make' and @placeholder='Make' and .//option[@value='Acura']]
+2025-05-26 20:41:08,447 - AutoTestFixer - INFO - Successfully find element: css selector = option[value ="Toyota"] within element: xpath = //select[@aria-label='Make' and @placeholder='Make' and .//option[@value='Acura']]
+2025-05-26 20:41:08,475 - AutoTestFixer - INFO - Element clicked: css selector = option[value ="Toyota"]
+2025-05-26 20:41:08,475 - AutoTestFixer - INFO - Attempting to find element: xpath = //select[@aria-label='Model' and @placeholder='Model' and .//option[@value='Camry']]
+2025-05-26 20:41:09,005 - AutoTestFixer - INFO - Successfully find element: xpath = //select[@aria-label='Model' and @placeholder='Model' and .//option[@value='Camry']]
+2025-05-26 20:41:09,017 - AutoTestFixer - INFO - Attempting to find elements: css selector = option[value ="Camry"] within element: xpath = //select[@aria-label='Model' and @placeholder='Model' and .//option[@value='Camry']]
+2025-05-26 20:41:09,027 - AutoTestFixer - INFO - Successfully find elements: css selector = option[value ="Camry"] within element: xpath = //select[@aria-label='Model' and @placeholder='Model' and .//option[@value='Camry']]
+2025-05-26 20:41:09,038 - AutoTestFixer - INFO - Attempting to click element: css selector = option[value ="Camry"]
+2025-05-26 20:41:09,038 - AutoTestFixer - INFO - Attempting to find element: css selector = option[value ="Camry"] within element: xpath = //select[@aria-label='Model' and @placeholder='Model' and .//option[@value='Camry']]
+2025-05-26 20:41:09,047 - AutoTestFixer - INFO - Successfully find element: css selector = option[value ="Camry"] within element: xpath = //select[@aria-label='Model' and @placeholder='Model' and .//option[@value='Camry']]
+2025-05-26 20:41:09,073 - AutoTestFixer - INFO - Element clicked: css selector = option[value ="Camry"]
+2025-05-26 20:41:09,073 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[contains(@class, 'mileage') and @type='tel']
+2025-05-26 20:41:09,081 - AutoTestFixer - INFO - Successfully find element: xpath = //input[contains(@class, 'mileage') and @type='tel']
+2025-05-26 20:41:09,102 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[contains(@class, 'mileage') and @type='tel']
+2025-05-26 20:41:09,107 - AutoTestFixer - INFO - Successfully find element: xpath = //input[contains(@class, 'mileage') and @type='tel']
+2025-05-26 20:41:09,370 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[contains(@class, 'zipcode') and @type='tel' and ./ancestor::label[1]/preceding-sibling::label]
+2025-05-26 20:41:09,378 - AutoTestFixer - INFO - Successfully find element: xpath = //input[contains(@class, 'zipcode') and @type='tel' and ./ancestor::label[1]/preceding-sibling::label]
+2025-05-26 20:41:09,396 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[contains(@class, 'zipcode') and @type='tel' and ./ancestor::label[1]/preceding-sibling::label]
+2025-05-26 20:41:09,401 - AutoTestFixer - INFO - Successfully find element: xpath = //input[contains(@class, 'zipcode') and @type='tel' and ./ancestor::label[1]/preceding-sibling::label]
+2025-05-26 20:41:09,441 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-testid='vehicle_picker_submit_button' and not(@disabled)]
+2025-05-26 20:41:09,971 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-testid='vehicle_picker_submit_button' and not(@disabled)]
+2025-05-26 20:41:09,971 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@data-testid='vehicle_picker_submit_button' and not(@disabled)]
+2025-05-26 20:41:09,971 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-testid='vehicle_picker_submit_button' and not(@disabled)]
+2025-05-26 20:41:09,983 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-testid='vehicle_picker_submit_button' and not(@disabled)]
+2025-05-26 20:41:11,987 - AutoTestFixer - INFO - Element clicked: xpath = //button[@data-testid='vehicle_picker_submit_button' and not(@disabled)]
+2025-05-26 20:41:16,033 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='box-style']/div[4]/label[1]/div[1]/div[1]/div[1]
+2025-05-26 20:41:16,053 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='box-style']/div[4]/label[1]/div[1]/div[1]/div[1]
+2025-05-26 20:41:16,053 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='box-style']/div[4]/label[1]/div[1]/div[1]/div[1]
+2025-05-26 20:41:16,053 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='box-style']/div[4]/label[1]/div[1]/div[1]/div[1]
+2025-05-26 20:41:16,059 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='box-style']/div[4]/label[1]/div[1]/div[1]/div[1]
+2025-05-26 20:41:16,145 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='box-style']/div[4]/label[1]/div[1]/div[1]/div[1]
+2025-05-26 20:41:16,145 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='content']/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/button[1]/span[1]
+2025-05-26 20:41:46,307 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //main[@id='content']/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/button[1]/span[1] (Current page URL: https://www.kbb.com/toyota/camry/2016/styles/?intent=trade-in-sell&mileage=40000)
+2025-05-26 20:41:46,380 - AutoTestFixer - INFO - Test test_kbb_d3a4e6c3 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 20:42:18,750 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle absolute XPath with robust locator using data-attribute for the “Next” button.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//main[@id='content']/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/button[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button[data-lean-auto='categoryPickerButton']").click()
+-------------------------------------------------------
+Potential fix (2): Locate the button via its visible text instead of deep DOM indices.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//main[@id='content']/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/button[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[normalize-space()='Next' or .//span[normalize-space()='Next']]").click()
+-------------------------------------------------------
+Potential fix (3): Click the span that contains the “Next” label directly.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//main[@id='content']/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/button[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[normalize-space()='Next']").click()
+-------------------------------------------------------
+Potential fix (4): Ensure the “Next” button is in view before clicking, using a concise CSS locator.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//main[@id='content']/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/button[1]/span[1]").click()
+Fixed code line/lines:
+        next_btn = self.driver.find_element(By.CSS_SELECTOR, "button[data-lean-auto='categoryPickerButton']")
+        self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", next_btn)
+        next_btn.click()
+-------------------------------------------------------
+Potential fix (5): Update the trim selection to a stable data-test-id so the correct radio button is definitely chosen before “Next” appears.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='box-style']/div[4]/label[1]/div[1]/div[1]/div[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "input[data-testid='radio_3_undefined']+div").click()
+-------------------------------------------------------
+
+2025-05-26 20:42:18,750 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
