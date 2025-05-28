@@ -1,0 +1,112 @@
+2025-05-26 17:24:41,637 - AutoTestFixer - ERROR - --- Test test_indeed_4ce51ed5 FAILED ---
+2025-05-26 17:24:41,637 - AutoTestFixer - ERROR - URL at failure: https://uk.indeed.com/?hl=en&co=gb&countrySelector=1&_ga=2.148704242.478851308.1748294649-500150217.1748294649&_gl=1*1l1uola*_gcl_au*MzM4MDUzNzU5LjE3NDgyOTQ2NTA.*_ga*NTAwMTUwMjE3LjE3NDgyOTQ2NDk.*_ga_5KTMMETCF4*czE3NDgyOTQ2NDkkbzEkZzAkdDE3NDgyOTQ2NDkkajYwJGwwJGgwJGQ5bzExd2R1ejlEd2ZWNHFpZk14RE5JT1BRc2pUZk1uTXd3
+2025-05-26 17:24:41,638 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_indeed.TestIndeed object at 0x107c82680>
+
+    def test_indeed_4ce51ed5(self):
+        self.driver.get("https://www.indeed.com/worldwide")
+    
+        self.driver.find_element(By.XPATH, "//div[@id='page']/div[1]/div[1]/ul[1]/li[58]/a[1]/span[1]").click()
+>       self.driver.find_element(By.XPATH, "//a[contains(text(),'Browse Jobs')]").click()
+
+test/test_indeed.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107c85b40>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010530b898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001053029ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104dbb600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104e0d304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104e0d521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104e5d204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000104e3333d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000104e5a566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000104e330e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000104dff61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104e00281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001052c9560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001052cd425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001052a3eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001052cde5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000105292dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001052f0a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001052f0c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000105302591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff8136dcdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff8136d8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 17:24:04,801 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.indeed.com/worldwide
+2025-05-26 17:24:05,314 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.indeed.com/worldwide
+2025-05-26 17:24:07,323 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='page']/div[1]/div[1]/ul[1]/li[58]/a[1]/span[1]
+2025-05-26 17:24:09,815 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='page']/div[1]/div[1]/ul[1]/li[58]/a[1]/span[1]
+2025-05-26 17:24:09,815 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='page']/div[1]/div[1]/ul[1]/li[58]/a[1]/span[1]
+2025-05-26 17:24:09,815 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='page']/div[1]/div[1]/ul[1]/li[58]/a[1]/span[1]
+2025-05-26 17:24:09,819 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='page']/div[1]/div[1]/ul[1]/li[58]/a[1]/span[1]
+2025-05-26 17:24:10,806 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='page']/div[1]/div[1]/ul[1]/li[58]/a[1]/span[1]
+2025-05-26 17:24:10,806 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Browse Jobs')]
+2025-05-26 17:24:40,886 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[contains(text(),'Browse Jobs')] (Current page URL: https://uk.indeed.com/?hl=en&co=gb&countrySelector=1&_ga=2.148704242.478851308.1748294649-500150217.1748294649&_gl=1*1l1uola*_gcl_au*MzM4MDUzNzU5LjE3NDgyOTQ2NTA.*_ga*NTAwMTUwMjE3LjE3NDgyOTQ2NDk.*_ga_5KTMMETCF4*czE3NDgyOTQ2NDkkbzEkZzAkdDE3NDgyOTQ2NDkkajYwJGwwJGgwJGQ5bzExd2R1ejlEd2ZWNHFpZk14RE5JT1BRc2pUZk1uTXd3)
+2025-05-26 17:24:40,960 - AutoTestFixer - INFO - Test test_indeed_4ce51ed5 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 17:25:13,432 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Locator is case-sensitive; use a case-insensitive XPath so “Browse jobs” (lower-case j) is matched.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Browse Jobs')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'browse jobs')]").click()
+-------------------------------------------------------
+Potential fix (2): Target the unique data attribute instead of visible text.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Browse Jobs')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@data-gnav-element-name='BrowseJobs']").click()
+-------------------------------------------------------
+Potential fix (3): Match by href fragment that is stable across locales.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Browse Jobs')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(@href,'/browsejobs')]").click()
+-------------------------------------------------------
+Potential fix (4): Scroll to the footer first, then click the element (helps if the footer is lazy-loaded).
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Browse Jobs')]").click()
+Fixed code line/lines:
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        self.driver.find_element(By.XPATH, "//a[@data-gnav-element-name='BrowseJobs']").click()
+-------------------------------------------------------
+2025-05-26 17:25:13,432 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
