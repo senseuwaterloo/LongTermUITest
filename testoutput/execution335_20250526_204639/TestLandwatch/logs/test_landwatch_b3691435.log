@@ -1,0 +1,166 @@
+2025-05-26 20:47:33,098 - AutoTestFixer - ERROR - --- Test test_landwatch_b3691435 FAILED ---
+2025-05-26 20:47:33,098 - AutoTestFixer - ERROR - URL at failure: https://www.landwatch.com/georgia-land-for-sale/timberland-property/acres-51-100/listed-7-days
+2025-05-26 20:47:33,098 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_landwatch.TestLandwatch object at 0x107ce36a0>
+
+    def test_landwatch_b3691435(self):
+        self.driver.get("https://landwatch.com")
+        self.driver.find_element(By.XPATH, "//div[@id='root']/div[1]/header[1]/div[2]/div[1]/div[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Timberland')]").click()
+    
+        time.sleep(3)
+        self.driver.find_element(By.XPATH, "//a[text()='Georgia ']").click()
+    
+        time.sleep(3)
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'51 - 100 Acres')]").click()
+    
+        time.sleep(3)
+        self.driver.find_element(By.XPATH, "//a[text()='For Sale ']").click()
+    
+        date_listed_dropdown = self.driver.find_element(By.ID, "Date Listed")
+        date_listed_select = Select(date_listed_dropdown)
+        date_listed_select.select_by_visible_text('Past 7 days')
+    
+        time.sleep(3)
+>       self.driver.find_element(By.XPATH, "//div[contains(@id, 'dropdown')]/div[1]/span[1]").click()
+
+test/test_landwatch.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107ced510>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000105198898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010518f9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104c48600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104c9a304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104c9a521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104cea204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000104cc033d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000104ce7566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000104cc00e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000104c8c61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104c8d281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000105156560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x000000010515a425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000105130eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x000000010515ae5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010511fdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x000000010517da78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x000000010517dc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010518f591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff806f50df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff806f4c857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 20:46:44,382 - AutoTestFixer - INFO - Attempting to navigate to URL: https://landwatch.com
+2025-05-26 20:46:45,239 - AutoTestFixer - INFO - Successfully navigated to URL: https://landwatch.com
+2025-05-26 20:46:47,245 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='root']/div[1]/header[1]/div[2]/div[1]/div[1]/span[1]
+2025-05-26 20:46:47,271 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='root']/div[1]/header[1]/div[2]/div[1]/div[1]/span[1]
+2025-05-26 20:46:47,271 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='root']/div[1]/header[1]/div[2]/div[1]/div[1]/span[1]
+2025-05-26 20:46:47,271 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='root']/div[1]/header[1]/div[2]/div[1]/div[1]/span[1]
+2025-05-26 20:46:47,277 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='root']/div[1]/header[1]/div[2]/div[1]/div[1]/span[1]
+2025-05-26 20:46:47,345 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='root']/div[1]/header[1]/div[2]/div[1]/div[1]/span[1]
+2025-05-26 20:46:47,345 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Timberland')]
+2025-05-26 20:46:47,352 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Timberland')]
+2025-05-26 20:46:47,352 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'Timberland')]
+2025-05-26 20:46:47,352 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Timberland')]
+2025-05-26 20:46:47,356 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Timberland')]
+2025-05-26 20:46:47,423 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'Timberland')]
+2025-05-26 20:46:50,432 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='Georgia ']
+2025-05-26 20:46:50,463 - AutoTestFixer - INFO - Successfully find element: xpath = //a[text()='Georgia ']
+2025-05-26 20:46:50,463 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[text()='Georgia ']
+2025-05-26 20:46:50,463 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='Georgia ']
+2025-05-26 20:46:50,470 - AutoTestFixer - INFO - Successfully find element: xpath = //a[text()='Georgia ']
+2025-05-26 20:46:50,562 - AutoTestFixer - INFO - Element clicked: xpath = //a[text()='Georgia ']
+2025-05-26 20:46:53,565 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'51 - 100 Acres')]
+2025-05-26 20:46:53,583 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'51 - 100 Acres')]
+2025-05-26 20:46:53,583 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'51 - 100 Acres')]
+2025-05-26 20:46:53,583 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'51 - 100 Acres')]
+2025-05-26 20:46:53,589 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'51 - 100 Acres')]
+2025-05-26 20:46:53,678 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'51 - 100 Acres')]
+2025-05-26 20:46:56,683 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='For Sale ']
+2025-05-26 20:46:56,711 - AutoTestFixer - INFO - Successfully find element: xpath = //a[text()='For Sale ']
+2025-05-26 20:46:56,712 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[text()='For Sale ']
+2025-05-26 20:46:56,712 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='For Sale ']
+2025-05-26 20:46:56,719 - AutoTestFixer - INFO - Successfully find element: xpath = //a[text()='For Sale ']
+2025-05-26 20:46:56,816 - AutoTestFixer - INFO - Element clicked: xpath = //a[text()='For Sale ']
+2025-05-26 20:46:56,816 - AutoTestFixer - INFO - Attempting to find element: id = Date Listed
+2025-05-26 20:46:56,824 - AutoTestFixer - INFO - Successfully find element: id = Date Listed
+2025-05-26 20:46:56,832 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "Past 7 days"] within element: id = Date Listed
+2025-05-26 20:46:56,839 - AutoTestFixer - INFO - Successfully find elements: xpath = .//option[normalize-space(.) = "Past 7 days"] within element: id = Date Listed
+2025-05-26 20:46:56,848 - AutoTestFixer - INFO - Attempting to click element: xpath = .//option[normalize-space(.) = "Past 7 days"]
+2025-05-26 20:46:56,848 - AutoTestFixer - INFO - Attempting to find element: xpath = .//option[normalize-space(.) = "Past 7 days"] within element: id = Date Listed
+2025-05-26 20:46:56,855 - AutoTestFixer - INFO - Successfully find element: xpath = .//option[normalize-space(.) = "Past 7 days"] within element: id = Date Listed
+2025-05-26 20:46:56,878 - AutoTestFixer - INFO - Element clicked: xpath = .//option[normalize-space(.) = "Past 7 days"]
+2025-05-26 20:46:59,884 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[contains(@id, 'dropdown')]/div[1]/span[1]
+2025-05-26 20:47:30,130 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[contains(@id, 'dropdown')]/div[1]/span[1] (Current page URL: https://www.landwatch.com/georgia-land-for-sale/timberland-property/acres-51-100/listed-7-days)
+2025-05-26 20:47:30,203 - AutoTestFixer - INFO - Test test_landwatch_b3691435 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 20:47:58,714 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace incorrect id-based XPath with data-testId locator that exists.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[contains(@id, 'dropdown')]/div[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@data-testid='dropdown']").click()
+-------------------------------------------------------
+Potential fix (2): Use a concise CSS selector for the same dropdown element.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[contains(@id, 'dropdown')]/div[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "div[data-testid='dropdown']").click()
+-------------------------------------------------------
+Potential fix (3): Scroll dropdown into view before clicking to avoid hidden-element issues.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[contains(@id, 'dropdown')]/div[1]/span[1]").click()
+Fixed code line/lines:
+        dropdown = self.driver.find_element(By.XPATH, "//div[@data-testid='dropdown']")
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", dropdown)
+        dropdown.click()
+-------------------------------------------------------
+Potential fix (4): Locate dropdown via its role and visible “Sort” label instead of id.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[contains(@id, 'dropdown')]/div[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@role='button'][.//span[normalize-space()='Sort']]").click()
+-------------------------------------------------------
+Potential fix (5): Target the button using aria attributes for robustness.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[contains(@id, 'dropdown')]/div[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@role='button' and @aria-haspopup='listbox']").click()
+-------------------------------------------------------
+2025-05-26 20:47:58,714 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
