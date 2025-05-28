@@ -1,0 +1,112 @@
+2025-05-26 22:52:45,967 - AutoTestFixer - ERROR - --- Test test_target_274571ea FAILED ---
+2025-05-26 22:52:45,968 - AutoTestFixer - ERROR - URL at failure: https://www.target.com/
+2025-05-26 22:52:45,968 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_target.TestTarget object at 0x103d6b040>
+
+    def test_target_274571ea(self):
+        self.driver.get("https://www.target.com/")
+    
+>       self.driver.find_element(By.XPATH, "//button[@id='web-store-id-msg-btn']/div[1]/span[1]").click()
+
+test/test_target.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x103d98160>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001011d7898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001011ce9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100c87600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100cd9304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100cd9521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100d29204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000100cff33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100d26566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100cff0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100ccb61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100ccc281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000101195560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000101199425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x000000010116feb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000101199e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010115edc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001011bca78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001011bcc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x00000001011ce591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812e64df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812e60857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 22:52:11,707 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.target.com/
+2025-05-26 22:52:13,152 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.target.com/
+2025-05-26 22:52:15,157 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@id='web-store-id-msg-btn']/div[1]/span[1]
+2025-05-26 22:52:45,214 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //button[@id='web-store-id-msg-btn']/div[1]/span[1] (Current page URL: https://www.target.com/)
+2025-05-26 22:52:45,288 - AutoTestFixer - INFO - Test test_target_274571ea failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 22:53:22,930 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Click the button directly by its unique id instead of an inner span that no longer exists.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@id='web-store-id-msg-btn']/div[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "web-store-id-msg-btn").click()
+-------------------------------------------------------
+Potential fix (2): Use the stable data-test attribute to locate the button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@id='web-store-id-msg-btn']/div[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@data-test='@web/StoreName/Button']").click()
+-------------------------------------------------------
+Potential fix (3): Update the XPath to target any descendant span inside the button, avoiding brittle child-indexing.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@id='web-store-id-msg-btn']/div[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@id='web-store-id-msg-btn']//span").click()
+-------------------------------------------------------
+Potential fix (4): Switch to a concise CSS selector for the button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@id='web-store-id-msg-btn']/div[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button#web-store-id-msg-btn").click()
+-------------------------------------------------------
+Potential fix (5): Scroll the button into view before clicking to avoid potential header overlap issues.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@id='web-store-id-msg-btn']/div[1]/span[1]").click()
+Fixed code line/lines:
+        store_btn = self.driver.find_element(By.ID, "web-store-id-msg-btn")
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", store_btn)
+        store_btn.click()
+-------------------------------------------------------
+2025-05-26 22:53:22,930 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
