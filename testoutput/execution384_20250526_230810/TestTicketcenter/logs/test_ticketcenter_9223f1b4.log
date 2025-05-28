@@ -1,0 +1,126 @@
+2025-05-26 23:08:53,081 - AutoTestFixer - ERROR - --- Test test_ticketcenter_9223f1b4 FAILED ---
+2025-05-26 23:08:53,081 - AutoTestFixer - ERROR - URL at failure: https://www.ticketcenter.com/wicked-tickets
+2025-05-26 23:08:53,081 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_ticketcenter.TestTicketcenter object at 0x104c8bf70>
+
+    def test_ticketcenter_9223f1b4(self):
+        self.driver.get("https://ticketcenter.com")
+    
+        self.driver.find_element(By.XPATH, "//input[@name='query' and @value='' and @type='text' and @placeholder='Search for artists, teams or venues...']").clear()
+        self.driver.find_element(By.XPATH, "//input[@name='query' and @value='' and @type='text' and @placeholder='Search for artists, teams or venues...']").send_keys("Wicked")
+        self.driver.find_element(By.XPATH, "//div[@id='spotlight']/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/ul[1]/li[1]/a[1]/strong[1]").click()
+    
+>       self.driver.find_element(By.XPATH, "//div[@id='filterContainer']/div[2]/span[7]/div[1]/button[1]/i[1]").click()
+
+test/test_ticketcenter.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x104c3f490>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000101563898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010155a9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000101013600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000101065304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000101065521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001010b5204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010108b33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001010b2566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010108b0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010105761d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000101058281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000101521560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000101525425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001014fbeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000101525e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001014eadc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000101548a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000101548c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010155a591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812e64df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812e60857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 23:08:16,088 - AutoTestFixer - INFO - Attempting to navigate to URL: https://ticketcenter.com
+2025-05-26 23:08:17,778 - AutoTestFixer - INFO - Successfully navigated to URL: https://ticketcenter.com
+2025-05-26 23:08:19,783 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@name='query' and @value='' and @type='text' and @placeholder='Search for artists, teams or venues...']
+2025-05-26 23:08:19,804 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@name='query' and @value='' and @type='text' and @placeholder='Search for artists, teams or venues...']
+2025-05-26 23:08:19,828 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@name='query' and @value='' and @type='text' and @placeholder='Search for artists, teams or venues...']
+2025-05-26 23:08:19,833 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@name='query' and @value='' and @type='text' and @placeholder='Search for artists, teams or venues...']
+2025-05-26 23:08:19,920 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='spotlight']/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/ul[1]/li[1]/a[1]/strong[1]
+2025-05-26 23:08:20,445 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='spotlight']/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/ul[1]/li[1]/a[1]/strong[1]
+2025-05-26 23:08:20,445 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='spotlight']/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/ul[1]/li[1]/a[1]/strong[1]
+2025-05-26 23:08:20,445 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='spotlight']/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/ul[1]/li[1]/a[1]/strong[1]
+2025-05-26 23:08:20,454 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='spotlight']/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/ul[1]/li[1]/a[1]/strong[1]
+2025-05-26 23:08:21,546 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='spotlight']/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/ul[1]/li[1]/a[1]/strong[1]
+2025-05-26 23:08:21,546 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='filterContainer']/div[2]/span[7]/div[1]/button[1]/i[1]
+2025-05-26 23:08:52,051 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='filterContainer']/div[2]/span[7]/div[1]/button[1]/i[1] (Current page URL: https://www.ticketcenter.com/wicked-tickets)
+2025-05-26 23:08:52,124 - AutoTestFixer - INFO - Test test_ticketcenter_9223f1b4 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 23:09:36,670 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update locator to use stable `date-dropdown-toggle` anchor instead of removed nested `<i>` path.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filterContainer']/div[2]/span[7]/div[1]/button[1]/i[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(@class,'date-dropdown-toggle') and @title='All dates']").click()
+-------------------------------------------------------
+Potential fix (2): Use a concise CSS selector targeting the same date filter toggle.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filterContainer']/div[2]/span[7]/div[1]/button[1]/i[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a.date-dropdown-toggle").click()
+-------------------------------------------------------
+Potential fix (3): Skip the unnecessary calendar-icon click and interact directly with the date-range input.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filterContainer']/div[2]/span[7]/div[1]/button[1]/i[1]").click()
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Select Date Range']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Select Date Range']").click()
+-------------------------------------------------------
+Potential fix (4): Scroll the date toggle into view before clicking to ensure visibility.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filterContainer']/div[2]/span[7]/div[1]/button[1]/i[1]").click()
+Fixed code line/lines:
+        date_toggle = self.driver.find_element(By.XPATH, "//a[contains(@class,'date-dropdown-toggle')]")
+        self.driver.execute_script("arguments[0].scrollIntoView(true); arguments[0].click();", date_toggle)
+-------------------------------------------------------
+Potential fix (5): Broaden XPath to locate the calendar icon regardless of internal structure changes.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filterContainer']/div[2]/span[7]/div[1]/button[1]/i[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='filterContainer']//a[contains(@class,'date-dropdown-toggle')]//i[contains(@class,'fa-calendar')]").click()
+-------------------------------------------------------
+2025-05-26 23:09:36,670 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
