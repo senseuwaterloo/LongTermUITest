@@ -1,0 +1,163 @@
+2025-05-26 23:26:13,935 - AutoTestFixer - ERROR - --- Test test_uhaul_9d8ba96c FAILED ---
+2025-05-26 23:26:13,935 - AutoTestFixer - ERROR - URL at failure: https://www.uhaul.com/Reservations/Schedule/
+2025-05-26 23:26:13,935 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_uhaul.TestUhaul object at 0x10406fc40>
+
+    def test_uhaul_9d8ba96c(self):
+        self.driver.get("https://uhaul.com")
+        self.driver.find_element(By.ID, "PickupLocation-TruckOnly").clear()
+        self.driver.find_element(By.ID, "PickupLocation-TruckOnly").send_keys("Birmingham, Alabama")
+    
+        self.driver.find_element(By.XPATH, "//div[text()='Birmingham, AL' and contains(@id, 'ui-id-')]").click()
+    
+        self.driver.find_element(By.ID, "DropoffLocation-TruckOnly").clear()
+    
+        self.driver.find_element(By.ID, "DropoffLocation-TruckOnly").send_keys("Mobil Alabama")
+    
+        self.driver.find_element(By.XPATH, "//form[@id='EquipmentSearch']/div[3]/div[1]/label[1]").click()
+    
+        (start_date_year, start_date_month_adjusted, start_date_day), (end_date_year, end_date_month_adjusted, end_date_day) = calculate_budget_dates(7, 14)
+        self.driver.find_element(By.XPATH, f"//td[@data-year='{start_date_year}' and @data-month='{start_date_month_adjusted}' and not(contains(@class, 'ui-datepicker-other-month'))]/a[text()='{start_date_day}']").click()
+    
+        self.driver.find_element(By.XPATH, "//form[@id='EquipmentSearch']/div[3]/div[2]/button[1]").click()
+        self.driver.find_element(By.ID, "submit_DC").click()
+    
+        pickup_time_dropdown = self.driver.find_element(By.ID, "SelectedScheduleTime_Row0_Entity775073")
+        pickup_time_select = Select(pickup_time_dropdown)
+>       pickup_time_select.select_by_visible_text("12:00 AM Midnight")
+
+test/test_uhaul.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.select.Select object at 0x10406c0d0>
+text = '12:00 AM Midnight'
+
+    def select_by_visible_text(self, text: str) -> None:
+        """Select all options that display text matching the argument. That is,
+        when given "Bar" this would select an option like:
+    
+         <option value="foo">Bar</option>
+    
+        :Args:
+         - text - The visible text to match against
+    
+         throws NoSuchElementException If there is no option with specified text in SELECT
+        """
+        xpath = f".//option[normalize-space(.) = {self._escape_string(text)}]"
+        opts = self._el.find_elements(By.XPATH, xpath)
+        matched = False
+        for opt in opts:
+            self._set_selected(opt)
+            if not self.is_multiple:
+                return
+            matched = True
+    
+        if len(opts) == 0 and " " in text:
+            sub_string_without_space = self._get_longest_token(text)
+            if sub_string_without_space == "":
+                candidates = self.options
+            else:
+                xpath = f".//option[contains(.,{self._escape_string(sub_string_without_space)})]"
+                candidates = self._el.find_elements(By.XPATH, xpath)
+            for candidate in candidates:
+                if text == candidate.text:
+                    self._set_selected(candidate)
+                    if not self.is_multiple:
+                        return
+                    matched = True
+    
+        if not matched:
+>           raise NoSuchElementException(f"Could not locate element with visible text: {text}")
+E           selenium.common.exceptions.NoSuchElementException: Message: Could not locate element with visible text: 12:00 AM Midnight; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/select.py:137: NoSuchElementException
+2025-05-26 23:25:00,049 - AutoTestFixer - INFO - Attempting to navigate to URL: https://uhaul.com
+2025-05-26 23:25:03,965 - AutoTestFixer - INFO - Successfully navigated to URL: https://uhaul.com
+2025-05-26 23:25:05,972 - AutoTestFixer - INFO - Attempting to find element: id = PickupLocation-TruckOnly
+2025-05-26 23:25:05,994 - AutoTestFixer - INFO - Successfully find element: id = PickupLocation-TruckOnly
+2025-05-26 23:25:06,022 - AutoTestFixer - INFO - Attempting to find element: id = PickupLocation-TruckOnly
+2025-05-26 23:25:06,027 - AutoTestFixer - INFO - Successfully find element: id = PickupLocation-TruckOnly
+2025-05-26 23:25:06,154 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[text()='Birmingham, AL' and contains(@id, 'ui-id-')]
+2025-05-26 23:25:06,700 - AutoTestFixer - INFO - Successfully find element: xpath = //div[text()='Birmingham, AL' and contains(@id, 'ui-id-')]
+2025-05-26 23:25:06,700 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[text()='Birmingham, AL' and contains(@id, 'ui-id-')]
+2025-05-26 23:25:06,700 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[text()='Birmingham, AL' and contains(@id, 'ui-id-')]
+2025-05-26 23:25:06,708 - AutoTestFixer - INFO - Successfully find element: xpath = //div[text()='Birmingham, AL' and contains(@id, 'ui-id-')]
+2025-05-26 23:25:06,786 - AutoTestFixer - INFO - Element clicked: xpath = //div[text()='Birmingham, AL' and contains(@id, 'ui-id-')]
+2025-05-26 23:25:06,787 - AutoTestFixer - INFO - Attempting to find element: id = DropoffLocation-TruckOnly
+2025-05-26 23:25:06,798 - AutoTestFixer - INFO - Successfully find element: id = DropoffLocation-TruckOnly
+2025-05-26 23:25:06,812 - AutoTestFixer - INFO - Attempting to find element: id = DropoffLocation-TruckOnly
+2025-05-26 23:25:06,816 - AutoTestFixer - INFO - Successfully find element: id = DropoffLocation-TruckOnly
+2025-05-26 23:25:06,852 - AutoTestFixer - INFO - Attempting to find element: xpath = //form[@id='EquipmentSearch']/div[3]/div[1]/label[1]
+2025-05-26 23:25:06,858 - AutoTestFixer - INFO - Successfully find element: xpath = //form[@id='EquipmentSearch']/div[3]/div[1]/label[1]
+2025-05-26 23:25:06,858 - AutoTestFixer - INFO - Attempting to click element: xpath = //form[@id='EquipmentSearch']/div[3]/div[1]/label[1]
+2025-05-26 23:25:06,859 - AutoTestFixer - INFO - Attempting to find element: xpath = //form[@id='EquipmentSearch']/div[3]/div[1]/label[1]
+2025-05-26 23:25:06,862 - AutoTestFixer - INFO - Successfully find element: xpath = //form[@id='EquipmentSearch']/div[3]/div[1]/label[1]
+2025-05-26 23:25:06,919 - AutoTestFixer - INFO - Element clicked: xpath = //form[@id='EquipmentSearch']/div[3]/div[1]/label[1]
+2025-05-26 23:25:06,919 - AutoTestFixer - INFO - Attempting to find element: xpath = //td[@data-year='2025' and @data-month='5' and not(contains(@class, 'ui-datepicker-other-month'))]/a[text()='2']
+2025-05-26 23:25:06,926 - AutoTestFixer - INFO - Successfully find element: xpath = //td[@data-year='2025' and @data-month='5' and not(contains(@class, 'ui-datepicker-other-month'))]/a[text()='2']
+2025-05-26 23:25:06,926 - AutoTestFixer - INFO - Attempting to click element: xpath = //td[@data-year='2025' and @data-month='5' and not(contains(@class, 'ui-datepicker-other-month'))]/a[text()='2']
+2025-05-26 23:25:06,926 - AutoTestFixer - INFO - Attempting to find element: xpath = //td[@data-year='2025' and @data-month='5' and not(contains(@class, 'ui-datepicker-other-month'))]/a[text()='2']
+2025-05-26 23:25:06,930 - AutoTestFixer - INFO - Successfully find element: xpath = //td[@data-year='2025' and @data-month='5' and not(contains(@class, 'ui-datepicker-other-month'))]/a[text()='2']
+2025-05-26 23:25:06,979 - AutoTestFixer - INFO - Element clicked: xpath = //td[@data-year='2025' and @data-month='5' and not(contains(@class, 'ui-datepicker-other-month'))]/a[text()='2']
+2025-05-26 23:25:06,979 - AutoTestFixer - INFO - Attempting to find element: xpath = //form[@id='EquipmentSearch']/div[3]/div[2]/button[1]
+2025-05-26 23:25:06,987 - AutoTestFixer - INFO - Successfully find element: xpath = //form[@id='EquipmentSearch']/div[3]/div[2]/button[1]
+2025-05-26 23:25:06,987 - AutoTestFixer - INFO - Attempting to click element: xpath = //form[@id='EquipmentSearch']/div[3]/div[2]/button[1]
+2025-05-26 23:25:06,987 - AutoTestFixer - INFO - Attempting to find element: xpath = //form[@id='EquipmentSearch']/div[3]/div[2]/button[1]
+2025-05-26 23:25:06,991 - AutoTestFixer - INFO - Successfully find element: xpath = //form[@id='EquipmentSearch']/div[3]/div[2]/button[1]
+2025-05-26 23:25:07,046 - AutoTestFixer - INFO - Element clicked: xpath = //form[@id='EquipmentSearch']/div[3]/div[2]/button[1]
+2025-05-26 23:25:07,046 - AutoTestFixer - INFO - Attempting to find element: id = submit_DC
+2025-05-26 23:25:10,179 - AutoTestFixer - INFO - Successfully find element: id = submit_DC
+2025-05-26 23:25:10,179 - AutoTestFixer - INFO - Attempting to click element: id = submit_DC
+2025-05-26 23:25:10,179 - AutoTestFixer - INFO - Attempting to find element: id = submit_DC
+2025-05-26 23:25:10,184 - AutoTestFixer - INFO - Successfully find element: id = submit_DC
+2025-05-26 23:25:12,977 - AutoTestFixer - INFO - Element clicked: id = submit_DC
+2025-05-26 23:25:12,978 - AutoTestFixer - INFO - Attempting to find element: id = SelectedScheduleTime_Row0_Entity775073
+2025-05-26 23:25:12,986 - AutoTestFixer - INFO - Successfully find element: id = SelectedScheduleTime_Row0_Entity775073
+2025-05-26 23:25:12,992 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[normalize-space(.) = "12:00 AM Midnight"] within element: id = SelectedScheduleTime_Row0_Entity775073
+2025-05-26 23:25:43,046 - AutoTestFixer - ERROR - TimeoutException: Elements not found within 30 seconds: xpath = .//option[normalize-space(.) = "12:00 AM Midnight"] (Current page URL: https://www.uhaul.com/Reservations/Schedule/)
+2025-05-26 23:25:43,047 - AutoTestFixer - INFO - Attempting to find elements: xpath = .//option[contains(.,"Midnight")] within element: id = SelectedScheduleTime_Row0_Entity775073
+2025-05-26 23:26:13,135 - AutoTestFixer - ERROR - TimeoutException: Elements not found within 30 seconds: xpath = .//option[contains(.,"Midnight")] (Current page URL: https://www.uhaul.com/Reservations/Schedule/)
+2025-05-26 23:26:13,206 - AutoTestFixer - INFO - Test test_uhaul_9d8ba96c failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 23:26:43,204 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): The option “12:00 AM Midnight” is not present; pick the first valid time “7:00 AM”.
+Original code line/lines:
+        pickup_time_select = Select(pickup_time_dropdown)
+        pickup_time_select.select_by_visible_text("12:00 AM Midnight")
+Fixed code line/lines:
+        pickup_time_select = Select(pickup_time_dropdown)
+        pickup_time_select.select_by_visible_text("7:00 AM")
+-------------------------------------------------------
+Potential fix (2): Select by value instead of text to avoid future wording changes.
+Original code line/lines:
+        pickup_time_select = Select(pickup_time_dropdown)
+        pickup_time_select.select_by_visible_text("12:00 AM Midnight")
+Fixed code line/lines:
+        pickup_time_select = Select(pickup_time_dropdown)
+        pickup_time_select.select_by_value("6/2/2025 7:00:00 AM")
+-------------------------------------------------------
+Potential fix (3): Dynamically choose the earliest available option regardless of its label.
+Original code line/lines:
+        pickup_time_select = Select(pickup_time_dropdown)
+        pickup_time_select.select_by_visible_text("12:00 AM Midnight")
+Fixed code line/lines:
+        pickup_time_select = Select(pickup_time_dropdown)
+        earliest_option = next(opt for opt in pickup_time_select.options if opt.get_attribute("value"))
+        pickup_time_select.select_by_value(earliest_option.get_attribute("value"))
+-------------------------------------------------------
+Potential fix (4): Correct destination typo so the schedule page loads standard times.
+Original code line/lines:
+        self.driver.find_element(By.ID, "DropoffLocation-TruckOnly").send_keys("Mobil Alabama")
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "DropoffLocation-TruckOnly").send_keys("Mobile Alabama")
+-------------------------------------------------------
+Potential fix (5): If the date changes, fetch today’s available option instead of a hard-coded date/time.
+Original code line/lines:
+        pickup_time_select = Select(pickup_time_dropdown)
+        pickup_time_select.select_by_visible_text("12:00 AM Midnight")
+Fixed code line/lines:
+        pickup_time_select = Select(pickup_time_dropdown)
+        available_times = [opt for opt in pickup_time_select.options if opt.get_attribute("value")]
+        pickup_time_select.select_by_value(available_times[0].get_attribute("value"))
+-------------------------------------------------------
+2025-05-26 23:26:43,204 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
