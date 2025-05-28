@@ -1,0 +1,118 @@
+2025-05-26 22:58:28,593 - AutoTestFixer - ERROR - --- Test test_thetrainline_5b37d2e1 FAILED ---
+2025-05-26 22:58:28,593 - AutoTestFixer - ERROR - URL at failure: https://www.thetrainline.com/en-us
+2025-05-26 22:58:28,593 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_thetrainline.TestThetrainline object at 0x10847c280>
+
+    def test_thetrainline_5b37d2e1(self):
+        self.driver.get("https://www.thetrainline.com/en-us")
+    
+        self.driver.find_element(By.ID, "jsf-origin-input").clear()
+        self.driver.find_element(By.ID, "jsf-origin-input").send_keys("PARIS")
+    
+>       self.driver.find_element(By.XPATH, "//ul[@id='jsf-origin-menu']/li[contains(@id, 'jsf-origin-item-') and ./span[text()='Paris'] and ./span[text()='FR']]").click()
+
+test/test_thetrainline.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x108407400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100b33898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000100b2a9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001005e3600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100635304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100635521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100685204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010065b33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100682566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x000000010065b0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010062761d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100628281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000100af1560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000100af5425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000100acbeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000100af5e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000100abadc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000100b18a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000100b18c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000100b2a591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812e64df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812e60857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 22:57:53,740 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.thetrainline.com/en-us
+2025-05-26 22:57:55,125 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.thetrainline.com/en-us
+2025-05-26 22:57:57,203 - AutoTestFixer - INFO - Attempting to find element: id = jsf-origin-input
+2025-05-26 22:57:57,229 - AutoTestFixer - INFO - Successfully find element: id = jsf-origin-input
+2025-05-26 22:57:57,254 - AutoTestFixer - INFO - Attempting to find element: id = jsf-origin-input
+2025-05-26 22:57:57,260 - AutoTestFixer - INFO - Successfully find element: id = jsf-origin-input
+2025-05-26 22:57:57,380 - AutoTestFixer - INFO - Attempting to find element: xpath = //ul[@id='jsf-origin-menu']/li[contains(@id, 'jsf-origin-item-') and ./span[text()='Paris'] and ./span[text()='FR']]
+2025-05-26 22:58:27,472 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //ul[@id='jsf-origin-menu']/li[contains(@id, 'jsf-origin-item-') and ./span[text()='Paris'] and ./span[text()='FR']] (Current page URL: https://www.thetrainline.com/en-us)
+2025-05-26 22:58:27,544 - AutoTestFixer - INFO - Test test_thetrainline_5b37d2e1 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 22:59:14,516 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Broaden the XPath to match “Paris (Any)” (or any Paris option) with contains(), making it less strict.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='jsf-origin-menu']/li[contains(@id, 'jsf-origin-item-') and ./span[text()='Paris'] and ./span[text()='FR']]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='jsf-origin-menu']/li[contains(@id,'jsf-origin-item-') and .//span[contains(text(),'Paris')] and .//span[text()='FR']]").click()
+-------------------------------------------------------
+Potential fix (2): Click the first highlighted (aria-selected) suggestion instead of filtering by text.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='jsf-origin-menu']/li[contains(@id, 'jsf-origin-item-') and ./span[text()='Paris'] and ./span[text()='FR']]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='jsf-origin-menu']//li[@aria-selected='true']").click()
+-------------------------------------------------------
+Potential fix (3): Directly hit RETURN on the input to accept the top suggestion, removing the need to locate the list item.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='jsf-origin-menu']/li[contains(@id, 'jsf-origin-item-') and ./span[text()='Paris'] and ./span[text()='FR']]").click()
+Fixed code line/lines:
+        from selenium.webdriver.common.keys import Keys
+        self.driver.find_element(By.ID, "jsf-origin-input").send_keys(Keys.RETURN)
+-------------------------------------------------------
+Potential fix (4): Target the specific “Paris (Any)” suggestion by its visible span text, then ascend to the li element.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='jsf-origin-menu']/li[contains(@id, 'jsf-origin-item-') and ./span[text()='Paris'] and ./span[text()='FR']]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Paris (Any)']/ancestor::li").click()
+-------------------------------------------------------
+Potential fix (5): Use the deterministic first item id (“jsf-origin-item-0”) that the input’s aria-activedescendant already references.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='jsf-origin-menu']/li[contains(@id, 'jsf-origin-item-') and ./span[text()='Paris'] and ./span[text()='FR']]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//li[@id='jsf-origin-item-0']").click()
+-------------------------------------------------------
+2025-05-26 22:59:14,516 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
