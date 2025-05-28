@@ -1,0 +1,134 @@
+2025-05-26 21:33:23,269 - AutoTestFixer - ERROR - --- Test test_ohiogov_77269ea5 FAILED ---
+2025-05-26 21:33:23,269 - AutoTestFixer - ERROR - URL at failure: https://development.ohio.gov/individual/energy-assistance/1-home-energy-assistance-program
+2025-05-26 21:33:23,270 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_ohiogov.TestOhioGov object at 0x1041a6c20>
+
+    def test_ohiogov_77269ea5(self):
+        self.driver.get("https://ohio.gov/")
+        self.driver.find_element(By.XPATH, "//nav[@id='main-nav-container']/ul[1]/li[3]/a[1]/div[1]").click()
+        self.driver.find_element(By.XPATH, "//main[@id='odx-main-content']/article[1]/section[1]/div[2]/div[1]/div[2]/div[2]/a[1]/div[2]/h3[1]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//main[@id='odx-main-content']/article[1]/div[1]/div[2]/aside[1]/section[1]/div[1]/a[1]/span[1]").click()
+    
+        switch_to_new_tab_and_close_old(self.driver)
+    
+>       self.driver.find_element(By.XPATH, "//span[contains(text(),'Search for Child Care')]").click()
+
+test/test_ohiogov.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1041b2950>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001007c4898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001007bb9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100274600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001002c6304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001002c6521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100316204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x00000001002ec33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100313566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001002ec0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001002b861d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001002b9281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000100782560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000100786425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x000000010075ceb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000100786e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010074bdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001007a9a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001007a9c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x00000001007bb591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff80db54df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80db50857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 21:32:39,058 - AutoTestFixer - INFO - Attempting to navigate to URL: https://ohio.gov/
+2025-05-26 21:32:40,883 - AutoTestFixer - INFO - Successfully navigated to URL: https://ohio.gov/
+2025-05-26 21:32:42,889 - AutoTestFixer - INFO - Attempting to find element: xpath = //nav[@id='main-nav-container']/ul[1]/li[3]/a[1]/div[1]
+2025-05-26 21:32:42,913 - AutoTestFixer - INFO - Successfully find element: xpath = //nav[@id='main-nav-container']/ul[1]/li[3]/a[1]/div[1]
+2025-05-26 21:32:42,913 - AutoTestFixer - INFO - Attempting to click element: xpath = //nav[@id='main-nav-container']/ul[1]/li[3]/a[1]/div[1]
+2025-05-26 21:32:42,913 - AutoTestFixer - INFO - Attempting to find element: xpath = //nav[@id='main-nav-container']/ul[1]/li[3]/a[1]/div[1]
+2025-05-26 21:32:42,918 - AutoTestFixer - INFO - Successfully find element: xpath = //nav[@id='main-nav-container']/ul[1]/li[3]/a[1]/div[1]
+2025-05-26 21:32:44,310 - AutoTestFixer - INFO - Element clicked: xpath = //nav[@id='main-nav-container']/ul[1]/li[3]/a[1]/div[1]
+2025-05-26 21:32:44,310 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='odx-main-content']/article[1]/section[1]/div[2]/div[1]/div[2]/div[2]/a[1]/div[2]/h3[1]/span[1]
+2025-05-26 21:32:44,318 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='odx-main-content']/article[1]/section[1]/div[2]/div[1]/div[2]/div[2]/a[1]/div[2]/h3[1]/span[1]
+2025-05-26 21:32:44,318 - AutoTestFixer - INFO - Attempting to click element: xpath = //main[@id='odx-main-content']/article[1]/section[1]/div[2]/div[1]/div[2]/div[2]/a[1]/div[2]/h3[1]/span[1]
+2025-05-26 21:32:44,318 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='odx-main-content']/article[1]/section[1]/div[2]/div[1]/div[2]/div[2]/a[1]/div[2]/h3[1]/span[1]
+2025-05-26 21:32:44,323 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='odx-main-content']/article[1]/section[1]/div[2]/div[1]/div[2]/div[2]/a[1]/div[2]/h3[1]/span[1]
+2025-05-26 21:32:45,046 - AutoTestFixer - INFO - Element clicked: xpath = //main[@id='odx-main-content']/article[1]/section[1]/div[2]/div[1]/div[2]/div[2]/a[1]/div[2]/h3[1]/span[1]
+2025-05-26 21:32:45,046 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='odx-main-content']/article[1]/div[1]/div[2]/aside[1]/section[1]/div[1]/a[1]/span[1]
+2025-05-26 21:32:45,053 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='odx-main-content']/article[1]/div[1]/div[2]/aside[1]/section[1]/div[1]/a[1]/span[1]
+2025-05-26 21:32:45,054 - AutoTestFixer - INFO - Attempting to click element: xpath = //main[@id='odx-main-content']/article[1]/div[1]/div[2]/aside[1]/section[1]/div[1]/a[1]/span[1]
+2025-05-26 21:32:45,054 - AutoTestFixer - INFO - Attempting to find element: xpath = //main[@id='odx-main-content']/article[1]/div[1]/div[2]/aside[1]/section[1]/div[1]/a[1]/span[1]
+2025-05-26 21:32:45,058 - AutoTestFixer - INFO - Successfully find element: xpath = //main[@id='odx-main-content']/article[1]/div[1]/div[2]/aside[1]/section[1]/div[1]/a[1]/span[1]
+2025-05-26 21:32:45,145 - AutoTestFixer - INFO - Element clicked: xpath = //main[@id='odx-main-content']/article[1]/div[1]/div[2]/aside[1]/section[1]/div[1]/a[1]/span[1]
+2025-05-26 21:32:52,237 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[contains(text(),'Search for Child Care')]
+2025-05-26 21:33:22,378 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //span[contains(text(),'Search for Child Care')] (Current page URL: https://development.ohio.gov/individual/energy-assistance/1-home-energy-assistance-program)
+2025-05-26 21:33:22,451 - AutoTestFixer - INFO - Test test_ohiogov_77269ea5 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:34:03,329 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Element changed from a <span> to an <a>; switch locator to anchor to hit the new markup.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Search for Child Care')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(normalize-space(text()),'Search for Child Care')]").click()
+-------------------------------------------------------
+Potential fix (2): Use a locator that matches either <span> or <a>, guarding against future tag changes.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Search for Child Care')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//*[self::a or self::span][contains(normalize-space(text()),'Search for Child Care')]").click()
+-------------------------------------------------------
+Potential fix (3): Page structure shifted; click the correct sidebar link by text instead of brittle absolute XPath.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//main[@id='odx-main-content']/article[1]/div[1]/div[2]/aside[1]/section[1]/div[1]/a[1]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//aside//a[contains(normalize-space(text()),'Search for Child Care')]").click()
+-------------------------------------------------------
+Potential fix (4): Navigate directly to the public Child Care Search portal after the tab switch to avoid relying on intermediate links that have moved.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Search for Child Care')]").click()
+Fixed code line/lines:
+        self.driver.get("https://childcaresearch.ohio.gov/")
+-------------------------------------------------------
+Potential fix (5): Combine the two consecutive clicks into one robust step that works with either span or anchor to reduce failures.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[contains(text(),'Search for Child Care')]").click()
+        self.driver.find_element(By.XPATH, "//a[text()='Search for Child Care']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//*[self::a or self::span][contains(normalize-space(text()),'Search for Child Care')]").click()
+-------------------------------------------------------
+2025-05-26 21:34:03,329 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
