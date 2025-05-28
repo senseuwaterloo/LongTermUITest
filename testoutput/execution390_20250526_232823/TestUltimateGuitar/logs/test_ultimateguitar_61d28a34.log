@@ -1,0 +1,110 @@
+2025-05-26 23:29:04,449 - AutoTestFixer - ERROR - --- Test test_ultimateguitar_61d28a34 FAILED ---
+2025-05-26 23:29:04,449 - AutoTestFixer - ERROR - URL at failure: https://www.ultimate-guitar.com/
+2025-05-26 23:29:04,450 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_ultimateguitar.TestUltimateGuitar object at 0x103bd7700>
+
+    def test_ultimateguitar_61d28a34(self):
+        self.driver.get("https://www.ultimate-guitar.com/")
+    
+>       self.driver.find_element(By.XPATH, "//span[text()='Tabs']").click()
+
+test/test_ultimateguitar.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x103b83490>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000105108898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001050ff9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104bb8600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104c0a304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104c0a521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104c5a204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000104c3033d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000104c57566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000104c300e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000104bfc61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104bfd281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x00000001050c6560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x00000001050ca425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001050a0eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x00000001050cae5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010508fdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x00000001050eda78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x00000001050edc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x00000001050ff591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff804c18df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff804c14857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 23:28:29,031 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.ultimate-guitar.com/
+2025-05-26 23:28:30,397 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.ultimate-guitar.com/
+2025-05-26 23:28:32,399 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Tabs']
+2025-05-26 23:29:02,868 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //span[text()='Tabs'] (Current page URL: https://www.ultimate-guitar.com/)
+2025-05-26 23:29:02,939 - AutoTestFixer - INFO - Test test_ultimateguitar_61d28a34 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 23:29:29,754 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Change to LINK_TEXT locator because the navigation item is an <a> element, not a <span>.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Tabs']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.LINK_TEXT, "Tabs").click()
+-------------------------------------------------------
+Potential fix (2): Update the XPath to target the <a> element that actually contains the visible “Tabs” text.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Tabs']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[normalize-space()='Tabs']").click()
+-------------------------------------------------------
+Potential fix (3): Use a more resilient XPath that relies on the href ending with “/explore”, which is unlikely to change text-wise.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Tabs']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(@href,'/explore') and contains(@class,'qOcVG')]").click()
+-------------------------------------------------------
+Potential fix (4): Use a concise CSS selector for the first top-menu anchor whose innerText is Tabs (case-sensitive match).
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Tabs']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a.qOcVG[href$='/explore']").click()
+-------------------------------------------------------
+Potential fix (5): Switch to partial link text to tolerate possible whitespace or icon wrappers.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Tabs']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.PARTIAL_LINK_TEXT, "Tabs").click()
+-------------------------------------------------------
+2025-05-26 23:29:29,754 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
