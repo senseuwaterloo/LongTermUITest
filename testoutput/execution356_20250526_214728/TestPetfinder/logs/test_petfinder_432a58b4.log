@@ -1,0 +1,112 @@
+2025-05-26 21:48:09,241 - AutoTestFixer - ERROR - --- Test test_petfinder_432a58b4 FAILED ---
+2025-05-26 21:48:09,241 - AutoTestFixer - ERROR - URL at failure: https://www.petfinder.com/
+2025-05-26 21:48:09,241 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_petfinder.TestPetfinder object at 0x1054dbfa0>
+
+    def test_petfinder_432a58b4(self):
+        self.driver.get("https://petfinder.com")
+    
+>       self.driver.find_element(By.XPATH, "//a[text()='Donate' and ./following-sibling::a[text()='Apply']]").click()
+
+test/test_petfinder.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10548f400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000101024898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010101b9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100ad4600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100b26304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100b26521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100b76204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000100b4c33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100b73566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100b4c0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100b1861d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100b19281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000100fe2560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000100fe6425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000100fbceb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000100fe6e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000100fabdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000101009a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000101009c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010101b591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff80db54df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80db50857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 21:47:34,760 - AutoTestFixer - INFO - Attempting to navigate to URL: https://petfinder.com
+2025-05-26 21:47:36,034 - AutoTestFixer - INFO - Successfully navigated to URL: https://petfinder.com
+2025-05-26 21:47:38,039 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='Donate' and ./following-sibling::a[text()='Apply']]
+2025-05-26 21:48:08,179 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[text()='Donate' and ./following-sibling::a[text()='Apply']] (Current page URL: https://www.petfinder.com/)
+2025-05-26 21:48:08,251 - AutoTestFixer - INFO - Test test_petfinder_432a58b4 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:48:37,848 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Simplify the XPath to target the “Donate” link alone (the sibling “Apply” anchor no longer exists).
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Donate' and ./following-sibling::a[text()='Apply']]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[normalize-space()='Donate']").click()
+-------------------------------------------------------
+Potential fix (2): Use a resilient CSS locator that selects any anchor whose href contains “/donate”.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Donate' and ./following-sibling::a[text()='Apply']]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a[href*='/donate']").click()
+-------------------------------------------------------
+Potential fix (3): Some builds render the Donate control as a button with an aria-label; switch to that locator.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Donate' and ./following-sibling::a[text()='Apply']]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@aria-label='Donate']").click()
+-------------------------------------------------------
+Potential fix (4): Skip the header click entirely and go straight to the Donate page URL.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Donate' and ./following-sibling::a[text()='Apply']]").click()
+Fixed code line/lines:
+        self.driver.get("https://www.petfinder.com/donate")
+-------------------------------------------------------
+Potential fix (5): Ensure the link is in view (some layouts place it off-viewport); scroll before clicking.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='Donate' and ./following-sibling::a[text()='Apply']]").click()
+Fixed code line/lines:
+        donate_link = self.driver.find_element(By.XPATH, "//a[normalize-space()='Donate']")
+        self.driver.execute_script("arguments[0].scrollIntoView({block:'center'});", donate_link)
+        donate_link.click()
+-------------------------------------------------------
+2025-05-26 21:48:37,848 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
