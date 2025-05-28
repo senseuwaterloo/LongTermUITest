@@ -1,0 +1,160 @@
+2025-05-26 22:11:36,716 - AutoTestFixer - ERROR - --- Test test_rottentomatoes_d4d4a01e FAILED ---
+2025-05-26 22:11:36,716 - AutoTestFixer - ERROR - URL at failure: https://www.rottentomatoes.com/browse/tv_series_browse/genres:action~sort:newest
+2025-05-26 22:11:36,716 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_rottentomatoes.TestRottentomatoes object at 0x108383af0>
+
+    def test_rottentomatoes_d4d4a01e(self):
+        self.driver.get("https://rottentomatoes.com")
+    
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Tv shows')]").click()
+    
+        self.driver.find_element(By.XPATH, "//span[text()='Sort: Most popular']").click()
+    
+        self.driver.find_element(By.XPATH, "//select-label[@data-qa='option-newest']").click()
+    
+        self.driver.find_element(By.XPATH, "//span[text()='Genre' and @slot='label']").click()
+    
+        self.driver.find_element(By.XPATH, "//select-label[@data-qa='option-action']").click()
+        self.driver.find_element(By.XPATH, "//bottom-sheet-menu[@data-qa='discovery-filter-genres-options']//button[@data-qa='apply-btn']").click()
+    
+>       self.driver.find_element(By.XPATH, "//span[text()='Audience score' and @slot='label']").click()
+
+test/test_rottentomatoes.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10833b400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000103389898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001033809ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000102e39600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102e8b304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000102e8b521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102edb204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000102eb133d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000102ed8566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000102eb10e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000102e7d61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000102e7e281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000103347560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x000000010334b425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000103321eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x000000010334be5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000103310dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x000000010336ea78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x000000010336ec40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000103380591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff80db54df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80db50857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 22:10:57,939 - AutoTestFixer - INFO - Attempting to navigate to URL: https://rottentomatoes.com
+2025-05-26 22:11:01,398 - AutoTestFixer - INFO - Successfully navigated to URL: https://rottentomatoes.com
+2025-05-26 22:11:03,403 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Tv shows')]
+2025-05-26 22:11:03,429 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Tv shows')]
+2025-05-26 22:11:03,429 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'Tv shows')]
+2025-05-26 22:11:03,429 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Tv shows')]
+2025-05-26 22:11:03,435 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Tv shows')]
+2025-05-26 22:11:04,532 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'Tv shows')]
+2025-05-26 22:11:04,532 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Sort: Most popular']
+2025-05-26 22:11:04,581 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Sort: Most popular']
+2025-05-26 22:11:04,581 - AutoTestFixer - INFO - Attempting to click element: xpath = //span[text()='Sort: Most popular']
+2025-05-26 22:11:04,582 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Sort: Most popular']
+2025-05-26 22:11:04,590 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Sort: Most popular']
+2025-05-26 22:11:04,638 - AutoTestFixer - INFO - Element clicked: xpath = //span[text()='Sort: Most popular']
+2025-05-26 22:11:04,638 - AutoTestFixer - INFO - Attempting to find element: xpath = //select-label[@data-qa='option-newest']
+2025-05-26 22:11:04,645 - AutoTestFixer - INFO - Successfully find element: xpath = //select-label[@data-qa='option-newest']
+2025-05-26 22:11:04,645 - AutoTestFixer - INFO - Attempting to click element: xpath = //select-label[@data-qa='option-newest']
+2025-05-26 22:11:04,645 - AutoTestFixer - INFO - Attempting to find element: xpath = //select-label[@data-qa='option-newest']
+2025-05-26 22:11:04,653 - AutoTestFixer - INFO - Successfully find element: xpath = //select-label[@data-qa='option-newest']
+2025-05-26 22:11:05,062 - AutoTestFixer - INFO - Element clicked: xpath = //select-label[@data-qa='option-newest']
+2025-05-26 22:11:05,062 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Genre' and @slot='label']
+2025-05-26 22:11:05,072 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Genre' and @slot='label']
+2025-05-26 22:11:05,072 - AutoTestFixer - INFO - Attempting to click element: xpath = //span[text()='Genre' and @slot='label']
+2025-05-26 22:11:05,072 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Genre' and @slot='label']
+2025-05-26 22:11:05,077 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Genre' and @slot='label']
+2025-05-26 22:11:05,133 - AutoTestFixer - INFO - Element clicked: xpath = //span[text()='Genre' and @slot='label']
+2025-05-26 22:11:05,133 - AutoTestFixer - INFO - Attempting to find element: xpath = //select-label[@data-qa='option-action']
+2025-05-26 22:11:05,142 - AutoTestFixer - INFO - Successfully find element: xpath = //select-label[@data-qa='option-action']
+2025-05-26 22:11:05,142 - AutoTestFixer - INFO - Attempting to click element: xpath = //select-label[@data-qa='option-action']
+2025-05-26 22:11:05,142 - AutoTestFixer - INFO - Attempting to find element: xpath = //select-label[@data-qa='option-action']
+2025-05-26 22:11:05,149 - AutoTestFixer - INFO - Successfully find element: xpath = //select-label[@data-qa='option-action']
+2025-05-26 22:11:05,340 - AutoTestFixer - INFO - Element clicked: xpath = //select-label[@data-qa='option-action']
+2025-05-26 22:11:05,341 - AutoTestFixer - INFO - Attempting to find element: xpath = //bottom-sheet-menu[@data-qa='discovery-filter-genres-options']//button[@data-qa='apply-btn']
+2025-05-26 22:11:05,347 - AutoTestFixer - INFO - Successfully find element: xpath = //bottom-sheet-menu[@data-qa='discovery-filter-genres-options']//button[@data-qa='apply-btn']
+2025-05-26 22:11:05,348 - AutoTestFixer - INFO - Attempting to click element: xpath = //bottom-sheet-menu[@data-qa='discovery-filter-genres-options']//button[@data-qa='apply-btn']
+2025-05-26 22:11:05,348 - AutoTestFixer - INFO - Attempting to find element: xpath = //bottom-sheet-menu[@data-qa='discovery-filter-genres-options']//button[@data-qa='apply-btn']
+2025-05-26 22:11:05,358 - AutoTestFixer - INFO - Successfully find element: xpath = //bottom-sheet-menu[@data-qa='discovery-filter-genres-options']//button[@data-qa='apply-btn']
+2025-05-26 22:11:05,509 - AutoTestFixer - INFO - Element clicked: xpath = //bottom-sheet-menu[@data-qa='discovery-filter-genres-options']//button[@data-qa='apply-btn']
+2025-05-26 22:11:05,510 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Audience score' and @slot='label']
+2025-05-26 22:11:35,641 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //span[text()='Audience score' and @slot='label'] (Current page URL: https://www.rottentomatoes.com/browse/tv_series_browse/genres:action~sort:newest)
+2025-05-26 22:11:35,713 - AutoTestFixer - INFO - Test test_rottentomatoes_d4d4a01e failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 22:12:26,299 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update locator to match the new visible label “Popcornmeter”.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Audience score' and @slot='label']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Popcornmeter' and @slot='label']").click()
+-------------------------------------------------------
+Potential fix (2): Target the filter-chip via its stable data-qa attribute instead of the text label.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Audience score' and @slot='label']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//filter-chip[@data-qa='discovery-filter-audience']//span[@slot='label']").click()
+-------------------------------------------------------
+Potential fix (3): Use a case-insensitive contains() search so the test survives future copy changes (“Audience Score”, “Popcornmeter”, etc.).
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Audience score' and @slot='label']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[@slot='label' and contains(translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'popcorn')]").click()
+-------------------------------------------------------
+Potential fix (4): Switch to a concise CSS selector that leverages the element’s data-qa hook.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Audience score' and @slot='label']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "filter-chip[data-qa='discovery-filter-audience'] span[slot='label']").click()
+-------------------------------------------------------
+Potential fix (5): Scroll the filter area into view before clicking to handle off-screen rendering on some viewports.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Audience score' and @slot='label']").click()
+Fixed code line/lines:
+        element = self.driver.find_element(By.XPATH, "//span[text()='Popcornmeter' and @slot='label']")
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+        element.click()
+-------------------------------------------------------
+
+2025-05-26 22:12:26,300 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
