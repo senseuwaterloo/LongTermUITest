@@ -1,0 +1,113 @@
+2025-05-26 23:52:29,746 - AutoTestFixer - ERROR - --- Test test_yelp_63e3020c FAILED ---
+2025-05-26 23:52:29,746 - AutoTestFixer - ERROR - URL at failure: https://www.yelp.com/
+2025-05-26 23:52:29,747 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_yelp.TestYelp object at 0x107b0bf70>
+
+    def test_yelp_63e3020c(self):
+        self.driver.get("https://yelp.com")
+    
+>       home_services_link = self.driver.find_element(By.XPATH, "//span[text()='Home Services']").get_native_element()
+
+test/test_yelp.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107abb490>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010489c898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001048939ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x000000010434c600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x000000010439e304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x000000010439e521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001043ee204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x00000001043c433d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001043eb566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001043c40e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010439061d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104391281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x000000010485a560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x000000010485e425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104834eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x000000010485ee5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104823dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104881a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104881c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104893591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff804c18df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff804c14857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 23:51:54,287 - AutoTestFixer - INFO - Attempting to navigate to URL: https://yelp.com
+2025-05-26 23:51:55,822 - AutoTestFixer - INFO - Successfully navigated to URL: https://yelp.com
+2025-05-26 23:51:57,828 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Home Services']
+2025-05-26 23:52:27,892 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //span[text()='Home Services'] (Current page URL: https://www.yelp.com/)
+2025-05-26 23:52:27,966 - AutoTestFixer - INFO - Test test_yelp_63e3020c failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 23:53:27,475 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace the outdated “Home Services” locator with the visible “Home & Garden”.
+Original code line/lines:
+        home_services_link = self.driver.find_element(By.XPATH, "//span[text()='Home Services']").get_native_element()
+Fixed code line/lines:
+        home_services_link = self.driver.find_element(By.XPATH, "//span[text()='Home & Garden']").get_native_element()
+-------------------------------------------------------
+Potential fix (2): Use a flexible XPath that works whether the label is “Home Services” or “Home & Garden”.
+Original code line/lines:
+        home_services_link = self.driver.find_element(By.XPATH, "//span[text()='Home Services']").get_native_element()
+Fixed code line/lines:
+        home_services_link = self.driver.find_element(By.XPATH, "//span[normalize-space()='Home Services' or normalize-space()='Home & Garden']").get_native_element()
+-------------------------------------------------------
+Potential fix (3): Target the anchor’s href to make the locator independent of the displayed text.
+Original code line/lines:
+        home_services_link = self.driver.find_element(By.XPATH, "//span[text()='Home Services']").get_native_element()
+Fixed code line/lines:
+        home_services_link = self.driver.find_element(By.XPATH, "//a[contains(@href,'Home+%26+Garden')]/span").get_native_element()
+-------------------------------------------------------
+Potential fix (4): Drop the framework-specific wrapper call; ActionChains can work directly with the WebElement returned by find_element.
+Original code line/lines:
+        home_services_link = self.driver.find_element(By.XPATH, "//span[text()='Home Services']").get_native_element()
+Fixed code line/lines:
+        home_services_link = self.driver.find_element(By.XPATH, "//span[normalize-space()='Home & Garden']")
+-------------------------------------------------------
+Potential fix (5): Add a fallback search that first tries “Home Services” then “Home & Garden” programmatically.
+Original code line/lines:
+        home_services_link = self.driver.find_element(By.XPATH, "//span[text()='Home Services']").get_native_element()
+Fixed code line/lines:
+        try:
+            home_services_link = self.driver.find_element(By.XPATH, "//span[text()='Home Services']").get_native_element()
+        except Exception:
+            home_services_link = self.driver.find_element(By.XPATH, "//span[text()='Home & Garden']").get_native_element()
+-------------------------------------------------------
+2025-05-26 23:53:27,475 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
