@@ -1,0 +1,139 @@
+2025-05-26 23:20:19,004 - AutoTestFixer - ERROR - --- Test test_tvguide_9cc81f50 FAILED ---
+2025-05-26 23:20:19,004 - AutoTestFixer - ERROR - URL at failure: https://www.tvguide.com/listings/
+2025-05-26 23:20:19,004 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_tvguide.TestTvguide object at 0x105db7a90>
+
+    def test_tvguide_9cc81f50(self):
+        self.driver.get("https://tvguide.com")
+    
+        self.driver.find_element(By.XPATH, "//a[text()='See Full Schedule']").click()
+        self.driver.find_element(By.XPATH, "//span[text()='Provider']").click()
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search']").clear()
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search']").send_keys("99201")
+        self.driver.find_element(By.XPATH, "//button[text()='Antenna']").click()
+>       self.driver.find_element(By.XPATH, "//span[text()='Broadcast TV Spokane (3)']").click()
+
+test/test_tvguide.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x105d6b490>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104c00898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000104bf79ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001046b0600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104702304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104702521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104752204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010472833d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x000000010474f566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001047280e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001046f461d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001046f5281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104bbe560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104bc2425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104b98eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104bc2e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104b87dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104be5a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104be5c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104bf7591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff804c18df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff804c14857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 23:19:42,705 - AutoTestFixer - INFO - Attempting to navigate to URL: https://tvguide.com
+2025-05-26 23:19:43,634 - AutoTestFixer - INFO - Successfully navigated to URL: https://tvguide.com
+2025-05-26 23:19:45,640 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='See Full Schedule']
+2025-05-26 23:19:45,656 - AutoTestFixer - INFO - Successfully find element: xpath = //a[text()='See Full Schedule']
+2025-05-26 23:19:45,656 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[text()='See Full Schedule']
+2025-05-26 23:19:45,656 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='See Full Schedule']
+2025-05-26 23:19:45,665 - AutoTestFixer - INFO - Successfully find element: xpath = //a[text()='See Full Schedule']
+2025-05-26 23:19:46,392 - AutoTestFixer - INFO - Element clicked: xpath = //a[text()='See Full Schedule']
+2025-05-26 23:19:46,392 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Provider']
+2025-05-26 23:19:46,402 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Provider']
+2025-05-26 23:19:46,402 - AutoTestFixer - INFO - Attempting to click element: xpath = //span[text()='Provider']
+2025-05-26 23:19:46,402 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Provider']
+2025-05-26 23:19:46,407 - AutoTestFixer - INFO - Successfully find element: xpath = //span[text()='Provider']
+2025-05-26 23:19:46,485 - AutoTestFixer - INFO - Element clicked: xpath = //span[text()='Provider']
+2025-05-26 23:19:46,485 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@placeholder='Search']
+2025-05-26 23:19:46,492 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@placeholder='Search']
+2025-05-26 23:19:46,510 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@placeholder='Search']
+2025-05-26 23:19:46,533 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@placeholder='Search']
+2025-05-26 23:19:46,840 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[text()='Antenna']
+2025-05-26 23:19:47,362 - AutoTestFixer - INFO - Successfully find element: xpath = //button[text()='Antenna']
+2025-05-26 23:19:47,362 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[text()='Antenna']
+2025-05-26 23:19:47,362 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[text()='Antenna']
+2025-05-26 23:19:47,369 - AutoTestFixer - INFO - Successfully find element: xpath = //button[text()='Antenna']
+2025-05-26 23:19:47,418 - AutoTestFixer - INFO - Element clicked: xpath = //button[text()='Antenna']
+2025-05-26 23:19:47,418 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[text()='Broadcast TV Spokane (3)']
+2025-05-26 23:20:17,906 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //span[text()='Broadcast TV Spokane (3)'] (Current page URL: https://www.tvguide.com/listings/)
+2025-05-26 23:20:17,979 - AutoTestFixer - INFO - Test test_tvguide_9cc81f50 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 23:20:56,844 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): The provider label changed to “Broadcast - Spokane”; update the locator to click the new button wrapper.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Broadcast TV Spokane (3)']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[span[normalize-space()='Broadcast - Spokane']]").click()
+-------------------------------------------------------
+Potential fix (2): Use a more tolerant locator that works even if minor text changes occur around “Broadcast” and “Spokane”.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Broadcast TV Spokane (3)']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[contains(normalize-space(),'Broadcast') and contains(normalize-space(),'Spokane')]").click()
+-------------------------------------------------------
+Potential fix (3): Click the first provider radio button directly via its class instead of the inner span text.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Broadcast TV Spokane (3)']").click()
+Fixed code line/lines:
+        self.driver.find_elements(By.CSS_SELECTOR, "button.c-tvListingsSettingsRadio")[0].click()
+-------------------------------------------------------
+Potential fix (4): Trigger the zipcode search results by sending an ENTER key with the zip code.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search']").send_keys("99201")
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search']").send_keys("99201\n")
+-------------------------------------------------------
+Potential fix (5): If the cookie banner sometimes blocks the modal, dismiss it before interacting with the provider list.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='See Full Schedule']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[text()='See Full Schedule']").click()
+        if self.driver.find_elements(By.ID, "onetrust-accept-btn-handler"):
+            self.driver.find_element(By.ID, "onetrust-accept-btn-handler").click()
+-------------------------------------------------------
+2025-05-26 23:20:56,845 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
