@@ -1,0 +1,110 @@
+2025-05-26 21:18:20,236 - AutoTestFixer - ERROR - --- Test test_nba_a6cb6d95 FAILED ---
+2025-05-26 21:18:20,236 - AutoTestFixer - ERROR - URL at failure: https://www.nba.com/
+2025-05-26 21:18:20,237 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_nba.TestNba object at 0x1116ead10>
+
+    def test_nba_a6cb6d95(self):
+        self.driver.get("https://www.nba.com/")
+    
+>       self.driver.find_element(By.XPATH, "//a[@data-id='nba:navigation:category:link' and @data-content='Teams']/span").click()
+
+test/test_nba.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x111683400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102e70898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000102e679ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000102920600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102972304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000102972521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001029c2204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010299833d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001029bf566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001029980e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010296461d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000102965281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000102e2e560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000102e32425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000102e08eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000102e32e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000102df7dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000102e55a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000102e55c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000102e67591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff802d00df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff802cfc857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 21:17:34,373 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.nba.com/
+2025-05-26 21:17:46,017 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.nba.com/
+2025-05-26 21:17:48,128 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[@data-id='nba:navigation:category:link' and @data-content='Teams']/span
+2025-05-26 21:18:18,324 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[@data-id='nba:navigation:category:link' and @data-content='Teams']/span (Current page URL: https://www.nba.com/)
+2025-05-26 21:18:18,400 - AutoTestFixer - INFO - Test test_nba_a6cb6d95 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:18:42,086 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update the XPath to match the actual data-id value (`nba:navigation:link`) used in the navbar.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@data-id='nba:navigation:category:link' and @data-content='Teams']/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@data-id='nba:navigation:link' and @data-content='Teams']/span").click()
+-------------------------------------------------------
+Potential fix (2): Target the link by its href instead of the changing data attributes.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@data-id='nba:navigation:category:link' and @data-content='Teams']/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(@href,'/teams')]/span").click()
+-------------------------------------------------------
+Potential fix (3): Click the link directly via visible link text to avoid span navigation structure changes.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@data-id='nba:navigation:category:link' and @data-content='Teams']/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.LINK_TEXT, "Teams").click()
+-------------------------------------------------------
+Potential fix (4): Switch to a concise, resilient CSS selector that keys off the stable `data-content` attribute.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@data-id='nba:navigation:category:link' and @data-content='Teams']/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a[data-content='Teams'] span").click()
+-------------------------------------------------------
+Potential fix (5): Click the anchor element instead of its child span, reducing sensitivity to internal markup changes.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@data-id='nba:navigation:category:link' and @data-content='Teams']/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@data-id='nba:navigation:link' and @data-content='Teams']").click()
+-------------------------------------------------------
+2025-05-26 21:18:42,087 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
