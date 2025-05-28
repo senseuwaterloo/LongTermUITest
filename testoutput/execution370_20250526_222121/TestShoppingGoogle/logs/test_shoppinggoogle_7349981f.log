@@ -1,0 +1,120 @@
+2025-05-26 22:22:02,428 - AutoTestFixer - ERROR - --- Test test_shoppinggoogle_7349981f FAILED ---
+2025-05-26 22:22:02,428 - AutoTestFixer - ERROR - URL at failure: https://www.google.com/shopping?udm=28
+2025-05-26 22:22:02,428 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_shoppinggoogle.TestShoppingGoogle object at 0x1074c3820>
+
+    def test_shoppinggoogle_7349981f(self):
+        self.driver.get("https://shopping.google.com/")
+    
+>       self.driver.find_element(By.ID, "REsRA").clear()
+
+test/test_shoppinggoogle.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1074fc160>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100ca2898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000100c999ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100752600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001007a4304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001007a4521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001007f4204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x00000001007ca33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001007f1566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001007ca0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010079661d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100797281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000100c60560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000100c64425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000100c3aeb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000100c64e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000100c29dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000100c87a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000100c87c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000100c99591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff80e974df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80e970857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 22:21:27,076 - AutoTestFixer - INFO - Attempting to navigate to URL: https://shopping.google.com/
+2025-05-26 22:21:29,694 - AutoTestFixer - INFO - Successfully navigated to URL: https://shopping.google.com/
+2025-05-26 22:21:31,699 - AutoTestFixer - INFO - Attempting to find element: id = REsRA
+2025-05-26 22:22:01,743 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: id = REsRA (Current page URL: https://www.google.com/shopping?udm=28)
+2025-05-26 22:22:01,815 - AutoTestFixer - INFO - Test test_shoppinggoogle_7349981f failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 22:22:18,361 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update locator to the current search box id "oDgap", replacing the outdated "REsRA".
+Original code line/lines:
+        self.driver.find_element(By.ID, "REsRA").clear()
+        self.driver.find_element(By.ID, "REsRA").send_keys("computer monitor")
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "oDgap").clear()
+        self.driver.find_element(By.ID, "oDgap").send_keys("computer monitor")
+-------------------------------------------------------
+Potential fix (2): Use the stable name attribute "q" instead of a volatile id.
+Original code line/lines:
+        self.driver.find_element(By.ID, "REsRA").clear()
+        self.driver.find_element(By.ID, "REsRA").send_keys("computer monitor")
+Fixed code line/lines:
+        self.driver.find_element(By.NAME, "q").clear()
+        self.driver.find_element(By.NAME, "q").send_keys("computer monitor")
+-------------------------------------------------------
+Potential fix (3): Switch to a resilient CSS selector targeting the textarea’s aria-label.
+Original code line/lines:
+        self.driver.find_element(By.ID, "REsRA").clear()
+        self.driver.find_element(By.ID, "REsRA").send_keys("computer monitor")
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "textarea[aria-label='Search']").clear()
+        self.driver.find_element(By.CSS_SELECTOR, "textarea[aria-label='Search']").send_keys("computer monitor")
+-------------------------------------------------------
+Potential fix (4): Cache the element once and reuse it, reducing duplicate lookups and potential stale issues.
+Original code line/lines:
+        self.driver.find_element(By.ID, "REsRA").clear()
+        self.driver.find_element(By.ID, "REsRA").send_keys("computer monitor")
+Fixed code line/lines:
+        search_box = self.driver.find_element(By.ID, "oDgap")
+        search_box.clear()
+        search_box.send_keys("computer monitor")
+-------------------------------------------------------
+Potential fix (5): Add an assertion to ensure the page has fully redirected before interacting with the search box.
+Original code line/lines:
+        self.driver.get("https://shopping.google.com/")
+Fixed code line/lines:
+        self.driver.get("https://shopping.google.com/")
+        assert "shopping" in self.driver.current_url.lower()
+-------------------------------------------------------
+2025-05-26 22:22:18,361 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
