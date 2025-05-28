@@ -1,0 +1,133 @@
+2025-05-26 23:05:59,222 - AutoTestFixer - ERROR - --- Test test_thumbtack_5a55aaa5 FAILED ---
+2025-05-26 23:05:59,222 - AutoTestFixer - ERROR - URL at failure: https://www.thumbtack.com/instant-results/?deprecate_spr=true&keyword_pk=367799062267486213&zip_code=02293&ir_referrer=HOME_PAGE_SEARCH&user_query_pk=549169523671744523&project_pk=549169525118197766
+2025-05-26 23:05:59,222 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_thumbtack.TestThumbtack object at 0x103d57c40>
+
+    def test_thumbtack_5a55aaa5(self):
+        self.driver.get("https://www.thumbtack.com/")
+    
+        self.driver.find_element(By.XPATH, "//input[@aria-label='Search on Thumbtack']").clear()
+        self.driver.find_element(By.XPATH, "//input[@aria-label='Search on Thumbtack']").send_keys("Phone or Tablet Repair")
+    
+        self.driver.find_element(By.NAME, "zip_code").clear()
+        self.driver.find_element(By.NAME, "zip_code").send_keys("89116")
+    
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//button[@aria-label='Search' and @type='button' and text()='Search']").click()
+    
+        time.sleep(5)
+>       self.driver.find_element(By.XPATH, "//div[text()='iPad mini']").click()
+
+test/test_thumbtack.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x103d90b80>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000102b9a898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000102b919ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x000000010264a600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x000000010269c304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x000000010269c521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001026ec204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x00000001026c233d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001026e9566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001026c20e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010268e61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x000000010268f281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000102b58560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000102b5c425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000102b32eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000102b5ce5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000102b21dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000102b7fa78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000102b7fc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000102b91591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812e64df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812e60857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 23:05:18,744 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.thumbtack.com/
+2025-05-26 23:05:19,235 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.thumbtack.com/
+2025-05-26 23:05:21,240 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@aria-label='Search on Thumbtack']
+2025-05-26 23:05:21,263 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@aria-label='Search on Thumbtack']
+2025-05-26 23:05:21,290 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@aria-label='Search on Thumbtack']
+2025-05-26 23:05:21,295 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@aria-label='Search on Thumbtack']
+2025-05-26 23:05:21,392 - AutoTestFixer - INFO - Attempting to find element: name = zip_code
+2025-05-26 23:05:21,400 - AutoTestFixer - INFO - Successfully find element: name = zip_code
+2025-05-26 23:05:21,435 - AutoTestFixer - INFO - Attempting to find element: name = zip_code
+2025-05-26 23:05:21,439 - AutoTestFixer - INFO - Successfully find element: name = zip_code
+2025-05-26 23:05:23,468 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@aria-label='Search' and @type='button' and text()='Search']
+2025-05-26 23:05:23,485 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@aria-label='Search' and @type='button' and text()='Search']
+2025-05-26 23:05:23,485 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@aria-label='Search' and @type='button' and text()='Search']
+2025-05-26 23:05:23,485 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@aria-label='Search' and @type='button' and text()='Search']
+2025-05-26 23:05:23,492 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@aria-label='Search' and @type='button' and text()='Search']
+2025-05-26 23:05:23,563 - AutoTestFixer - INFO - Element clicked: xpath = //button[@aria-label='Search' and @type='button' and text()='Search']
+2025-05-26 23:05:28,569 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[text()='iPad mini']
+2025-05-26 23:05:58,684 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[text()='iPad mini'] (Current page URL: https://www.thumbtack.com/instant-results/?deprecate_spr=true&keyword_pk=367799062267486213&zip_code=02293&ir_referrer=HOME_PAGE_SEARCH&user_query_pk=549169523671744523&project_pk=549169525118197766)
+2025-05-26 23:05:58,758 - AutoTestFixer - INFO - Test test_thumbtack_5a55aaa5 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 23:06:44,925 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update locator text from “iPad mini” to the new visible text “Apple iPad”.
+Original code line/lines:
+            self.driver.find_element(By.XPATH, "//div[text()='iPad mini']").click()
+Fixed code line/lines:
+            self.driver.find_element(By.XPATH, "//div[normalize-space()='Apple iPad']").click()
+-------------------------------------------------------
+Potential fix (2): Make the locator resilient by matching any option containing “iPad”.
+Original code line/lines:
+            self.driver.find_element(By.XPATH, "//div[text()='iPad mini']").click()
+Fixed code line/lines:
+            self.driver.find_element(By.XPATH, "//div[contains(normalize-space(), 'iPad')]").click()
+-------------------------------------------------------
+Potential fix (3): Scroll the option into view before clicking to avoid hidden-element issues.
+Original code line/lines:
+            self.driver.find_element(By.XPATH, "//div[text()='iPad mini']").click()
+Fixed code line/lines:
+            device_option = self.driver.find_element(By.XPATH, "//div[normalize-space()='Apple iPad']")
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", device_option)
+            device_option.click()
+-------------------------------------------------------
+Potential fix (4): Use the same ZIP code (02293) that the site redirects to, preventing mismatched results.
+Original code line/lines:
+        self.driver.find_element(By.NAME, "zip_code").clear()
+        self.driver.find_element(By.NAME, "zip_code").send_keys("89116")
+Fixed code line/lines:
+        self.driver.find_element(By.NAME, "zip_code").clear()
+        self.driver.find_element(By.NAME, "zip_code").send_keys("02293")
+-------------------------------------------------------
+
+2025-05-26 23:06:44,925 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
