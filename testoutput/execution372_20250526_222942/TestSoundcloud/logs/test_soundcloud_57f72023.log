@@ -1,0 +1,119 @@
+2025-05-26 22:30:32,102 - AutoTestFixer - ERROR - --- Test test_soundcloud_57f72023 FAILED ---
+2025-05-26 22:30:32,103 - AutoTestFixer - ERROR - URL at failure: https://soundcloud.com/
+2025-05-26 22:30:32,103 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_soundcloud.TestSoundcloud object at 0x1071cfa30>
+
+    def test_soundcloud_57f72023(self):
+        self.driver.get("https://soundcloud.com")
+    
+        self.driver.find_element(By.XPATH, "//div[@id='content']//input[@name='q' and @type='search']").clear()
+        self.driver.find_element(By.XPATH, "//div[@id='content']//input[@name='q' and @type='search']").send_keys("SOUTH AFRICAN HISTORY PODCAST")
+    
+>       self.driver.find_element(By.XPATH, "//div[@id='content']//button[@type='submit' and text()='Search']").click()
+
+test/test_soundcloud.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10720d7e0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104fb8898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000104faf9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104a68600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104aba304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104aba521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000104b0a204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000104ae033d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000104b07566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000104ae00e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000104aac61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104aad281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104f76560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104f7a425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104f50eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104f7ae5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104f3fdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104f9da78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104f9dc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104faf591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812e64df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812e60857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 22:29:48,435 - AutoTestFixer - INFO - Attempting to navigate to URL: https://soundcloud.com
+2025-05-26 22:29:49,339 - AutoTestFixer - INFO - Successfully navigated to URL: https://soundcloud.com
+2025-05-26 22:29:58,812 - AutoTestFixer - WARNING - handle cookie window error, element located by id with locator onetrust-accept-btn-handler not found, continue without dismissing cookie window
+2025-05-26 22:30:00,817 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='content']//input[@name='q' and @type='search']
+2025-05-26 22:30:00,838 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='content']//input[@name='q' and @type='search']
+2025-05-26 22:30:00,866 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='content']//input[@name='q' and @type='search']
+2025-05-26 22:30:00,871 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='content']//input[@name='q' and @type='search']
+2025-05-26 22:30:00,985 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='content']//button[@type='submit' and text()='Search']
+2025-05-26 22:30:31,057 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='content']//button[@type='submit' and text()='Search'] (Current page URL: https://soundcloud.com/)
+2025-05-26 22:30:31,128 - AutoTestFixer - INFO - Test test_soundcloud_57f72023 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 22:31:12,034 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle XPath locator with a CSS selector that matches the search button’s unique class since the button has no visible text.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='content']//button[@type='submit' and text()='Search']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button.headerSearch__submit[type='submit']").click()
+-------------------------------------------------------
+Potential fix (2): Modify the XPath to target the hidden span containing 'Search' inside the button instead of relying on the button’s own text.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='content']//button[@type='submit' and text()='Search']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@type='submit' and descendant::span[normalize-space()='Search']]").click()
+-------------------------------------------------------
+Potential fix (3): Submit the query by sending the ENTER key to the input, eliminating the need to locate the problematic button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='content']//button[@type='submit' and text()='Search']").click()
+Fixed code line/lines:
+        from selenium.webdriver.common.keys import Keys
+        self.driver.find_element(By.XPATH, "//div[@id='content']//input[@name='q' and @type='search']").send_keys(Keys.ENTER)
+-------------------------------------------------------
+Potential fix (4): Switch both search input and button locators to reliable class-based CSS selectors to future-proof against DOM changes.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='content']//input[@name='q' and @type='search']").clear()
+        self.driver.find_element(By.XPATH, "//div[@id='content']//input[@name='q' and @type='search']").send_keys("SOUTH AFRICAN HISTORY PODCAST")
+
+        self.driver.find_element(By.XPATH, "//div[@id='content']//button[@type='submit' and text()='Search']").click()
+Fixed code line/lines:
+        search_input = self.driver.find_element(By.CSS_SELECTOR, "input.headerSearch__input[name='q']")
+        search_input.clear()
+        search_input.send_keys("SOUTH AFRICAN HISTORY PODCAST")
+        self.driver.find_element(By.CSS_SELECTOR, "button.headerSearch__submit[type='submit']").click()
+-------------------------------------------------------
+2025-05-26 22:31:12,034 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
