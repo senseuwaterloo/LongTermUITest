@@ -1,0 +1,255 @@
+2025-05-26 21:52:20,189 - AutoTestFixer - ERROR - --- Test test_qatarairways_4786982f FAILED ---
+2025-05-26 21:52:20,190 - AutoTestFixer - ERROR - URL at failure: https://hotels.qatarairways.com/searchresults.en-us.html?label=qa-navtab&sid=ee390c4cd2f9f7296016f8b2ff3a8f18&aid=857789&sb_lp=1&error_url=https%3A%2F%2Fhotels.qatarairways.com%2Findex.en-us.html%3Faid%3D857789%26label%3Dqa-navtab%26sid%3Dee390c4cd2f9f7296016f8b2ff3a8f18%26sb_price_type%3Dtotal%26&ss=Washington%2C+District+of+Columbia%2C+United+States&is_ski_area=&checkin_year=2025&checkin_month=6&checkin_monthday=9&checkout_year=2025&checkout_month=6&checkout_monthday=10&flex_window=0&efdco=1&group_adults=2&group_children=0&no_rooms=1&b_h4u_keep_filters=&from_sf=1&ss_raw=washington&ac_position=0&ac_langcode=en&ac_click_type=b&dest_id=20021296&dest_type=city&iata=WAS&place_id_lat=38.901344&place_id_lon=-77.03654&search_pageview_id=6c450d1125de02c8&search_selected=true&search_pageview_id=6c450d1125de02c8&ac_suggestion_list_length=5&ac_suggestion_theme_list_length=0&nflt=di%3D928%3Bhotelfacility%3D107%3Bclass%3D5&order=price
+2025-05-26 21:52:20,190 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_qatarairways.TestQatarairways object at 0x106317ca0>
+
+    def test_qatarairways_4786982f(self):
+        self.driver.get("https://www.qatarairways.com/en-us/homepage.html")
+    
+        self.driver.find_element(By.XPATH, "//a[normalize-space(text())='Book' and @role='button']").click()
+    
+        self.driver.find_element(By.XPATH, "//ul[@id='planyourtrip']/li[3]/a[1]/span[text()='Hotels']").click()
+        switch_to_new_tab(self.driver)
+    
+        self.driver.find_element(By.ID, "ss").clear()
+        self.driver.find_element(By.ID, "ss").send_keys("washington")
+        self.driver.find_element(By.XPATH, "//form[@id='frm']/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/span[2]/span[1]").click()
+    
+        start_date_str, end_date_str = calculate_dates(14, 15)
+    
+        self.driver.find_element(By.XPATH, f"//td[@data-date='{start_date_str}']").click()
+        self.driver.find_element(By.XPATH, f"//td[@data-date='{end_date_str}']").click()
+    
+        self.driver.find_element(By.XPATH, "//button[@data-sb-id='main' and @type='submit']").click()
+    
+        self.driver.find_element(By.XPATH, "//button[@data-testid='occupancy-config']/span[@data-testid='searchbox-form-button-icon']").click()
+        self.driver.find_element(By.XPATH, "//div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]").click()
+        self.driver.find_element(By.XPATH, "//div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]").click()
+        self.driver.find_element(By.XPATH, "//div[@data-testid='occupancy-popup']/div/div[3]/div[2]/button[2]").click()
+        self.driver.find_element(By.XPATH, "//div[@data-testid='occupancy-popup']/button[1]").click()
+    
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='di']//div[text()='Downtown D.C.']").click()
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//div[@id='bodyconstraint']//button[contains(@aria-controls, 'filter_group_hotelfacility') and @data-testid='filters-group-expand-collapse']").click()
+        self.driver.find_element(By.XPATH, "//div[@data-testid='filters-group' and @data-filters-group='hotelfacility']//div[text()='Free Wifi']").click()
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='class']//div[text()='5 stars']").click()
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//button[@data-testid='sorters-dropdown-trigger']").click()
+        self.driver.find_element(By.XPATH, "//button[@data-id='price' and @type='button']//span[text()='Price (lowest first)']").click()
+        time.sleep(2)
+>       self.driver.find_element(By.XPATH, "//div[@id='search_results_table']/div[2]/div/div/div[3]/div[3]//a[@data-testid='availability-cta-btn']").click()
+
+test/test_qatarairways.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x106343130>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104a60898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000104a579ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104510600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104562304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104562521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001045b2204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x000000010458833d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001045af566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001045880e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010455461d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104555281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104a1e560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104a22425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x00000001049f8eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104a22e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x00000001049e7dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104a45a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104a45c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104a57591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff80db54df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80db50857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 21:51:24,130 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.qatarairways.com/en-us/homepage.html
+2025-05-26 21:51:26,087 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.qatarairways.com/en-us/homepage.html
+2025-05-26 21:51:28,726 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[normalize-space(text())='Book' and @role='button']
+2025-05-26 21:51:28,745 - AutoTestFixer - INFO - Successfully find element: xpath = //a[normalize-space(text())='Book' and @role='button']
+2025-05-26 21:51:28,745 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[normalize-space(text())='Book' and @role='button']
+2025-05-26 21:51:28,745 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[normalize-space(text())='Book' and @role='button']
+2025-05-26 21:51:28,752 - AutoTestFixer - INFO - Successfully find element: xpath = //a[normalize-space(text())='Book' and @role='button']
+2025-05-26 21:51:28,814 - AutoTestFixer - INFO - Element clicked: xpath = //a[normalize-space(text())='Book' and @role='button']
+2025-05-26 21:51:28,814 - AutoTestFixer - INFO - Attempting to find element: xpath = //ul[@id='planyourtrip']/li[3]/a[1]/span[text()='Hotels']
+2025-05-26 21:51:28,822 - AutoTestFixer - INFO - Successfully find element: xpath = //ul[@id='planyourtrip']/li[3]/a[1]/span[text()='Hotels']
+2025-05-26 21:51:28,822 - AutoTestFixer - INFO - Attempting to click element: xpath = //ul[@id='planyourtrip']/li[3]/a[1]/span[text()='Hotels']
+2025-05-26 21:51:28,822 - AutoTestFixer - INFO - Attempting to find element: xpath = //ul[@id='planyourtrip']/li[3]/a[1]/span[text()='Hotels']
+2025-05-26 21:51:28,826 - AutoTestFixer - INFO - Successfully find element: xpath = //ul[@id='planyourtrip']/li[3]/a[1]/span[text()='Hotels']
+2025-05-26 21:51:29,071 - AutoTestFixer - INFO - Element clicked: xpath = //ul[@id='planyourtrip']/li[3]/a[1]/span[text()='Hotels']
+2025-05-26 21:51:34,092 - AutoTestFixer - INFO - Attempting to find element: id = ss
+2025-05-26 21:51:34,102 - AutoTestFixer - INFO - Successfully find element: id = ss
+2025-05-26 21:51:34,120 - AutoTestFixer - INFO - Attempting to find element: id = ss
+2025-05-26 21:51:34,124 - AutoTestFixer - INFO - Successfully find element: id = ss
+2025-05-26 21:51:34,207 - AutoTestFixer - INFO - Attempting to find element: xpath = //form[@id='frm']/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/span[2]/span[1]
+2025-05-26 21:51:34,731 - AutoTestFixer - INFO - Successfully find element: xpath = //form[@id='frm']/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/span[2]/span[1]
+2025-05-26 21:51:34,731 - AutoTestFixer - INFO - Attempting to click element: xpath = //form[@id='frm']/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/span[2]/span[1]
+2025-05-26 21:51:34,731 - AutoTestFixer - INFO - Attempting to find element: xpath = //form[@id='frm']/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/span[2]/span[1]
+2025-05-26 21:51:34,738 - AutoTestFixer - INFO - Successfully find element: xpath = //form[@id='frm']/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/span[2]/span[1]
+2025-05-26 21:51:34,812 - AutoTestFixer - INFO - Element clicked: xpath = //form[@id='frm']/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/span[2]/span[1]
+2025-05-26 21:51:34,812 - AutoTestFixer - INFO - Attempting to find element: xpath = //td[@data-date='2025-06-09']
+2025-05-26 21:51:34,834 - AutoTestFixer - INFO - Successfully find element: xpath = //td[@data-date='2025-06-09']
+2025-05-26 21:51:34,834 - AutoTestFixer - INFO - Attempting to click element: xpath = //td[@data-date='2025-06-09']
+2025-05-26 21:51:34,834 - AutoTestFixer - INFO - Attempting to find element: xpath = //td[@data-date='2025-06-09']
+2025-05-26 21:51:34,838 - AutoTestFixer - INFO - Successfully find element: xpath = //td[@data-date='2025-06-09']
+2025-05-26 21:51:34,881 - AutoTestFixer - INFO - Element clicked: xpath = //td[@data-date='2025-06-09']
+2025-05-26 21:51:34,882 - AutoTestFixer - INFO - Attempting to find element: xpath = //td[@data-date='2025-06-10']
+2025-05-26 21:51:34,890 - AutoTestFixer - INFO - Successfully find element: xpath = //td[@data-date='2025-06-10']
+2025-05-26 21:51:34,890 - AutoTestFixer - INFO - Attempting to click element: xpath = //td[@data-date='2025-06-10']
+2025-05-26 21:51:34,890 - AutoTestFixer - INFO - Attempting to find element: xpath = //td[@data-date='2025-06-10']
+2025-05-26 21:51:34,894 - AutoTestFixer - INFO - Successfully find element: xpath = //td[@data-date='2025-06-10']
+2025-05-26 21:51:34,939 - AutoTestFixer - INFO - Element clicked: xpath = //td[@data-date='2025-06-10']
+2025-05-26 21:51:34,939 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-sb-id='main' and @type='submit']
+2025-05-26 21:51:34,946 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-sb-id='main' and @type='submit']
+2025-05-26 21:51:34,946 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@data-sb-id='main' and @type='submit']
+2025-05-26 21:51:34,946 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-sb-id='main' and @type='submit']
+2025-05-26 21:51:34,950 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-sb-id='main' and @type='submit']
+2025-05-26 21:51:37,421 - AutoTestFixer - INFO - Element clicked: xpath = //button[@data-sb-id='main' and @type='submit']
+2025-05-26 21:51:37,421 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-testid='occupancy-config']/span[@data-testid='searchbox-form-button-icon']
+2025-05-26 21:51:37,524 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-testid='occupancy-config']/span[@data-testid='searchbox-form-button-icon']
+2025-05-26 21:51:37,525 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@data-testid='occupancy-config']/span[@data-testid='searchbox-form-button-icon']
+2025-05-26 21:51:37,525 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-testid='occupancy-config']/span[@data-testid='searchbox-form-button-icon']
+2025-05-26 21:51:37,530 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-testid='occupancy-config']/span[@data-testid='searchbox-form-button-icon']
+2025-05-26 21:51:37,575 - AutoTestFixer - INFO - Element clicked: xpath = //button[@data-testid='occupancy-config']/span[@data-testid='searchbox-form-button-icon']
+2025-05-26 21:51:37,576 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,583 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,583 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,583 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,588 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,630 - AutoTestFixer - INFO - Element clicked: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,630 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,640 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,640 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,640 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,645 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,685 - AutoTestFixer - INFO - Element clicked: xpath = //div[@data-testid='occupancy-popup']/div/div[1]/div[2]/button[2]
+2025-05-26 21:51:37,685 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='occupancy-popup']/div/div[3]/div[2]/button[2]
+2025-05-26 21:51:37,692 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='occupancy-popup']/div/div[3]/div[2]/button[2]
+2025-05-26 21:51:37,693 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@data-testid='occupancy-popup']/div/div[3]/div[2]/button[2]
+2025-05-26 21:51:37,693 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='occupancy-popup']/div/div[3]/div[2]/button[2]
+2025-05-26 21:51:37,697 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='occupancy-popup']/div/div[3]/div[2]/button[2]
+2025-05-26 21:51:37,739 - AutoTestFixer - INFO - Element clicked: xpath = //div[@data-testid='occupancy-popup']/div/div[3]/div[2]/button[2]
+2025-05-26 21:51:37,739 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='occupancy-popup']/button[1]
+2025-05-26 21:51:37,746 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='occupancy-popup']/button[1]
+2025-05-26 21:51:37,746 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@data-testid='occupancy-popup']/button[1]
+2025-05-26 21:51:37,746 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='occupancy-popup']/button[1]
+2025-05-26 21:51:37,751 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='occupancy-popup']/button[1]
+2025-05-26 21:51:37,791 - AutoTestFixer - INFO - Element clicked: xpath = //div[@data-testid='occupancy-popup']/button[1]
+2025-05-26 21:51:39,796 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='di']//div[text()='Downtown D.C.']
+2025-05-26 21:51:39,817 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='di']//div[text()='Downtown D.C.']
+2025-05-26 21:51:39,817 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='di']//div[text()='Downtown D.C.']
+2025-05-26 21:51:39,817 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='di']//div[text()='Downtown D.C.']
+2025-05-26 21:51:39,826 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='di']//div[text()='Downtown D.C.']
+2025-05-26 21:51:40,025 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='di']//div[text()='Downtown D.C.']
+2025-05-26 21:51:42,031 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='bodyconstraint']//button[contains(@aria-controls, 'filter_group_hotelfacility') and @data-testid='filters-group-expand-collapse']
+2025-05-26 21:51:42,050 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='bodyconstraint']//button[contains(@aria-controls, 'filter_group_hotelfacility') and @data-testid='filters-group-expand-collapse']
+2025-05-26 21:51:42,050 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='bodyconstraint']//button[contains(@aria-controls, 'filter_group_hotelfacility') and @data-testid='filters-group-expand-collapse']
+2025-05-26 21:51:42,050 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='bodyconstraint']//button[contains(@aria-controls, 'filter_group_hotelfacility') and @data-testid='filters-group-expand-collapse']
+2025-05-26 21:51:42,058 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='bodyconstraint']//button[contains(@aria-controls, 'filter_group_hotelfacility') and @data-testid='filters-group-expand-collapse']
+2025-05-26 21:51:42,116 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='bodyconstraint']//button[contains(@aria-controls, 'filter_group_hotelfacility') and @data-testid='filters-group-expand-collapse']
+2025-05-26 21:51:42,116 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='filters-group' and @data-filters-group='hotelfacility']//div[text()='Free Wifi']
+2025-05-26 21:51:42,125 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='filters-group' and @data-filters-group='hotelfacility']//div[text()='Free Wifi']
+2025-05-26 21:51:42,126 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@data-testid='filters-group' and @data-filters-group='hotelfacility']//div[text()='Free Wifi']
+2025-05-26 21:51:42,126 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@data-testid='filters-group' and @data-filters-group='hotelfacility']//div[text()='Free Wifi']
+2025-05-26 21:51:42,130 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@data-testid='filters-group' and @data-filters-group='hotelfacility']//div[text()='Free Wifi']
+2025-05-26 21:51:42,225 - AutoTestFixer - INFO - Element clicked: xpath = //div[@data-testid='filters-group' and @data-filters-group='hotelfacility']//div[text()='Free Wifi']
+2025-05-26 21:51:44,230 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='class']//div[text()='5 stars']
+2025-05-26 21:51:44,248 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='class']//div[text()='5 stars']
+2025-05-26 21:51:44,248 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='class']//div[text()='5 stars']
+2025-05-26 21:51:44,248 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='class']//div[text()='5 stars']
+2025-05-26 21:51:44,256 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='class']//div[text()='5 stars']
+2025-05-26 21:51:44,368 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='bodyconstraint']//div[@data-testid='filters-group' and @data-filters-group='class']//div[text()='5 stars']
+2025-05-26 21:51:46,374 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-testid='sorters-dropdown-trigger']
+2025-05-26 21:51:46,390 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-testid='sorters-dropdown-trigger']
+2025-05-26 21:51:46,391 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@data-testid='sorters-dropdown-trigger']
+2025-05-26 21:51:46,391 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-testid='sorters-dropdown-trigger']
+2025-05-26 21:51:46,398 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-testid='sorters-dropdown-trigger']
+2025-05-26 21:51:46,449 - AutoTestFixer - INFO - Element clicked: xpath = //button[@data-testid='sorters-dropdown-trigger']
+2025-05-26 21:51:46,450 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-id='price' and @type='button']//span[text()='Price (lowest first)']
+2025-05-26 21:51:46,457 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-id='price' and @type='button']//span[text()='Price (lowest first)']
+2025-05-26 21:51:46,457 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@data-id='price' and @type='button']//span[text()='Price (lowest first)']
+2025-05-26 21:51:46,457 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-id='price' and @type='button']//span[text()='Price (lowest first)']
+2025-05-26 21:51:46,463 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-id='price' and @type='button']//span[text()='Price (lowest first)']
+2025-05-26 21:51:46,973 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-id='price' and @type='button']//span[text()='Price (lowest first)']
+2025-05-26 21:51:46,986 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-id='price' and @type='button']//span[text()='Price (lowest first)']
+2025-05-26 21:51:47,150 - AutoTestFixer - INFO - Element clicked: xpath = //button[@data-id='price' and @type='button']//span[text()='Price (lowest first)']
+2025-05-26 21:51:49,155 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='search_results_table']/div[2]/div/div/div[3]/div[3]//a[@data-testid='availability-cta-btn']
+2025-05-26 21:52:19,226 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='search_results_table']/div[2]/div/div/div[3]/div[3]//a[@data-testid='availability-cta-btn'] (Current page URL: https://hotels.qatarairways.com/searchresults.en-us.html?label=qa-navtab&sid=ee390c4cd2f9f7296016f8b2ff3a8f18&aid=857789&sb_lp=1&error_url=https%3A%2F%2Fhotels.qatarairways.com%2Findex.en-us.html%3Faid%3D857789%26label%3Dqa-navtab%26sid%3Dee390c4cd2f9f7296016f8b2ff3a8f18%26sb_price_type%3Dtotal%26&ss=Washington%2C+District+of+Columbia%2C+United+States&is_ski_area=&checkin_year=2025&checkin_month=6&checkin_monthday=9&checkout_year=2025&checkout_month=6&checkout_monthday=10&flex_window=0&efdco=1&group_adults=2&group_children=0&no_rooms=1&b_h4u_keep_filters=&from_sf=1&ss_raw=washington&ac_position=0&ac_langcode=en&ac_click_type=b&dest_id=20021296&dest_type=city&iata=WAS&place_id_lat=38.901344&place_id_lon=-77.03654&search_pageview_id=6c450d1125de02c8&search_selected=true&search_pageview_id=6c450d1125de02c8&ac_suggestion_list_length=5&ac_suggestion_theme_list_length=0&nflt=di%3D928%3Bhotelfacility%3D107%3Bclass%3D5&order=price)
+2025-05-26 21:52:19,299 - AutoTestFixer - INFO - Test test_qatarairways_4786982f failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:52:49,149 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Simplify the locator to the first visible “See availability” button using a robust attribute-only XPath.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='search_results_table']/div[2]/div/div/div[3]/div[3]//a[@data-testid='availability-cta-btn']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "(//a[@data-testid='availability-cta-btn'])[1]").click()
+-------------------------------------------------------
+Potential fix (2): Target the first property card explicitly, then click its availability button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='search_results_table']/div[2]/div/div/div[3]/div[3]//a[@data-testid='availability-cta-btn']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@data-testid='property-card'][1]//a[@data-testid='availability-cta-btn']").click()
+-------------------------------------------------------
+Potential fix (3): Switch to a CSS selector that is less brittle than the deep XPath.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='search_results_table']/div[2]/div/div/div[3]/div[3]//a[@data-testid='availability-cta-btn']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "a[data-testid='availability-cta-btn']").click()
+-------------------------------------------------------
+Potential fix (4): Scroll the button into view before clicking to avoid hidden-element issues.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='search_results_table']/div[2]/div/div/div[3]/div[3]//a[@data-testid='availability-cta-btn']").click()
+Fixed code line/lines:
+        elem = self.driver.find_element(By.XPATH, "(//a[@data-testid='availability-cta-btn'])[1]")
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", elem)
+        elem.click()
+-------------------------------------------------------
+Potential fix (5): Wait for at least one availability button to be present before clicking (guards against slow result load).
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='search_results_table']/div[2]/div/div/div[3]/div[3]//a[@data-testid='availability-cta-btn']").click()
+Fixed code line/lines:
+        elem = self.driver.find_element(By.XPATH, "(//a[@data-testid='availability-cta-btn'])[1]")
+        elem.click()
+-------------------------------------------------------
+
+2025-05-26 21:52:49,149 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
