@@ -1,0 +1,121 @@
+2025-05-26 22:46:34,304 - AutoTestFixer - ERROR - --- Test test_stubhub_1567bfa7 FAILED ---
+2025-05-26 22:46:34,304 - AutoTestFixer - ERROR - URL at failure: https://www.stubhub.com/
+2025-05-26 22:46:34,304 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_stubhub.TestStubhub object at 0x1066eab00>
+
+    def test_stubhub_1567bfa7(self):
+        self.driver.get("https://stubhub.com")
+        time.sleep(5)
+    
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search events, artists, teams, and more']").clear()
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search events, artists, teams, and more']").send_keys("MIAMI HEAT")
+    
+>       self.driver.find_element(By.XPATH, "//p[./em[text()='Miami'] and ./em[text()='Heat'] and not(preceding-sibling::*) and not(following-sibling::*)]").click()
+
+test/test_stubhub.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10667f400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104e83898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000104e7a9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000104933600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000104985304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000104985521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001049d5204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x00000001049ab33d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001049d2566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001049ab0e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010497761d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000104978281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104e41560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104e45425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104e1beb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104e45e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104e0adc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104e68a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104e68c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104e7a591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff812e64df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff812e60857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 22:45:54,755 - AutoTestFixer - INFO - Attempting to navigate to URL: https://stubhub.com
+2025-05-26 22:45:56,115 - AutoTestFixer - INFO - Successfully navigated to URL: https://stubhub.com
+2025-05-26 22:46:03,122 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@placeholder='Search events, artists, teams, and more']
+2025-05-26 22:46:03,148 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@placeholder='Search events, artists, teams, and more']
+2025-05-26 22:46:03,173 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@placeholder='Search events, artists, teams, and more']
+2025-05-26 22:46:03,178 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@placeholder='Search events, artists, teams, and more']
+2025-05-26 22:46:03,298 - AutoTestFixer - INFO - Attempting to find element: xpath = //p[./em[text()='Miami'] and ./em[text()='Heat'] and not(preceding-sibling::*) and not(following-sibling::*)]
+2025-05-26 22:46:33,323 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //p[./em[text()='Miami'] and ./em[text()='Heat'] and not(preceding-sibling::*) and not(following-sibling::*)] (Current page URL: https://www.stubhub.com/)
+2025-05-26 22:46:33,399 - AutoTestFixer - INFO - Test test_stubhub_1567bfa7 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 22:47:25,009 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Remove the restrictive sibling checks so the “Miami Heat” suggestion is matched.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//p[./em[text()='Miami'] and ./em[text()='Heat'] and not(preceding-sibling::*) and not(following-sibling::*)]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//p[./em[text()='Miami'] and ./em[text()='Heat']]").click()
+-------------------------------------------------------
+Potential fix (2): Target the clickable parent anchor instead of the inner <p> for a more stable locator.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//p[./em[text()='Miami'] and ./em[text()='Heat'] and not(preceding-sibling::*) and not(following-sibling::*)]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[.//p[./em[text()='Miami'] and ./em[text()='Heat']]]").click()
+-------------------------------------------------------
+Potential fix (3): Select the first autosuggestion via keyboard, eliminating the brittle suggestion-XPath entirely (add `from selenium.webdriver.common.keys import Keys` to imports).
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Search events, artists, teams, and more']").send_keys("MIAMI HEAT")
+        self.driver.find_element(By.XPATH, "//p[./em[text()='Miami'] and ./em[text()='Heat'] and not(preceding-sibling::*) and not(following-sibling::*)]").click()
+Fixed code line/lines:
+        search_box = self.driver.find_element(By.XPATH, "//input[@placeholder='Search events, artists, teams, and more']")
+        search_box.send_keys("MIAMI HEAT")
+        search_box.send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+-------------------------------------------------------
+Potential fix (4): Use the suggestion’s href substring to locate it, avoiding text/structure variations.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//p[./em[text()='Miami'] and ./em[text()='Heat'] and not(preceding-sibling::*) and not(following-sibling::*)]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(@href,'miami-heat') and contains(@href,'tickets')]").click()
+-------------------------------------------------------
+Potential fix (5): Click the first list item produced by the autosuggest (index-based XPath) to ignore content differences.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//p[./em[text()='Miami'] and ./em[text()='Heat'] and not(preceding-sibling::*) and not(following-sibling::*)]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "(//div[@role='listbox']//a)[1]").click()
+-------------------------------------------------------
+2025-05-26 22:47:25,010 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
