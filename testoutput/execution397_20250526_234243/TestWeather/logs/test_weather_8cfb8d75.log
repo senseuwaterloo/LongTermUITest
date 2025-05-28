@@ -1,0 +1,124 @@
+2025-05-26 23:43:39,725 - AutoTestFixer - ERROR - --- Test test_weather_8cfb8d75 FAILED ---
+2025-05-26 23:43:39,725 - AutoTestFixer - ERROR - URL at failure: https://weather.com/
+2025-05-26 23:43:39,725 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_weather.TestWeather object at 0x106217b80>
+
+    def test_weather_8cfb8d75(self):
+        self.driver.get("https://weather.com/")
+>       self.driver.find_element(By.ID, "LocationSearch_input").clear()
+
+test/test_weather.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1061c7490>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100bc1898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000100bb89ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100671600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001006c3304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001006c3521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100713204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x00000001006e933d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100710566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001006e90e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x00000001006b561d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001006b6281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000100b7f560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000100b83425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000100b59eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000100b83e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000100b48dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000100ba6a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000100ba6c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000100bb8591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff804c18df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff804c14857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 23:42:48,310 - AutoTestFixer - INFO - Attempting to navigate to URL: https://weather.com/
+2025-05-26 23:43:06,359 - AutoTestFixer - INFO - Successfully navigated to URL: https://weather.com/
+2025-05-26 23:43:08,365 - AutoTestFixer - INFO - Attempting to find element: id = LocationSearch_input
+2025-05-26 23:43:38,610 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: id = LocationSearch_input (Current page URL: https://weather.com/)
+2025-05-26 23:43:38,680 - AutoTestFixer - INFO - Test test_weather_8cfb8d75 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 23:44:22,156 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Update outdated element ID to the current ‘headerSearch_LocationSearch_input’.
+Original code line/lines:
+        self.driver.find_element(By.ID, "LocationSearch_input").clear()
+        self.driver.find_element(By.ID, "LocationSearch_input").send_keys("Champaign, IL")
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "headerSearch_LocationSearch_input").clear()
+        self.driver.find_element(By.ID, "headerSearch_LocationSearch_input").send_keys("Champaign, IL")
+-------------------------------------------------------
+Potential fix (2): Use a robust CSS selector that matches any ID ending with ‘LocationSearch_input’.
+Original code line/lines:
+        self.driver.find_element(By.ID, "LocationSearch_input").clear()
+        self.driver.find_element(By.ID, "LocationSearch_input").send_keys("Champaign, IL")
+Fixed code line/lines:
+        search_box = self.driver.find_element(By.CSS_SELECTOR, "input[id$='LocationSearch_input']")
+        search_box.clear()
+        search_box.send_keys("Champaign, IL")
+-------------------------------------------------------
+Potential fix (3): Locate the search box via its placeholder attribute to ignore ID changes altogether.
+Original code line/lines:
+        self.driver.find_element(By.ID, "LocationSearch_input").clear()
+        self.driver.find_element(By.ID, "LocationSearch_input").send_keys("Champaign, IL")
+Fixed code line/lines:
+        search_box = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder='Search City or Zip Code']")
+        search_box.clear()
+        search_box.send_keys("Champaign, IL")
+-------------------------------------------------------
+Potential fix (4): Click the search icon to ensure the input is visible before typing.
+Original code line/lines:
+        self.driver.find_element(By.ID, "LocationSearch_input").clear()
+        self.driver.find_element(By.ID, "LocationSearch_input").send_keys("Champaign, IL")
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button.CurrentConditions--searchButton--6luPr").click()
+        search_box = self.driver.find_element(By.CSS_SELECTOR, "input[id$='LocationSearch_input']")
+        search_box.clear()
+        search_box.send_keys("Champaign, IL")
+-------------------------------------------------------
+Potential fix (5): Cache the located element to reduce re-query timing sensitivity.
+Original code line/lines:
+        self.driver.find_element(By.ID, "LocationSearch_input").clear()
+        self.driver.find_element(By.ID, "LocationSearch_input").send_keys("Champaign, IL")
+Fixed code line/lines:
+        search_box = self.driver.find_element(By.ID, "headerSearch_LocationSearch_input")
+        search_box.clear()
+        search_box.send_keys("Champaign, IL")
+-------------------------------------------------------
+2025-05-26 23:44:22,156 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
