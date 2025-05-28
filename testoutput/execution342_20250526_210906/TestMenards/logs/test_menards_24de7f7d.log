@@ -1,0 +1,129 @@
+2025-05-26 21:09:47,256 - AutoTestFixer - ERROR - --- Test test_menards_24de7f7d FAILED ---
+2025-05-26 21:09:47,256 - AutoTestFixer - ERROR - URL at failure: https://www.menards.com/main/home.html
+2025-05-26 21:09:47,257 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_menards.TestMenards object at 0x1080cfe80>
+
+    def test_menards_24de7f7d(self):
+        self.driver.get("https://menards.com")
+    
+        self.driver.find_element(By.XPATH, "//button[@qubit-id='SelectStore']").click()
+    
+>       self.driver.find_element(By.ID, "header-zip-input").clear()
+
+test/test_menards.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10807f400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104eab898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000104ea29ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x000000010495b600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001049ad304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001049ad521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001049fd204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x00000001049d333d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001049fa566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001049d30e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010499f61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x00000001049a0281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000104e69560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000104e6d425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000104e43eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000104e6de5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000104e32dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000104e90a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000104e90c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000104ea2591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff806f50df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff806f4c857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 21:09:12,894 - AutoTestFixer - INFO - Attempting to navigate to URL: https://menards.com
+2025-05-26 21:09:13,200 - AutoTestFixer - INFO - Successfully navigated to URL: https://menards.com
+2025-05-26 21:09:15,206 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@qubit-id='SelectStore']
+2025-05-26 21:09:15,229 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@qubit-id='SelectStore']
+2025-05-26 21:09:15,229 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@qubit-id='SelectStore']
+2025-05-26 21:09:15,230 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@qubit-id='SelectStore']
+2025-05-26 21:09:15,236 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@qubit-id='SelectStore']
+2025-05-26 21:09:15,307 - AutoTestFixer - INFO - Element clicked: xpath = //button[@qubit-id='SelectStore']
+2025-05-26 21:09:15,307 - AutoTestFixer - INFO - Attempting to find element: id = header-zip-input
+2025-05-26 21:09:45,791 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: id = header-zip-input (Current page URL: https://www.menards.com/main/home.html)
+2025-05-26 21:09:45,863 - AutoTestFixer - INFO - Test test_menards_24de7f7d failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:10:30,512 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use the placeholder-based locator because the input no longer has id='header-zip-input'.
+Original code line/lines:
+        self.driver.find_element(By.ID, "header-zip-input").clear()
+        self.driver.find_element(By.ID, "header-zip-input").send_keys("60538")
+Fixed code line/lines:
+        zip_input = self.driver.find_element(By.XPATH, "//input[@placeholder='Zip Code']")
+        zip_input.clear()
+        zip_input.send_keys("60538")
+-------------------------------------------------------
+Potential fix (2): Open the “Change My Store” panel before typing to ensure the zip field is present.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@qubit-id='SelectStore']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@qubit-id='SelectStore']").click()
+        self.driver.find_element(By.XPATH, "//span[normalize-space()='Change My Store']/parent::*").click()
+-------------------------------------------------------
+Potential fix (3): Switch to a CSS selector for the zip field for added robustness.
+Original code line/lines:
+        self.driver.find_element(By.ID, "header-zip-input").clear()
+        self.driver.find_element(By.ID, "header-zip-input").send_keys("60538")
+Fixed code line/lines:
+        zip_input = self.driver.find_element(By.CSS_SELECTOR, "input[placeholder='Zip Code']")
+        zip_input.clear()
+        zip_input.send_keys("60538")
+-------------------------------------------------------
+Potential fix (4): Combine lookup and clear/send into one chain using the new xpath.
+Original code line/lines:
+        self.driver.find_element(By.ID, "header-zip-input").clear()
+        self.driver.find_element(By.ID, "header-zip-input").send_keys("60538")
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//input[@placeholder='Zip Code']").send_keys(Keys.CONTROL + 'a' + Keys.DELETE + "60538")
+-------------------------------------------------------
+Potential fix (5): If the input actually has id='zip-input' in the header dropdown, update locator accordingly.
+Original code line/lines:
+        self.driver.find_element(By.ID, "header-zip-input").clear()
+        self.driver.find_element(By.ID, "header-zip-input").send_keys("60538")
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "zip-input").clear()
+        self.driver.find_element(By.ID, "zip-input").send_keys("60538")
+-------------------------------------------------------
+
+2025-05-26 21:10:30,512 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
