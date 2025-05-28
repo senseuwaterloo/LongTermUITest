@@ -1,0 +1,116 @@
+2025-05-26 21:27:27,889 - AutoTestFixer - ERROR - --- Test test_nfl_91843d71 FAILED ---
+2025-05-26 21:27:27,889 - AutoTestFixer - ERROR - URL at failure: https://www.nfl.com/
+2025-05-26 21:27:27,889 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_nfl.TestNfl object at 0x121ccfb50>
+
+    def test_nfl_91843d71(self):
+        self.driver.get("https://www.nfl.com/")
+    
+>       self.driver.find_element(By.XPATH, "//a[@aria-label='More menu choices' and @aria-controls='2ndlevel']").click()
+
+test/test_nfl.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x121c83400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010119a898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001011919ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000100c4a600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000100c9c304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000100c9c521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000100cec204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000100cc233d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000100ce9566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000100cc20e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000100c8e61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000100c8f281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000101158560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x000000010115c425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000101132eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x000000010115ce5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000101121dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x000000010117fa78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x000000010117fc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000101191591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff80db54df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80db50857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 21:26:47,380 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.nfl.com/
+2025-05-26 21:26:54,289 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.nfl.com/
+2025-05-26 21:26:56,393 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[@aria-label='More menu choices' and @aria-controls='2ndlevel']
+2025-05-26 21:27:26,545 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[@aria-label='More menu choices' and @aria-controls='2ndlevel'] (Current page URL: https://www.nfl.com/)
+2025-05-26 21:27:26,597 - AutoTestFixer - INFO - Test test_nfl_91843d71 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:28:03,455 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace obsolete “More” locator with visible “STATS” nav button and directly open the Players link underneath it.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@aria-label='More menu choices' and @aria-controls='2ndlevel']").click()
+        self.driver.find_element(By.XPATH, "//ul[@id='2ndlevel']/li[1]/a/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[normalize-space()='STATS']").click()
+        self.driver.find_element(By.XPATH, "//a[contains(@href,'/players') and contains(normalize-space(.),'Players')]").click()
+-------------------------------------------------------
+Potential fix (2): Skip the header navigation entirely and go straight to the player-search page.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@aria-label='More menu choices' and @aria-controls='2ndlevel']").click()
+        self.driver.find_element(By.XPATH, "//ul[@id='2ndlevel']/li[1]/a/span").click()
+Fixed code line/lines:
+        self.driver.get("https://www.nfl.com/players/")
+-------------------------------------------------------
+Potential fix (3): Force a mobile viewport so the “More menu choices” link appears, then click as before.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@aria-label='More menu choices' and @aria-controls='2ndlevel']").click()
+Fixed code line/lines:
+        self.driver.set_window_size(360, 640)
+        self.driver.find_element(By.XPATH, "//a[@aria-label='More menu choices' and @aria-controls='2ndlevel']").click()
+-------------------------------------------------------
+Potential fix (4): Target the Stats pop-over button directly via its span text instead of the missing anchor.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@aria-label='More menu choices' and @aria-controls='2ndlevel']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button/span[normalize-space()='STATS']").click()
+-------------------------------------------------------
+Potential fix (5): Use “WATCH” (always present) dropdown to reach Players, avoiding the removed “More” link.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[@aria-label='More menu choices' and @aria-controls='2ndlevel']").click()
+        self.driver.find_element(By.XPATH, "//ul[@id='2ndlevel']/li[1]/a/span").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[normalize-space()='WATCH']").click()
+        self.driver.find_element(By.XPATH, "//a[contains(@href,'/players')][contains(text(),'Players')]").click()
+-------------------------------------------------------
+2025-05-26 21:28:03,455 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
