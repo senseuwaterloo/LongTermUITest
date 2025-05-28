@@ -1,0 +1,77 @@
+2025-05-26 21:57:29,486 - AutoTestFixer - ERROR - --- Test test_reddit_f83262c3 FAILED ---
+2025-05-26 21:57:29,486 - AutoTestFixer - ERROR - URL at failure: https://www.reddit.com/?rdt=56137
+2025-05-26 21:57:29,487 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_reddit.TestReddit object at 0x106debaf0>
+
+    def test_reddit_f83262c3(self):
+        self.driver.get("https://reddit.com")
+    
+        reddit_search_large_shadow_root = self.driver.find_element(By.CSS_SELECTOR, "body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large")
+        faceplate_search_input_shadow_root = reddit_search_large_shadow_root.shadow_root.find_element(By.CSS_SELECTOR, '#search-input')
+        search_input = faceplate_search_input_shadow_root.shadow_root.find_element(By.CSS_SELECTOR, 'input[type="text"][name="q"][placeholder="Search Reddit"]')
+    
+        search_input.clear()
+        search_input.send_keys("r/news")
+    
+        reddit_search_large_shadow_root = self.driver.find_element(By.CSS_SELECTOR, "body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large")
+        first_item_in_dropdown = reddit_search_large_shadow_root.shadow_root.find_element(By.CSS_SELECTOR, '#reddit-typeahead-results-partial-container > faceplate-tracker:nth-child(2) > faceplate-tracker > li > a')
+>       first_item_in_dropdown.click()
+E       AttributeError: 'NoneType' object has no attribute 'click'
+
+test/test_reddit.py:20: AttributeError
+2025-05-26 21:57:08,128 - AutoTestFixer - INFO - Attempting to navigate to URL: https://reddit.com
+2025-05-26 21:57:10,497 - AutoTestFixer - INFO - Successfully navigated to URL: https://reddit.com
+2025-05-26 21:57:12,511 - AutoTestFixer - INFO - Attempting to find element: css selector = body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large
+2025-05-26 21:57:12,523 - AutoTestFixer - INFO - Successfully find element: css selector = body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large
+2025-05-26 21:57:12,524 - AutoTestFixer - INFO - Getting the shadow root of current element: css selector = body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large
+2025-05-26 21:57:12,530 - AutoTestFixer - INFO - Attempting to find element in shadow root: css selector = #search-input
+2025-05-26 21:57:12,541 - AutoTestFixer - INFO - Element found in shadow root: css selector = #search-input
+2025-05-26 21:57:12,541 - AutoTestFixer - INFO - Getting the shadow root of current element: css selector = #search-input
+2025-05-26 21:57:12,545 - AutoTestFixer - INFO - Attempting to find element in shadow root: css selector = input[type="text"][name="q"][placeholder="Search Reddit"]
+2025-05-26 21:57:12,553 - AutoTestFixer - INFO - Element found in shadow root: css selector = input[type="text"][name="q"][placeholder="Search Reddit"]
+2025-05-26 21:57:12,676 - AutoTestFixer - INFO - Attempting to find element: css selector = body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large
+2025-05-26 21:57:12,681 - AutoTestFixer - INFO - Successfully find element: css selector = body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large
+2025-05-26 21:57:12,681 - AutoTestFixer - INFO - Getting the shadow root of current element: css selector = body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large
+2025-05-26 21:57:12,686 - AutoTestFixer - INFO - Attempting to find element in shadow root: css selector = #reddit-typeahead-results-partial-container > faceplate-tracker:nth-child(2) > faceplate-tracker > li > a
+2025-05-26 21:57:28,199 - AutoTestFixer - ERROR - TimeoutException: Element not found in shadow root within 15 seconds: css selector = #reddit-typeahead-results-partial-container > faceplate-tracker:nth-child(2) > faceplate-tracker > li > a (Current page URL: https://www.reddit.com/?rdt=56137)
+2025-05-26 21:57:28,262 - AutoTestFixer - INFO - Test test_reddit_f83262c3 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 21:59:28,073 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Skip brittle dropdown click and simply press Enter to open r/news directly after typing.
+Original code line/lines:
+        reddit_search_large_shadow_root = self.driver.find_element(By.CSS_SELECTOR, "body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large")
+        first_item_in_dropdown = reddit_search_large_shadow_root.shadow_root.find_element(By.CSS_SELECTOR, '#reddit-typeahead-results-partial-container > faceplate-tracker:nth-child(2) > faceplate-tracker > li > a')
+        first_item_in_dropdown.click()
+Fixed code line/lines:
+        search_input.send_keys(Keys.RETURN)
+-------------------------------------------------------
+Potential fix (2): Update the dropdown locator to a simpler, more stable selector that targets the r/news link directly.
+Original code line/lines:
+        reddit_search_large_shadow_root = self.driver.find_element(By.CSS_SELECTOR, "body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large")
+        first_item_in_dropdown = reddit_search_large_shadow_root.shadow_root.find_element(By.CSS_SELECTOR, '#reddit-typeahead-results-partial-container > faceplate-tracker:nth-child(2) > faceplate-tracker > li > a')
+        first_item_in_dropdown.click()
+Fixed code line/lines:
+        reddit_search_large_shadow_root = self.driver.find_element(By.CSS_SELECTOR, "body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large")
+        first_item_in_dropdown = reddit_search_large_shadow_root.shadow_root.find_element(By.CSS_SELECTOR, 'li a[href^="/r/news"]')
+        first_item_in_dropdown.click()
+-------------------------------------------------------
+Potential fix (3): Grab all subreddit links in the dropdown and click the first one, avoiding hard-coded nth-child indices.
+Original code line/lines:
+        reddit_search_large_shadow_root = self.driver.find_element(By.CSS_SELECTOR, "body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large")
+        first_item_in_dropdown = reddit_search_large_shadow_root.shadow_root.find_element(By.CSS_SELECTOR, '#reddit-typeahead-results-partial-container > faceplate-tracker:nth-child(2) > faceplate-tracker > li > a')
+        first_item_in_dropdown.click()
+Fixed code line/lines:
+        reddit_search_large_shadow_root = self.driver.find_element(By.CSS_SELECTOR, "body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large")
+        subreddit_links = reddit_search_large_shadow_root.shadow_root.find_elements(By.CSS_SELECTOR, 'li a[href^="/r/"]')
+        subreddit_links[0].click()
+-------------------------------------------------------
+Potential fix (4): Use keyboard navigation (Down Arrow + Enter) to select the first suggestion, removing the need to locate dropdown elements at all.
+Original code line/lines:
+        reddit_search_large_shadow_root = self.driver.find_element(By.CSS_SELECTOR, "body > shreddit-app > reddit-header-large > reddit-header-action-items > header > nav > div > div > div > search-dynamic-id-cache-controller > reddit-search-large")
+        first_item_in_dropdown = reddit_search_large_shadow_root.shadow_root.find_element(By.CSS_SELECTOR, '#reddit-typeahead-results-partial-container > faceplate-tracker:nth-child(2) > faceplate-tracker > li > a')
+        first_item_in_dropdown.click()
+Fixed code line/lines:
+        search_input.send_keys(Keys.ARROW_DOWN)
+        search_input.send_keys(Keys.RETURN)
+-------------------------------------------------------
+2025-05-26 21:59:28,073 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
