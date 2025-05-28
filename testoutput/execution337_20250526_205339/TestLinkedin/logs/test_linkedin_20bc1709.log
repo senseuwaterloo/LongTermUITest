@@ -1,0 +1,203 @@
+2025-05-26 20:53:51,454 - AutoTestFixer - ERROR - --- Test test_linkedin_20bc1709 FAILED ---
+2025-05-26 20:53:51,454 - AutoTestFixer - ERROR - URL at failure: https://www.linkedin.com/jobs/search?trk=guest_homepage-basic_guest_nav_menu_jobs&position=1&pageNum=0
+2025-05-26 20:53:51,454 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_linkedin.TestLinkedin object at 0x1042d21a0>
+
+    def test_linkedin_20bc1709(self):
+        self.driver.get("https://www.linkedin.com/")
+    
+        self.driver.find_element(By.XPATH, "//span[contains(text(), '   Jobs')]").click()
+        self.driver.find_element(By.ID, "job-search-bar-keywords").clear()
+        self.driver.find_element(By.ID, "job-search-bar-keywords").send_keys("Bioinformatician")
+>       self.driver.find_element(By.XPATH, "//button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']").click()
+
+test/test_linkedin.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:145: in click
+    raise e
+framework/custom_selenium.py:120: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1042d3820>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff806f50df1 _pthread_start + 99\\n24  libsystem_pthread.dylib             0x00007ff806f4c857 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <button class="base-search-bar__submit-btn block basis-[40px] flex-shrink-0 cursor-pointer babymamabear:invisible babymamabear:ml-[-9999px] babymamabear:w-[1px] babymamabear:h-[1px]" aria-label="Search" data-tracking-control-name="public_jobs_jobs-search-bar_base-search-bar-search-submit" type="submit">...</button> is not clickable at point (1249, 38). Other element would receive the click: <div class="modal__overlay flex items-center bg-color-background-scrim justify-center fixed bottom-0 left-0 right-0 top-0 opacity-0 invisible pointer-events-none z-[1000] transition-[opacity] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] duration-[0.17s] py-4 modal__overlay--visible" aria-hidden="false">...</div>
+E         (Session info: chrome=137.0.7151.41)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100a46898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x0000000100a3d9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x00000001004f6600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x000000010054f1b0 undetected_chromedriver + 778672
+E       4   undetected_chromedriver             0x000000010054d011 undetected_chromedriver + 770065
+E       5   undetected_chromedriver             0x000000010054a6a2 undetected_chromedriver + 759458
+E       6   undetected_chromedriver             0x0000000100549d6e undetected_chromedriver + 757102
+E       7   undetected_chromedriver             0x000000010053c42d undetected_chromedriver + 701485
+E       8   undetected_chromedriver             0x000000010056e312 undetected_chromedriver + 906002
+E       9   undetected_chromedriver             0x000000010053bda8 undetected_chromedriver + 699816
+E       10  undetected_chromedriver             0x000000010056e4ce undetected_chromedriver + 906446
+E       11  undetected_chromedriver             0x0000000100595566 undetected_chromedriver + 1066342
+E       12  undetected_chromedriver             0x000000010056e0e3 undetected_chromedriver + 905443
+E       13  undetected_chromedriver             0x000000010053a61d undetected_chromedriver + 693789
+E       14  undetected_chromedriver             0x000000010053b281 undetected_chromedriver + 696961
+E       15  undetected_chromedriver             0x0000000100a04560 undetected_chromedriver + 5715296
+E       16  undetected_chromedriver             0x0000000100a08425 undetected_chromedriver + 5731365
+E       17  undetected_chromedriver             0x00000001009deeb0 undetected_chromedriver + 5562032
+E       18  undetected_chromedriver             0x0000000100a08e5b undetected_chromedriver + 5733979
+E       19  undetected_chromedriver             0x00000001009cddc4 undetected_chromedriver + 5492164
+E       20  undetected_chromedriver             0x0000000100a2ba78 undetected_chromedriver + 5876344
+E       21  undetected_chromedriver             0x0000000100a2bc40 undetected_chromedriver + 5876800
+E       22  undetected_chromedriver             0x0000000100a3d591 undetected_chromedriver + 5948817
+E       23  libsystem_pthread.dylib             0x00007ff806f50df1 _pthread_start + 99
+E       24  libsystem_pthread.dylib             0x00007ff806f4c857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2025-05-26 20:53:45,035 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.linkedin.com/
+2025-05-26 20:53:45,804 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.linkedin.com/
+2025-05-26 20:53:47,810 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[contains(text(), '   Jobs')]
+2025-05-26 20:53:47,860 - AutoTestFixer - INFO - Successfully find element: xpath = //span[contains(text(), '   Jobs')]
+2025-05-26 20:53:47,860 - AutoTestFixer - INFO - Attempting to click element: xpath = //span[contains(text(), '   Jobs')]
+2025-05-26 20:53:47,860 - AutoTestFixer - INFO - Attempting to find element: xpath = //span[contains(text(), '   Jobs')]
+2025-05-26 20:53:47,865 - AutoTestFixer - INFO - Successfully find element: xpath = //span[contains(text(), '   Jobs')]
+2025-05-26 20:53:49,271 - AutoTestFixer - INFO - Element clicked: xpath = //span[contains(text(), '   Jobs')]
+2025-05-26 20:53:49,271 - AutoTestFixer - INFO - Attempting to find element: id = job-search-bar-keywords
+2025-05-26 20:53:49,307 - AutoTestFixer - INFO - Successfully find element: id = job-search-bar-keywords
+2025-05-26 20:53:49,334 - AutoTestFixer - INFO - Attempting to find element: id = job-search-bar-keywords
+2025-05-26 20:53:49,836 - AutoTestFixer - INFO - Successfully find element: id = job-search-bar-keywords
+2025-05-26 20:53:49,936 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']
+2025-05-26 20:53:49,943 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']
+2025-05-26 20:53:49,943 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']
+2025-05-26 20:53:49,943 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']
+2025-05-26 20:53:49,949 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']
+2025-05-26 20:53:51,012 - AutoTestFixer - ERROR - ElementClickInterceptedException: Element click intercepted: xpath = //button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit'] (Current page URL: https://www.linkedin.com/jobs/search?trk=guest_homepage-basic_guest_nav_menu_jobs&position=1&pageNum=0)
+2025-05-26 20:53:51,092 - AutoTestFixer - INFO - Test test_linkedin_20bc1709 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 20:54:17,704 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Use the ENTER key on the keywords field instead of clicking the search button, bypassing any overlay that intercepts the click.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']").click()
+Fixed code line/lines:
+        from selenium.webdriver.common.keys import Keys
+        self.driver.find_element(By.ID, "job-search-bar-keywords").send_keys(Keys.ENTER)
+-------------------------------------------------------
+Potential fix (2): Click the search button via JavaScript to ignore visual obstructions that cause ElementClickInterceptedException.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']").click()
+Fixed code line/lines:
+        button = self.driver.find_element(By.XPATH, "//button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']")
+        self.driver.execute_script("arguments[0].click();", button)
+-------------------------------------------------------
+Potential fix (3): Dismiss the sign-in modal if present before clicking the search button, ensuring the button is unobstructed.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']").click()
+Fixed code line/lines:
+        try:
+            self.driver.find_element(By.CSS_SELECTOR, "button.contextual-sign-in-modal__modal-dismiss").click()
+        except Exception:
+            pass
+        self.driver.find_element(By.XPATH, "//button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']").click()
+-------------------------------------------------------
+Potential fix (4): Scroll the search button into view first, reducing the chance of another element overlapping the click target.  
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']").click()
+Fixed code line/lines:
+        button = self.driver.find_element(By.XPATH, "//button[@data-tracking-control-name='public_jobs_jobs-search-bar_base-search-bar-search-submit']")
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});")
+        button.click()
+-------------------------------------------------------
+2025-05-26 20:54:17,704 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
