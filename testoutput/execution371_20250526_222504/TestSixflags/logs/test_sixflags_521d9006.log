@@ -1,0 +1,178 @@
+2025-05-26 22:26:10,725 - AutoTestFixer - ERROR - --- Test test_sixflags_521d9006 FAILED ---
+2025-05-26 22:26:10,725 - AutoTestFixer - ERROR - URL at failure: https://www.sixflags.com/magicmountain/group-sales
+2025-05-26 22:26:10,725 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_sixflags.TestSixflags object at 0x10812a2f0>
+
+    def test_sixflags_521d9006(self):
+        self.driver.get("https://sixflags.com")
+    
+        self.driver.find_element(By.XPATH, "//section[@id='parkselector']//div[@class='sf-dropdown']//button[./div[text()='Browse the Parks Below']]").click()
+    
+        self.driver.find_element(By.XPATH, "//section[@id='parkselector']//a[@class='single-park-desktop' and @data-title='Six Flags Magic Mountain' and @data-state='Los Angeles, CA']").click()
+    
+        self.driver.find_element(By.XPATH, "//section[@id='parkselector']//div[@class='sf-dropdown']//button[text()='Go!']").click()
+    
+        self.driver.find_element(By.XPATH, "//nav[not(@aria-hidden='true')]//a[text()='Groups' and ./span[@aria-label='Menu Toggle' and @role='application'] and ./span[@class='sub-arrow']]").click()
+        scroll_down(self.driver, 600)
+        self.driver.find_element(By.XPATH, "//button[@class='btn_show_hide card_icon' and ./parent::div/div[1]/h3[text()='Groups of 15 to 99']]").click()
+    
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Buy Tickets')]").click()
+    
+        override_iframe = self.driver.find_element(By.ID, "override").get_native_element()
+        self.driver.switch_to.frame(override_iframe)
+    
+>       buy_now_button = self.driver.find_element(By.XPATH, "//button[./gap-button-label[text()='Buy Now']]").get_native_element()
+
+test/test_sixflags.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x10812e710>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001032a8898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x000000010329f9ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x0000000102d58600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x0000000102daa304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x0000000102daa521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x0000000102dfa204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x0000000102dd033d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x0000000102df7566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x0000000102dd00e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x0000000102d9c61d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000102d9d281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x0000000103266560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x000000010326a425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000103240eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x000000010326ae5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x000000010322fdc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x000000010328da78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x000000010328dc40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x000000010329f591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff81a478df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff81a474857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 22:25:10,579 - AutoTestFixer - INFO - Attempting to navigate to URL: https://sixflags.com
+2025-05-26 22:25:16,076 - AutoTestFixer - INFO - Successfully navigated to URL: https://sixflags.com
+2025-05-26 22:25:25,387 - AutoTestFixer - WARNING - handle cookie window error, element located by id with locator cn-accept-cookie not found, continue without dismissing cookie window
+2025-05-26 22:25:27,388 - AutoTestFixer - INFO - Attempting to find element: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[./div[text()='Browse the Parks Below']]
+2025-05-26 22:25:27,398 - AutoTestFixer - INFO - Successfully find element: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[./div[text()='Browse the Parks Below']]
+2025-05-26 22:25:27,399 - AutoTestFixer - INFO - Attempting to click element: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[./div[text()='Browse the Parks Below']]
+2025-05-26 22:25:27,399 - AutoTestFixer - INFO - Attempting to find element: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[./div[text()='Browse the Parks Below']]
+2025-05-26 22:25:27,404 - AutoTestFixer - INFO - Successfully find element: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[./div[text()='Browse the Parks Below']]
+2025-05-26 22:25:27,500 - AutoTestFixer - INFO - Element clicked: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[./div[text()='Browse the Parks Below']]
+2025-05-26 22:25:27,500 - AutoTestFixer - INFO - Attempting to find element: xpath = //section[@id='parkselector']//a[@class='single-park-desktop' and @data-title='Six Flags Magic Mountain' and @data-state='Los Angeles, CA']
+2025-05-26 22:25:27,508 - AutoTestFixer - INFO - Successfully find element: xpath = //section[@id='parkselector']//a[@class='single-park-desktop' and @data-title='Six Flags Magic Mountain' and @data-state='Los Angeles, CA']
+2025-05-26 22:25:27,508 - AutoTestFixer - INFO - Attempting to click element: xpath = //section[@id='parkselector']//a[@class='single-park-desktop' and @data-title='Six Flags Magic Mountain' and @data-state='Los Angeles, CA']
+2025-05-26 22:25:27,508 - AutoTestFixer - INFO - Attempting to find element: xpath = //section[@id='parkselector']//a[@class='single-park-desktop' and @data-title='Six Flags Magic Mountain' and @data-state='Los Angeles, CA']
+2025-05-26 22:25:27,515 - AutoTestFixer - INFO - Successfully find element: xpath = //section[@id='parkselector']//a[@class='single-park-desktop' and @data-title='Six Flags Magic Mountain' and @data-state='Los Angeles, CA']
+2025-05-26 22:25:28,024 - AutoTestFixer - INFO - Attempting to find element: xpath = //section[@id='parkselector']//a[@class='single-park-desktop' and @data-title='Six Flags Magic Mountain' and @data-state='Los Angeles, CA']
+2025-05-26 22:25:28,038 - AutoTestFixer - INFO - Successfully find element: xpath = //section[@id='parkselector']//a[@class='single-park-desktop' and @data-title='Six Flags Magic Mountain' and @data-state='Los Angeles, CA']
+2025-05-26 22:25:28,116 - AutoTestFixer - INFO - Element clicked: xpath = //section[@id='parkselector']//a[@class='single-park-desktop' and @data-title='Six Flags Magic Mountain' and @data-state='Los Angeles, CA']
+2025-05-26 22:25:28,116 - AutoTestFixer - INFO - Attempting to find element: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[text()='Go!']
+2025-05-26 22:25:28,141 - AutoTestFixer - INFO - Successfully find element: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[text()='Go!']
+2025-05-26 22:25:28,141 - AutoTestFixer - INFO - Attempting to click element: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[text()='Go!']
+2025-05-26 22:25:28,141 - AutoTestFixer - INFO - Attempting to find element: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[text()='Go!']
+2025-05-26 22:25:28,148 - AutoTestFixer - INFO - Successfully find element: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[text()='Go!']
+2025-05-26 22:25:31,842 - AutoTestFixer - INFO - Element clicked: xpath = //section[@id='parkselector']//div[@class='sf-dropdown']//button[text()='Go!']
+2025-05-26 22:25:31,842 - AutoTestFixer - INFO - Attempting to find element: xpath = //nav[not(@aria-hidden='true')]//a[text()='Groups' and ./span[@aria-label='Menu Toggle' and @role='application'] and ./span[@class='sub-arrow']]
+2025-05-26 22:25:31,866 - AutoTestFixer - INFO - Successfully find element: xpath = //nav[not(@aria-hidden='true')]//a[text()='Groups' and ./span[@aria-label='Menu Toggle' and @role='application'] and ./span[@class='sub-arrow']]
+2025-05-26 22:25:31,867 - AutoTestFixer - INFO - Attempting to click element: xpath = //nav[not(@aria-hidden='true')]//a[text()='Groups' and ./span[@aria-label='Menu Toggle' and @role='application'] and ./span[@class='sub-arrow']]
+2025-05-26 22:25:31,867 - AutoTestFixer - INFO - Attempting to find element: xpath = //nav[not(@aria-hidden='true')]//a[text()='Groups' and ./span[@aria-label='Menu Toggle' and @role='application'] and ./span[@class='sub-arrow']]
+2025-05-26 22:25:31,872 - AutoTestFixer - INFO - Successfully find element: xpath = //nav[not(@aria-hidden='true')]//a[text()='Groups' and ./span[@aria-label='Menu Toggle' and @role='application'] and ./span[@class='sub-arrow']]
+2025-05-26 22:25:35,034 - AutoTestFixer - INFO - Element clicked: xpath = //nav[not(@aria-hidden='true')]//a[text()='Groups' and ./span[@aria-label='Menu Toggle' and @role='application'] and ./span[@class='sub-arrow']]
+2025-05-26 22:25:36,053 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@class='btn_show_hide card_icon' and ./parent::div/div[1]/h3[text()='Groups of 15 to 99']]
+2025-05-26 22:25:36,072 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@class='btn_show_hide card_icon' and ./parent::div/div[1]/h3[text()='Groups of 15 to 99']]
+2025-05-26 22:25:36,072 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@class='btn_show_hide card_icon' and ./parent::div/div[1]/h3[text()='Groups of 15 to 99']]
+2025-05-26 22:25:36,072 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@class='btn_show_hide card_icon' and ./parent::div/div[1]/h3[text()='Groups of 15 to 99']]
+2025-05-26 22:25:36,081 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@class='btn_show_hide card_icon' and ./parent::div/div[1]/h3[text()='Groups of 15 to 99']]
+2025-05-26 22:25:36,153 - AutoTestFixer - INFO - Element clicked: xpath = //button[@class='btn_show_hide card_icon' and ./parent::div/div[1]/h3[text()='Groups of 15 to 99']]
+2025-05-26 22:25:36,154 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Buy Tickets')]
+2025-05-26 22:25:36,163 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Buy Tickets')]
+2025-05-26 22:25:36,164 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'Buy Tickets')]
+2025-05-26 22:25:36,164 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Buy Tickets')]
+2025-05-26 22:25:36,169 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Buy Tickets')]
+2025-05-26 22:25:36,676 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Buy Tickets')]
+2025-05-26 22:25:36,692 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Buy Tickets')]
+2025-05-26 22:25:36,773 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'Buy Tickets')]
+2025-05-26 22:25:36,773 - AutoTestFixer - INFO - Attempting to find element: id = override
+2025-05-26 22:25:36,781 - AutoTestFixer - INFO - Successfully find element: id = override
+2025-05-26 22:25:38,519 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[./gap-button-label[text()='Buy Now']]
+2025-05-26 22:26:09,033 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //button[./gap-button-label[text()='Buy Now']] (Current page URL: https://www.sixflags.com/magicmountain/group-sales)
+2025-05-26 22:26:09,099 - AutoTestFixer - INFO - Test test_sixflags_521d9006 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 22:26:52,520 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Locator points to a non-existent <button>; target the visible <gap-button> element instead.
+Original code line/lines:
+        buy_now_button = self.driver.find_element(By.XPATH, "//button[./gap-button-label[text()='Buy Now']]").get_native_element()
+        self.driver.execute_script("arguments[0].click()", buy_now_button)
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//gap-button[normalize-space()='Buy Now']").click()
+-------------------------------------------------------
+Potential fix (2): Use a robust CSS selector that matches any enabled “Buy Now” <gap-button>.
+Original code line/lines:
+        buy_now_button = self.driver.find_element(By.XPATH, "//button[./gap-button-label[text()='Buy Now']]").get_native_element()
+        self.driver.execute_script("arguments[0].click()", buy_now_button)
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "gap-button.btn-primary-action[aria-disabled='false']").click()
+-------------------------------------------------------
+Potential fix (3): The “Buy Now” buttons are inside a nested iframe; switch into it before searching.
+Original code line/lines:
+        override_iframe = self.driver.find_element(By.ID, "override").get_native_element()
+        self.driver.switch_to.frame(override_iframe)
+Fixed code line/lines:
+        override_iframe = self.driver.find_element(By.ID, "override").get_native_element()
+        self.driver.switch_to.frame(override_iframe)
+        inner_iframe = self.driver.find_element(By.CSS_SELECTOR, "iframe").get_native_element()
+        self.driver.switch_to.frame(inner_iframe)
+-------------------------------------------------------
+Potential fix (4): Keep JavaScript click but correct the XPath to the <gap-button>.
+Original code line/lines:
+        buy_now_button = self.driver.find_element(By.XPATH, "//button[./gap-button-label[text()='Buy Now']]").get_native_element()
+        self.driver.execute_script("arguments[0].click()", buy_now_button)
+Fixed code line/lines:
+        buy_now_button = self.driver.find_element(By.XPATH, "//gap-button[normalize-space()='Buy Now']").get_native_element()
+        self.driver.execute_script("arguments[0].click()", buy_now_button)
+-------------------------------------------------------
+Potential fix (5): Execute JavaScript directly to click the first active “Buy Now” without locating it via Selenium.
+Original code line/lines:
+        buy_now_button = self.driver.find_element(By.XPATH, "//button[./gap-button-label[text()='Buy Now']]").get_native_element()
+        self.driver.execute_script("arguments[0].click()", buy_now_button)
+Fixed code line/lines:
+        self.driver.execute_script("document.querySelector('gap-button.btn-primary-action:not([aria-disabled=\"true\"])').click()")
+-------------------------------------------------------
+
+2025-05-26 22:26:52,520 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
