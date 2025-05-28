@@ -1,0 +1,113 @@
+2025-05-26 20:36:09,487 - AutoTestFixer - ERROR - --- Test test_kayak_f7c2c65f FAILED ---
+2025-05-26 20:36:09,487 - AutoTestFixer - ERROR - URL at failure: https://www.kayak.com/?ispredir=true
+2025-05-26 20:36:09,487 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_kayak.TestKayak object at 0x107e72e60>
+
+    def test_kayak_f7c2c65f(self):
+        self.driver.get("https://www.kayak.com/?ispredir=true")
+    
+>       self.driver.find_element(By.XPATH, "//div[text()='Round-trip']").click()
+
+test/test_kayak.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107e0b400>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x000000010269f898 undetected_chromedriver + 5986456
+E       1   undetected_chromedriver             0x00000001026969ca undetected_chromedriver + 5949898
+E       2   undetected_chromedriver             0x000000010214f600 undetected_chromedriver + 415232
+E       3   undetected_chromedriver             0x00000001021a1304 undetected_chromedriver + 750340
+E       4   undetected_chromedriver             0x00000001021a1521 undetected_chromedriver + 750881
+E       5   undetected_chromedriver             0x00000001021f1204 undetected_chromedriver + 1077764
+E       6   undetected_chromedriver             0x00000001021c733d undetected_chromedriver + 906045
+E       7   undetected_chromedriver             0x00000001021ee566 undetected_chromedriver + 1066342
+E       8   undetected_chromedriver             0x00000001021c70e3 undetected_chromedriver + 905443
+E       9   undetected_chromedriver             0x000000010219361d undetected_chromedriver + 693789
+E       10  undetected_chromedriver             0x0000000102194281 undetected_chromedriver + 696961
+E       11  undetected_chromedriver             0x000000010265d560 undetected_chromedriver + 5715296
+E       12  undetected_chromedriver             0x0000000102661425 undetected_chromedriver + 5731365
+E       13  undetected_chromedriver             0x0000000102637eb0 undetected_chromedriver + 5562032
+E       14  undetected_chromedriver             0x0000000102661e5b undetected_chromedriver + 5733979
+E       15  undetected_chromedriver             0x0000000102626dc4 undetected_chromedriver + 5492164
+E       16  undetected_chromedriver             0x0000000102684a78 undetected_chromedriver + 5876344
+E       17  undetected_chromedriver             0x0000000102684c40 undetected_chromedriver + 5876800
+E       18  undetected_chromedriver             0x0000000102696591 undetected_chromedriver + 5948817
+E       19  libsystem_pthread.dylib             0x00007ff806f50df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff806f4c857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-26 20:35:32,813 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.kayak.com/?ispredir=true
+2025-05-26 20:35:36,156 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.kayak.com/?ispredir=true
+2025-05-26 20:35:38,161 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[text()='Round-trip']
+2025-05-26 20:36:08,617 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[text()='Round-trip'] (Current page URL: https://www.kayak.com/?ispredir=true)
+2025-05-26 20:36:08,694 - AutoTestFixer - INFO - Test test_kayak_f7c2c65f failed. Auto-fix mode: suggest. Initiating process.
+2025-05-26 20:36:42,383 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Target the correct tag – the text “Round-trip” is inside a <span>, not a <div>.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[text()='Round-trip']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[normalize-space()='Round-trip']").click()
+-------------------------------------------------------
+Potential fix (2): Click the actual clickable container by climbing to its ancestor with role="button".
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[text()='Round-trip']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[normalize-space()='Round-trip']/ancestor::div[@role='button']").click()
+-------------------------------------------------------
+Potential fix (3): Make the locator more robust by matching the unique class the text element carries.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[text()='Round-trip']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[contains(@class,'NwIQ') and normalize-space()='Round-trip']").click()
+-------------------------------------------------------
+Potential fix (4): Use a starts-with expression to survive possible text changes like “Round trip”.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[text()='Round-trip']").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[starts-with(normalize-space(),'Round') and contains(normalize-space(),'trip')]").click()
+-------------------------------------------------------
+Potential fix (5): Scroll the element into view first in case it’s outside the initial viewport.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[text()='Round-trip']").click()
+Fixed code line/lines:
+        element = self.driver.find_element(By.XPATH, "//span[normalize-space()='Round-trip']")
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+        element.click()
+-------------------------------------------------------
+
+2025-05-26 20:36:42,383 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
