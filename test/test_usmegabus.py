@@ -29,7 +29,7 @@ class TestUsMegabus:
         time.sleep(2)
         self.driver.find_element(By.ID, "mat-input-0").click()
 
-        start_date_str, end_date_str = calculate_dates_full_month_name(7, 14)
+        start_date_str, end_date_str = calculate_dates_full_month_name(1, 2)
         if self.driver.find_element(By.XPATH, f"//td[@aria-label='{start_date_str}']") is None:
             self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
 

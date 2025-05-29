@@ -1,0 +1,180 @@
+2025-05-29 00:11:31,820 - AutoTestFixer - ERROR - --- Test test_usmegabus_54d60a7c FAILED ---
+2025-05-29 00:11:31,821 - AutoTestFixer - ERROR - URL at failure: https://us.megabus.com/
+2025-05-29 00:11:31,821 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_usmegabus.TestUsMegabus object at 0x105ceadd0>
+
+    def test_usmegabus_54d60a7c(self):
+        self.driver.get("https://us.megabus.com")
+    
+        if self.driver.find_element(By.XPATH, "//button[text()='Decline Offer']") is not None:
+            self.driver.find_element(By.XPATH, "//button[text()='Decline Offer']").click()
+    
+        self.driver.find_element(By.ID, "startingAt").clear()
+        self.driver.find_element(By.ID, "startingAt").send_keys("albany")
+    
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//div[./input[@id='startingAt']]//div[@title='Enter a town or city']/div[1]/div[2]").click()
+    
+        self.driver.find_element(By.ID, "goingTo").clear()
+        self.driver.find_element(By.ID, "goingTo").send_keys("New York")
+    
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//div[./input[@id='goingTo']]//div[@title='Enter a town or city']/div[1]/div[2]").click()
+    
+        time.sleep(2)
+        self.driver.find_element(By.ID, "mat-input-0").click()
+    
+        start_date_str, end_date_str = calculate_dates_full_month_name(1, 2)
+>       if self.driver.find_element(By.XPATH, f"//td[@aria-label='{start_date_str}']") is None:
+
+test/test_usmegabus.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x105cf6680>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001028670c8 undetected_chromedriver + 6140104
+E       1   undetected_chromedriver             0x000000010285e82a undetected_chromedriver + 6105130
+E       2   undetected_chromedriver             0x00000001022f23b0 undetected_chromedriver + 418736
+E       3   undetected_chromedriver             0x0000000102343fab undetected_chromedriver + 753579
+E       4   undetected_chromedriver             0x00000001023441c1 undetected_chromedriver + 754113
+E       5   undetected_chromedriver             0x0000000102394a34 undetected_chromedriver + 1083956
+E       6   undetected_chromedriver             0x000000010236a29d undetected_chromedriver + 909981
+E       7   undetected_chromedriver             0x0000000102391dd3 undetected_chromedriver + 1072595
+E       8   undetected_chromedriver             0x000000010236a043 undetected_chromedriver + 909379
+E       9   undetected_chromedriver             0x0000000102336287 undetected_chromedriver + 696967
+E       10  undetected_chromedriver             0x0000000102336ef1 undetected_chromedriver + 700145
+E       11  undetected_chromedriver             0x0000000102824c30 undetected_chromedriver + 5868592
+E       12  undetected_chromedriver             0x0000000102828baf undetected_chromedriver + 5884847
+E       13  undetected_chromedriver             0x00000001027ffee6 undetected_chromedriver + 5717734
+E       14  undetected_chromedriver             0x000000010282950f undetected_chromedriver + 5887247
+E       15  undetected_chromedriver             0x00000001027ee794 undetected_chromedriver + 5646228
+E       16  undetected_chromedriver             0x000000010284c1c8 undetected_chromedriver + 6029768
+E       17  undetected_chromedriver             0x000000010284c390 undetected_chromedriver + 6030224
+E       18  undetected_chromedriver             0x000000010285e3f1 undetected_chromedriver + 6104049
+E       19  libsystem_pthread.dylib             0x00007ff80c7acdf1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff80c7a8857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-29 00:10:50,559 - AutoTestFixer - INFO - Attempting to navigate to URL: https://us.megabus.com
+2025-05-29 00:10:52,132 - AutoTestFixer - INFO - Successfully navigated to URL: https://us.megabus.com
+2025-05-29 00:10:54,137 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[text()='Decline Offer']
+2025-05-29 00:10:54,163 - AutoTestFixer - INFO - Successfully find element: xpath = //button[text()='Decline Offer']
+2025-05-29 00:10:54,163 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[text()='Decline Offer']
+2025-05-29 00:10:54,170 - AutoTestFixer - INFO - Successfully find element: xpath = //button[text()='Decline Offer']
+2025-05-29 00:10:54,170 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[text()='Decline Offer']
+2025-05-29 00:10:54,170 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[text()='Decline Offer']
+2025-05-29 00:10:54,176 - AutoTestFixer - INFO - Successfully find element: xpath = //button[text()='Decline Offer']
+2025-05-29 00:10:54,306 - AutoTestFixer - INFO - Element clicked: xpath = //button[text()='Decline Offer']
+2025-05-29 00:10:54,306 - AutoTestFixer - INFO - Attempting to find element: id = startingAt
+2025-05-29 00:10:54,313 - AutoTestFixer - INFO - Successfully find element: id = startingAt
+2025-05-29 00:10:54,331 - AutoTestFixer - INFO - Attempting to find element: id = startingAt
+2025-05-29 00:10:54,335 - AutoTestFixer - INFO - Successfully find element: id = startingAt
+2025-05-29 00:10:56,470 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[./input[@id='startingAt']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:56,480 - AutoTestFixer - INFO - Successfully find element: xpath = //div[./input[@id='startingAt']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:56,480 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[./input[@id='startingAt']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:56,480 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[./input[@id='startingAt']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:56,484 - AutoTestFixer - INFO - Successfully find element: xpath = //div[./input[@id='startingAt']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:56,563 - AutoTestFixer - INFO - Element clicked: xpath = //div[./input[@id='startingAt']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:56,563 - AutoTestFixer - INFO - Attempting to find element: id = goingTo
+2025-05-29 00:10:56,569 - AutoTestFixer - INFO - Successfully find element: id = goingTo
+2025-05-29 00:10:56,582 - AutoTestFixer - INFO - Attempting to find element: id = goingTo
+2025-05-29 00:10:56,585 - AutoTestFixer - INFO - Successfully find element: id = goingTo
+2025-05-29 00:10:58,624 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[./input[@id='goingTo']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:58,636 - AutoTestFixer - INFO - Successfully find element: xpath = //div[./input[@id='goingTo']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:58,636 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[./input[@id='goingTo']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:58,636 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[./input[@id='goingTo']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:58,642 - AutoTestFixer - INFO - Successfully find element: xpath = //div[./input[@id='goingTo']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:10:58,684 - AutoTestFixer - INFO - Element clicked: xpath = //div[./input[@id='goingTo']]//div[@title='Enter a town or city']/div[1]/div[2]
+2025-05-29 00:11:00,690 - AutoTestFixer - INFO - Attempting to find element: id = mat-input-0
+2025-05-29 00:11:00,708 - AutoTestFixer - INFO - Successfully find element: id = mat-input-0
+2025-05-29 00:11:00,708 - AutoTestFixer - INFO - Attempting to click element: id = mat-input-0
+2025-05-29 00:11:00,708 - AutoTestFixer - INFO - Attempting to find element: id = mat-input-0
+2025-05-29 00:11:00,715 - AutoTestFixer - INFO - Successfully find element: id = mat-input-0
+2025-05-29 00:11:00,783 - AutoTestFixer - INFO - Element clicked: id = mat-input-0
+2025-05-29 00:11:00,783 - AutoTestFixer - INFO - Attempting to find element: xpath = //td[@aria-label='May 30, 2025']
+2025-05-29 00:11:30,835 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //td[@aria-label='May 30, 2025'] (Current page URL: https://us.megabus.com/)
+2025-05-29 00:11:30,907 - AutoTestFixer - INFO - Test test_usmegabus_54d60a7c failed. Auto-fix mode: suggest. Initiating process.
+2025-05-29 00:12:10,796 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Switch from the outdated <td> selector to the current <button> selector for the calendar day cells.
+Original code line/lines:
+        if self.driver.find_element(By.XPATH, f"//td[@aria-label='{start_date_str}']") is None:
+            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+
+        self.driver.find_element(By.XPATH, f"//td[@aria-label='{start_date_str}']").click()
+Fixed code line/lines:
+        if self.driver.find_element(By.XPATH, f"//button[@aria-label='{start_date_str}']") is None:
+            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+
+        self.driver.find_element(By.XPATH, f"//button[@aria-label='{start_date_str}']").click()
+-------------------------------------------------------
+Potential fix (2): Apply the same <button> selector change to the end-date selection block.
+Original code line/lines:
+        if self.driver.find_element(By.XPATH, f"//td[@aria-label='{end_date_str}']") is None:
+            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+
+        self.driver.find_element(By.XPATH, f"//td[@aria-label='{end_date_str}']").click()
+Fixed code line/lines:
+        if self.driver.find_element(By.XPATH, f"//button[@aria-label='{end_date_str}']") is None:
+            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+
+        self.driver.find_element(By.XPATH, f"//button[@aria-label='{end_date_str}']").click()
+-------------------------------------------------------
+Potential fix (3): Prevent unnecessary timeouts by checking presence with find_elements, which returns an empty list instead of throwing.
+Original code line/lines:
+        if self.driver.find_element(By.XPATH, f"//button[@aria-label='{start_date_str}']") is None:
+            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+Fixed code line/lines:
+        if not self.driver.find_elements(By.XPATH, f"//button[@aria-label='{start_date_str}']"):
+            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+-------------------------------------------------------
+Potential fix (4): Use the safer presence check for the end-date block as well.
+Original code line/lines:
+        if self.driver.find_element(By.XPATH, f"//button[@aria-label='{end_date_str}']") is None:
+            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+Fixed code line/lines:
+        if not self.driver.find_elements(By.XPATH, f"//button[@aria-label='{end_date_str}']"):
+            self.driver.find_element(By.XPATH, "//button[@aria-label='Next month']").click()
+-------------------------------------------------------
+Potential fix (5): Remove the unnecessary hard wait before opening the calendar to reduce flakiness.
+Original code line/lines:
+        time.sleep(2)
+        self.driver.find_element(By.ID, "mat-input-0").click()
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "mat-input-0").click()
+-------------------------------------------------------
+2025-05-29 00:12:10,796 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
