@@ -1,0 +1,270 @@
+2025-05-29 00:15:27,480 - AutoTestFixer - ERROR - --- Test test_usnewseducation_7d047bb7 FAILED ---
+2025-05-29 00:15:27,481 - AutoTestFixer - ERROR - URL at failure: https://www.usnews.com/education/scholarships/for-arizona-students?state-of-study=AZ&sort=deadline-desc
+2025-05-29 00:15:27,481 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_usnewseducation.TestUsnewsEducation object at 0x106daad70>
+
+    def test_usnewseducation_7d047bb7(self):
+        self.driver.get("https://www.usnews.com/education")
+    
+        self.driver.find_element(By.XPATH, "//button[@title='My Account']").click()
+        self.driver.find_element(By.XPATH, "//a[text()='Sign In to My Account']").click()
+    
+        time.sleep(2)
+        self.driver.find_element(By.NAME, "username").clear()
+        self.driver.find_element(By.NAME, "username").send_keys("uiteststudy@gmail.com")
+        self.driver.find_element(By.NAME, "password").clear()
+        self.driver.find_element(By.NAME, "password").send_keys("Pass4USNews!")
+        self.driver.find_element(By.XPATH, "//button[text()='Continue']").click()
+    
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//a[text()='Scholarships and Finances']").click()
+    
+        state_residence_dropdown = self.driver.find_element(By.NAME, "state-of-residence")
+        state_residence_select = Select(state_residence_dropdown)
+        state_residence_select.select_by_value("AZ")
+    
+        state_study_dropdown = self.driver.find_element(By.NAME, "state-of-study")
+        state_study_select = Select(state_study_dropdown)
+        state_study_select.select_by_value("AZ")
+    
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//input[@name='ethnicity' and @placeholder='Type to Select']").clear()
+        self.driver.find_element(By.XPATH, "//input[@name='ethnicity' and @placeholder='Type to Select']").send_keys("african american")
+    
+>       self.driver.find_element(By.ID, "react-autowhatever-1--item-0").click()
+
+test/test_usnewseducation.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:145: in click
+    raise e
+framework/custom_selenium.py:120: in click
+    self.element.click()
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:94: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webelement.py:395: in _execute
+    return self._parent.execute(command, params)
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py:354: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x106da9780>
+response = {'status': 400, 'value': '{"value":{"error":"element click intercepted","message":"element click intercepted: Element ...7ff817008df1 _pthread_start + 99\\n24  libsystem_pthread.dylib             0x00007ff817004857 thread_start + 15\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element is not clickable at point (446, 972)
+E         (Session info: chrome=137.0.7151.41)
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000100fb30c8 undetected_chromedriver + 6140104
+E       1   undetected_chromedriver             0x0000000100faa82a undetected_chromedriver + 6105130
+E       2   undetected_chromedriver             0x0000000100a3e3b0 undetected_chromedriver + 418736
+E       3   undetected_chromedriver             0x0000000100a96e30 undetected_chromedriver + 781872
+E       4   undetected_chromedriver             0x0000000100a94c8b undetected_chromedriver + 773259
+E       5   undetected_chromedriver             0x0000000100a92322 undetected_chromedriver + 762658
+E       6   undetected_chromedriver             0x0000000100a91a40 undetected_chromedriver + 760384
+E       7   undetected_chromedriver             0x0000000100a840cd undetected_chromedriver + 704717
+E       8   undetected_chromedriver             0x0000000100ab6272 undetected_chromedriver + 909938
+E       9   undetected_chromedriver             0x0000000100a83a48 undetected_chromedriver + 703048
+E       10  undetected_chromedriver             0x0000000100ab642e undetected_chromedriver + 910382
+E       11  undetected_chromedriver             0x0000000100adddd3 undetected_chromedriver + 1072595
+E       12  undetected_chromedriver             0x0000000100ab6043 undetected_chromedriver + 909379
+E       13  undetected_chromedriver             0x0000000100a82287 undetected_chromedriver + 696967
+E       14  undetected_chromedriver             0x0000000100a82ef1 undetected_chromedriver + 700145
+E       15  undetected_chromedriver             0x0000000100f70c30 undetected_chromedriver + 5868592
+E       16  undetected_chromedriver             0x0000000100f74baf undetected_chromedriver + 5884847
+E       17  undetected_chromedriver             0x0000000100f4bee6 undetected_chromedriver + 5717734
+E       18  undetected_chromedriver             0x0000000100f7550f undetected_chromedriver + 5887247
+E       19  undetected_chromedriver             0x0000000100f3a794 undetected_chromedriver + 5646228
+E       20  undetected_chromedriver             0x0000000100f981c8 undetected_chromedriver + 6029768
+E       21  undetected_chromedriver             0x0000000100f98390 undetected_chromedriver + 6030224
+E       22  undetected_chromedriver             0x0000000100faa3f1 undetected_chromedriver + 6104049
+E       23  libsystem_pthread.dylib             0x00007ff817008df1 _pthread_start + 99
+E       24  libsystem_pthread.dylib             0x00007ff817004857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/remote/errorhandler.py:229: ElementClickInterceptedException
+2025-05-29 00:15:07,564 - AutoTestFixer - INFO - Attempting to navigate to URL: https://www.usnews.com/education
+2025-05-29 00:15:08,711 - AutoTestFixer - INFO - Successfully navigated to URL: https://www.usnews.com/education
+2025-05-29 00:15:10,716 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@title='My Account']
+2025-05-29 00:15:10,734 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@title='My Account']
+2025-05-29 00:15:10,734 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[@title='My Account']
+2025-05-29 00:15:10,734 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[@title='My Account']
+2025-05-29 00:15:10,739 - AutoTestFixer - INFO - Successfully find element: xpath = //button[@title='My Account']
+2025-05-29 00:15:10,810 - AutoTestFixer - INFO - Element clicked: xpath = //button[@title='My Account']
+2025-05-29 00:15:10,813 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='Sign In to My Account']
+2025-05-29 00:15:10,835 - AutoTestFixer - INFO - Successfully find element: xpath = //a[text()='Sign In to My Account']
+2025-05-29 00:15:10,835 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[text()='Sign In to My Account']
+2025-05-29 00:15:10,835 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='Sign In to My Account']
+2025-05-29 00:15:10,840 - AutoTestFixer - INFO - Successfully find element: xpath = //a[text()='Sign In to My Account']
+2025-05-29 00:15:10,891 - AutoTestFixer - INFO - Element clicked: xpath = //a[text()='Sign In to My Account']
+2025-05-29 00:15:12,895 - AutoTestFixer - INFO - Attempting to find element: name = username
+2025-05-29 00:15:12,975 - AutoTestFixer - INFO - Successfully find element: name = username
+2025-05-29 00:15:13,068 - AutoTestFixer - INFO - Attempting to find element: name = username
+2025-05-29 00:15:13,086 - AutoTestFixer - INFO - Successfully find element: name = username
+2025-05-29 00:15:13,393 - AutoTestFixer - INFO - Attempting to find element: name = password
+2025-05-29 00:15:13,413 - AutoTestFixer - INFO - Successfully find element: name = password
+2025-05-29 00:15:13,494 - AutoTestFixer - INFO - Attempting to find element: name = password
+2025-05-29 00:15:13,511 - AutoTestFixer - INFO - Successfully find element: name = password
+2025-05-29 00:15:13,683 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[text()='Continue']
+2025-05-29 00:15:13,703 - AutoTestFixer - INFO - Successfully find element: xpath = //button[text()='Continue']
+2025-05-29 00:15:13,703 - AutoTestFixer - INFO - Attempting to click element: xpath = //button[text()='Continue']
+2025-05-29 00:15:13,703 - AutoTestFixer - INFO - Attempting to find element: xpath = //button[text()='Continue']
+2025-05-29 00:15:13,722 - AutoTestFixer - INFO - Successfully find element: xpath = //button[text()='Continue']
+2025-05-29 00:15:14,036 - AutoTestFixer - INFO - Element clicked: xpath = //button[text()='Continue']
+2025-05-29 00:15:16,041 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='Scholarships and Finances']
+2025-05-29 00:15:16,303 - AutoTestFixer - INFO - Successfully find element: xpath = //a[text()='Scholarships and Finances']
+2025-05-29 00:15:16,303 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[text()='Scholarships and Finances']
+2025-05-29 00:15:16,303 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[text()='Scholarships and Finances']
+2025-05-29 00:15:16,308 - AutoTestFixer - INFO - Successfully find element: xpath = //a[text()='Scholarships and Finances']
+2025-05-29 00:15:21,887 - AutoTestFixer - INFO - Element clicked: xpath = //a[text()='Scholarships and Finances']
+2025-05-29 00:15:21,888 - AutoTestFixer - INFO - Attempting to find element: name = state-of-residence
+2025-05-29 00:15:21,899 - AutoTestFixer - INFO - Successfully find element: name = state-of-residence
+2025-05-29 00:15:21,907 - AutoTestFixer - INFO - Attempting to find elements: css selector = option[value ="AZ"] within element: name = state-of-residence
+2025-05-29 00:15:21,916 - AutoTestFixer - INFO - Successfully find elements: css selector = option[value ="AZ"] within element: name = state-of-residence
+2025-05-29 00:15:21,927 - AutoTestFixer - INFO - Attempting to click element: css selector = option[value ="AZ"]
+2025-05-29 00:15:21,927 - AutoTestFixer - INFO - Attempting to find element: css selector = option[value ="AZ"] within element: name = state-of-residence
+2025-05-29 00:15:21,935 - AutoTestFixer - INFO - Successfully find element: css selector = option[value ="AZ"] within element: name = state-of-residence
+2025-05-29 00:15:22,127 - AutoTestFixer - INFO - Element clicked: css selector = option[value ="AZ"]
+2025-05-29 00:15:22,127 - AutoTestFixer - INFO - Attempting to find element: name = state-of-study
+2025-05-29 00:15:22,134 - AutoTestFixer - INFO - Successfully find element: name = state-of-study
+2025-05-29 00:15:22,140 - AutoTestFixer - INFO - Attempting to find elements: css selector = option[value ="AZ"] within element: name = state-of-study
+2025-05-29 00:15:22,145 - AutoTestFixer - INFO - Successfully find elements: css selector = option[value ="AZ"] within element: name = state-of-study
+2025-05-29 00:15:22,158 - AutoTestFixer - INFO - Attempting to click element: css selector = option[value ="AZ"]
+2025-05-29 00:15:22,158 - AutoTestFixer - INFO - Attempting to find element: css selector = option[value ="AZ"] within element: name = state-of-study
+2025-05-29 00:15:22,164 - AutoTestFixer - INFO - Successfully find element: css selector = option[value ="AZ"] within element: name = state-of-study
+2025-05-29 00:15:22,186 - AutoTestFixer - INFO - Element clicked: css selector = option[value ="AZ"]
+2025-05-29 00:15:24,191 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@name='ethnicity' and @placeholder='Type to Select']
+2025-05-29 00:15:24,215 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@name='ethnicity' and @placeholder='Type to Select']
+2025-05-29 00:15:24,238 - AutoTestFixer - INFO - Attempting to find element: xpath = //input[@name='ethnicity' and @placeholder='Type to Select']
+2025-05-29 00:15:24,244 - AutoTestFixer - INFO - Successfully find element: xpath = //input[@name='ethnicity' and @placeholder='Type to Select']
+2025-05-29 00:15:24,289 - AutoTestFixer - INFO - Attempting to find element: id = react-autowhatever-1--item-0
+2025-05-29 00:15:25,327 - AutoTestFixer - INFO - Successfully find element: id = react-autowhatever-1--item-0
+2025-05-29 00:15:25,327 - AutoTestFixer - INFO - Attempting to click element: id = react-autowhatever-1--item-0
+2025-05-29 00:15:25,327 - AutoTestFixer - INFO - Attempting to find element: id = react-autowhatever-1--item-0
+2025-05-29 00:15:25,333 - AutoTestFixer - INFO - Successfully find element: id = react-autowhatever-1--item-0
+2025-05-29 00:15:26,379 - AutoTestFixer - ERROR - ElementClickInterceptedException: Element click intercepted: id = react-autowhatever-1--item-0 (Current page URL: https://www.usnews.com/education/scholarships/for-arizona-students?state-of-study=AZ&sort=deadline-desc)
+2025-05-29 00:15:26,472 - AutoTestFixer - INFO - Test test_usnewseducation_7d047bb7 failed. Auto-fix mode: suggest. Initiating process.
+2025-05-29 00:15:50,693 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Scroll the autosuggest option into view first so no overlapping element intercepts the click.  
+Original code line/lines:
+        self.driver.find_element(By.ID, "react-autowhatever-1--item-0").click()
+Fixed code line/lines:
+        ethnicity_option = self.driver.find_element(By.ID, "react-autowhatever-1--item-0")
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", ethnicity_option)
+        ethnicity_option.click()
+-------------------------------------------------------
+Potential fix (2): Use JavaScript to perform the click, bypassing any transient overlay that causes ElementClickInterceptedException.  
+Original code line/lines:
+        self.driver.find_element(By.ID, "react-autowhatever-1--item-0").click()
+Fixed code line/lines:
+        ethnicity_option = self.driver.find_element(By.ID, "react-autowhatever-1--item-0")
+        self.driver.execute_script("arguments[0].click();", ethnicity_option)
+-------------------------------------------------------
+Potential fix (3): Replace the brittle dynamic-ID locator with a stable CSS selector targeting the first suggestion.  
+Original code line/lines:
+        self.driver.find_element(By.ID, "react-autowhatever-1--item-0").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "ul[role='listbox'] li[role='option']:first-child").click()
+-------------------------------------------------------
+Potential fix (4): Choose the suggestion via keyboard navigation to avoid any mouse-click interception.  
+Original code line/lines:
+        self.driver.find_element(By.ID, "react-autowhatever-1--item-0").click()
+Fixed code line/lines:
+        from selenium.webdriver.common.keys import Keys
+        self.driver.find_element(By.XPATH, "//input[@name='ethnicity' and @placeholder='Type to Select']").send_keys(Keys.ARROW_DOWN + Keys.ENTER)
+-------------------------------------------------------
+Potential fix (5): Close the floating toast that may cover the autosuggest list before attempting the click.  
+Original code line/lines:
+        self.driver.find_element(By.ID, "react-autowhatever-1--item-0").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button.close-button__ButtonStyled-sc-hd0ioc-0").click()
+        self.driver.find_element(By.ID, "react-autowhatever-1--item-0").click()
+-------------------------------------------------------
+2025-05-29 00:15:50,693 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
