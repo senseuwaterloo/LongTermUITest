@@ -1,0 +1,111 @@
+2025-05-30 19:04:56,006 - AutoTestFixer - ERROR - --- Test test_coinmarketcap_5f0c4ebf FAILED ---
+2025-05-30 19:04:56,006 - AutoTestFixer - ERROR - URL at failure: https://coinmarketcap.com/
+2025-05-30 19:04:56,006 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_coinmarketcap.TestCoinmarketcap object at 0x1074d3b80>
+
+    def test_coinmarketcap_5f0c4ebf(self):
+        self.driver.get("https://coinmarketcap.com")
+>       self.driver.find_element(By.XPATH, "//div[@id='__next']/div[2]/div[1]/div[2]/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/button[1]").click()
+
+test/test_coinmarketcap.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x107487640>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x00000001034610c8 undetected_chromedriver + 6140104
+E       1   undetected_chromedriver             0x000000010345882a undetected_chromedriver + 6105130
+E       2   undetected_chromedriver             0x0000000102eec3b0 undetected_chromedriver + 418736
+E       3   undetected_chromedriver             0x0000000102f3dfab undetected_chromedriver + 753579
+E       4   undetected_chromedriver             0x0000000102f3e1c1 undetected_chromedriver + 754113
+E       5   undetected_chromedriver             0x0000000102f8ea34 undetected_chromedriver + 1083956
+E       6   undetected_chromedriver             0x0000000102f6429d undetected_chromedriver + 909981
+E       7   undetected_chromedriver             0x0000000102f8bdd3 undetected_chromedriver + 1072595
+E       8   undetected_chromedriver             0x0000000102f64043 undetected_chromedriver + 909379
+E       9   undetected_chromedriver             0x0000000102f30287 undetected_chromedriver + 696967
+E       10  undetected_chromedriver             0x0000000102f30ef1 undetected_chromedriver + 700145
+E       11  undetected_chromedriver             0x000000010341ec30 undetected_chromedriver + 5868592
+E       12  undetected_chromedriver             0x0000000103422baf undetected_chromedriver + 5884847
+E       13  undetected_chromedriver             0x00000001033f9ee6 undetected_chromedriver + 5717734
+E       14  undetected_chromedriver             0x000000010342350f undetected_chromedriver + 5887247
+E       15  undetected_chromedriver             0x00000001033e8794 undetected_chromedriver + 5646228
+E       16  undetected_chromedriver             0x00000001034461c8 undetected_chromedriver + 6029768
+E       17  undetected_chromedriver             0x0000000103446390 undetected_chromedriver + 6030224
+E       18  undetected_chromedriver             0x00000001034583f1 undetected_chromedriver + 6104049
+E       19  libsystem_pthread.dylib             0x00007ff803ef8df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff803ef4857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-30 19:04:19,500 - AutoTestFixer - INFO - Attempting to navigate to URL: https://coinmarketcap.com
+2025-05-30 19:04:20,756 - AutoTestFixer - INFO - Successfully navigated to URL: https://coinmarketcap.com
+2025-05-30 19:04:22,761 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='__next']/div[2]/div[1]/div[2]/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/button[1]
+2025-05-30 19:04:53,269 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //div[@id='__next']/div[2]/div[1]/div[2]/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/button[1] (Current page URL: https://coinmarketcap.com/)
+2025-05-30 19:04:53,341 - AutoTestFixer - INFO - Test test_coinmarketcap_5f0c4ebf failed. Auto-fix mode: suggest. Initiating process.
+2025-05-30 19:05:33,163 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Replace brittle absolute XPath with a stable text-based locator for the “Filters” button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='__next']/div[2]/div[1]/div[2]/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/button[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[.//span[normalize-space()='Filters']]").click()
+-------------------------------------------------------
+Potential fix (2): Scroll the element into view before clicking to handle lazy-loaded content.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='__next']/div[2]/div[1]/div[2]/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/button[1]").click()
+Fixed code line/lines:
+        filters_btn = self.driver.find_element(By.XPATH, "//button[.//span[normalize-space()='Filters']]")
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", filters_btn)
+        filters_btn.click()
+-------------------------------------------------------
+Potential fix (3): Use a concise CSS selector targeting the unique class of the Filters button.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='__next']/div[2]/div[1]/div[2]/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/button[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.CSS_SELECTOR, "button.TableListingFiltersV4_button__Ipkdq").click()
+-------------------------------------------------------
+Potential fix (4): Use ancestor traversal from the visible text node to locate the correct button element.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='__next']/div[2]/div[1]/div[2]/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/button[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//span[text()='Filters']/ancestor::button").click()
+-------------------------------------------------------
+Potential fix (5): Target the button by partial class name with a robust XPath contains check.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='__next']/div[2]/div[1]/div[2]/div/div[1]/div[3]/div[2]/div[2]/div[2]/div/button[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//button[contains(@class,'TableListingFiltersV4_button')]").click()
+-------------------------------------------------------
+2025-05-30 19:05:33,164 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
