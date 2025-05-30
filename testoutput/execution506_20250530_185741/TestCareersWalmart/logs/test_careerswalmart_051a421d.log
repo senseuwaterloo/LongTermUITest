@@ -1,0 +1,182 @@
+2025-05-30 18:58:29,317 - AutoTestFixer - ERROR - --- Test test_careerswalmart_051a421d FAILED ---
+2025-05-30 18:58:29,317 - AutoTestFixer - ERROR - URL at failure: https://careers.walmart.com/results?q=&page=1&sort=rank&jobCategory=00000159-7627-d286-a3f9-7ea7d10c0000&jobSubCategory=0000015a-a52a-d06d-af5f-f5bb06450000,0000018b-4831-d283-abeb-5a7d7b260000,0000018b-4860-d283-abeb-5a7c5d410000&jobBrand=0000015a-624c-d7d3-afff-76ec4e230000&jobEmploymentType=0000015a-721d-de53-ab7e-767ff1d80000&jobRate=00000160-6a45-d7f5-a17a-ffddc6c80000&expand=department,00000159-7574-d286-a3f9-7ff45f640000,00000159-7627-d286-a3f9-7ea7d10c0000,brand,type,rate&type=jobs
+2025-05-30 18:58:29,317 - AutoTestFixer - ERROR - Traceback:
+self = <test.test_careerswalmart.TestCareersWalmart object at 0x1041cfa30>
+
+    def test_careerswalmart_051a421d(self):
+        self.driver.get("https://careers.walmart.com/")
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'All Career Areas')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'Sam’s Club Jobs')]").click()
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'See All Openings')]").click()
+        time.sleep(1)
+        self.driver.find_element(By.ID, "location").clear()
+        self.driver.find_element(By.ID, "location").send_keys("DALLAS")
+        self.driver.find_element(By.XPATH, "//ul[@id='search-location-list']/li[8]/span[1]").click()
+        self.driver.find_element(By.XPATH, "//div[@id='type-accordion']/div[1]/div[3]/label[1]").click()
+        time.sleep(1)
+        self.driver.find_element(By.XPATH, "//div[@id='rate-accordion']/div[1]/div[2]/label[1]").click()
+        time.sleep(1)
+        self.driver.find_element(By.XPATH, "//div[@id='department-accordion']/div[1]/div[5]/h6[1]").click()
+        self.driver.find_element(By.XPATH, "//label[@for='dep-410']").click()
+    
+        time.sleep(1)
+>       self.driver.find_element(By.XPATH, "//a[contains(text(),'(USA) Member Specialist: Internship ( Unlocked Potential )')]").click()
+
+test/test_careerswalmart.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+framework/custom_selenium.py:71: in find_element
+    raise e
+framework/custom_selenium.py:55: in find_element
+    element = WebDriverWait(super(), WAIT_TIMEOUT).until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="None")>
+method = <function presence_of_element_located.<locals>._predicate at 0x1041b9ab0>
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -> T:
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       0   undetected_chromedriver             0x0000000104c050c8 undetected_chromedriver + 6140104
+E       1   undetected_chromedriver             0x0000000104bfc82a undetected_chromedriver + 6105130
+E       2   undetected_chromedriver             0x00000001046903b0 undetected_chromedriver + 418736
+E       3   undetected_chromedriver             0x00000001046e1fab undetected_chromedriver + 753579
+E       4   undetected_chromedriver             0x00000001046e21c1 undetected_chromedriver + 754113
+E       5   undetected_chromedriver             0x0000000104732a34 undetected_chromedriver + 1083956
+E       6   undetected_chromedriver             0x000000010470829d undetected_chromedriver + 909981
+E       7   undetected_chromedriver             0x000000010472fdd3 undetected_chromedriver + 1072595
+E       8   undetected_chromedriver             0x0000000104708043 undetected_chromedriver + 909379
+E       9   undetected_chromedriver             0x00000001046d4287 undetected_chromedriver + 696967
+E       10  undetected_chromedriver             0x00000001046d4ef1 undetected_chromedriver + 700145
+E       11  undetected_chromedriver             0x0000000104bc2c30 undetected_chromedriver + 5868592
+E       12  undetected_chromedriver             0x0000000104bc6baf undetected_chromedriver + 5884847
+E       13  undetected_chromedriver             0x0000000104b9dee6 undetected_chromedriver + 5717734
+E       14  undetected_chromedriver             0x0000000104bc750f undetected_chromedriver + 5887247
+E       15  undetected_chromedriver             0x0000000104b8c794 undetected_chromedriver + 5646228
+E       16  undetected_chromedriver             0x0000000104bea1c8 undetected_chromedriver + 6029768
+E       17  undetected_chromedriver             0x0000000104bea390 undetected_chromedriver + 6030224
+E       18  undetected_chromedriver             0x0000000104bfc3f1 undetected_chromedriver + 6104049
+E       19  libsystem_pthread.dylib             0x00007ff803ef8df1 _pthread_start + 99
+E       20  libsystem_pthread.dylib             0x00007ff803ef4857 thread_start + 15
+
+.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py:105: TimeoutException
+2025-05-30 18:57:47,290 - AutoTestFixer - INFO - Attempting to navigate to URL: https://careers.walmart.com/
+2025-05-30 18:57:50,076 - AutoTestFixer - INFO - Successfully navigated to URL: https://careers.walmart.com/
+2025-05-30 18:57:52,081 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'All Career Areas')]
+2025-05-30 18:57:52,100 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'All Career Areas')]
+2025-05-30 18:57:52,101 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'All Career Areas')]
+2025-05-30 18:57:52,101 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'All Career Areas')]
+2025-05-30 18:57:52,108 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'All Career Areas')]
+2025-05-30 18:57:52,181 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'All Career Areas')]
+2025-05-30 18:57:52,181 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Sam’s Club Jobs')]
+2025-05-30 18:57:52,189 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Sam’s Club Jobs')]
+2025-05-30 18:57:52,189 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'Sam’s Club Jobs')]
+2025-05-30 18:57:52,189 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'Sam’s Club Jobs')]
+2025-05-30 18:57:52,194 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'Sam’s Club Jobs')]
+2025-05-30 18:57:52,659 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'Sam’s Club Jobs')]
+2025-05-30 18:57:52,659 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'See All Openings')]
+2025-05-30 18:57:52,665 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'See All Openings')]
+2025-05-30 18:57:52,665 - AutoTestFixer - INFO - Attempting to click element: xpath = //a[contains(text(),'See All Openings')]
+2025-05-30 18:57:52,665 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'See All Openings')]
+2025-05-30 18:57:52,669 - AutoTestFixer - INFO - Successfully find element: xpath = //a[contains(text(),'See All Openings')]
+2025-05-30 18:57:53,077 - AutoTestFixer - INFO - Element clicked: xpath = //a[contains(text(),'See All Openings')]
+2025-05-30 18:57:54,083 - AutoTestFixer - INFO - Attempting to find element: id = location
+2025-05-30 18:57:54,091 - AutoTestFixer - INFO - Successfully find element: id = location
+2025-05-30 18:57:54,114 - AutoTestFixer - INFO - Attempting to find element: id = location
+2025-05-30 18:57:54,119 - AutoTestFixer - INFO - Successfully find element: id = location
+2025-05-30 18:57:54,199 - AutoTestFixer - INFO - Attempting to find element: xpath = //ul[@id='search-location-list']/li[8]/span[1]
+2025-05-30 18:57:54,718 - AutoTestFixer - INFO - Successfully find element: xpath = //ul[@id='search-location-list']/li[8]/span[1]
+2025-05-30 18:57:54,718 - AutoTestFixer - INFO - Attempting to click element: xpath = //ul[@id='search-location-list']/li[8]/span[1]
+2025-05-30 18:57:54,718 - AutoTestFixer - INFO - Attempting to find element: xpath = //ul[@id='search-location-list']/li[8]/span[1]
+2025-05-30 18:57:54,722 - AutoTestFixer - INFO - Successfully find element: xpath = //ul[@id='search-location-list']/li[8]/span[1]
+2025-05-30 18:57:54,871 - AutoTestFixer - INFO - Element clicked: xpath = //ul[@id='search-location-list']/li[8]/span[1]
+2025-05-30 18:57:54,871 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='type-accordion']/div[1]/div[3]/label[1]
+2025-05-30 18:57:54,878 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='type-accordion']/div[1]/div[3]/label[1]
+2025-05-30 18:57:54,878 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='type-accordion']/div[1]/div[3]/label[1]
+2025-05-30 18:57:54,878 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='type-accordion']/div[1]/div[3]/label[1]
+2025-05-30 18:57:54,883 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='type-accordion']/div[1]/div[3]/label[1]
+2025-05-30 18:57:54,962 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='type-accordion']/div[1]/div[3]/label[1]
+2025-05-30 18:57:55,967 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='rate-accordion']/div[1]/div[2]/label[1]
+2025-05-30 18:57:55,973 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='rate-accordion']/div[1]/div[2]/label[1]
+2025-05-30 18:57:55,973 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='rate-accordion']/div[1]/div[2]/label[1]
+2025-05-30 18:57:55,973 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='rate-accordion']/div[1]/div[2]/label[1]
+2025-05-30 18:57:55,977 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='rate-accordion']/div[1]/div[2]/label[1]
+2025-05-30 18:57:56,042 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='rate-accordion']/div[1]/div[2]/label[1]
+2025-05-30 18:57:57,047 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='department-accordion']/div[1]/div[5]/h6[1]
+2025-05-30 18:57:57,056 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='department-accordion']/div[1]/div[5]/h6[1]
+2025-05-30 18:57:57,056 - AutoTestFixer - INFO - Attempting to click element: xpath = //div[@id='department-accordion']/div[1]/div[5]/h6[1]
+2025-05-30 18:57:57,056 - AutoTestFixer - INFO - Attempting to find element: xpath = //div[@id='department-accordion']/div[1]/div[5]/h6[1]
+2025-05-30 18:57:57,061 - AutoTestFixer - INFO - Successfully find element: xpath = //div[@id='department-accordion']/div[1]/div[5]/h6[1]
+2025-05-30 18:57:57,102 - AutoTestFixer - INFO - Element clicked: xpath = //div[@id='department-accordion']/div[1]/div[5]/h6[1]
+2025-05-30 18:57:57,102 - AutoTestFixer - INFO - Attempting to find element: xpath = //label[@for='dep-410']
+2025-05-30 18:57:57,110 - AutoTestFixer - INFO - Successfully find element: xpath = //label[@for='dep-410']
+2025-05-30 18:57:57,110 - AutoTestFixer - INFO - Attempting to click element: xpath = //label[@for='dep-410']
+2025-05-30 18:57:57,110 - AutoTestFixer - INFO - Attempting to find element: xpath = //label[@for='dep-410']
+2025-05-30 18:57:57,114 - AutoTestFixer - INFO - Successfully find element: xpath = //label[@for='dep-410']
+2025-05-30 18:57:57,213 - AutoTestFixer - INFO - Element clicked: xpath = //label[@for='dep-410']
+2025-05-30 18:57:58,218 - AutoTestFixer - INFO - Attempting to find element: xpath = //a[contains(text(),'(USA) Member Specialist: Internship ( Unlocked Potential )')]
+2025-05-30 18:58:28,265 - AutoTestFixer - ERROR - TimeoutException: Element not found within 30 seconds: xpath = //a[contains(text(),'(USA) Member Specialist: Internship ( Unlocked Potential )')] (Current page URL: https://careers.walmart.com/results?q=&page=1&sort=rank&jobCategory=00000159-7627-d286-a3f9-7ea7d10c0000&jobSubCategory=0000015a-a52a-d06d-af5f-f5bb06450000,0000018b-4831-d283-abeb-5a7d7b260000,0000018b-4860-d283-abeb-5a7c5d410000&jobBrand=0000015a-624c-d7d3-afff-76ec4e230000&jobEmploymentType=0000015a-721d-de53-ab7e-767ff1d80000&jobRate=00000160-6a45-d7f5-a17a-ffddc6c80000&expand=department,00000159-7574-d286-a3f9-7ff45f640000,00000159-7627-d286-a3f9-7ea7d10c0000,brand,type,rate&type=jobs)
+2025-05-30 18:58:28,337 - AutoTestFixer - INFO - Test test_careerswalmart_051a421d failed. Auto-fix mode: suggest. Initiating process.
+2025-05-30 18:58:58,859 - AutoTestFixer - INFO - GPT suggestions:
+-------------------------------------------------------
+Potential fix (1): Location suggestion index changed; click the first item instead of the now-missing 8th item.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='search-location-list']/li[8]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//ul[@id='search-location-list']/li[1]/span[1]").click()
+-------------------------------------------------------
+Potential fix (2): Select the location by pressing ENTER after typing, eliminating fragile list-item clicks.
+Original code line/lines:
+        self.driver.find_element(By.ID, "location").send_keys("DALLAS")
+        self.driver.find_element(By.XPATH, "//ul[@id='search-location-list']/li[8]/span[1]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.ID, "location").send_keys("DALLAS", Keys.ENTER)
+-------------------------------------------------------
+Potential fix (3): Remove the hourly-rate filter that produces zero search results.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//div[@id='rate-accordion']/div[1]/div[2]/label[1]").click()
+        time.sleep(1)
+Fixed code line/lines:
+        # Removed rate filter selection – it yielded no job results
+        pass
+-------------------------------------------------------
+Potential fix (4): Narrow the job link locator to a shorter, still-unique substring to survive minor text changes.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'(USA) Member Specialist: Internship ( Unlocked Potential )')]").click()
+Fixed code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(.,'Member Specialist') and contains(.,'Internship')]").click()
+-------------------------------------------------------
+Potential fix (5): Scroll the job link into view before clicking so that lazy-loaded results become interactable.
+Original code line/lines:
+        self.driver.find_element(By.XPATH, "//a[contains(text(),'(USA) Member Specialist: Internship ( Unlocked Potential )')]").click()
+Fixed code line/lines:
+        job_link = self.driver.find_element(By.XPATH, "//a[contains(.,'Member Specialist') and contains(.,'Internship')]")
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", job_link)
+        job_link.click()
+-------------------------------------------------------
+
+2025-05-30 18:58:58,859 - AutoTestFixer - INFO - Auto-fix mode is 'suggest'. Suggestions displayed. No patching or re-run will occur.
