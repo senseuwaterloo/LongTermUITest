@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from framework.config import DEFAULT_CHROME_OPTION_ARGS, CHROME_PREFS, MAX_FIX_ATTEMPTS_PER_FAILURE_POINT
 from framework.custom_selenium import CustomWebDriver
 from framework.logger_setup import logger, get_list_handler
-from util.agent import call_gpt_for_candidate_fixes
+from util.agent import call_gpt_for_candidate_fixes, classify_failure_source
 from util.llm_helper import get_web_element_rect, gather_test_code_and_failing_line
 from util.patch_manager import parse_gpt_suggestions, apply_fix_to_method_source, replace_method_in_file_ast, run_specific_test
 

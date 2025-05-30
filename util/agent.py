@@ -5,16 +5,16 @@ from util.llm_helper import encode_image, call_gpt_api
 
 
 def call_gpt_for_candidate_fixes(
-    test_name: str,
-    class_name: str,
-    failing_url: str,
-    screenshot_path: str,
-    web_elements_text: str,
-    traceback_text: str,
-    logging_output: str,
-    test_method_source: str,
-    failing_line_code: str,
-    openai_api_key: str = None
+        test_name: str,
+        class_name: str,
+        failing_url: str,
+        screenshot_path: str,
+        web_elements_text: str,
+        traceback_text: str,
+        logging_output: str,
+        test_method_source: str,
+        failing_line_code: str,
+        openai_api_key: str = None
 ) -> str:
     """
     Calls GPT with the screenshot and clickable elements to propose candidate fixes.
@@ -104,3 +104,91 @@ def call_gpt_for_candidate_fixes(
         return ""
     else:
         return openai_response.choices[0].message.content
+
+
+def classify_failure_source(
+        test_name: str,
+        class_name: str,
+        failing_url: str,
+        screenshot_path: str,
+        web_elements_text: str,
+        traceback_text: str,  # Assuming you still want to pass this, though not explicitly in the new prompt
+        logging_output: str,
+        test_method_source: str,
+        failing_line_code: str,
+        openai_api_key: str = None
+) -> str:
+    """
+    Calls GPT with the provided test failure context to determine if the failure
+    is due to test case brittleness or an application bug.
+    Returns "Yes" if likely brittleness, "No" if likely an application bug,
+    or an empty string/error message if the call fails or response is unclear.
+    """
+    if not openai_api_key:
+        openai_api_key = os.getenv("OPENAI_API_KEY")
+
+    system_msg = {
+        "role": "system",
+        "content": (
+            "You are an expert assistant specializing in analyzing web GUI test failures. "
+            "Your task is to determine if a given test failure is more likely due to the **brittleness of the test case** itself "
+            "or a **bug in the web application under test**. "
+            "You will be provided with the context of a failed Selenium test, including screenshots, logs, source code of the test method, and the failing line.\n\n"
+            "Based on all the provided information, please answer with only one word: 'Yes' if the failure is primarily due to test case brittleness, or 'No' if it is primarily due to an application bug. "
+            "Do not provide any explanation or additional text. Your entire response must be either 'Yes' or 'No'."
+        )
+    }
+
+    screenshot_b64 = encode_image(screenshot_path)
+    user_msg = {
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": (
+                    f"Test {test_name} in class {class_name} failed.\n"
+                    f"URL at failure: {failing_url}\n"
+                    f"Traceback:\n{traceback_text}\n"  # Added traceback here as it's crucial for debugging
+                    f"Logs from the test execution:\n{logging_output}\n\n"
+                    "Below is the screenshot of the page where the test case fails, with interactable elements annotated. "
+                    "You also have a textual list of those elements.\n\n"
+                    "Pay attention to any error messages on the page, the nature of the exception in the traceback, "
+                    "and the test logic in relation to the application's state shown in the screenshot.\n\n"
+                    f"--- Test Method Source ---\n{test_method_source}\n\n"
+                    f"--- Failing Line ---\n{failing_line_code}\n\n"
+                    "Is this failure primarily due to test case brittleness (Yes) or an application bug (No)?\n\n"
+                    f"Textual list of clickable HTML elements annotated in the screenshot (if any):\n{web_elements_text}\n"
+                ),
+            },
+            {
+                "type": "image_url",
+                "image_url": {"url": f"data:image/png;base64,{screenshot_b64}"}
+            }
+        ]
+    }
+
+    messages = [system_msg, user_msg]
+
+    client = OpenAI(api_key=openai_api_key)
+    # Consider adjusting call_gpt_api or parameters like temperature if needed for classification tasks
+    # For a classification task like this, you might want a lower temperature (e.g., 0 or 0.1)
+    # to make the output more deterministic.
+    prompt_tokens, completion_tokens, gpt_call_error, openai_response = call_gpt_api(
+        args=None,  # Or pass relevant args for temperature if your helper supports it
+        openai_client=client,
+        messages=messages
+    )
+
+    if gpt_call_error or not openai_response:
+        logging.error("GPT call failed or returned error.")
+        return "Error"  # Or some other indicator
+    else:
+        response_text = openai_response.choices[0].message.content.strip()
+        # Validate the response
+        if response_text.lower() == "yes":
+            return "Yes"
+        elif response_text.lower() == "no":
+            return "No"
+        else:
+            logging.warning(f"GPT returned an unexpected response: '{response_text}'")
+            return "Unclear"  # Or handle unexpected responses as needed
